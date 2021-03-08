@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'title' => ':boat_name - Boats',
+    'title' => ':boat.name - Boats',
     'owner' => 'Owner:'
 ];

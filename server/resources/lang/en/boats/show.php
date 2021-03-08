@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => ':boat_name - Boats',
+    'title' => ':boat.name - Boats',
     'edit' => 'Edit boat',
     'delete' => 'Delete boat'
 ];

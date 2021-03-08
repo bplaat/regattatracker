@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', __('admin/boats/show.title', [ 'boat_name' => $boat->name ]))
+@section('title', __('admin/boats/show.title', [ 'boat.name' => $boat->name ]))
 
 @section('content')
     <div class="breadcrumb">

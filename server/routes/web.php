@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BoatsController;
 use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\AdminUsersController;
-use App\Http\Controllers\AdminBoatsController;
+use App\Http\Controllers\Admin\AdminUsersController;
+use App\Http\Controllers\Admin\AdminBoatsController;
 use App\Models\User;
 
 // Home page

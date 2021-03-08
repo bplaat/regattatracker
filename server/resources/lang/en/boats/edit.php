@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'Edit - :boat_name - Boats',
+    'title' => 'Edit - :boat.name - Boats',
     'short' => 'Edit',
     'header' => 'Edit boat',
     'name' => 'Name',
