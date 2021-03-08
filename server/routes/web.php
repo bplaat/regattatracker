@@ -4,11 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BoatsController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\AdminUsersController;
+use App\Http\Controllers\AdminBoatsController;
+use App\Models\User;
 
 // Home page
 Route::view('/', 'home')->name('home');
 
-// Normal / Kapitein routes
+// Normal routes
 Route::middleware([ 'auth' ])->group(function () {
     // Boats
     Route::get('/boats', [ BoatsController::class, 'index' ])->name('boats.index');
@@ -28,10 +31,21 @@ Route::middleware([ 'auth' ])->group(function () {
     Route::get('/auth/logout', [ AuthController::class, 'logout' ])->name('auth.logout');
 });
 
-// Admin / Beheerder routes
-// TODO
+// Admin routes
+Route::middleware([ 'admin' ])->group(function () {
+    // Admin home
+    Route::view('/admin', 'admin.home')->name('admin.home');
 
-// Guest / Niet ingelogd routes
+    // Admin users
+    Route::get('/admin/users', [ AdminUsersController::class, 'index' ])->name('admin.users.index');
+    Route::get('/admin/users/{user}', [ AdminUsersController::class, 'show' ])->name('admin.users.show');
+
+    // Admin boats
+    Route::get('/admin/boats', [ AdminBoatsController::class, 'index' ])->name('admin.boats.index');
+    Route::get('/admin/boats/{boat}', [ AdminBoatsController::class, 'show' ])->name('admin.boats.show');
+});
+
+// Guest routes
 Route::middleware([ 'guest' ])->group(function () {
     // Auth login
     Route::view('/auth/login', 'auth.login')->name('auth.login');

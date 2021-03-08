@@ -28,6 +28,16 @@
                         @else
                             <a class="navbar-item" href="{{ route('boats.index') }}">@lang('layout.boats')</a>
                         @endif
+
+                        @if (Auth::user()->role == App\Models\User::ROLE_ADMIN)
+                            <div class="navbar-item has-dropdown is-hoverable">
+                                <a class="navbar-link is-arrowless" href="{{ route('admin.home') }}">@lang('layout.admin')</a>
+                                <div class="navbar-dropdown">
+                                    <a class="navbar-item" href="{{ route('admin.users.index') }}">@lang('layout.admin_users')</a>
+                                    <a class="navbar-item" href="{{ route('admin.boats.index') }}">@lang('layout.admin_boats')</a>
+                                </div>
+                            </div>
+                        @endif
                     </div>
 
                     <div class="navbar-end">

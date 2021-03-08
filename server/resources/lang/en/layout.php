@@ -2,6 +2,11 @@
 
 return [
     'boats' => 'Boats',
+
+    'admin' => 'Admin',
+    'admin_users' => 'Users',
+    'admin_boats' => 'Boats',
+
     'settings' => 'Settings',
     'logout' => 'Logout',
 
