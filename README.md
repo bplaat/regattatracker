@@ -45,7 +45,7 @@ The brand new RegattaTracker deluxe tracking system
 - lng
 - time
 
-## Installation
+## Test Environment Installation
 
 ### Windows
 - Install [XAMPP](https://www.apachefriends.org/download.html) Apache web server, PHP and MySQL database
@@ -94,7 +94,7 @@ The brand new RegattaTracker deluxe tracking system
     cd server
     php artisan migrate
     ```
-- Goto http://regattatracker.local/ and your done 🎉
+- Goto http://regattatracker.local/ and you're done! 🎉
 
 ### macOS
 TODO
@@ -180,7 +180,64 @@ TODO
     cd server
     php artisan migrate
     ```
-- Goto http://regattatracker.local/ and your done 🎉
+- Goto http://regattatracker.local/ and you're done! 🎉
 
 #### Arch based disto's
-TODO
+- Install packages.
+    ```
+    # pacman -Sy
+    # pacman -S apache php composer mariadb
+    ```
+- Setup mysql (mariadb) server.
+    ```
+    # mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+    cd /srv/http
+    ```
+- Create a vhost document root, rename it to a domain name (e.g. regattadev.com)
+    ```
+    # git clone https://github.com/IpsumCapra/regattatracker.git
+    # mv regattatracker your_domain
+    # chown -R http http
+    # chmod -R g+rwx http
+    # cd your_domain
+    # cd server
+    # composer install
+    ```
+- Copy .env.example to .env.
+- Check whether vhosts are enabled in the config. Add following to config file after enabling.
+    ```
+    # RegattaTracker vhosts
+
+    <VirtualHost *:80>
+        ServerName your_domain
+        DocumentRoot "/srv/http/your_domain/server/public"
+    </VirtualHost>
+
+    <VirtualHost *:80>
+        ServerName www.your_domain
+        Redirect permanent / http://your_domain/
+    </VirtualHost>
+    ```
+- Change AllowOverride on `/srv/http` from `None` to `All`.
+    ```
+    <Directory /var/www/>
+            ...
+            AllowOverride All
+            ...
+    </Directory>
+    ```
+- Enable PHP for apache.
+- - Add following lines to `/etc/hosts` file **as root**
+    ```
+    # RegattaTracker local domains
+    127.0.0.1 your_domain
+    127.0.0.1 www.your_domain
+    ```
+- Create MySQL user and database
+- Fill in MySQL user, password and database information in `server/.env`
+- Create database tables
+    ```
+    cd server
+    php artisan migrate
+    ```  
+- Everything should now be running under your chosen domain name! 🎉
