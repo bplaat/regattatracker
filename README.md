@@ -54,7 +54,7 @@ The brand new RegattaTracker deluxe tracking system
 
     ```
     cd C:/xampp/htdocs
-    git clone https://github.com/bplaat/regattatracker.git
+    git clone https://github.com/IpsumCapra/regattatracker.git
     cd regattatracker
     ```
 - Install deps via Composer
