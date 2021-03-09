@@ -15,7 +15,15 @@ class SettingsController extends Controller {
         $fields = $request->validate([
             'firstname' => 'required|min:2',
             'lastname' => 'required|min:2',
-            'email' => 'required|email' // BUG: unique:users
+            'email' => [
+                'required',
+                'email',
+                function ($attribute, $value, $fail) {
+                    if ($value != Auth::user()->email && count(User::where('email', $value)->get()) > 0) {
+                        $fail(__('validation.not_unique_email', [ 'attribute' => $attribute ]));
+                    }
+                }
+            ]
         ]);
 
         // Update user details
