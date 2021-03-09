@@ -17,7 +17,9 @@
         @forelse ($boats as $boat)
             <div class="box">
                 <h2 class="title"><a href="{{ route('admin.boats.show', $boat) }}">{{ $boat->name }}</a></h2>
-                <p>{{ Str::limit($boat->description, 64) }}</a></p>
+                @if ($boat->description != null)
+                    <p>{{ Str::limit($boat->description, 64) }}</a></p>
+                @endif
                 <p>@lang('admin/boats.index.owner') <a href="{{ route('admin.users.show', $boat->user) }}">{{ $boat->user->firstname }} {{ $boat->user->lastname }}</a></p>
             </div>
         @empty

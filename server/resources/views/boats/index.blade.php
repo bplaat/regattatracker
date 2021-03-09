@@ -16,7 +16,9 @@
         @forelse ($boats as $boat)
             <div class="box">
                 <h2 class="title"><a href="{{ route('boats.show', $boat) }}">{{ $boat->name }}</a></h2>
-                <p>{{ Str::limit($boat->description, 64) }}</a></p>
+                @if ($boat->description != null)
+                    <p>{{ Str::limit($boat->description, 64) }}</a></p>
+                @endif
             </div>
         @empty
             <p><i>@lang('boats.index.empty')</i></p>

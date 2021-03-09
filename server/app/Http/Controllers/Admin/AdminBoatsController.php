@@ -25,15 +25,14 @@ class AdminBoatsController extends Controller {
         // Validate input
         $fields = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'name' => 'required|min:2',
-            'description' => 'required'
+            'name' => 'required|min:2'
         ]);
 
         // Create boat
         $boat = Boat::create([
             'user_id' => $fields['user_id'],
             'name' => $fields['name'],
-            'description' => $fields['description']
+            'description' => request('description')
         ]);
 
         // Go to the new admin boat page
@@ -56,15 +55,14 @@ class AdminBoatsController extends Controller {
         // Validate input
         $fields = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'name' => 'required|min:2',
-            'description' => 'required'
+            'name' => 'required|min:2'
         ]);
 
         // Update boat
         $boat->update([
             'user_id' => $fields['user_id'],
             'name' => $fields['name'],
-            'description' => $fields['description']
+            'description' => request('description')
         ]);
 
         // Go to the admin boat page

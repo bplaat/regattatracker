@@ -14,7 +14,9 @@
 
     <div class="content">
         <h2 class="title"><a href="{{ route('admin.boats.show', $boat) }}">{{ $boat->name }}</a></h2>
-        <p style="white-space: pre;">{{ $boat->description }}</a></p>
+        @if ($boat->description != null)
+            <p style="white-space: pre-wrap;">{{ $boat->description }}</a></p>
+        @endif
         <p>@lang('admin/boats.show.owner') <a href="{{ route('admin.users.show', $boat->user) }}">{{ $boat->user->firstname }} {{ $boat->user->lastname }}</a></p>
     </div>
 

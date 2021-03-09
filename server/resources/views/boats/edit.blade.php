@@ -33,7 +33,7 @@
             <label class="label" for="description">@lang('boats.edit.description')</label>
 
             <div class="control">
-                <textarea class="textarea @error('description') is-danger @enderror" id="description" name="description" required>{{ old('description', $boat->description) }}</textarea>
+                <textarea class="textarea @error('description') is-danger @enderror" id="description" name="description">{{ old('description', $boat->description) }}</textarea>
             </div>
 
             @error('description')

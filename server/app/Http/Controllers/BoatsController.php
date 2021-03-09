@@ -18,15 +18,14 @@ class BoatsController extends Controller {
     public function store(Request $request) {
         // Validate input
         $fields = $request->validate([
-            'name' => 'required|min:2',
-            'description' => 'required'
+            'name' => 'required|min:2'
         ]);
 
         // Create boat
         $boat = Boat::create([
             'user_id' => Auth::id(),
             'name' => $fields['name'],
-            'description' => $fields['description']
+            'description' => request('description')
         ]);
 
         // Go to the new boat page
@@ -53,14 +52,13 @@ class BoatsController extends Controller {
 
         // Validate input
         $fields = $request->validate([
-            'name' => 'required|min:2',
-            'description' => 'required'
+            'name' => 'required|min:2'
         ]);
 
         // Update boat
         $boat->update([
             'name' => $fields['name'],
-            'description' => $fields['description']
+            'description' => request('description')
         ]);
 
         // Go to the boat page
