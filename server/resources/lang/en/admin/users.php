@@ -31,6 +31,7 @@ return [
     'show.boats_title' => 'Boats',
     'show.boats_owner' => 'Owner:',
     'show.boats_empty' => 'There are no boats found',
+    'show.hijack' => 'Hijack user',
     'show.edit' => 'Edit user',
     'show.delete' => 'Delete user',
 

@@ -41,6 +41,7 @@ Route::middleware([ 'admin' ])->group(function () {
     Route::get('/admin/users', [ AdminUsersController::class, 'index' ])->name('admin.users.index');
     Route::view('/admin/users/create', 'admin.users.create')->name('admin.users.create');
     Route::post('/admin/users', [ AdminUsersController::class, 'store' ])->name('admin.users.store');
+    Route::get('/admin/users/{user}/hijack', [ AdminUsersController::class, 'hijack' ])->name('admin.users.hijack');
     Route::get('/admin/users/{user}/edit', [ AdminUsersController::class, 'edit' ])->name('admin.users.edit');
     Route::get('/admin/users/{user}/delete', [ AdminUsersController::class, 'delete' ])->name('admin.users.delete');
     Route::get('/admin/users/{user}', [ AdminUsersController::class, 'show' ])->name('admin.users.show');

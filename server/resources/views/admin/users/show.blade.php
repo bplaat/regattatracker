@@ -39,6 +39,9 @@
     </div>
 
     <div class="buttons">
+        @if ($user->id != Auth::id())
+            <a class="button is-black" href="{{ route('admin.users.hijack', $user) }}">@lang('admin/users.show.hijack')</a>
+        @endif
         <a class="button is-link" href="{{ route('admin.users.edit', $user) }}">@lang('admin/users.show.edit')</a>
         <a class="button is-danger" href="{{ route('admin.users.delete', $user) }}">@lang('admin/users.show.delete')</a>
     </div>

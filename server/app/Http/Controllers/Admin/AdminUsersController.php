@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AdminUsersController extends Controller {
@@ -46,6 +47,15 @@ class AdminUsersController extends Controller {
     // Admin users edit route
     public function edit(User $user) {
         return view('admin.users.edit', [ 'user' => $user ]);
+    }
+
+    // Admin users hijack route
+    public function hijack(User $user) {
+        // Login as the user
+        Auth::login($user, true);
+
+        // Go to the home page
+        return redirect()->route('home');
     }
 
     // Admin users update route

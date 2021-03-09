@@ -16,9 +16,8 @@ class AuthController extends Controller {
         $email = request('email');
         $password = request('password');
 
-        // Try to login
-        if (Auth::attempt([ 'email' => $email, 'password' => $password ])) {
-            // Go to home page when successfull
+        // Try to login when successfull go to home page
+        if (Auth::attempt([ 'email' => $email, 'password' => $password ], true)) {
             return redirect()->route('home');
         }
 
@@ -47,10 +46,7 @@ class AuthController extends Controller {
         ]);
 
         // Login user in
-        Auth::attempt([
-            'email' => $fields['email'],
-            'password' => $fields['password']
-        ]);
+        Auth::attempt([ 'email' => $fields['email'], 'password' => $fields['password'] ], true);
 
         // Go to home page
         return redirect()->route('home');
