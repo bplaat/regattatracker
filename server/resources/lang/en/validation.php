@@ -121,7 +121,7 @@ return [
 
     // Custom rules
     'not_unique_email' => 'The :attribute is already used by an other user.',
-    'old_password' => 'The :attribute must contain your old password.',
+    'current_password' => 'The :attribute must contain your current password.',
 
     /*
     |--------------------------------------------------------------------------

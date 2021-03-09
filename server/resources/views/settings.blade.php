@@ -74,19 +74,19 @@
         <h2 class="title is-4">@lang('settings.change_password_title')</h2>
 
         <div class="field">
-            <label class="label" for="old_password">@lang('settings.old_password')</label>
+            <label class="label" for="current_password">@lang('settings.current_password')</label>
 
             <div class="control">
-                <input class="input @error('old_password') is-danger @enderror" type="password" id="old_password" name="old_password" required>
+                <input class="input @error('current_password') is-danger @enderror" type="password" id="current_password" name="current_password" required>
             </div>
 
-            @error('old_password')
-                <p class="help is-danger">{{ $errors->first('old_password') }}</p>
+            @error('current_password')
+                <p class="help is-danger">{{ $errors->first('current_password') }}</p>
             @enderror
         </div>
 
         <div class="field">
-            <label class="label" for="password">@lang('settings.new_password')</label>
+            <label class="label" for="password">@lang('settings.password')</label>
 
             <div class="control">
                 <input class="input @error('password') is-danger @enderror" type="password" id="password" name="password" required>
@@ -98,7 +98,7 @@
         </div>
 
         <div class="field">
-            <label class="label" for="password_confirmation">@lang('settings.new_password_confirmation')</label>
+            <label class="label" for="password_confirmation">@lang('settings.password_confirmation')</label>
 
             <div class="control">
                 <input class="input @error('password') is-danger @enderror" type="password" id="password_confirmation" name="password_confirmation" required>

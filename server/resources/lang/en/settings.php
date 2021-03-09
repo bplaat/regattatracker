@@ -11,9 +11,9 @@ return [
     'change_details_message' => 'Your details have changed',
 
     'change_password_title' => 'Change password',
-    'old_password' => 'Old password',
-    'new_password' => 'New password',
-    'new_password_confirmation' => 'Confirm new password',
+    'current_password' => 'Current password',
+    'password' => 'New password',
+    'password_confirmation' => 'Confirm new password',
     'change_password_button' => 'Change password',
     'change_password_message' => 'Your password has changed'
 ];

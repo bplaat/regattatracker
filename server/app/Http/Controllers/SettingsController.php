@@ -41,9 +41,9 @@ class SettingsController extends Controller {
     public function changePassword(Request $request) {
         // Validate input
         $fields = $request->validate([
-            'old_password' => function ($attribute, $value, $fail) {
+            'current_password' => function ($attribute, $value, $fail) {
                 if (!Hash::check($value, Auth::user()->password)) {
-                    $fail(__('validation.old_password', [ 'attribute' => $attribute ]));
+                    $fail(__('validation.current_password', [ 'attribute' => $attribute ]));
                 }
             },
             'password' => 'required|min:6'
