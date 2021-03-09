@@ -6,5 +6,6 @@ return [
     'breadcrumb' => 'Admin',
     'header' => 'The admin zone',
     'users' => 'Users',
-    'boats' => 'Boats'
+    'boats' => 'Boats',
+    'boat_types' => 'Boat Types'
 ];

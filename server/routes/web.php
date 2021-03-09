@@ -6,6 +6,7 @@ use App\Http\Controllers\BoatsController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Admin\AdminBoatsController;
+use App\Http\Controllers\Admin\AdminBoatTypesController;
 use App\Models\User;
 
 // Home page
@@ -53,6 +54,15 @@ Route::middleware([ 'admin' ])->group(function () {
     Route::get('/admin/boats/{boat}/delete', [ AdminBoatsController::class, 'delete' ])->name('admin.boats.delete');
     Route::get('/admin/boats/{boat}', [ AdminBoatsController::class, 'show' ])->name('admin.boats.show');
     Route::post('/admin/boats/{boat}', [ AdminBoatsController::class, 'update' ])->name('admin.boats.update');
+
+    // Admin boat types
+    Route::get('/admin/boat_types', [ AdminBoatTypesController::class, 'index' ])->name('admin.boat_types.index');
+    Route::view('/admin/boat_types/create', 'admin.boat_types.create')->name('admin.boat_types.create');
+    Route::post('/admin/boat_types', [ AdminBoatTypesController::class, 'store' ])->name('admin.boat_types.store');
+    Route::get('/admin/boat_types/{boatType}/edit', [ AdminBoatTypesController::class, 'edit' ])->name('admin.boat_types.edit');
+    Route::get('/admin/boat_types/{boatType}/delete', [ AdminBoatTypesController::class, 'delete' ])->name('admin.boat_types.delete');
+    Route::get('/admin/boat_types/{boatType}', [ AdminBoatTypesController::class, 'show' ])->name('admin.boat_types.show');
+    Route::post('/admin/boat_types/{boatType}', [ AdminBoatTypesController::class, 'update' ])->name('admin.boat_types.update');
 });
 
 // Guest routes
