@@ -158,10 +158,14 @@ TODO
 - Edit this line in `/etc/apache2/apache2.conf` at `AllowOverride` from `None` to `All` **as root**
     ```
     <Directory /var/www/>
-        Options Indexes FollowSymLinks
+        ...
         AllowOverride All
-        Require all granted
+        ...
     </Directory>
+    ```
+- Enable the Apache rewrite module
+    ```
+    sudo a2enmod rewrite
     ```
 - Restart apache
     ```
@@ -221,13 +225,13 @@ TODO
 - Change AllowOverride on `/srv/http` from `None` to `All`.
     ```
     <Directory /var/www/>
-            ...
-            AllowOverride All
-            ...
+        ...
+        AllowOverride All
+        ...
     </Directory>
     ```
 - Enable PHP for apache.
-- - Add following lines to `/etc/hosts` file **as root**
+- Add following lines to `/etc/hosts` file **as root**
     ```
     # RegattaTracker local domains
     127.0.0.1 your_domain
@@ -239,5 +243,5 @@ TODO
     ```
     cd server
     php artisan migrate
-    ```  
+    ```
 - Everything should now be running under your chosen domain name! 🎉

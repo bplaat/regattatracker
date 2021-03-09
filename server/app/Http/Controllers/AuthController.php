@@ -40,7 +40,10 @@ class AuthController extends Controller {
             'firstname' => $fields['firstname'],
             'lastname' => $fields['lastname'],
             'email' => $fields['email'],
-            'password' => Hash::make($fields['password'])
+            'password' => Hash::make($fields['password']),
+
+            // First account is always admin
+            'role' => count(User:all()) == 0 ? User::ROLE_ADMIN : User::ROLE_NORMAL
         ]);
 
         // Login user in

@@ -38,11 +38,21 @@ Route::middleware([ 'admin' ])->group(function () {
 
     // Admin users
     Route::get('/admin/users', [ AdminUsersController::class, 'index' ])->name('admin.users.index');
+    Route::view('/admin/users/create', 'admin.users.create')->name('admin.users.create');
+    Route::post('/admin/users', [ AdminUsersController::class, 'store' ])->name('admin.users.store');
+    Route::get('/admin/users/{user}/edit', [ AdminUsersController::class, 'edit' ])->name('admin.users.edit');
+    Route::get('/admin/users/{user}/delete', [ AdminUsersController::class, 'delete' ])->name('admin.users.delete');
     Route::get('/admin/users/{user}', [ AdminUsersController::class, 'show' ])->name('admin.users.show');
+    Route::post('/admin/users/{user}', [ AdminUsersController::class, 'update' ])->name('admin.users.update');
 
     // Admin boats
     Route::get('/admin/boats', [ AdminBoatsController::class, 'index' ])->name('admin.boats.index');
+    Route::get('/admin/boats/create', [ AdminBoatsController::class, 'create' ])->name('admin.boats.create');
+    Route::post('/admin/boats', [ AdminBoatsController::class, 'store' ])->name('admin.boats.store');
+    Route::get('/admin/boats/{boat}/edit', [ AdminBoatsController::class, 'edit' ])->name('admin.boats.edit');
+    Route::get('/admin/boats/{boat}/delete', [ AdminBoatsController::class, 'delete' ])->name('admin.boats.delete');
     Route::get('/admin/boats/{boat}', [ AdminBoatsController::class, 'show' ])->name('admin.boats.show');
+    Route::post('/admin/boats/{boat}', [ AdminBoatsController::class, 'update' ])->name('admin.boats.update');
 });
 
 // Guest routes
