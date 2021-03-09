@@ -18,7 +18,7 @@
                     <div class="navbar-start">
                         @if (count(Auth::user()->boats) > 0)
                             <div class="navbar-item has-dropdown is-hoverable">
-                                <a class="navbar-link is-arrowless" href="{{ route('boats.index') }}">@lang('layout.boats')</a>
+                                <a class="navbar-link is-arrowless" href="{{ route('boats.index') }}">@lang('layout.header.boats')</a>
                                 <div class="navbar-dropdown">
                                     @foreach (Auth::user()->boats as $boat)
                                         <a class="navbar-item" href="{{ route('boats.show', $boat) }}">{{ $boat->name }}</a>
@@ -26,15 +26,15 @@
                                 </div>
                             </div>
                         @else
-                            <a class="navbar-item" href="{{ route('boats.index') }}">@lang('layout.boats')</a>
+                            <a class="navbar-item" href="{{ route('boats.index') }}">@lang('layout.header.boats')</a>
                         @endif
 
                         @if (Auth::user()->role == App\Models\User::ROLE_ADMIN)
                             <div class="navbar-item has-dropdown is-hoverable">
-                                <a class="navbar-link is-arrowless" href="{{ route('admin.home') }}">@lang('layout.admin')</a>
+                                <a class="navbar-link is-arrowless" href="{{ route('admin.home') }}">@lang('layout.header.admin.home')</a>
                                 <div class="navbar-dropdown">
-                                    <a class="navbar-item" href="{{ route('admin.users.index') }}">@lang('layout.admin_users')</a>
-                                    <a class="navbar-item" href="{{ route('admin.boats.index') }}">@lang('layout.admin_boats')</a>
+                                    <a class="navbar-item" href="{{ route('admin.users.index') }}">@lang('layout.header.admin.users')</a>
+                                    <a class="navbar-item" href="{{ route('admin.boats.index') }}">@lang('layout.header.admin.boats')</a>
                                 </div>
                             </div>
                         @endif
@@ -47,8 +47,8 @@
                         </div>
                         <div class="navbar-item">
                             <div class="buttons">
-                                <a class="button is-link" href="{{ route('settings') }}">@lang('layout.settings')</a>
-                                <a class="button" href="{{ route('auth.logout') }}">@lang('layout.logout')</a>
+                                <a class="button is-link" href="{{ route('settings') }}">@lang('layout.header.settings')</a>
+                                <a class="button" href="{{ route('auth.logout') }}">@lang('layout.header.logout')</a>
                             </div>
                         </div>
                     </div>
@@ -56,8 +56,8 @@
                     <div class="navbar-end">
                         <div class="navbar-item">
                             <div class="buttons">
-                                <a class="button is-link" href="{{ route('auth.login') }}">@lang('layout.login')</a>
-                                <a class="button" href="{{ route('auth.register') }}">@lang('layout.register')</a>
+                                <a class="button is-link" href="{{ route('auth.login') }}">@lang('layout.header.login')</a>
+                                <a class="button" href="{{ route('auth.register') }}">@lang('layout.header.register')</a>
                             </div>
                         </div>
                     </div>
@@ -74,8 +74,8 @@
 
     <div class="footer">
         <div class="content has-text-centered">
-            <p>@lang('layout.footer_made_by')</p>
-            <p>@lang('layout.footer_source')</p>
+            <p>@lang('layout.footer.authors')</p>
+            <p>@lang('layout.footer.source')</p>
         </div>
     </div>
 

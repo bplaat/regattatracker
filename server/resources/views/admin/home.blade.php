@@ -6,12 +6,12 @@
 <div class="breadcrumb">
         <ul>
             <li><a href="/">RegattaTracker</a></li>
-            <li class="is-active"><a href="{{ route('admin.home') }}">@lang('admin/home.title')</a></li>
+            <li class="is-active"><a href="{{ route('admin.home') }}">@lang('admin/home.breadcrumb')</a></li>
         </ul>
     </div>
 
     <div class="content">
-        <h1 class="title">@lang('admin/home.title')</h1>
+        <h1 class="title">@lang('admin/home.header')</h1>
     </div>
 
     <div class="buttons">

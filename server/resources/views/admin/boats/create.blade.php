@@ -1,24 +1,24 @@
 @extends('layout')
 
-@section('title', __('admin/boats/create.title'))
+@section('title', __('admin/boats.create.title'))
 
 @section('content')
     <div class="breadcrumb">
         <ul>
             <li><a href="/">RegattaTracker</a></li>
             <li><a href="{{ route('admin.home') }}">@lang('admin/home.title')</a></li>
-            <li><a href="{{ route('admin.boats.index') }}">@lang('admin/boats/index.short')</a></li>
-            <li class="is-active"><a href="{{ route('admin.boats.create') }}">@lang('admin/boats/create.short')</a></li>
+            <li><a href="{{ route('admin.boats.index') }}">@lang('admin/boats.index.breadcrumb')</a></li>
+            <li class="is-active"><a href="{{ route('admin.boats.create') }}">@lang('admin/boats.create.breadcrumb')</a></li>
         </ul>
     </div>
 
-    <h1 class="title">@lang('admin/boats/create.header')</h1>
+    <h1 class="title">@lang('admin/boats.create.header')</h1>
 
     <form method="POST" action="{{ route('admin.boats.store') }}">
         @csrf
 
         <div class="field">
-            <label class="label" for="user_id">@lang('admin/boats/create.user')</label>
+            <label class="label" for="user_id">@lang('admin/boats.create.user')</label>
 
             <div class="control">
                 <div class="select @error('user_id') is-danger @enderror">
@@ -38,7 +38,7 @@
         </div>
 
         <div class="field">
-            <label class="label" for="name">@lang('admin/boats/create.name')</label>
+            <label class="label" for="name">@lang('admin/boats.create.name')</label>
 
             <div class="control">
                 <input class="input @error('name') is-danger @enderror" type="text" id="name" name="name" value="{{ old('name') }}" required>
@@ -50,7 +50,7 @@
         </div>
 
         <div class="field">
-            <label class="label" for="description">@lang('admin/boats/create.description')</label>
+            <label class="label" for="description">@lang('admin/boats.create.description')</label>
 
             <div class="control">
                 <textarea class="textarea @error('description') is-danger @enderror" id="description" name="description" required>{{ old('description') }}</textarea>
@@ -63,7 +63,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" type="submit">@lang('admin/boats/create.button')</button>
+                <button class="button is-link" type="submit">@lang('admin/boats.create.button')</button>
             </div>
         </div>
     </form>

@@ -22,7 +22,7 @@ class AuthController extends Controller {
             return redirect()->route('home');
         }
 
-        return back()->withInput()->with('error', __('auth/login.error'));
+        return back()->withInput()->with('error', __('auth.login.error'));
     }
 
     // Register route

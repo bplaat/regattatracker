@@ -1,8 +1,10 @@
 <?php
 
 return [
+    // Settings page
     'title' => 'Settings',
 
+    // Change details part
     'change_details_title' => 'Change details',
     'firstname' => 'First name',
     'lastname' => 'Last name',
@@ -10,6 +12,7 @@ return [
     'change_details_button' => 'Change details',
     'change_details_message' => 'Your details have changed',
 
+    // Change password part
     'change_password_title' => 'Change password',
     'current_password' => 'Current password',
     'password' => 'New password',

@@ -1,18 +1,17 @@
 <?php
 
 return [
-    'boats' => 'Boats',
+    // Layout header
+    'header.boats' => 'Boats',
+    'header.admin.home' => 'Admin',
+    'header.admin.users' => 'Users',
+    'header.admin.boats' => 'Boats',
+    'header.settings' => 'Settings',
+    'header.logout' => 'Logout',
+    'header.login' => 'Login',
+    'header.register' => 'Register',
 
-    'admin' => 'Admin',
-    'admin_users' => 'Users',
-    'admin_boats' => 'Boats',
-
-    'settings' => 'Settings',
-    'logout' => 'Logout',
-
-    'login' => 'Login',
-    'register' => 'Register',
-
-    'footer_made_by' => 'Made by <a href="https://bastiaan.ml/" target="_blank" rel="noreferrer">Bastiaan van der Plaat</a>, Charlie de Raaf, Sam Cornelisse, Stan Boer en Rowdey Goos',
-    'footer_source' => 'For the source code go to <a href="https://github.com/IpsumCapra/regattatracker" target="_blank" rel="noreferrer">GitHub</a>',
+    // Layout footer
+    'footer.authors' => 'Made by <a href="https://bastiaan.ml/" target="_blank" rel="noreferrer">Bastiaan van der Plaat</a>, Charlie de Raaf, Sam Cornelisse, Stan Boer en Rowdey Goos',
+    'footer.source' => 'For the source code go to <a href="https://github.com/IpsumCapra/regattatracker" target="_blank" rel="noreferrer">GitHub</a>',
 ];
