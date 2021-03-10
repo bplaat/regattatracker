@@ -54,9 +54,9 @@ class User extends Authenticatable
 
     // Delete user and all its belongings
     public function completeDelete() {
-        // Delete user boats
+        // Complete delete user boats
         foreach ($this->boats as $boat) {
-            $boat->delete();
+            $boat->completeDelete();
         }
 
         // Delete user

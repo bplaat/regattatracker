@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BoatsController;
+use App\Http\Controllers\BoatBoatTypesController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Admin\AdminBoatsController;
+use App\Http\Controllers\Admin\AdminBoatBoatTypesController;
 use App\Http\Controllers\Admin\AdminBoatTypesController;
 use App\Models\User;
 
@@ -22,6 +24,10 @@ Route::middleware([ 'auth' ])->group(function () {
     Route::get('/boats/{boat}/delete', [ BoatsController::class, 'delete' ])->name('boats.delete');
     Route::get('/boats/{boat}', [ BoatsController::class, 'show' ])->name('boats.show');
     Route::post('/boats/{boat}', [ BoatsController::class, 'update' ])->name('boats.update');
+
+    // Boat boat types
+    Route::post('/boats/{boat}/boat_types', [ BoatBoatTypesController::class, 'create' ])->name('boats.boat_types.create');
+    Route::get('/boats/{boat}/boat_types/{boatType}/delete', [ BoatBoatTypesController::class, 'delete' ])->name('boats.boat_types.delete');
 
     // Settings
     Route::view('/settings', 'settings')->name('settings');
@@ -55,6 +61,10 @@ Route::middleware([ 'admin' ])->group(function () {
     Route::get('/admin/boats/{boat}/delete', [ AdminBoatsController::class, 'delete' ])->name('admin.boats.delete');
     Route::get('/admin/boats/{boat}', [ AdminBoatsController::class, 'show' ])->name('admin.boats.show');
     Route::post('/admin/boats/{boat}', [ AdminBoatsController::class, 'update' ])->name('admin.boats.update');
+
+    // Admin boat boat types
+    Route::post('/admin/boats/{boat}/boat_types', [ AdminBoatBoatTypesController::class, 'create' ])->name('admin.boats.boat_types.create');
+    Route::get('/admin/boats/{boat}/boat_types/{boatType}/delete', [ AdminBoatBoatTypesController::class, 'delete' ])->name('admin.boats.boat_types.delete');
 
     // Admin boat types
     Route::get('/admin/boat_types', [ AdminBoatTypesController::class, 'index' ])->name('admin.boat_types.index');

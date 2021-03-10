@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Boat;
+use App\Models\BoatType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,7 +37,8 @@ class BoatsController extends Controller {
     public function show(Boat $boat) {
         $this->checkUser($boat);
 
-        return view('boats.show', [ 'boat' => $boat ]);
+        $boatTypes = BoatType::all();
+        return view('boats.show', [ 'boat' => $boat, 'boatTypes' => $boatTypes ]);
     }
 
     // Boats edit route
@@ -69,8 +71,8 @@ class BoatsController extends Controller {
     public function delete(Boat $boat) {
         $this->checkUser($boat);
 
-        // Delete boat
-        $boat->delete();
+        // Complete delete boat
+        $boat->completeDelete();
 
         // Go to the boats index page
         return redirect()->route('boats.index');

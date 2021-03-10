@@ -18,8 +18,13 @@ return [
 
     // Boats show page
     'show.title' => ':boat.name - Boats',
+    'show.description_empty' => 'This boat has no description.',
     'show.edit' => 'Edit boat',
     'show.delete' => 'Delete boat',
+    'show.boat_types' => 'Boat Types',
+    'show.boat_types_remove_button' => 'Remove boat type',
+    'show.boat_types_empty' => 'This boat has no assigned boat types.',
+    'show.boat_types_add_button' => 'Add boat type',
 
     // Boats edit page
     'edit.title' => 'Edit - :boat.name - Boats',

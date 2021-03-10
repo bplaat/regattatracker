@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Boat;
+use App\Models\BoatType;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -41,7 +42,8 @@ class AdminBoatsController extends Controller {
 
     // Admin boats show route
     public function show(Boat $boat) {
-        return view('admin.boats.show', [ 'boat' => $boat ]);
+        $boatTypes = BoatType::all();
+        return view('admin.boats.show', [ 'boat' => $boat, 'boatTypes' => $boatTypes ]);
     }
 
     // Admin boats edit route
