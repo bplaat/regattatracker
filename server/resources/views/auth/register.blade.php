@@ -3,6 +3,13 @@
 @section('title', __('auth.register.title'))
 
 @section('content')
+    <div class="breadcrumb">
+        <ul>
+            <li><a href="/">RegattaTracker</a></li>
+            <li class="is-active"><a href="{{ route('auth.register') }}">@lang('auth.register.breadcrumb')</a></li>
+        </ul>
+    </div>
+
     <h1 class="title">@lang('auth.register.header')</h1>
 
     <form method="POST">

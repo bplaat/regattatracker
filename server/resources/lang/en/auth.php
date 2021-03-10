@@ -3,6 +3,7 @@
 return [
     // Auth login page
     'login.title' => 'Login',
+    'login.breadcrumb' => 'Login',
     'login.header' => 'Login',
     'login.email' => 'Email address',
     'login.password' => 'Password',
@@ -11,6 +12,7 @@ return [
 
     // Auth register page
     'register.title' => 'Register',
+    'register.breadcrumb' => 'Register',
     'register.header' => 'Register',
     'register.firstname' => 'First name',
     'register.lastname' => 'Last name',

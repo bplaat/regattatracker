@@ -3,6 +3,13 @@
 @section('title', __('auth.login.title'))
 
 @section('content')
+    <div class="breadcrumb">
+        <ul>
+            <li><a href="/">RegattaTracker</a></li>
+            <li class="is-active"><a href="{{ route('auth.login') }}">@lang('auth.login.breadcrumb')</a></li>
+        </ul>
+    </div>
+
     <h1 class="title">@lang('auth.login.header')</h1>
 
     @if (session('error'))

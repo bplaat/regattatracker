@@ -3,6 +3,13 @@
 @section('title', __('settings.title'))
 
 @section('content')
+    <div class="breadcrumb">
+        <ul>
+            <li><a href="/">RegattaTracker</a></li>
+            <li class="is-active"><a href="{{ route('settings') }}">@lang('settings.breadcrumb')</a></li>
+        </ul>
+    </div>
+
     <h1 class="title">@lang('settings.title')</h1>
 
     @if (session('message'))
