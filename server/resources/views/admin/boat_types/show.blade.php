@@ -12,27 +12,27 @@
         </ul>
     </div>
 
-    <div class="content">
-        <h2 class="title"><a href="{{ route('admin.boat_types.show', $boatType) }}">{{ $boatType->name }}</a></h2>
+    <div class="box content">
+        <h1 class="title is-4">{{ $boatType->name }}</h1>
         @if ($boatType->description != null)
             <p style="white-space: pre-wrap;">{{ $boatType->description }}</a></p>
         @endif
+
+        <div class="buttons">
+            <a class="button is-link" href="{{ route('admin.boat_types.edit', $boatType) }}">@lang('admin/boat_types.show.edit')</a>
+            <a class="button is-danger" href="{{ route('admin.boat_types.delete', $boatType) }}">@lang('admin/boat_types.show.delete')</a>
+        </div>
     </div>
 
-    <div class="buttons">
-        <a class="button is-link" href="{{ route('admin.boat_types.edit', $boatType) }}">@lang('admin/boat_types.show.edit')</a>
-        <a class="button is-danger" href="{{ route('admin.boat_types.delete', $boatType) }}">@lang('admin/boat_types.show.delete')</a>
-    </div>
-
-    <div class="content">
-        <h2 class="title is-3">@lang('admin/boat_types.show.boats_title')</h1>
+    <div class="box content">
+        <h2 class="title is-4">@lang('admin/boat_types.show.boats_title')</h2>
 
         @if (count($boats) > 0)
             {{ $boats->links() }}
 
             @foreach ($boats as $boat)
                 <div class="box">
-                    <h2 class="title"><a href="{{ route('admin.boats.show', $boat) }}">{{ $boat->name }}</a></h2>
+                    <h3 class="title is-4"><a href="{{ route('admin.boats.show', $boat) }}">{{ $boat->name }}</a></h3>
                     @if ($boat->description != null)
                         <p>{{ Str::limit($boat->description, 64) }}</a></p>
                     @endif

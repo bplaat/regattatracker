@@ -12,15 +12,15 @@
         </ul>
     </div>
 
-    <div class="content">
-        <h2 class="title"><a href="{{ route('admin.buoys.show', $buoy) }}">{{ $buoy->name }}</a></h2>
+    <div class="box content">
+        <h1 class="title is-4">{{ $buoy->name }}</h1>
         @if ($buoy->description != null)
             <p style="white-space: pre-wrap;">{{ $buoy->description }}</a></p>
         @endif
-    </div>
 
-    <div class="buttons">
-        <a class="button is-link" href="{{ route('admin.buoys.edit', $buoy) }}">@lang('admin/buoys.show.edit')</a>
-        <a class="button is-danger" href="{{ route('admin.buoys.delete', $buoy) }}">@lang('admin/buoys.show.delete')</a>
+        <div class="buttons">
+            <a class="button is-link" href="{{ route('admin.buoys.edit', $buoy) }}">@lang('admin/buoys.show.edit')</a>
+            <a class="button is-danger" href="{{ route('admin.buoys.delete', $buoy) }}">@lang('admin/buoys.show.delete')</a>
+        </div>
     </div>
 @endsection

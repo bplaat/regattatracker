@@ -12,8 +12,8 @@
         </ul>
     </div>
 
-    <div class="content">
-        <h2 class="title"><a href="{{ route('admin.boats.show', $boat) }}">{{ $boat->name }}</a></h2>
+    <div class="box content">
+        <h1 class="title is-4">{{ $boat->name }}</h1>
         <p>@lang('admin/boats.show.owner') <a href="{{ route('admin.users.show', $boat->user) }}">{{ $boat->user->firstname }} {{ $boat->user->lastname }}</a></p>
 
         @if ($boat->description != null)
@@ -28,10 +28,11 @@
         </div>
     </div>
 
-    <div class="content">
-        <h3 class="subtitle">@lang('admin/boats.show.boat_types')</h3>
+    <div class="box content">
+        <h2 class="title is-4">@lang('admin/boats.show.boat_types')</h2>
+
         @if (count($boat->boatTypes) > 0)
-            <ul class="list">
+            <ul>
                 @foreach ($boat->boatTypes as $boatType)
                     <li>
                         @if ($boatType->description != null)

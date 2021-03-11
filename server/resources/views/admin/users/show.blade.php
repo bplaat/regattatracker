@@ -12,16 +12,16 @@
         </ul>
     </div>
 
-    <div class="content">
-        <h2 class="title"><a href="{{ route('admin.users.show', $user) }}">{{ $user->firstname }} {{ $user->lastname }}</a></h2>
-        <p>
+    <div class="box content">
+        <h1 class="title is-4">
+            {{ $user->firstname }} {{ $user->lastname }}
             @if ($user->role == App\Models\User::ROLE_NORMAL)
-                <span class="tag is-success">@lang('admin/users.show.role_normal')</span>
+                <span class="tag is-pulled-right is-success">@lang('admin/users.show.role_normal')</span>
             @endif
             @if ($user->role == App\Models\User::ROLE_ADMIN)
-                <span class="tag is-danger">@lang('admin/users.show.role_admin')</span>
+                <span class="tag is-pulled-right is-danger">@lang('admin/users.show.role_admin')</span>
             @endif
-        </p>
+        </h1>
         <p><a class="tag" href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
 
         <div class="buttons">
@@ -33,15 +33,15 @@
         </div>
     </div>
 
-    <div class="content">
-        <h2 class="title is-3">@lang('admin/users.show.boats_title')</h1>
+    <div class="box content">
+        <h2 class="title is-4">@lang('admin/users.show.boats_title')</h2>
 
         @if (count($boats) > 0)
             {{ $boats->links() }}
 
             @foreach ($boats as $boat)
                 <div class="box">
-                    <h2 class="title"><a href="{{ route('admin.boats.show', $boat) }}">{{ $boat->name }}</a></h2>
+                    <h3 class="title is-4"><a href="{{ route('admin.boats.show', $boat) }}">{{ $boat->name }}</a></h3>
                     @if ($boat->description != null)
                         <p>{{ Str::limit($boat->description, 64) }}</a></p>
                     @endif

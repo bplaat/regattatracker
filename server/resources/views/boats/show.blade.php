@@ -11,8 +11,8 @@
         </ul>
     </div>
 
-    <div class="content">
-        <h2 class="title"><a href="{{ route('boats.show', $boat) }}">{{ $boat->name }}</a></h2>
+    <div class="box content">
+        <h1 class="title is-4">{{ $boat->name }}</h1>
         @if ($boat->description != null)
             <p style="white-space: pre-wrap;">{{ $boat->description }}</a></p>
         @else
@@ -25,10 +25,11 @@
         </div>
     </div>
 
-    <div class="content">
-        <h3 class="subtitle">@lang('boats.show.boat_types')</h3>
+    <div class="box content">
+        <h2 class="title is-4">@lang('boats.show.boat_types')</h2>
+
         @if (count($boat->boatTypes) > 0)
-            <ul class="list">
+            <ul>
                 @foreach ($boat->boatTypes as $boatType)
                     <li>
                         @if ($boatType->description != null)
