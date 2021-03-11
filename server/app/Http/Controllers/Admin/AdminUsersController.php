@@ -41,7 +41,8 @@ class AdminUsersController extends Controller {
 
     // Admin users show route
     public function show(User $user) {
-        return view('admin.users.show', [ 'user' => $user ]);
+        $boats = $user->boats->paginate(5);
+        return view('admin.users.show', [ 'user' => $user, 'boats' => $boats ]);
     }
 
     // Admin users edit route
