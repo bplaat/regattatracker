@@ -5,6 +5,8 @@ return [
     'index.title' => 'Boat Types - Admin',
     'index.breadcrumb' => 'Boat Types',
     'index.header' => 'All the boat types',
+    'index.search_field' => 'Search...',
+    'index.search_button' => 'Search',
     'index.empty' => 'There are no boat types found',
     'index.create' => 'Create new boat type',
 

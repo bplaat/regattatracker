@@ -5,6 +5,8 @@ return [
     'index.title' => 'Boats - Admin',
     'index.breadcrumb' => 'Boats',
     'index.header' => 'All the boats',
+    'index.search_field' => 'Search...',
+    'index.search_button' => 'Search',
     'index.owner' => 'Owner:',
     'index.empty' => 'There are no boats found',
     'index.create' => 'Create new boat',

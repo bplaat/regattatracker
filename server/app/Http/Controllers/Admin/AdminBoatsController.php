@@ -11,7 +11,14 @@ use Illuminate\Http\Request;
 class AdminBoatsController extends Controller {
     // Admin boats index route
     public function index() {
-        $boats = Boat::paginate(5);
+        // When a query is given search by query
+        $query = request('q');
+        if ($query != null) {
+            $boats = Boat::search($query)->paginate(5);
+        } else {
+            $boats = Boat::paginate(5);
+        }
+
         return view('admin.boats.index', [ 'boats' => $boats ]);
     }
 

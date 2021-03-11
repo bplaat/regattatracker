@@ -47,6 +47,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // Search by a query
+    public static function search($query) {
+        return static::where('firstname', 'LIKE', '%' . $query . '%')
+            ->orWhere('lastname', 'LIKE', '%' . $query . '%')
+            ->orWhere('email', 'LIKE', '%' . $query . '%');
+    }
+
     // A user has many boats
     public function boats() {
         return $this->hasMany(Boat::class);

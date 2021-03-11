@@ -11,7 +11,14 @@ use Illuminate\Support\Facades\Auth;
 class BoatsController extends Controller {
     // Boats index route
     public function index() {
-        $boats = Auth::user()->boats->paginate(5);
+        // When a query is given search by query
+        $query = request('q');
+        if ($query != null) {
+            $boats = Boat::searchCollection(Auth::user()->boats, $query)->paginate(5);
+        } else {
+            $boats = Auth::user()->boats->paginate(5);
+        }
+
         return view('boats.index', [ 'boats' => $boats ]);
     }
 

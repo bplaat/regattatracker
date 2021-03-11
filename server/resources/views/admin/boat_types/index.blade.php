@@ -14,6 +14,25 @@
     <div class="content">
         <h1 class="title">@lang('admin/boat_types.index.header')</h1>
 
+        <div class="columns">
+            <div class="column">
+                <div class="buttons">
+                    <a class="button is-link" href="{{ route('admin.boat_types.create') }}">@lang('admin/boat_types.index.create')</a>
+                </div>
+            </div>
+
+            <form class="column" method="GET">
+                <div class="field has-addons">
+                    <div class="control" style="width: 100%;">
+                        <input class="input" type="text" id="q" name="q" placeholder="@lang('admin/boat_types.index.search_field')" value="{{ request('q') }}">
+                    </div>
+                    <div class="control">
+                        <button class="button is-link" type="submit">@lang('admin/boat_types.index.search_button')</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
         @if (count($boatTypes) > 0)
             {{ $boatTypes->links() }}
 
@@ -30,9 +49,5 @@
         @else
             <p><i>@lang('admin/boat_types.index.empty')</i></p>
         @endif
-    </div>
-
-    <div class="buttons">
-        <a class="button is-link" href="{{ route('admin.boat_types.create') }}">@lang('admin/boat_types.index.create')</a>
     </div>
 @endsection

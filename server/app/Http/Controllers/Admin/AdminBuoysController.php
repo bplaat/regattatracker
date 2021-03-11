@@ -9,7 +9,14 @@ use Illuminate\Http\Request;
 class AdminBuoysController extends Controller {
     // Admin buoys index route
     public function index() {
-        $buoys = Buoy::paginate(5);
+        // When a query is given search by query
+        $query = request('q');
+        if ($query != null) {
+            $buoys = Buoy::search($query)->paginate(5);
+        } else {
+            $buoys = Buoy::paginate(5);
+        }
+
         return view('admin.buoys.index', [ 'buoys' => $buoys ]);
     }
 

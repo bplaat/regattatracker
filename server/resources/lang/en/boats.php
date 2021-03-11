@@ -5,6 +5,8 @@ return [
     'index.title' => 'Boats',
     'index.breadcrumb' => 'Boats',
     'index.header' => 'All your boats',
+    'index.search_field' => 'Search...',
+    'index.search_button' => 'Search',
     'index.empty' => 'There are no boats found',
     'index.create' => 'Create new boat',
 

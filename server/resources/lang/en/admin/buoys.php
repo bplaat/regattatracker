@@ -5,6 +5,8 @@ return [
     'index.title' => 'Buoys - Admin',
     'index.breadcrumb' => 'Buoys',
     'index.header' => 'All the buoys',
+    'index.search_field' => 'Search...',
+    'index.search_button' => 'Search',
     'index.empty' => 'There are no buoys found',
     'index.create' => 'Create new buoy',
 

@@ -9,4 +9,10 @@ class Buoy extends Model {
         'name',
         'description'
     ];
+
+    // Search by a query
+    public static function search($query) {
+        return static::where('name', 'LIKE', '%' . $query . '%')
+            ->orWhere('description', 'LIKE', '%' . $query . '%');
+    }
 }

@@ -5,6 +5,8 @@ return [
     'index.title' => 'Users - Admin',
     'index.breadcrumb' => 'Users',
     'index.header' => 'All the users',
+    'index.search_field' => 'Search...',
+    'index.search_button' => 'Search',
     'index.role_normal' => 'NORMAL',
     'index.role_admin' => 'ADMIN',
     'index.empty' => 'There are no users found',
