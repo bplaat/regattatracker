@@ -7,5 +7,6 @@ return [
     'header' => 'The admin zone',
     'users' => 'Users',
     'boats' => 'Boats',
-    'boat_types' => 'Boat Types'
+    'boat_types' => 'Boat Types',
+    'buoys' => 'Buoys'
 ];

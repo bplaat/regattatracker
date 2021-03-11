@@ -36,6 +36,7 @@
                                     <a class="navbar-item" href="{{ route('admin.users.index') }}">@lang('layout.header.admin.users')</a>
                                     <a class="navbar-item" href="{{ route('admin.boats.index') }}">@lang('layout.header.admin.boats')</a>
                                     <a class="navbar-item" href="{{ route('admin.boat_types.index') }}">@lang('layout.header.admin.boat_types')</a>
+                                    <a class="navbar-item" href="{{ route('admin.buoys.index') }}">@lang('layout.header.admin.buoys')</a>
                                 </div>
                             </div>
                         @endif

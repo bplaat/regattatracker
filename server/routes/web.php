@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Admin\AdminBoatsController;
 use App\Http\Controllers\Admin\AdminBoatBoatTypesController;
 use App\Http\Controllers\Admin\AdminBoatTypesController;
+use App\Http\Controllers\Admin\AdminBuoysController;
 use App\Models\User;
 
 // Home page
@@ -74,6 +75,15 @@ Route::middleware([ 'admin' ])->group(function () {
     Route::get('/admin/boat_types/{boatType}/delete', [ AdminBoatTypesController::class, 'delete' ])->name('admin.boat_types.delete');
     Route::get('/admin/boat_types/{boatType}', [ AdminBoatTypesController::class, 'show' ])->name('admin.boat_types.show');
     Route::post('/admin/boat_types/{boatType}', [ AdminBoatTypesController::class, 'update' ])->name('admin.boat_types.update');
+
+    // Admin buoys
+    Route::get('/admin/buoys', [ AdminBuoysController::class, 'index' ])->name('admin.buoys.index');
+    Route::view('/admin/buoys/create', 'admin.buoys.create')->name('admin.buoys.create');
+    Route::post('/admin/buoys', [ AdminBuoysController::class, 'store' ])->name('admin.buoys.store');
+    Route::get('/admin/buoys/{buoy}/edit', [ AdminBuoysController::class, 'edit' ])->name('admin.buoys.edit');
+    Route::get('/admin/buoys/{buoy}/delete', [ AdminBuoysController::class, 'delete' ])->name('admin.buoys.delete');
+    Route::get('/admin/buoys/{buoy}', [ AdminBuoysController::class, 'show' ])->name('admin.buoys.show');
+    Route::post('/admin/buoys/{buoy}', [ AdminBuoysController::class, 'update' ])->name('admin.buoys.update');
 });
 
 // Guest routes

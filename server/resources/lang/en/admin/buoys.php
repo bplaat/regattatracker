@@ -1,0 +1,31 @@
+<?php
+
+return [
+    // Admin buoys index page
+    'index.title' => 'Buoys - Admin',
+    'index.breadcrumb' => 'Buoys',
+    'index.header' => 'All the buoys',
+    'index.empty' => 'There are no buoys found',
+    'index.create' => 'Create new buoy',
+
+    // Admin buoys create page
+    'create.title' => 'Create - Buoys - Admin',
+    'create.breadcrumb' => 'Create',
+    'create.header' => 'Create new buoy',
+    'create.name' => 'Name',
+    'create.description' => 'Description',
+    'create.button' => 'Create new buoy',
+
+    // Admin buoys show page
+    'show.title' => ':buoy.name - Buoys - Admin',
+    'show.edit' => 'Edit buoy',
+    'show.delete' => 'Delete buoy',
+
+    // Admin buoys edit page
+    'edit.title' => 'Edit - :buoy.name - Buoys',
+    'edit.breadcrumb' => 'Edit',
+    'edit.header' => 'Edit buoy',
+    'edit.name' => 'Name',
+    'edit.description' => 'Description',
+    'edit.button' => 'Edit buoy'
+];
