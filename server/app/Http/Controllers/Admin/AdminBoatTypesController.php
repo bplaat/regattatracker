@@ -32,7 +32,8 @@ class AdminBoatTypesController extends Controller {
 
     // Admin boat types show route
     public function show(BoatType $boatType) {
-        return view('admin.boat_types.show', [ 'boatType' => $boatType ]);
+        $boats = $boatType->boats->paginate(5);
+        return view('admin.boat_types.show', [ 'boatType' => $boatType, 'boats' => $boats ]);
     }
 
     // Admin boat types edit route

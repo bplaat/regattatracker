@@ -35,9 +35,9 @@
                 @foreach ($boat->boatTypes as $boatType)
                     <li>
                         @if ($boatType->description != null)
-                            <b>{{ $boatType->name }}</b>: {{ Str::limit($boatType->description, 64) }}
+                            <a href="{{ route('admin.boat_types.show', $boatType) }}"><b>{{ $boatType->name }}</b></a>: {{ Str::limit($boatType->description, 64) }}
                         @else
-                            <b>{{ $boatType->name }}</b>
+                            <a href="{{ route('admin.boat_types.show', $boatType) }}"><b>{{ $boatType->name }}</b></a>
                         @endif
                         <a href="{{ route('admin.boats.boat_types.delete', [ $boat, $boatType ]) }}">@lang('admin/boats.show.boat_types_remove_button')</a>
                     </li>
