@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Boat;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Boat;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
     use HasFactory, Notifiable;
 
     // A user can be normal or an admin
@@ -59,14 +58,8 @@ class User extends Authenticatable
         return $this->hasMany(Boat::class);
     }
 
-    // Delete user and all its belongings
-    public function completeDelete() {
-        // Complete delete user boats
-        foreach ($this->boats as $boat) {
-            $boat->completeDelete();
-        }
-
-        // Delete user
-        $this->delete();
+    // A boat belongs to many boats as crew
+    public function crewBoats() {
+        return $this->belongsToMany(Boat::class)->withPivot('role');
     }
 }

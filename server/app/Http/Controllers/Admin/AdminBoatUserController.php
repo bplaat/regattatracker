@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Boat;
+use App\Models\BoatUser;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class AdminBoatUserController extends Controller {
+    // Admin boat user create route
+    public function create(Request $request, Boat $boat) {
+        // Validate input
+        $fields = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'role' => 'required|integer|digits_between:' . BoatUser::ROLE_CREW . ',' . BoatUser::ROLE_CAPTAIN
+        ]);
+
+        // Create boat user connection
+        BoatUser::create([
+            'boat_id' => $boat->id,
+            'user_id' => $fields['user_id'],
+            'role' => $fields['role']
+        ]);
+
+        // Go back to the boat page
+        return redirect()->route('admin.boats.show', $boat);
+    }
+
+    // Admin boat user delete route
+    public function delete(Request $request, Boat $boat, User $user) {
+        // Delete boat user connection
+        BoatUser::where('boat_id', $boat->id)
+            ->where('user_id', $user->id)
+            ->first()
+            ->delete();
+
+        // Go back to the boat page
+        return redirect()->route('admin.boats.show', $boat);
+    }
+}

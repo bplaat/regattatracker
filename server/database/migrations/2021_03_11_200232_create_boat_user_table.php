@@ -3,8 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\BoatUser;
 
-class CreateBoatBoatTypeTable extends Migration
+class CreateBoatUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +14,11 @@ class CreateBoatBoatTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('boat_boat_type', function (Blueprint $table) {
+        Schema::create('boat_user', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('boat_id');
-            $table->unsignedBigInteger('boat_type_id');
+            $table->unsignedBigInteger('user_id');
+            $table->integer('role')->default(BoatUser::ROLE_CREW);
             $table->timestamps();
 
             $table->foreign('boat_id')
@@ -24,9 +26,9 @@ class CreateBoatBoatTypeTable extends Migration
                 ->on('boats')
                 ->onDelete('cascade');
 
-            $table->foreign('boat_type_id')
+            $table->foreign('user_id')
                 ->references('id')
-                ->on('boat_types')
+                ->on('users')
                 ->onDelete('cascade');
         });
     }
@@ -38,6 +40,6 @@ class CreateBoatBoatTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('boat_boat_type');
+        Schema::dropIfExists('boat_user');
     }
 }

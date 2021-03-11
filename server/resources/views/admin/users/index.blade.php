@@ -38,11 +38,13 @@
 
             @foreach ($users as $user)
                 <div class="box">
-                    <h2 class="title">
+                    <h2 class="title is-4">
                         <a href="{{ route('admin.users.show', $user) }}">{{ $user->firstname }} {{ $user->lastname }}</a>
+
                         @if ($user->role == App\Models\User::ROLE_NORMAL)
                             <span class="tag is-pulled-right is-success">@lang('admin/users.index.role_normal')</span>
                         @endif
+
                         @if ($user->role == App\Models\User::ROLE_ADMIN)
                             <span class="tag is-pulled-right is-danger">@lang('admin/users.index.role_admin')</span>
                         @endif

@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Boat;
+use Illuminate\Database\Eloquent\Model;
 
 class BoatType extends Model {
     protected $fillable = [

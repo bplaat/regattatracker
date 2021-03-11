@@ -85,8 +85,13 @@
             <div class="control">
                 <div class="select @error('role') is-danger @enderror">
                     <select id="role" name="role" required>
-                        <option value="{{ App\Models\User::ROLE_NORMAL }}" @if (App\Models\User::ROLE_NORMAL == old('role', App\Models\User::ROLE_NORMAL)) selected @endif>@lang('admin/users.create.role_normal')</option>
-                        <option value="{{ App\Models\User::ROLE_ADMIN }}" @if (App\Models\User::ROLE_ADMIN == old('role', App\Models\User::ROLE_NORMAL)) selected @endif>@lang('admin/users.create.role_admin')</option>
+                        <option value="{{ App\Models\User::ROLE_NORMAL }}" @if (App\Models\User::ROLE_NORMAL == old('role', App\Models\User::ROLE_NORMAL)) selected @endif>
+                            @lang('admin/users.create.role_normal')
+                        </option>
+
+                        <option value="{{ App\Models\User::ROLE_ADMIN }}" @if (App\Models\User::ROLE_ADMIN == old('role', App\Models\User::ROLE_NORMAL)) selected @endif>
+                            @lang('admin/users.create.role_admin')
+                        </option>
                     </select>
                 </div>
             </div>

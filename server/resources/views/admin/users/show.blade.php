@@ -15,9 +15,11 @@
     <div class="box content">
         <h1 class="title is-4">
             {{ $user->firstname }} {{ $user->lastname }}
+
             @if ($user->role == App\Models\User::ROLE_NORMAL)
                 <span class="tag is-pulled-right is-success">@lang('admin/users.show.role_normal')</span>
             @endif
+
             @if ($user->role == App\Models\User::ROLE_ADMIN)
                 <span class="tag is-pulled-right is-danger">@lang('admin/users.show.role_admin')</span>
             @endif

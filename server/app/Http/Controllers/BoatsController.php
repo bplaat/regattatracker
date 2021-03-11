@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Boat;
 use App\Models\BoatType;
+use App\Models\BoatUser;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,6 +38,13 @@ class BoatsController extends Controller {
             'description' => request('description')
         ]);
 
+        // Add user to boat as captain
+        BoatUser::create([
+            'boat_id' => $boat->id,
+            'user_id' => Auth::id(),
+            'role' => BoatUser::ROLE_CAPTAIN
+        ]);
+
         // Go to the new boat page
         return redirect()->route('boats.show', $boat);
     }
@@ -44,8 +53,19 @@ class BoatsController extends Controller {
     public function show(Boat $boat) {
         $this->checkUser($boat);
 
-        $boatTypes = BoatType::all();
-        return view('boats.show', [ 'boat' => $boat, 'boatTypes' => $boatTypes ]);
+        $boatTypes = $boat->boatTypes->paginate(5);
+        $allBoatTypes = BoatType::all();
+
+        $users = $boat->crewUsers->paginate(5);
+        $allUsers = User::all();
+
+        return view('boats.show', [
+            'boat' => $boat,
+            'boatTypes' => $boatTypes,
+            'allBoatTypes' => $allBoatTypes,
+            'users' => $users,
+            'allUsers' => $allUsers
+        ]);
     }
 
     // Boats edit route
@@ -78,8 +98,8 @@ class BoatsController extends Controller {
     public function delete(Boat $boat) {
         $this->checkUser($boat);
 
-        // Complete delete boat
-        $boat->completeDelete();
+        // Delete boat
+        $boat->delete();
 
         // Go to the boats index page
         return redirect()->route('boats.index');

@@ -1,16 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Boat;
 use App\Models\BoatType;
 use App\Models\BoatBoatType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class AdminBoatBoatTypesController extends Controller {
-    // Admin boat boat types create route
+class BoatBoatTypeController extends Controller {
+    // Boat boat type create route
     public function create(Request $request, Boat $boat) {
+        $this->checkUser($boat);
+
         // Validate input
         $fields = $request->validate([
             'boat_type_id' => 'required|exists:boat_types,id'
@@ -23,11 +26,13 @@ class AdminBoatBoatTypesController extends Controller {
         ]);
 
         // Go back to the boat page
-        return redirect()->route('admin.boats.show', $boat);
+        return redirect()->route('boats.show', $boat);
     }
 
-    // Admin boat boat types delete route
+    // Boat boat type delete route
     public function delete(Request $request, Boat $boat, BoatType $boatType) {
+        $this->checkUser($boat);
+
         // Delete boat boat type connection
         BoatBoatType::where('boat_id', $boat->id)
             ->where('boat_type_id', $boatType->id)
@@ -35,6 +40,13 @@ class AdminBoatBoatTypesController extends Controller {
             ->delete();
 
         // Go back to the boat page
-        return redirect()->route('admin.boats.show', $boat);
+        return redirect()->route('boats.show', $boat);
+    }
+
+    // Check if user is onwer of boat
+    private function checkUser($boat) {
+        if ($boat->user_id != Auth::id()) {
+            abort(404);
+        }
     }
 }

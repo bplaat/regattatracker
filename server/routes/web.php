@@ -1,15 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BoatsController;
-use App\Http\Controllers\BoatBoatTypesController;
+use App\Http\Controllers\BoatBoatTypeController;
+use App\Http\Controllers\BoatUserController;
 use App\Http\Controllers\SettingsController;
+
 use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Admin\AdminBoatsController;
-use App\Http\Controllers\Admin\AdminBoatBoatTypesController;
+use App\Http\Controllers\Admin\AdminBoatBoatTypeController;
+use App\Http\Controllers\Admin\AdminBoatUserController;
 use App\Http\Controllers\Admin\AdminBoatTypesController;
 use App\Http\Controllers\Admin\AdminBuoysController;
+
 use App\Models\User;
 
 // Home page
@@ -27,8 +32,12 @@ Route::middleware([ 'auth' ])->group(function () {
     Route::post('/boats/{boat}', [ BoatsController::class, 'update' ])->name('boats.update');
 
     // Boat boat types
-    Route::post('/boats/{boat}/boat_types', [ BoatBoatTypesController::class, 'create' ])->name('boats.boat_types.create');
-    Route::get('/boats/{boat}/boat_types/{boatType}/delete', [ BoatBoatTypesController::class, 'delete' ])->name('boats.boat_types.delete');
+    Route::post('/boats/{boat}/boat_types', [ BoatBoatTypeController::class, 'create' ])->name('boats.boat_types.create');
+    Route::get('/boats/{boat}/boat_types/{boatType}/delete', [ BoatBoatTypeController::class, 'delete' ])->name('boats.boat_types.delete');
+
+    // Boat users
+    Route::post('/boats/{boat}/users', [ BoatUserController::class, 'create' ])->name('boats.users.create');
+    Route::get('/boats/{boat}/users/{user}/delete', [ BoatUserController::class, 'delete' ])->name('boats.users.delete');
 
     // Settings
     Route::view('/settings', 'settings')->name('settings');
@@ -64,8 +73,12 @@ Route::middleware([ 'admin' ])->group(function () {
     Route::post('/admin/boats/{boat}', [ AdminBoatsController::class, 'update' ])->name('admin.boats.update');
 
     // Admin boat boat types
-    Route::post('/admin/boats/{boat}/boat_types', [ AdminBoatBoatTypesController::class, 'create' ])->name('admin.boats.boat_types.create');
-    Route::get('/admin/boats/{boat}/boat_types/{boatType}/delete', [ AdminBoatBoatTypesController::class, 'delete' ])->name('admin.boats.boat_types.delete');
+    Route::post('/admin/boats/{boat}/boat_types', [ AdminBoatBoatTypeController::class, 'create' ])->name('admin.boats.boat_types.create');
+    Route::get('/admin/boats/{boat}/boat_types/{boatType}/delete', [ AdminBoatBoatTypeController::class, 'delete' ])->name('admin.boats.boat_types.delete');
+
+    // Admin boat users
+    Route::post('/admin/boats/{boat}/users', [ AdminBoatUserController::class, 'create' ])->name('admin.boats.users.create');
+    Route::get('/admin/boats/{boat}/users/{user}/delete', [ AdminBoatUserController::class, 'delete' ])->name('admin.boats.users.delete');
 
     // Admin boat types
     Route::get('/admin/boat_types', [ AdminBoatTypesController::class, 'index' ])->name('admin.boat_types.index');

@@ -24,6 +24,11 @@ class Boat extends Model {
         return $this->belongsToMany(BoatType::class);
     }
 
+    // A boat belongs to many users as crew
+    public function crewUsers() {
+        return $this->belongsToMany(User::class)->withPivot('role');
+    }
+
     // Search by a query
     public static function search($query) {
         return static::where('name', 'LIKE', '%' . $query . '%')
@@ -36,17 +41,5 @@ class Boat extends Model {
             return Str::contains(strtolower($boat->name), strtolower($query)) ||
                 Str::contains(strtolower($boat->description), strtolower($query));
         });
-    }
-
-    // Delete boat and all its belongings
-    public function completeDelete() {
-        // Delete boat boat type connections
-        $boatBoatTypes = BoatBoatType::where('boat_id', $this->id)->get();
-        foreach ($boatBoatTypes as $boatBoatType) {
-            $boatBoatType->delete();
-        }
-
-        // Delete boat
-        $this->delete();
     }
 }

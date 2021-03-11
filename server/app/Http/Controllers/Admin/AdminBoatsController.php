@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Boat;
 use App\Models\BoatType;
+use App\Models\BoatUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -43,14 +44,32 @@ class AdminBoatsController extends Controller {
             'description' => request('description')
         ]);
 
+        // Add user to boat as captain
+        BoatUser::create([
+            'boat_id' => $boat->id,
+            'user_id' => $fields['user_id'],
+            'role' => BoatUser::ROLE_CAPTAIN
+        ]);
+
         // Go to the new admin boat page
         return redirect()->route('admin.boats.show', $boat);
     }
 
     // Admin boats show route
     public function show(Boat $boat) {
-        $boatTypes = BoatType::all();
-        return view('admin.boats.show', [ 'boat' => $boat, 'boatTypes' => $boatTypes ]);
+        $boatTypes = $boat->boatTypes->paginate(5);
+        $allBoatTypes = BoatType::all();
+
+        $users = $boat->crewUsers->paginate(5);
+        $allUsers = User::all();
+
+        return view('admin.boats.show', [
+            'boat' => $boat,
+            'boatTypes' => $boatTypes,
+            'allBoatTypes' => $allBoatTypes,
+            'users' => $users,
+            'allUsers' => $allUsers
+        ]);
     }
 
     // Admin boats edit route

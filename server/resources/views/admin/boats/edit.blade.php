@@ -26,7 +26,7 @@
                     <select id="user_id" name="user_id" required>
                         @foreach ($users as $user)
                             <option value="{{ $user->id }}" @if ($user->id == old('user_id', $boat->user_id)) selected @endif>
-                                {{ $user->id }}. {{ $user->firstname }} {{ $user->lastname }}
+                                {{ $user->firstname }} {{ $user->lastname }}
                             </option>
                         @endforeach
                     </select>

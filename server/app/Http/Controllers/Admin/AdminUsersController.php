@@ -106,8 +106,8 @@ class AdminUsersController extends Controller {
 
     // Admin users delete route
     public function delete(User $user) {
-        // Complete delete user
-        $user->completeDelete();
+        // Delete user
+        $user->delete();
 
         // Go to the users index page
         return redirect()->route('admin.users.index');
