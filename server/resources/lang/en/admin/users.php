@@ -30,11 +30,17 @@ return [
     'show.title' => ':user.firstname :user.lastname - Users - Admin',
     'show.role_normal' => 'NORMAL',
     'show.role_admin' => 'ADMIN',
-    'show.boats_title' => 'Boats of this user',
-    'show.boats_empty' => 'There are no boats found',
     'show.hijack' => 'Hijack user',
     'show.edit' => 'Edit user',
     'show.delete' => 'Delete user',
+
+    'show.boats_title' => 'Boats of this user',
+    'show.boats_empty' => 'There are no boats found',
+
+    'show.crew_boats_title' => 'Crew boats of this user',
+    'show.crew_boats_role_crew' => 'CREW',
+    'show.crew_boats_role_captain' => 'CAPTAIN',
+    'show.crew_boats_empty' => 'There are no crew boats found',
 
     // Admin users edit page
     'edit.title' => 'Edit - :user.firstname :user.lastname - Users',

@@ -22,6 +22,7 @@ return [
     'show.title' => ':boat.name - Boat Types - Admin',
     'show.edit' => 'Edit boat type',
     'show.delete' => 'Delete boat type',
+
     'show.boats_title' => 'Boats with this boat type',
     'show.boats_owner' => 'Owner:',
     'show.boats_empty' => 'There are no boats found',

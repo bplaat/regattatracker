@@ -94,7 +94,7 @@
             @foreach ($users as $user)
                 <div class="box">
                     <h3 class="title is-4">
-                        {{ $user->firstname }} {{ $user->lastname }}
+                        <a href="{{ route('admin.users.show', $user) }}">{{ $user->firstname }} {{ $user->lastname }}</a>
 
                         @if ($user->pivot->role == App\Models\BoatUser::ROLE_CREW)
                             <span class="tag is-pulled-right is-success">@lang('admin/boats.show.users_role_crew')</span>
