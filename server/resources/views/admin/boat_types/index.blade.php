@@ -14,16 +14,22 @@
     <div class="content">
         <h1 class="title">@lang('admin/boat_types.index.header')</h1>
 
-        @forelse ($boatTypes as $boatType)
-            <div class="box">
-                <h2 class="title"><a href="{{ route('admin.boat_types.show', $boatType) }}">{{ $boatType->name }}</a></h2>
-                @if ($boatType->description != null)
-                    <p>{{ Str::limit($boatType->description, 64) }}</a></p>
-                @endif
-            </div>
-        @empty
+        @if (count($boatTypes) > 0)
+            {{ $boatTypes->links() }}
+
+            @foreach ($boatTypes as $boatType)
+                <div class="box">
+                    <h2 class="title"><a href="{{ route('admin.boat_types.show', $boatType) }}">{{ $boatType->name }}</a></h2>
+                    @if ($boatType->description != null)
+                        <p>{{ Str::limit($boatType->description, 64) }}</a></p>
+                    @endif
+                </div>
+            @endforeach
+
+            {{ $boatTypes->links() }}
+        @else
             <p><i>@lang('admin/boat_types.index.empty')</i></p>
-        @endforelse
+        @endif
     </div>
 
     <div class="buttons">

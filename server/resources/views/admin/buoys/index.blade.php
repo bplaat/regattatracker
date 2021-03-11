@@ -14,16 +14,22 @@
     <div class="content">
         <h1 class="title">@lang('admin/buoys.index.header')</h1>
 
-        @forelse ($buoys as $buoy)
-            <div class="box">
-                <h2 class="title"><a href="{{ route('admin.buoys.show', $buoy) }}">{{ $buoy->name }}</a></h2>
-                @if ($buoy->description != null)
-                    <p>{{ Str::limit($buoy->description, 64) }}</a></p>
-                @endif
-            </div>
-        @empty
+        @if (count($buoys) > 0)
+            {{ $buoys->links() }}
+
+            @foreach ($buoys as $buoy)
+                <div class="box">
+                    <h2 class="title"><a href="{{ route('admin.buoys.show', $buoy) }}">{{ $buoy->name }}</a></h2>
+                    @if ($buoy->description != null)
+                        <p>{{ Str::limit($buoy->description, 64) }}</a></p>
+                    @endif
+                </div>
+            @endforeach
+
+            {{ $buoys->links() }}
+        @else
             <p><i>@lang('admin/buoys.index.empty')</i></p>
-        @endforelse
+        @endif
     </div>
 
     <div class="buttons">

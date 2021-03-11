@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class BoatsController extends Controller {
     // Boats index route
     public function index() {
-        $boats = Auth::user()->boats;
+        $boats = Auth::user()->boats->paginate(5);
         return view('boats.index', [ 'boats' => $boats ]);
     }
 

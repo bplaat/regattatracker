@@ -14,22 +14,28 @@
     <div class="content">
         <h1 class="title">@lang('admin/users.index.header')</h1>
 
-        @forelse ($users as $user)
-            <div class="box">
-                <h2 class="title">
-                    <a href="{{ route('admin.users.show', $user) }}">{{ $user->firstname }} {{ $user->lastname }}</a>
-                    @if ($user->role == App\Models\User::ROLE_NORMAL)
-                        <span class="tag is-pulled-right is-success">@lang('admin/users.index.role_normal')</span>
-                    @endif
-                    @if ($user->role == App\Models\User::ROLE_ADMIN)
-                        <span class="tag is-pulled-right is-danger">@lang('admin/users.index.role_admin')</span>
-                    @endif
-                </h2>
-                <p><a class="tag" href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
-            </div>
-        @empty
+        @if (count($users) > 0)
+            {{ $users->links() }}
+
+            @foreach ($users as $user)
+                <div class="box">
+                    <h2 class="title">
+                        <a href="{{ route('admin.users.show', $user) }}">{{ $user->firstname }} {{ $user->lastname }}</a>
+                        @if ($user->role == App\Models\User::ROLE_NORMAL)
+                            <span class="tag is-pulled-right is-success">@lang('admin/users.index.role_normal')</span>
+                        @endif
+                        @if ($user->role == App\Models\User::ROLE_ADMIN)
+                            <span class="tag is-pulled-right is-danger">@lang('admin/users.index.role_admin')</span>
+                        @endif
+                    </h2>
+                    <p><a class="tag" href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
+                </div>
+            @endforeach
+
+            {{ $users->links() }}
+        @else
             <p><i>@lang('admin/users.index.empty')</i></p>
-        @endforelse
+        @endif
     </div>
 
     <div class="buttons">

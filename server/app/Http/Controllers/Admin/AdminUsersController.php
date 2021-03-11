@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class AdminUsersController extends Controller {
     // Admin users index route
     public function index() {
-        $users = User::all();
+        $users = User::paginate(5);
         return view('admin.users.index', [ 'users' => $users ]);
     }
 

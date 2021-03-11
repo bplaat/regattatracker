@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class AdminBuoysController extends Controller {
     // Admin buoys index route
     public function index() {
-        $buoys = Buoy::all();
+        $buoys = Buoy::paginate(5);
         return view('admin.buoys.index', [ 'buoys' => $buoys ]);
     }
 

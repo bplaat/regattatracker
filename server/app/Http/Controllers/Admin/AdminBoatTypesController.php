@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class AdminBoatTypesController extends Controller {
     // Admin boat types index route
     public function index() {
-        $boatTypes = BoatType::all();
+        $boatTypes = BoatType::paginate(5);
         return view('admin.boat_types.index', [ 'boatTypes' => $boatTypes ]);
     }
 

@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class AdminBoatsController extends Controller {
     // Admin boats index route
     public function index() {
-        $boats = Boat::all();
+        $boats = Boat::paginate(5);
         return view('admin.boats.index', [ 'boats' => $boats ]);
     }
 
