@@ -37,6 +37,7 @@ Route::middleware([ 'auth' ])->group(function () {
 
     // Boat users
     Route::post('/boats/{boat}/users', [ BoatUserController::class, 'create' ])->name('boats.users.create');
+    Route::get('/boats/{boat}/users/{user}/update', [ BoatUserController::class, 'update' ])->name('boats.users.update');
     Route::get('/boats/{boat}/users/{user}/delete', [ BoatUserController::class, 'delete' ])->name('boats.users.delete');
 
     // Settings
@@ -78,6 +79,7 @@ Route::middleware([ 'admin' ])->group(function () {
 
     // Admin boat users
     Route::post('/admin/boats/{boat}/users', [ AdminBoatUserController::class, 'create' ])->name('admin.boats.users.create');
+    Route::get('/admin/boats/{boat}/users/{user}/update', [ AdminBoatUserController::class, 'update' ])->name('admin.boats.users.update');
     Route::get('/admin/boats/{boat}/users/{user}/delete', [ AdminBoatUserController::class, 'delete' ])->name('admin.boats.users.delete');
 
     // Admin boat types

@@ -31,6 +31,35 @@ class BoatUserController extends Controller {
         return redirect()->route('boats.show', $boat);
     }
 
+    // Boat user update route
+    public function update(Request $request, Boat $boat, User $user) {
+        $this->checkUserAsCaptain($boat);
+
+        // Validate input
+        $fields = $request->validate([
+            'role' => 'required|integer|digits_between:' . BoatUser::ROLE_CREW . ',' . BoatUser::ROLE_CAPTAIN
+        ]);
+
+        // Check if user is not the last capatain
+        if ($fields['role'] == BoatUser::ROLE_CREW) {
+            $boatUser = $boat->users->firstWhere('id', $user->id);
+            $boatCaptains = $boat->users->filter(function ($user) { return $user->pivot->role == BoatUser::ROLE_CAPTAIN; });
+            if ($boatUser->pivot->role == BoatUser::ROLE_CAPTAIN && $boatCaptains->count() <= 1) {
+                return redirect()->route('boats.show', $boat);
+            }
+        }
+
+        // Update boat user connection
+        $boatUser = BoatUser::where('boat_id', $boat->id)
+            ->where('user_id', $user->id)
+            ->first();
+        $boatUser->role = $fields['role'];
+        $boatUser->update();
+
+        // Go back to the boat page
+        return redirect()->route('boats.show', $boat);
+    }
+
     // Boat user delete route
     public function delete(Request $request, Boat $boat, User $user) {
         $this->checkUserAsCaptain($boat);

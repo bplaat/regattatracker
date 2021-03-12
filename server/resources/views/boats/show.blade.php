@@ -109,6 +109,12 @@
                     @if ($boatUser->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
                         @if ($user->pivot->role != App\Models\BoatUser::ROLE_CAPTAIN || $boatCaptains->count() > 1)
                             <div class="buttons">
+                                @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
+                                    <a class="button is-success" href="{{ route('boats.users.update', [ $boat, $user ]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">@lang('boats.show.users_make_crew_button')</a>
+                                @else
+                                    <a class="button is-info" href="{{ route('boats.users.update', [ $boat, $user ]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">@lang('boats.show.users_make_captain_button')</a>
+                                @endif
+
                                 <a class="button is-danger" href="{{ route('boats.users.delete', [ $boat, $user ]) }}">@lang('boats.show.users_remove_button')</a>
                             </div>
                         @endif
