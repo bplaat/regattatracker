@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Buoy;
 use Illuminate\Http\Request;
 
-class AdminBuoysController extends Controller {
+class AdminBuoysController extends Controller
+{
     // Admin buoys index route
-    public function index() {
+    public function index()
+    {
         // When a query is given search by query
         $query = request('q');
         if ($query != null) {
@@ -19,20 +21,22 @@ class AdminBuoysController extends Controller {
         $buoys = $buoys->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
 
         // Return buoys index view
-        return view('admin.buoys.index', [ 'buoys' => $buoys ]);
+        return view('admin.buoys.index', ['buoys' => $buoys]);
     }
 
     // Admin buoys store route
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         // Validate input
         $fields = $request->validate([
-            'name' => 'required|min:2'
+            'name' => 'required|min:2',
+            'description' => 'nullable'
         ]);
 
         // Create buoy
         $buoy = Buoy::create([
             'name' => $fields['name'],
-            'description' => request('description')
+            'description' => $fields['description']
         ]);
 
         // Go to the new admin buoy page
@@ -40,26 +44,30 @@ class AdminBuoysController extends Controller {
     }
 
     // Admin buoys show route
-    public function show(Buoy $buoy) {
-        return view('admin.buoys.show', [ 'buoy' => $buoy ]);
+    public function show(Buoy $buoy)
+    {
+        return view('admin.buoys.show', ['buoy' => $buoy]);
     }
 
     // Admin buoys edit route
-    public function edit(Buoy $buoy) {
-        return view('admin.buoys.edit', [ 'buoy' => $buoy ]);
+    public function edit(Buoy $buoy)
+    {
+        return view('admin.buoys.edit', ['buoy' => $buoy]);
     }
 
     // Admin buoys update route
-    public function update(Request $request, Buoy $buoy) {
+    public function update(Request $request, Buoy $buoy)
+    {
         // Validate input
         $fields = $request->validate([
-            'name' => 'required|min:2'
+            'name' => 'required|min:2',
+            'description' => 'nullable'
         ]);
 
         // Update buoy
         $buoy->update([
             'name' => $fields['name'],
-            'description' => request('description')
+            'description' => $fields['description']
         ]);
 
         // Go to the admin buoy page
@@ -67,7 +75,8 @@ class AdminBuoysController extends Controller {
     }
 
     // Admin buoys delete route
-    public function delete(Buoy $buoy) {
+    public function delete(Buoy $buoy)
+    {
         // Delete buoy
         $buoy->delete();
 

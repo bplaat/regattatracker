@@ -9,9 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
-class AdminUsersController extends Controller {
+class AdminUsersController extends Controller
+{
     // Admin users index route
-    public function index() {
+    public function index()
+    {
         // When a query is given search by query
         $query = request('q');
         if ($query != null) {
@@ -22,11 +24,12 @@ class AdminUsersController extends Controller {
         $users = $users->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
 
         // Return users index view
-        return view('admin.users.index', [ 'users' => $users ]);
+        return view('admin.users.index', ['users' => $users]);
     }
 
     // Admin users store route
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         // Validate input
         $fields = $request->validate([
             'firstname' => 'required|min:2',
@@ -50,18 +53,21 @@ class AdminUsersController extends Controller {
     }
 
     // Admin users show route
-    public function show(User $user) {
+    public function show(User $user)
+    {
         $boats = $user->boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->sortByDesc('pivot.role')->paginate(5)->withQueryString();
-        return view('admin.users.show', [ 'user' => $user, 'boats' => $boats ]);
+        return view('admin.users.show', ['user' => $user, 'boats' => $boats]);
     }
 
     // Admin users edit route
-    public function edit(User $user) {
-        return view('admin.users.edit', [ 'user' => $user ]);
+    public function edit(User $user)
+    {
+        return view('admin.users.edit', ['user' => $user]);
     }
 
     // Admin users hijack route
-    public function hijack(User $user) {
+    public function hijack(User $user)
+    {
         // Login as the user
         Auth::login($user, true);
 
@@ -70,7 +76,8 @@ class AdminUsersController extends Controller {
     }
 
     // Admin users update route
-    public function update(Request $request, User $user) {
+    public function update(Request $request, User $user)
+    {
         // Validate input
         $fields = $request->validate([
             'firstname' => 'required|min:2',
@@ -107,7 +114,8 @@ class AdminUsersController extends Controller {
     }
 
     // Admin users delete route
-    public function delete(User $user) {
+    public function delete(User $user)
+    {
         // Delete user
         $user->delete();
 

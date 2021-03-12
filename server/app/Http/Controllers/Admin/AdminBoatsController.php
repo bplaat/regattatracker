@@ -9,9 +9,11 @@ use App\Models\BoatUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class AdminBoatsController extends Controller {
+class AdminBoatsController extends Controller
+{
     // Admin boats index route
-    public function index() {
+    public function index()
+    {
         // When a query is given search by query
         $query = request('q');
         if ($query != null) {
@@ -22,27 +24,30 @@ class AdminBoatsController extends Controller {
         $boats = $boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
 
         // Return admin boat index view
-        return view('admin.boats.index', [ 'boats' => $boats ]);
+        return view('admin.boats.index', ['boats' => $boats]);
     }
 
     // Admin boats create route
-    public function create() {
+    public function create()
+    {
         $users = User::all()->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE);
-        return view('admin.boats.create', [ 'users' => $users ]);
+        return view('admin.boats.create', ['users' => $users]);
     }
 
     // Admin boats store route
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         // Validate input
         $fields = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'name' => 'required|min:2'
+            'name' => 'required|min:2',
+            'description' => 'nullable'
         ]);
 
         // Create boat
         $boat = Boat::create([
             'name' => $fields['name'],
-            'description' => request('description')
+            'description' => $fields['description']
         ]);
 
         // Add user to boat as captain
@@ -57,7 +62,8 @@ class AdminBoatsController extends Controller {
     }
 
     // Admin boats show route
-    public function show(Boat $boat) {
+    public function show(Boat $boat)
+    {
         // Select boat information
         $boatBoatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
         $boatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
@@ -80,21 +86,24 @@ class AdminBoatsController extends Controller {
     }
 
     // Admin boats edit route
-    public function edit(Boat $boat) {
-        return view('admin.boats.edit', [ 'boat' => $boat ]);
+    public function edit(Boat $boat)
+    {
+        return view('admin.boats.edit', ['boat' => $boat]);
     }
 
     // Admin boats update route
-    public function update(Request $request, Boat $boat) {
+    public function update(Request $request, Boat $boat)
+    {
         // Validate input
         $fields = $request->validate([
-            'name' => 'required|min:2'
+            'name' => 'required|min:2',
+            'description' => 'nullable'
         ]);
 
         // Update boat
         $boat->update([
             'name' => $fields['name'],
-            'description' => request('description')
+            'description' => $fields['description']
         ]);
 
         // Go to the admin boat page
@@ -102,7 +111,8 @@ class AdminBoatsController extends Controller {
     }
 
     // Admin boats delete route
-    public function delete(Boat $boat) {
+    public function delete(Boat $boat)
+    {
         // Delete boat
         $boat->delete();
 

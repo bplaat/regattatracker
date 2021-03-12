@@ -7,30 +7,35 @@ use App\Models\BoatType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Boat extends Model {
+class Boat extends Model
+{
     protected $fillable = [
         'name',
         'description'
     ];
 
     // A boat has many boat types
-    public function boatTypes() {
+    public function boatTypes()
+    {
         return $this->belongsToMany(BoatType::class);
     }
 
     // A boat belongs to many users
-    public function users() {
+    public function users()
+    {
         return $this->belongsToMany(User::class)->withPivot('role');
     }
 
     // Search by a query
-    public static function search($query) {
+    public static function search($query)
+    {
         return static::where('name', 'LIKE', '%' . $query . '%')
             ->orWhere('description', 'LIKE', '%' . $query . '%');
     }
 
     // Search collection by a query
-    public static function searchCollection($collection, $query) {
+    public static function searchCollection($collection, $query)
+    {
         return $collection->filter(function ($boat) use ($query) {
             return Str::contains(strtolower($boat->name), strtolower($query)) ||
                 Str::contains(strtolower($boat->description), strtolower($query));

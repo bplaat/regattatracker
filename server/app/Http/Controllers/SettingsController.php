@@ -9,9 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
-class SettingsController extends Controller {
+class SettingsController extends Controller
+{
     // Change details route
-    public function changeDetails(Request $request) {
+    public function changeDetails(Request $request)
+    {
         // Validate input
         $fields = $request->validate([
             'firstname' => 'required|min:2',
@@ -35,12 +37,13 @@ class SettingsController extends Controller {
     }
 
     // Change password route
-    public function changePassword(Request $request) {
+    public function changePassword(Request $request)
+    {
         // Validate input
         $fields = $request->validate([
             'current_password' => function ($attribute, $value, $fail) {
                 if (!Hash::check($value, Auth::user()->password)) {
-                    $fail(__('validation.current_password', [ 'attribute' => $attribute ]));
+                    $fail(__('validation.current_password', ['attribute' => $attribute]));
                 }
             },
             'password' => 'required|min:6'

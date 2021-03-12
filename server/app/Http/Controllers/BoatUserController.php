@@ -9,9 +9,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class BoatUserController extends Controller {
+class BoatUserController extends Controller
+{
     // Boat user create route
-    public function create(Request $request, Boat $boat) {
+    public function create(Request $request, Boat $boat)
+    {
         // Validate input
         $fields = $request->validate([
             'user_id' => 'required|exists:users,id',
@@ -30,7 +32,8 @@ class BoatUserController extends Controller {
     }
 
     // Boat user update route
-    public function update(Request $request, Boat $boat, User $user) {
+    public function update(Request $request, Boat $boat, User $user)
+    {
         // Validate input
         $fields = $request->validate([
             'role' => 'required|integer|digits_between:' . BoatUser::ROLE_CREW . ',' . BoatUser::ROLE_CAPTAIN
@@ -57,7 +60,8 @@ class BoatUserController extends Controller {
     }
 
     // Boat user delete route
-    public function delete(Request $request, Boat $boat, User $user) {
+    public function delete(Request $request, Boat $boat, User $user)
+    {
         // Check if user is not the last capatain
         $boatUser = $boat->users->firstWhere('id', $user->id);
         $boatCaptains = $boat->users->filter(function ($user) { return $user->pivot->role == BoatUser::ROLE_CAPTAIN; });

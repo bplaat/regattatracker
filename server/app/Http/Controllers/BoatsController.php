@@ -10,9 +10,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class BoatsController extends Controller {
+class BoatsController extends Controller
+{
     // Boats index route
-    public function index() {
+    public function index()
+    {
         // When a query is given search by query
         $query = request('q');
         if ($query != null) {
@@ -23,20 +25,22 @@ class BoatsController extends Controller {
         $boats = $boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->sortByDesc('pivot.role')->paginate(5)->withQueryString();
 
         // Return boat index view
-        return view('boats.index', [ 'boats' => $boats ]);
+        return view('boats.index', ['boats' => $boats]);
     }
 
     // Boats store route
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         // Validate input
         $fields = $request->validate([
-            'name' => 'required|min:2'
+            'name' => 'required|min:2',
+            'description' => 'nullable'
         ]);
 
         // Create boat
         $boat = Boat::create([
             'name' => $fields['name'],
-            'description' => request('description')
+            'description' => $fields['description']
         ]);
 
         // Add user to boat as captain
@@ -51,7 +55,8 @@ class BoatsController extends Controller {
     }
 
     // Boats show route
-    public function show(Boat $boat) {
+    public function show(Boat $boat)
+    {
         // Select boat information
         $boatBoatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
         $boatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
@@ -74,22 +79,25 @@ class BoatsController extends Controller {
     }
 
     // Boats edit route
-    public function edit(Boat $boat) {
+    public function edit(Boat $boat)
+    {
         // Return boat edit view
-        return view('boats.edit', [ 'boat' => $boat ]);
+        return view('boats.edit', ['boat' => $boat]);
     }
 
     // Boats update route
-    public function update(Request $request, Boat $boat) {
+    public function update(Request $request, Boat $boat)
+    {
         // Validate input
         $fields = $request->validate([
-            'name' => 'required|min:2'
+            'name' => 'required|min:2',
+            'description' => 'nullable'
         ]);
 
         // Update boat
         $boat->update([
             'name' => $fields['name'],
-            'description' => request('description')
+            'description' => $fields['description']
         ]);
 
         // Go to the boat page
@@ -97,7 +105,8 @@ class BoatsController extends Controller {
     }
 
     // Boats delete route
-    public function delete(Boat $boat) {
+    public function delete(Boat $boat)
+    {
         // Delete boat
         $boat->delete();
 

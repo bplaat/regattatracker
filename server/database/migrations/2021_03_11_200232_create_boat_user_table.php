@@ -21,7 +21,7 @@ class CreateBoatUserTable extends Migration
             $table->integer('role')->default(BoatUser::ROLE_CREW);
             $table->timestamps();
 
-            $table->unique([ 'boat_id', 'user_id' ]);
+            $table->unique(['boat_id', 'user_id']);
 
             $table->foreign('boat_id')
                 ->references('id')

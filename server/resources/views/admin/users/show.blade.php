@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', __('admin/users.show.title', [ 'user.firstname' => $user->firstname, 'user.lastname' => $user->lastname ]))
+@section('title', __('admin/users.show.title', ['user.firstname' => $user->firstname, 'user.lastname' => $user->lastname]))
 
 @section('content')
     <div class="breadcrumb">

@@ -9,15 +9,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Session;
 
-class AuthController extends Controller {
+class AuthController extends Controller
+{
     // Login route
-    public function login() {
-        // Get input
-        $email = request('email');
-        $password = request('password');
+    public function login(Request $request)
+    {
+        // Validate input
+        $fields = $request->validate([
+            'email' => 'nullable',
+            'password' => 'nullable'
+        ]);
 
         // Try to login when successfull go to home page
-        if (Auth::attempt([ 'email' => $email, 'password' => $password ], true)) {
+        if (Auth::attempt(['email' => $fields['email'], 'password' => $fields['password']], true)) {
             return redirect()->route('home');
         }
 
@@ -26,7 +30,8 @@ class AuthController extends Controller {
     }
 
     // Register route
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
         // Validate input
         $fields = $request->validate([
             'firstname' => 'required|min:2',
@@ -47,14 +52,15 @@ class AuthController extends Controller {
         ]);
 
         // Login user in
-        Auth::attempt([ 'email' => $fields['email'], 'password' => $fields['password'] ], true);
+        Auth::attempt(['email' => $fields['email'], 'password' => $fields['password']], true);
 
         // Go to home page
         return redirect()->route('home');
     }
 
     // Logout route
-    public function logout() {
+    public function logout()
+    {
         // Logout user
         Session::flush();
         Auth::logout();

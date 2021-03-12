@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable {
+class User extends Authenticatable
+{
     use HasFactory, Notifiable;
 
     // A user can be normal or an admin
@@ -47,14 +48,16 @@ class User extends Authenticatable {
     ];
 
     // Search by a query
-    public static function search($query) {
+    public static function search($query)
+    {
         return static::where('firstname', 'LIKE', '%' . $query . '%')
             ->orWhere('lastname', 'LIKE', '%' . $query . '%')
             ->orWhere('email', 'LIKE', '%' . $query . '%');
     }
 
     // A boat belongs to many boats
-    public function boats() {
+    public function boats()
+    {
         return $this->belongsToMany(Boat::class)->withPivot('role');
     }
 }

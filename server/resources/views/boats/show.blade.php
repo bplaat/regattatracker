@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', __('boats.show.title', [ 'boat.name' => $boat->name ]))
+@section('title', __('boats.show.title', ['boat.name' => $boat->name]))
 
 @section('content')
     <div class="breadcrumb">
@@ -19,7 +19,7 @@
             <p><i>@lang('boats.show.description_empty')</i></p>
         @endif
 
-        @canany([ 'update', 'delete' ], $boat)
+        @canany(['update', 'delete'], $boat)
             <div class="buttons">
                 @can('update', $boat)
                     <a class="button is-link" href="{{ route('boats.edit', $boat) }}">@lang('boats.show.edit')</a>
@@ -110,7 +110,7 @@
                         @endif
                     </h3>
 
-                    @canany([ 'update_boat_user', 'delete_boat_user' ], $boat)
+                    @canany(['update_boat_user', 'delete_boat_user'], $boat)
                         @if ($user->pivot->role != App\Models\BoatUser::ROLE_CAPTAIN || $boatCaptains->count() > 1)
                             <div class="buttons">
                                 @can('update_boat_user', $boat)
