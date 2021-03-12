@@ -12,10 +12,11 @@ class AdminBoatTypesController extends Controller {
         // When a query is given search by query
         $query = request('q');
         if ($query != null) {
-            $boatTypes = BoatType::search($query)->paginate(5);
+            $boatTypes = BoatType::search($query)->get();
         } else {
-            $boatTypes = BoatType::paginate(5);
+            $boatTypes = BoatType::all();
         }
+        $boatTypes = $boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
 
         return view('admin.boat_types.index', [ 'boatTypes' => $boatTypes ]);
     }
@@ -39,7 +40,7 @@ class AdminBoatTypesController extends Controller {
 
     // Admin boat types show route
     public function show(BoatType $boatType) {
-        $boats = $boatType->boats->paginate(5);
+        $boats = $boatType->boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
         return view('admin.boat_types.show', [ 'boatType' => $boatType, 'boats' => $boats ]);
     }
 

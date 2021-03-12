@@ -27,7 +27,7 @@
     <div class="box content">
         <h2 class="title is-4">@lang('admin/boat_types.show.boats_title')</h2>
 
-        @if (count($boats) > 0)
+        @if ($boats->count() > 0)
             {{ $boats->links() }}
 
             @foreach ($boats as $boat)

@@ -33,7 +33,7 @@
             </form>
         </div>
 
-        @if (count($boats) > 0)
+        @if ($boats->count() > 0)
             {{ $boats->links() }}
 
             @foreach ($boats as $boat)

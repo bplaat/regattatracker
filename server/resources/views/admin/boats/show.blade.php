@@ -32,7 +32,7 @@
     <div class="box content">
         <h2 class="title is-4">@lang('admin/boats.show.boat_types')</h2>
 
-        @if (count($boatTypes) > 0)
+        @if ($boatTypes->count() > 0)
             {{ $boatTypes->links() }}
 
             @foreach ($boatTypes as $boatType)
@@ -53,7 +53,7 @@
             <p><i>@lang('admin/boats.show.boat_types_empty')</i></p>
         @endif
 
-        @if (count($boatTypes) != count($allBoatTypes))
+        @if ($boatTypes->count() != $allBoatTypes->count())
             <form method="POST" action="{{ route('admin.boats.boat_types.create', $boat) }}">
                 @csrf
 
@@ -88,7 +88,7 @@
     <div class="box content">
         <h2 class="title is-4">@lang('admin/boats.show.users')</h2>
 
-        @if (count($users) > 0)
+        @if ($users->count() > 0)
             {{ $users->links() }}
 
             @foreach ($users as $user)
@@ -116,7 +116,7 @@
             <p><i>@lang('admin/boats.show.users_empty')</i></p>
         @endif
 
-        @if (count($users) != count($allUsers))
+        @if ($users->count() != $allUsers->count())
             <form method="POST" action="{{ route('admin.boats.users.create', $boat) }}">
                 @csrf
 

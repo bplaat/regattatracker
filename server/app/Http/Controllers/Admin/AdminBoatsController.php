@@ -15,17 +15,18 @@ class AdminBoatsController extends Controller {
         // When a query is given search by query
         $query = request('q');
         if ($query != null) {
-            $boats = Boat::search($query)->paginate(5);
+            $boats = Boat::search($query)->get();
         } else {
-            $boats = Boat::paginate(5);
+            $boats = Boat::all();
         }
+        $boats = $boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
 
         return view('admin.boats.index', [ 'boats' => $boats ]);
     }
 
     // Admin boats create route
     public function create() {
-        $users = User::all();
+        $users = User::all()->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE);
         return view('admin.boats.create', [ 'users' => $users ]);
     }
 
@@ -57,11 +58,11 @@ class AdminBoatsController extends Controller {
 
     // Admin boats show route
     public function show(Boat $boat) {
-        $boatTypes = $boat->boatTypes->paginate(5);
-        $allBoatTypes = BoatType::all();
+        $boatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
+        $allBoatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
 
-        $users = $boat->crewUsers->paginate(5);
-        $allUsers = User::all();
+        $users = $boat->crewUsers->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
+        $allUsers = User::all()->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE);
 
         return view('admin.boats.show', [
             'boat' => $boat,
@@ -74,7 +75,7 @@ class AdminBoatsController extends Controller {
 
     // Admin boats edit route
     public function edit(Boat $boat) {
-        $users = User::all();
+        $users = User::all()->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE);
         return view('admin.boats.edit', [ 'boat' => $boat, 'users' => $users ]);
     }
 

@@ -12,10 +12,11 @@ class AdminBuoysController extends Controller {
         // When a query is given search by query
         $query = request('q');
         if ($query != null) {
-            $buoys = Buoy::search($query)->paginate(5);
+            $buoys = Buoy::search($query)->get();
         } else {
-            $buoys = Buoy::paginate(5);
+            $buoys = Buoy::all();
         }
+        $buoys = $buoys->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
 
         return view('admin.buoys.index', [ 'buoys' => $buoys ]);
     }

@@ -14,10 +14,11 @@ class AdminUsersController extends Controller {
         // When a query is given search by query
         $query = request('q');
         if ($query != null) {
-            $users = User::search($query)->paginate(5);
+            $users = User::search($query)->get();
         } else {
-            $users = User::paginate(5);
+            $users = User::all();
         }
+        $users = $users->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
 
         return view('admin.users.index', [ 'users' => $users ]);
     }
@@ -48,8 +49,8 @@ class AdminUsersController extends Controller {
 
     // Admin users show route
     public function show(User $user) {
-        $boats = $user->boats->paginate(5);
-        $crewBoats = $user->crewBoats->paginate(5);
+        $boats = $user->boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
+        $crewBoats = $user->crewBoats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
         return view('admin.users.show', [ 'user' => $user, 'boats' => $boats, 'crewBoats' => $crewBoats ]);
     }
 
@@ -78,7 +79,7 @@ class AdminUsersController extends Controller {
         ]);
 
         // Validate email for uniqueness or it is the same
-        if ($fields['email'] != $user->email && count(User::where('email', $fields['email'])->get()) > 0) {
+        if ($fields['email'] != $user->email && User::where('email', $fields['email'])->count() > 0) {
             return back()->withInput()->withErrors([ 'email' => __('validation.not_unique_email', [ 'attribute' => 'email' ]) ]);
         }
 

@@ -33,7 +33,7 @@
             </form>
         </div>
 
-        @if (count($users) > 0)
+        @if ($users->count() > 0)
             {{ $users->links() }}
 
             @foreach ($users as $user)

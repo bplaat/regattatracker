@@ -16,10 +16,11 @@ class BoatsController extends Controller {
         // When a query is given search by query
         $query = request('q');
         if ($query != null) {
-            $boats = Boat::searchCollection(Auth::user()->boats, $query)->paginate(5);
+            $boats = Boat::searchCollection(Auth::user()->boats, $query);
         } else {
-            $boats = Auth::user()->boats->paginate(5);
+            $boats = Auth::user()->boats;
         }
+        $boats = $boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
 
         return view('boats.index', [ 'boats' => $boats ]);
     }
@@ -53,11 +54,11 @@ class BoatsController extends Controller {
     public function show(Boat $boat) {
         $this->checkUser($boat);
 
-        $boatTypes = $boat->boatTypes->paginate(5);
-        $allBoatTypes = BoatType::all();
+        $boatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
+        $allBoatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
 
-        $users = $boat->crewUsers->paginate(5);
-        $allUsers = User::all();
+        $users = $boat->crewUsers->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
+        $allUsers = User::all()->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE);
 
         return view('boats.show', [
             'boat' => $boat,

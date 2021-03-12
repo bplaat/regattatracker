@@ -16,11 +16,11 @@
             <div class="navbar-menu">
                 @auth
                     <div class="navbar-start">
-                        @if (count(Auth::user()->boats) > 0)
+                        @if (Auth::user()->boats->count() > 0)
                             <div class="navbar-item has-dropdown is-hoverable">
                                 <a class="navbar-link is-arrowless" href="{{ route('boats.index') }}">@lang('layout.header.boats')</a>
                                 <div class="navbar-dropdown">
-                                    @foreach (Auth::user()->boats as $boat)
+                                    @foreach (Auth::user()->boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE) as $boat)
                                         <a class="navbar-item" href="{{ route('boats.show', $boat) }}">{{ $boat->name }}</a>
                                     @endforeach
                                 </div>

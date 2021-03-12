@@ -42,7 +42,7 @@ class AuthController extends Controller {
             'password' => Hash::make($fields['password']),
 
             // First account is always admin
-            'role' => count(User::all()) == 0 ? User::ROLE_ADMIN : User::ROLE_NORMAL
+            'role' => User::count() == 0 ? User::ROLE_ADMIN : User::ROLE_NORMAL
         ]);
 
         // Login user in

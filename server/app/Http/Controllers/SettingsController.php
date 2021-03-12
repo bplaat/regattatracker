@@ -19,7 +19,7 @@ class SettingsController extends Controller {
                 'required',
                 'email',
                 function ($attribute, $value, $fail) {
-                    if ($value != Auth::user()->email && count(User::where('email', $value)->get()) > 0) {
+                    if ($value != Auth::user()->email && User::where('email', $value)->count() > 0) {
                         $fail(__('validation.not_unique_email', [ 'attribute' => $attribute ]));
                     }
                 }
