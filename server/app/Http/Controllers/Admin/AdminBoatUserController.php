@@ -41,7 +41,7 @@ class AdminBoatUserController extends Controller {
             $boatUser = $boat->users->firstWhere('id', $user->id);
             $boatCaptains = $boat->users->filter(function ($user) { return $user->pivot->role == BoatUser::ROLE_CAPTAIN; });
             if ($boatUser->pivot->role == BoatUser::ROLE_CAPTAIN && $boatCaptains->count() <= 1) {
-                return redirect()->route('boats.show', $boat);
+                return redirect()->route('admin.boats.show', $boat);
             }
         }
 
@@ -53,7 +53,7 @@ class AdminBoatUserController extends Controller {
         $boatUser->update();
 
         // Go back to the boat page
-        return redirect()->route('boats.show', $boat);
+        return redirect()->route('admin.boats.show', $boat);
     }
 
     // Admin boat user delete route

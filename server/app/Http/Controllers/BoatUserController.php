@@ -77,8 +77,13 @@ class BoatUserController extends Controller {
             ->first()
             ->delete();
 
-        // Go back to the boat page
-        return redirect()->route('boats.show', $boat);
+        // Go back to the boat index page when you remove yourself
+        if ($user->id == Auth::id()) {
+            return redirect()->route('boats.index');
+        } else {
+            // Or go back to the boat page
+            return redirect()->route('boats.show', $boat);
+        }
     }
 
     // Check if user is connected to the boat and is captain
