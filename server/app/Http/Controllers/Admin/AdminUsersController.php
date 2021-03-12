@@ -21,9 +21,10 @@ class AdminUsersController extends Controller
         } else {
             $users = User::all();
         }
-        $users = $users->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
+        $users = $users->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)
+            ->paginate(5)->withQueryString();
 
-        // Return users index view
+        // Return admin users index view
         return view('admin.users.index', ['users' => $users]);
     }
 
@@ -55,7 +56,11 @@ class AdminUsersController extends Controller
     // Admin users show route
     public function show(User $user)
     {
-        $boats = $user->boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->sortByDesc('pivot.role')->paginate(5)->withQueryString();
+        // Get all user boats
+        $boats = $user->boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
+            ->sortByDesc('pivot.role')->paginate(5)->withQueryString();
+
+        // Return admin users show view
         return view('admin.users.show', [
             'user' => $user,
             'boats' => $boats

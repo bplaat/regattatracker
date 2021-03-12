@@ -42,7 +42,9 @@ class BoatUserController extends Controller
         // Check if user is not the last capatain
         if ($fields['role'] == BoatUser::ROLE_CREW) {
             $boatUser = $boat->users->firstWhere('id', $user->id);
-            $boatCaptains = $boat->users->filter(function ($user) { return $user->pivot->role == BoatUser::ROLE_CAPTAIN; });
+            $boatCaptains = $boat->users->filter(function ($user) {
+                return $user->pivot->role == BoatUser::ROLE_CAPTAIN;
+            });
             if ($boatUser->pivot->role == BoatUser::ROLE_CAPTAIN && $boatCaptains->count() <= 1) {
                 return redirect()->route('boats.show', $boat);
             }
@@ -64,7 +66,9 @@ class BoatUserController extends Controller
     {
         // Check if user is not the last capatain
         $boatUser = $boat->users->firstWhere('id', $user->id);
-        $boatCaptains = $boat->users->filter(function ($user) { return $user->pivot->role == BoatUser::ROLE_CAPTAIN; });
+        $boatCaptains = $boat->users->filter(function ($user) {
+            return $user->pivot->role == BoatUser::ROLE_CAPTAIN;
+        });
         if ($boatUser->pivot->role == BoatUser::ROLE_CAPTAIN && $boatCaptains->count() <= 1) {
             return redirect()->route('boats.show', $boat);
         }

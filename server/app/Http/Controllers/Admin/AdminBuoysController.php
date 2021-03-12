@@ -18,9 +18,10 @@ class AdminBuoysController extends Controller
         } else {
             $buoys = Buoy::all();
         }
-        $buoys = $buoys->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
+        $buoys = $buoys->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
+            ->paginate(5)->withQueryString();
 
-        // Return buoys index view
+        // Return admin buoys index view
         return view('admin.buoys.index', ['buoys' => $buoys]);
     }
 

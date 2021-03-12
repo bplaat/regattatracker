@@ -22,7 +22,8 @@ class BoatsController extends Controller
         } else {
             $boats = Auth::user()->boats;
         }
-        $boats = $boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->sortByDesc('pivot.role')->paginate(5)->withQueryString();
+        $boats = $boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
+            ->sortByDesc('pivot.role')->paginate(5)->withQueryString();
 
         // Return boat index view
         return view('boats.index', ['boats' => $boats]);
@@ -58,11 +59,15 @@ class BoatsController extends Controller
     public function show(Boat $boat)
     {
         // Select boat information
-        $boatBoatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
+        $boatBoatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
+            ->paginate(5)->withQueryString();
         $boatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
 
-        $boatUsers = $boat->users->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)->sortByDesc('pivot.role')->paginate(5)->withQueryString();
-        $boatCaptains = $boatUsers->filter(function ($user) { return $user->pivot->role == BoatUser::ROLE_CAPTAIN; });
+        $boatUsers = $boat->users->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)
+            ->sortByDesc('pivot.role')->paginate(5)->withQueryString();
+        $boatCaptains = $boatUsers->filter(function ($user) {
+            return $user->pivot->role == BoatUser::ROLE_CAPTAIN;
+        });
         $users = User::all()->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE);
 
         // Return boat show view

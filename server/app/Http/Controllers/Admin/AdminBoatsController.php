@@ -21,7 +21,8 @@ class AdminBoatsController extends Controller
         } else {
             $boats = Boat::all();
         }
-        $boats = $boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
+        $boats = $boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
+            ->paginate(5)->withQueryString();
 
         // Return admin boat index view
         return view('admin.boats.index', ['boats' => $boats]);
@@ -30,7 +31,10 @@ class AdminBoatsController extends Controller
     // Admin boats create route
     public function create()
     {
+        // Get all users
         $users = User::all()->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE);
+
+        // Return admin boat create view
         return view('admin.boats.create', ['users' => $users]);
     }
 
@@ -65,11 +69,15 @@ class AdminBoatsController extends Controller
     public function show(Boat $boat)
     {
         // Select boat information
-        $boatBoatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
+        $boatBoatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
+            ->paginate(5)->withQueryString();
         $boatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
 
-        $boatUsers = $boat->users->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)->sortByDesc('pivot.role')->paginate(5)->withQueryString();
-        $boatCaptains = $boatUsers->filter(function ($user) { return $user->pivot->role == BoatUser::ROLE_CAPTAIN; });
+        $boatUsers = $boat->users->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)
+            ->sortByDesc('pivot.role')->paginate(5)->withQueryString();
+        $boatCaptains = $boatUsers->filter(function ($user) {
+            return $user->pivot->role == BoatUser::ROLE_CAPTAIN;
+        });
         $users = User::all()->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE);
 
         // Return boat show view
