@@ -39,7 +39,7 @@
             @foreach ($users as $user)
                 <div class="box">
                     <h2 class="title is-4">
-                        <a href="{{ route('admin.users.show', $user) }}">{{ $user->firstname }} {{ $user->lastname }}</a>
+                        <a href="{{ route('admin.users.show', $user) }}">{{ $user->name() }}</a>
 
                         @if ($user->role == App\Models\User::ROLE_NORMAL)
                             <span class="tag is-pulled-right is-success">@lang('admin/users.index.role_normal')</span>

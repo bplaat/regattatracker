@@ -99,7 +99,7 @@
             @foreach ($boatUsers as $user)
                 <div class="box">
                     <h3 class="title is-4">
-                        {{ $user->firstname }} {{ $user->lastname }}
+                        {{ $user->name() }}
 
                         @if ($user->pivot->role == App\Models\BoatUser::ROLE_CREW)
                             <span class="tag is-pulled-right is-success">@lang('boats.show.users_role_crew')</span>
@@ -150,7 +150,7 @@
                                 @foreach ($users as $user)
                                     @if (!in_array($user->id, $boatUsers->pluck('id')->toArray()))
                                         <option value="{{ $user->id }}"  @if ($user->id == old('user_id')) selected @endif>
-                                            {{ $user->firstname }} {{ $user->lastname }}
+                                            {{ $user->name() }}
                                         </option>
                                     @endif
                                 @endforeach

@@ -27,7 +27,7 @@ return [
     'create.button' => 'Create new user',
 
     // Admin users show page
-    'show.title' => ':user.firstname :user.lastname - Users - Admin',
+    'show.title' => ':user.name - Users - Admin',
     'show.role_normal' => 'NORMAL',
     'show.role_admin' => 'ADMIN',
     'show.hijack' => 'Hijack user',
@@ -40,7 +40,7 @@ return [
     'show.boats_empty' => 'There are no boats found',
 
     // Admin users edit page
-    'edit.title' => 'Edit - :user.firstname :user.lastname - Users',
+    'edit.title' => 'Edit - :user.name - Users',
     'edit.breadcrumb' => 'Edit',
     'edit.header' => 'Edit user',
     'edit.firstname' => 'First name',

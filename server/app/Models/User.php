@@ -47,6 +47,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // Get user full name
+    public function name() {
+        return implode(' ', [$this->firstname, $this->lastname]);
+    }
+
     // Search by a query
     public static function search($query)
     {

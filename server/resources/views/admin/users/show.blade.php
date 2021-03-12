@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', __('admin/users.show.title', ['user.firstname' => $user->firstname, 'user.lastname' => $user->lastname]))
+@section('title', __('admin/users.show.title', ['user.name' => $user->name()]))
 
 @section('content')
     <div class="breadcrumb">
@@ -8,13 +8,13 @@
             <li><a href="/">RegattaTracker</a></li>
             <li><a href="{{ route('admin.home') }}">@lang('admin/home.breadcrumb')</a></li>
             <li><a href="{{ route('admin.users.index') }}">@lang('admin/users.index.breadcrumb')</a></li>
-            <li class="is-active"><a href="{{ route('admin.users.show', $user) }}">{{ $user->firstname }} {{ $user->lastname }}</a></li>
+            <li class="is-active"><a href="{{ route('admin.users.show', $user) }}">{{ $user->name() }}</a></li>
         </ul>
     </div>
 
     <div class="box content">
         <h1 class="title is-4">
-            {{ $user->firstname }} {{ $user->lastname }}
+            {{ $user->name() }}
 
             @if ($user->role == App\Models\User::ROLE_NORMAL)
                 <span class="tag is-pulled-right is-success">@lang('admin/users.show.role_normal')</span>
