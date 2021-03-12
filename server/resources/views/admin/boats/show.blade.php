@@ -14,7 +14,6 @@
 
     <div class="box content">
         <h1 class="title is-4">{{ $boat->name }}</h1>
-        <p>@lang('admin/boats.show.owner') <a href="{{ route('admin.users.show', $boat->user) }}">{{ $boat->user->firstname }} {{ $boat->user->lastname }}</a></p>
 
         @if ($boat->description != null)
             <p style="white-space: pre-wrap;">{{ $boat->description }}</a></p>
@@ -32,10 +31,10 @@
     <div class="box content">
         <h2 class="title is-4">@lang('admin/boats.show.boat_types')</h2>
 
-        @if ($boatTypes->count() > 0)
-            {{ $boatTypes->links() }}
+        @if ($boatBoatTypes->count() > 0)
+            {{ $boatBoatTypes->links() }}
 
-            @foreach ($boatTypes as $boatType)
+            @foreach ($boatBoatTypes as $boatType)
                 <div class="box">
                     <h3 class="title is-4"><a href="{{ route('admin.boat_types.show', $boatType) }}">{{ $boatType->name }}</a></h3>
                     @if ($boatType->description != null)
@@ -48,12 +47,12 @@
                 </div>
             @endforeach
 
-            {{ $boatTypes->links() }}
+            {{ $boatBoatTypes->links() }}
         @else
             <p><i>@lang('admin/boats.show.boat_types_empty')</i></p>
         @endif
 
-        @if ($boatTypes->count() != $allBoatTypes->count())
+        @if ($boatBoatTypes->count() != $boatTypes->count())
             <form method="POST" action="{{ route('admin.boats.boat_types.create', $boat) }}">
                 @csrf
 
@@ -65,8 +64,8 @@
                                     @lang('admin/boats.show.boat_types_field')
                                 </option>
 
-                                @foreach ($allBoatTypes as $boatType)
-                                    @if (!in_array($boatType->name, $boatTypes->pluck('name')->toArray()))
+                                @foreach ($boatTypes as $boatType)
+                                    @if (!in_array($boatType->name, $boatBoatTypes->pluck('name')->toArray()))
                                         <option value="{{ $boatType->id }}" @if ($boatType->id == old('boat_type_id')) selected @endif>
                                             {{ $boatType->name }}
                                         </option>
@@ -88,10 +87,10 @@
     <div class="box content">
         <h2 class="title is-4">@lang('admin/boats.show.users')</h2>
 
-        @if ($users->count() > 0)
-            {{ $users->links() }}
+        @if ($boatUsers->count() > 0)
+            {{ $boatUsers->links() }}
 
-            @foreach ($users as $user)
+            @foreach ($boatUsers as $user)
                 <div class="box">
                     <h3 class="title is-4">
                         <a href="{{ route('admin.users.show', $user) }}">{{ $user->firstname }} {{ $user->lastname }}</a>
@@ -105,18 +104,26 @@
                         @endif
                     </h3>
 
-                    <div class="buttons">
-                        <a class="button is-danger" href="{{ route('admin.boats.users.delete', [ $boat, $user ]) }}">@lang('admin/boats.show.users_remove_button')</a>
-                    </div>
+                    @if ($user->pivot->role != App\Models\BoatUser::ROLE_CAPTAIN || $boatCaptains->count() > 1)
+                        <div class="buttons">
+                            @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
+                                <a class="button is-success" href="{{ route('admin.boats.users.update', [ $boat, $user ]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">@lang('admin/boats.show.users_make_crew_button')</a>
+                            @else
+                                <a class="button is-info" href="{{ route('admin.boats.users.update', [ $boat, $user ]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">@lang('admin/boats.show.users_make_captain_button')</a>
+                            @endif
+
+                            <a class="button is-danger" href="{{ route('admin.boats.users.delete', [ $boat, $user ]) }}">@lang('admin/boats.show.users_remove_button')</a>
+                        </div>
+                    @endif
                 </div>
             @endforeach
 
-            {{ $users->links() }}
+            {{ $boatUsers->links() }}
         @else
             <p><i>@lang('admin/boats.show.users_empty')</i></p>
         @endif
 
-        @if ($users->count() != $allUsers->count())
+        @if ($boatUsers->count() != $users->count())
             <form method="POST" action="{{ route('admin.boats.users.create', $boat) }}">
                 @csrf
 
@@ -128,8 +135,8 @@
                                     @lang('admin/boats.show.users_field')
                                 </option>
 
-                                @foreach ($allUsers as $user)
-                                    @if (!in_array($user->id, $users->pluck('id')->toArray()))
+                                @foreach ($users as $user)
+                                    @if (!in_array($user->id, $boatUsers->pluck('id')->toArray()))
                                         <option value="{{ $user->id }}"  @if ($user->id == old('user_id')) selected @endif>
                                             {{ $user->firstname }} {{ $user->lastname }}
                                         </option>

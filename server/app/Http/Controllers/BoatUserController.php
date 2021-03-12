@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class BoatUserController extends Controller {
     // Boat user create route
     public function create(Request $request, Boat $boat) {
-        $this->checkUser($boat);
+        $this->checkUserAsCaptain($boat);
 
         // Validate input
         $fields = $request->validate([
@@ -31,9 +31,45 @@ class BoatUserController extends Controller {
         return redirect()->route('boats.show', $boat);
     }
 
+    // Boat user update route
+    public function update(Request $request, Boat $boat, User $user) {
+        $this->checkUserAsCaptain($boat);
+
+        // Validate input
+        $fields = $request->validate([
+            'role' => 'required|integer|digits_between:' . BoatUser::ROLE_CREW . ',' . BoatUser::ROLE_CAPTAIN
+        ]);
+
+        // Check if user is not the last capatain
+        if ($fields['role'] == BoatUser::ROLE_CREW) {
+            $boatUser = $boat->users->firstWhere('id', $user->id);
+            $boatCaptains = $boat->users->filter(function ($user) { return $user->pivot->role == BoatUser::ROLE_CAPTAIN; });
+            if ($boatUser->pivot->role == BoatUser::ROLE_CAPTAIN && $boatCaptains->count() <= 1) {
+                return redirect()->route('boats.show', $boat);
+            }
+        }
+
+        // Update boat user connection
+        $boatUser = BoatUser::where('boat_id', $boat->id)
+            ->where('user_id', $user->id)
+            ->first();
+        $boatUser->role = $fields['role'];
+        $boatUser->update();
+
+        // Go back to the boat page
+        return redirect()->route('boats.show', $boat);
+    }
+
     // Boat user delete route
     public function delete(Request $request, Boat $boat, User $user) {
-        $this->checkUser($boat);
+        $this->checkUserAsCaptain($boat);
+
+        // Check if user is not the last capatain
+        $boatUser = $boat->users->firstWhere('id', $user->id);
+        $boatCaptains = $boat->users->filter(function ($user) { return $user->pivot->role == BoatUser::ROLE_CAPTAIN; });
+        if ($boatUser->pivot->role == BoatUser::ROLE_CAPTAIN && $boatCaptains->count() <= 1) {
+            return redirect()->route('boats.show', $boat);
+        }
 
         // Delete boat user connection
         BoatUser::where('boat_id', $boat->id)
@@ -45,9 +81,11 @@ class BoatUserController extends Controller {
         return redirect()->route('boats.show', $boat);
     }
 
-    // Check if user is onwer of boat
-    private function checkUser($boat) {
-        if ($boat->user_id != Auth::id()) {
+    // Check if user is connected to the boat and is captain
+    private function checkUserAsCaptain($boat) {
+        $boatUser = BoatUser::where('boat_id', $boat->id)->where('user_id', Auth::id());
+
+        if ($boatUser->count() == 0 || $boatUser->first()->role != BoatUser::ROLE_CAPTAIN) {
             abort(404);
         }
     }

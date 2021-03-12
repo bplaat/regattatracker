@@ -7,6 +7,8 @@ return [
     'index.header' => 'All your boats',
     'index.search_field' => 'Search for boats...',
     'index.search_button' => 'Search',
+    'index.role_crew' => 'CREW',
+    'index.role_captain' => 'CAPTAIN',
     'index.empty' => 'There are no boats found',
     'index.create' => 'Create new boat',
 
@@ -33,6 +35,8 @@ return [
     'show.users' => 'Boat Users',
     'show.users_role_crew' => 'CREW',
     'show.users_role_captain' => 'CAPTAIN',
+    'show.users_make_crew_button' => 'Make crew',
+    'show.users_make_captain_button' => 'Make captain',
     'show.users_remove_button' => 'Remove user',
     'show.users_empty' => 'This boat has no assigned users',
     'show.users_field' => 'Select a user...',

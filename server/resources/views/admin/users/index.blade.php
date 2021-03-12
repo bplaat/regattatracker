@@ -49,6 +49,7 @@
                             <span class="tag is-pulled-right is-danger">@lang('admin/users.index.role_admin')</span>
                         @endif
                     </h2>
+
                     <p><a class="tag" href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
                 </div>
             @endforeach

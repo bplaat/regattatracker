@@ -36,7 +36,6 @@
                     @if ($boat->description != null)
                         <p>{{ Str::limit($boat->description, 64) }}</a></p>
                     @endif
-                    <p>@lang('admin/boat_types.show.boats_owner') <a href="{{ route('admin.users.show', $boat->user) }}">{{ $boat->user->firstname }} {{ $boat->user->lastname }}</a></p>
                 </div>
             @endforeach
 
