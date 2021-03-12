@@ -31,11 +31,25 @@ class BoatPolicy
         return $this->edit($user, $boat);
     }
 
-    public function boat_boat_type_create(User $user, Boat $boat) {
+    // Boat Boat Type connection
+    public function create_boat_boat_type(User $user, Boat $boat) {
         return $this->edit($user, $boat);
     }
 
-    public function boat_boat_type_delete(User $user, Boat $boat) {
+    public function delete_boat_boat_type(User $user, Boat $boat) {
+        return $this->edit($user, $boat);
+    }
+
+    // Boat User connection
+    public function create_boat_user(User $user, Boat $boat) {
+        return $this->edit($user, $boat);
+    }
+
+    public function update_boat_user(User $user, Boat $boat) {
+        return $this->edit($user, $boat);
+    }
+
+    public function delete_boat_user(User $user, Boat $boat) {
         return $this->edit($user, $boat);
     }
 }

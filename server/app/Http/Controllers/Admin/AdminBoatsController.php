@@ -66,8 +66,10 @@ class AdminBoatsController extends Controller {
 
         return view('admin.boats.show', [
             'boat' => $boat,
+
             'boatBoatTypes' => $boatBoatTypes,
             'boatTypes' => $boatTypes,
+
             'boatUsers' => $boatUsers,
             'boatCaptains' => $boatCaptains,
             'users' => $users

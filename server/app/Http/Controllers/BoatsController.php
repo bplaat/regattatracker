@@ -9,7 +9,6 @@ use App\Models\BoatUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 class BoatsController extends Controller {
     // Boats index route
@@ -53,44 +52,35 @@ class BoatsController extends Controller {
 
     // Boats show route
     public function show(Boat $boat) {
-        // Check authorization
-        Gate::authorize('show', $boat);
-
         // Select boat information
         $boatBoatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
         $boatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
 
         $boatUsers = $boat->users->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)->sortByDesc('pivot.role')->paginate(5)->withQueryString();
         $boatCaptains = $boatUsers->filter(function ($user) { return $user->pivot->role == BoatUser::ROLE_CAPTAIN; });
-        $boatUser = $boatUsers->firstWhere('id', Auth::id());
         $users = User::all()->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE);
 
         // Return boat show view
         return view('boats.show', [
             'boat' => $boat,
+
             'boatBoatTypes' => $boatBoatTypes,
             'boatTypes' => $boatTypes,
+
             'boatUsers' => $boatUsers,
             'boatCaptains' => $boatCaptains,
-            'boatUser' => $boatUser,
             'users' => $users
         ]);
     }
 
     // Boats edit route
     public function edit(Boat $boat) {
-        // Authorize user
-        Gate::authorize('edit', $boat);
-
         // Return boat edit view
         return view('boats.edit', [ 'boat' => $boat ]);
     }
 
     // Boats update route
     public function update(Request $request, Boat $boat) {
-        // Authorize user
-        Gate::authorize('update', $boat);
-
         // Validate input
         $fields = $request->validate([
             'name' => 'required|min:2'
@@ -108,9 +98,6 @@ class BoatsController extends Controller {
 
     // Boats delete route
     public function delete(Boat $boat) {
-        // Authorize user
-        Gate::authorize('delete', $boat);
-
         // Delete boat
         $boat->delete();
 

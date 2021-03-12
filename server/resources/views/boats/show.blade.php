@@ -19,12 +19,16 @@
             <p><i>@lang('boats.show.description_empty')</i></p>
         @endif
 
-        @if ($boatUser->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
+        @canany([ 'update', 'delete' ], $boat)
             <div class="buttons">
-                <a class="button is-link" href="{{ route('boats.edit', $boat) }}">@lang('boats.show.edit')</a>
-                <a class="button is-danger" href="{{ route('boats.delete', $boat) }}">@lang('boats.show.delete')</a>
+                @can('update', $boat)
+                    <a class="button is-link" href="{{ route('boats.edit', $boat) }}">@lang('boats.show.edit')</a>
+                @endcan
+                @can('delete', $boat)
+                    <a class="button is-danger" href="{{ route('boats.delete', $boat) }}">@lang('boats.show.delete')</a>
+                @endcan
             </div>
-        @endif
+        @endcanany
     </div>
 
     <!-- Boat boat types -->
@@ -41,11 +45,11 @@
                         <p>{{ Str::limit($boatType->description, 64) }}</a></p>
                     @endif
 
-                    @if ($boatUser->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
+                    @can('delete_boat_boat_type', $boat)
                         <div class="buttons">
                             <a class="button is-danger" href="{{ route('boats.boat_types.delete', [ $boat, $boatType ]) }}">@lang('boats.show.boat_types_remove_button')</a>
                         </div>
-                    @endif
+                    @endcan
                 </div>
             @endforeach
 
@@ -54,7 +58,7 @@
             <p><i>@lang('boats.show.boat_types_empty')</i></p>
         @endif
 
-        @if ($boatUser->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN && $boatBoatTypes->count() != $boatTypes->count())
+        @can('create_boat_boat_type', $boat)
             <form method="POST" action="{{ route('boats.boat_types.create', $boat) }}">
                 @csrf
 
@@ -82,7 +86,7 @@
                     </div>
                 </div>
             </form>
-        @endif
+        @endcan
     </div>
 
     <!-- Boat users -->
@@ -106,19 +110,23 @@
                         @endif
                     </h3>
 
-                    @if ($boatUser->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
+                    @canany([ 'update_boat_user', 'delete_boat_user' ], $boat)
                         @if ($user->pivot->role != App\Models\BoatUser::ROLE_CAPTAIN || $boatCaptains->count() > 1)
                             <div class="buttons">
-                                @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
-                                    <a class="button is-success" href="{{ route('boats.users.update', [ $boat, $user ]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">@lang('boats.show.users_make_crew_button')</a>
-                                @else
-                                    <a class="button is-info" href="{{ route('boats.users.update', [ $boat, $user ]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">@lang('boats.show.users_make_captain_button')</a>
-                                @endif
+                                @can('update_boat_user', $boat)
+                                    @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
+                                        <a class="button is-success" href="{{ route('boats.users.update', [ $boat, $user ]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">@lang('boats.show.users_make_crew_button')</a>
+                                    @else
+                                        <a class="button is-info" href="{{ route('boats.users.update', [ $boat, $user ]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">@lang('boats.show.users_make_captain_button')</a>
+                                    @endif
+                                @endcan
 
-                                <a class="button is-danger" href="{{ route('boats.users.delete', [ $boat, $user ]) }}">@lang('boats.show.users_remove_button')</a>
+                                @can('delete_boat_user', $boat)
+                                    <a class="button is-danger" href="{{ route('boats.users.delete', [ $boat, $user ]) }}">@lang('boats.show.users_remove_button')</a>
+                                @endcan
                             </div>
                         @endif
-                    @endif
+                    @endcanany
                 </div>
             @endforeach
 
@@ -127,7 +135,7 @@
             <p><i>@lang('boats.show.users_empty')</i></p>
         @endif
 
-        @if ($boatUser->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN && $boatUsers->count() != $users->count())
+        @can('create_boat_user', $boat)
             <form method="POST" action="{{ route('boats.users.create', $boat) }}">
                 @csrf
 
@@ -169,6 +177,6 @@
                     </div>
                 </div>
             </form>
-        @endif
+        @endcan
     </div>
 @endsection
