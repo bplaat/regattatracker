@@ -25,7 +25,15 @@ class UserFactory extends Factory
     {
         return [
             'firstname' => $this->faker->firstName,
+            'insertion' => $this->faker->randomElement(['Van Der', 'Van', 'Uit', 'De', null]),
             'lastname' => $this->faker->lastName,
+            'gender' => $this->faker->randomElement([0, 1, 2]),
+            'birthday' => $this->faker->date(),
+            'country' => $this->faker->country,
+            'city' => $this->faker->city,
+            'street' => $this->faker->streetAddress,
+            'zipcode' => $this->faker->postcode,
+            'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->unique()->safeEmail,
             'password' => Hash::make($this->faker->password)
         ];

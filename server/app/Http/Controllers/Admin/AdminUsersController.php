@@ -28,7 +28,15 @@ class AdminUsersController extends Controller {
         // Validate input
         $fields = $request->validate([
             'firstname' => 'required|min:2',
+            'insertion' => 'nullable',
             'lastname' => 'required|min:2',
+            'gender' => 'required|int|digits_between:0,' . (count(User::GENDERS) - 1),
+            'birthday' => 'required|date',
+            'country' => 'required',
+            'city' => 'required',
+            'street' => 'required',
+            'zipcode' => 'required',
+            'phone' => 'required|min:9|numeric',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6|confirmed',
             'role' => 'required|integer|digits_between:' . User::ROLE_NORMAL . ',' . User::ROLE_ADMIN
@@ -37,7 +45,15 @@ class AdminUsersController extends Controller {
         // Create user
         $user = User::create([
             'firstname' => $fields['firstname'],
+            'insertion' => $fields['insertion'],
             'lastname' => $fields['lastname'],
+            'gender' => $fields['gender'],
+            'birthday' => $fields['birthday'],
+            'country' => $fields['country'],
+            'city' => $fields['city'],
+            'street' => $fields['street'],
+            'zipcode' => $fields['zipcode'],
+            'phone' => $fields['phone'],
             'email' => $fields['email'],
             'password' => Hash::make($fields['password']),
             'role' => $fields['role']
@@ -56,7 +72,8 @@ class AdminUsersController extends Controller {
 
     // Admin users edit route
     public function edit(User $user) {
-        return view('admin.users.edit', [ 'user' => $user ]);
+        //return $user;
+        return view('admin.users.edit', [ 'user' => $user, 'genders' => User::GENDERS, 'countries' => User::COUNTRIES ]);
     }
 
     // Admin users hijack route
@@ -73,8 +90,16 @@ class AdminUsersController extends Controller {
         // Validate input
         $fields = $request->validate([
             'firstname' => 'required|min:2',
+            'insertion' => 'nullable',
             'lastname' => 'required|min:2',
-            'email' => 'required|email',
+            'gender' => 'required|int|digits_between:0,' . (count(User::GENDERS) - 1),
+            'birthday' => 'required|date',
+            'country' => 'required',
+            'city' => 'required',
+            'street' => 'required',
+            'zipcode' => 'required',
+            'phone' => 'required|min:9|numeric',
+            'email' => 'required|email|unique:users',
             'role' => 'required|integer|digits_between:' . User::ROLE_NORMAL . ',' . User::ROLE_ADMIN
         ]);
 
@@ -86,7 +111,15 @@ class AdminUsersController extends Controller {
         // Update user
         $user->update([
             'firstname' => $fields['firstname'],
+            'insertion' => $fields['insertion'],
             'lastname' => $fields['lastname'],
+            'gender' => $fields['gender'],
+            'birthday' => $fields['birthday'],
+            'country' => $fields['country'],
+            'city' => $fields['city'],
+            'street' => $fields['street'],
+            'zipcode' => $fields['zipcode'],
+            'phone' => $fields['phone'],
             'email' => $fields['email'],
             'role' => $fields['role']
         ]);

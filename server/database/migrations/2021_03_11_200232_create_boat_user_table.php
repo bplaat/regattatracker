@@ -18,7 +18,7 @@ class CreateBoatUserTable extends Migration
             $table->id();
             $table->unsignedBigInteger('boat_id');
             $table->unsignedBigInteger('user_id');
-            $table->integer('role')->default(BoatUser::ROLE_CREW);
+            $table->tinyInteger('role')->default(BoatUser::ROLE_CREW);
             $table->timestamps();
 
             $table->foreign('boat_id')

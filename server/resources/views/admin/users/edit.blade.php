@@ -35,6 +35,20 @@
 
             <div class="column">
                 <div class="field">
+                    <label class="label" for="insertion">@lang('admin/users.edit.insertion')</label>
+
+                    <div class="control">
+                        <input class="input @error('insertion') is-danger @enderror" type="text" id="insertion" name="insertion" value="{{ old('insertion', $user->insertion) }}" autofocus required>
+                    </div>
+
+                    @error('insertion')
+                    <p class="help is-danger">{{ $errors->first('insertion') }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
                     <label class="label" for="lastname">@lang('admin/users.edit.lastname')</label>
 
                     <div class="control">
@@ -46,6 +60,106 @@
                     @enderror
                 </div>
             </div>
+        </div>
+
+        <div class="field">
+            <label class="label" for="gender">@lang('admin/users.edit.gender')</label>
+
+            <div class="control">
+                <select class="input @error('gender') is-danger @enderror" type="value" id="gender" name="gender" required>
+                    @for($i = 0; $i < count($genders); $i++)
+                        <option {{$user->gender === $i ? 'selected' : ''}} value={{$i}}>{{$genders[$i]}}</option>
+                    @endfor
+                </select>
+            </div>
+
+            @error('gender')
+            <p class="help is-danger">{{ $errors->first('gender') }}</p>
+            @enderror
+        </div>
+
+        <div class="field">
+            <label class="label" for="birthday">@lang('admin/users.edit.birthday')</label>
+
+            <div class="control">
+                <input class="input @error('birthday') is-danger @enderror" type="date" id="birthday" name="birthday" value="{{ $user->birthday }}" placeholder="DD-MM-YYYY" required>
+            </div>
+
+            @error('birthday')
+            <p class="help is-danger">{{ $errors->first('birthday') }}</p>
+            @enderror
+        </div>
+
+        <div class="field">
+            <label class="label" for="country">@lang('admin/users.edit.country')</label>
+
+            <div class="control">
+                <select class="input @error('country') is-danger @enderror" type="text" id="country" name="country" required>
+                    @foreach($countries as $country)
+                        <option {{(strcmp($user->country, $country) === 0) ? 'selected' : ''}} value="{{$country}}">{{$country}}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            @error('country')
+            <p class="help is-danger">{{ $errors->first('country') }}</p>
+            @enderror
+        </div>
+
+        <div class="field">
+            <label class="label" for="city">@lang('admin/users.edit.city')</label>
+
+            <div class="control">
+                <input class="input @error('city') is-danger @enderror" type="text" id="city" name="city" value="{{ $user->city }}" required>
+            </div>
+
+            @error('city')
+            <p class="help is-danger">{{ $errors->first('city') }}</p>
+            @enderror
+        </div>
+
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="street">@lang('admin/users.edit.street')</label>
+
+                    <div class="control">
+                        <input class="input @error('street') is-danger @enderror" type="text" id="street" name="street"
+                               value="{{ $user->street }}" required>
+                    </div>
+
+                    @error('street')
+                    <p class="help is-danger">{{ $errors->first('street') }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="zipcode">@lang('admin/users.edit.zipcode')</label>
+
+                    <div class="control">
+                        <input class="input @error('zipcode') is-danger @enderror" type="text" id="zipcode"
+                               name="zipcode" value="{{ $user->zipcode }}" required>
+                    </div>
+
+                    @error('zipcode')
+                    <p class="help is-danger">{{ $errors->first('zipcode') }}</p>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label" for="phone">@lang('admin/users.edit.phone')</label>
+
+            <div class="control">
+                <input class="input @error('phone') is-danger @enderror" type="tel" id="phone" name="phone" value="{{ $user->phone }}" required>
+            </div>
+
+            @error('phone')
+            <p class="help is-danger">{{ $errors->first('phone') }}</p>
+            @enderror
         </div>
 
         <div class="field">

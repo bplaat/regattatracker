@@ -44,8 +44,8 @@
 
                     <div class="navbar-end">
                         <div class="navbar-item" style="display: flex; align-items: center;">
-                            <img style="border-radius: 50%; margin-right: 10px;" src="https://www.gravatar.com/avatar/{{ md5(Auth::user()->email) }}?s=48&d=mp" alt="{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}'s avatar">
-                            <span>{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span>
+                            <img style="border-radius: 50%; margin-right: 10px;" src="https://www.gravatar.com/avatar/{{ md5(Auth::user()->email) }}?s=48&d=mp" alt="{{ Auth::user()->firstname }} {{Auth::user()->insertion}} {{ Auth::user()->lastname }}'s avatar">
+                            <span>{{ Auth::user()->firstname }} {{Auth::user()->insertion}} {{ Auth::user()->lastname }}</span>
                         </div>
                         <div class="navbar-item">
                             <div class="buttons">
