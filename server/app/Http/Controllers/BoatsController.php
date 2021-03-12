@@ -9,6 +9,7 @@ use App\Models\BoatUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class BoatsController extends Controller {
     // Boats index route
@@ -22,6 +23,7 @@ class BoatsController extends Controller {
         }
         $boats = $boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->sortByDesc('pivot.role')->paginate(5)->withQueryString();
 
+        // Return boat index view
         return view('boats.index', [ 'boats' => $boats ]);
     }
 
@@ -51,8 +53,10 @@ class BoatsController extends Controller {
 
     // Boats show route
     public function show(Boat $boat) {
-        $this->checkUser($boat);
+        // Check authorization
+        Gate::authorize('show', $boat);
 
+        // Select boat information
         $boatBoatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
         $boatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
 
@@ -61,6 +65,7 @@ class BoatsController extends Controller {
         $boatUser = $boatUsers->firstWhere('id', Auth::id());
         $users = User::all()->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE);
 
+        // Return boat show view
         return view('boats.show', [
             'boat' => $boat,
             'boatBoatTypes' => $boatBoatTypes,
@@ -74,14 +79,17 @@ class BoatsController extends Controller {
 
     // Boats edit route
     public function edit(Boat $boat) {
-        $this->checkUserAsCaptain($boat);
+        // Authorize user
+        Gate::authorize('edit', $boat);
 
+        // Return boat edit view
         return view('boats.edit', [ 'boat' => $boat ]);
     }
 
     // Boats update route
     public function update(Request $request, Boat $boat) {
-        $this->checkUserAsCaptain($boat);
+        // Authorize user
+        Gate::authorize('update', $boat);
 
         // Validate input
         $fields = $request->validate([
@@ -100,28 +108,13 @@ class BoatsController extends Controller {
 
     // Boats delete route
     public function delete(Boat $boat) {
-        $this->checkUserAsCaptain($boat);
+        // Authorize user
+        Gate::authorize('delete', $boat);
 
         // Delete boat
         $boat->delete();
 
         // Go to the boats index page
         return redirect()->route('boats.index');
-    }
-
-    // Check if user is connected to the boat
-    private function checkUser($boat) {
-        if (BoatUser::where('boat_id', $boat->id)->where('user_id', Auth::id())->count() == 0) {
-            abort(404);
-        }
-    }
-
-    // Check if user is connected to the boat and is captain
-    private function checkUserAsCaptain($boat) {
-        $this->checkUser($boat);
-
-        if (BoatUser::where('boat_id', $boat->id)->where('user_id', Auth::id())->first()->role != BoatUser::ROLE_CAPTAIN) {
-            abort(404);
-        }
     }
 }
