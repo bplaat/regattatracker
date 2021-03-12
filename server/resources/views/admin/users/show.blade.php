@@ -44,7 +44,18 @@
 
             @foreach ($boats as $boat)
                 <div class="box">
-                    <h3 class="title is-4"><a href="{{ route('admin.boats.show', $boat) }}">{{ $boat->name }}</a></h3>
+                    <h3 class="title is-4">
+                        <a href="{{ route('admin.boats.show', $boat) }}">{{ $boat->name }}</a>
+
+                        @if ($boat->pivot->role == App\Models\BoatUser::ROLE_CREW)
+                            <span class="tag is-pulled-right is-success">@lang('admin/users.show.boats_role_crew')</span>
+                        @endif
+
+                        @if ($boat->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
+                            <span class="tag is-pulled-right is-info">@lang('admin/users.show.boats_role_captain')</span>
+                        @endif
+                    </h3>
+
                     @if ($boat->description != null)
                         <p>{{ Str::limit($boat->description, 64) }}</a></p>
                     @endif
@@ -54,38 +65,6 @@
             {{ $boats->links() }}
         @else
             <p><i>@lang('admin/users.show.boats_empty')</i></p>
-        @endif
-    </div>
-
-    <!-- User crew boats -->
-    <div class="box content">
-        <h2 class="title is-4">@lang('admin/users.show.crew_boats_title')</h2>
-
-        @if ($crewBoats->count() > 0)
-            {{ $crewBoats->links() }}
-
-            @foreach ($crewBoats as $crewBoat)
-                <div class="box">
-                    <h3 class="title is-4">
-                        <a href="{{ route('admin.boats.show', $crewBoat) }}">{{ $crewBoat->name }}</a>
-
-                        @if ($crewBoat->pivot->role == App\Models\BoatUser::ROLE_CREW)
-                            <span class="tag is-pulled-right is-success">@lang('admin/users.show.crew_boats_role_crew')</span>
-                        @endif
-
-                        @if ($crewBoat->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
-                            <span class="tag is-pulled-right is-info">@lang('admin/users.show.crew_boats_role_captain')</span>
-                        @endif
-                    </h3>
-                    @if ($crewBoat->description != null)
-                        <p>{{ Str::limit($crewBoat->description, 64) }}</a></p>
-                    @endif
-                </div>
-            @endforeach
-
-            {{ $crewBoats->links() }}
-        @else
-            <p><i>@lang('admin/users.show.crew_boats_empty')</i></p>
         @endif
     </div>
 @endsection

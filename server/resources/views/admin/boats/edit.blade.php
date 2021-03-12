@@ -19,26 +19,6 @@
         @csrf
 
         <div class="field">
-            <label class="label" for="user_id">@lang('admin/boats.create.user')</label>
-
-            <div class="control">
-                <div class="select @error('user_id') is-danger @enderror">
-                    <select id="user_id" name="user_id" required>
-                        @foreach ($users as $user)
-                            <option value="{{ $user->id }}" @if ($user->id == old('user_id', $boat->user_id)) selected @endif>
-                                {{ $user->firstname }} {{ $user->lastname }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
-            @error('user_id')
-                <p class="help is-danger">{{ $errors->first('user_id') }}</p>
-            @enderror
-        </div>
-
-        <div class="field">
             <label class="label" for="name">@lang('admin/boats.edit.name')</label>
 
             <div class="control">

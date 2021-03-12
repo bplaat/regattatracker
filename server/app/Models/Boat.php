@@ -9,23 +9,17 @@ use Illuminate\Support\Str;
 
 class Boat extends Model {
     protected $fillable = [
-        'user_id',
         'name',
         'description'
     ];
-
-    // A boat belongs to a user
-    public function user() {
-        return $this->belongsTo(User::class);
-    }
 
     // A boat has many boat types
     public function boatTypes() {
         return $this->belongsToMany(BoatType::class);
     }
 
-    // A boat belongs to many users as crew
-    public function crewUsers() {
+    // A boat belongs to many users
+    public function users() {
         return $this->belongsToMany(User::class)->withPivot('role');
     }
 

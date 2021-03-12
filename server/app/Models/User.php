@@ -53,13 +53,8 @@ class User extends Authenticatable {
             ->orWhere('email', 'LIKE', '%' . $query . '%');
     }
 
-    // A user has many boats
+    // A boat belongs to many boats
     public function boats() {
-        return $this->hasMany(Boat::class);
-    }
-
-    // A boat belongs to many boats as crew
-    public function crewBoats() {
         return $this->belongsToMany(Boat::class)->withPivot('role');
     }
 }

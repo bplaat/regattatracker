@@ -34,7 +34,6 @@ class BoatsController extends Controller {
 
         // Create boat
         $boat = Boat::create([
-            'user_id' => Auth::id(),
             'name' => $fields['name'],
             'description' => request('description')
         ]);
@@ -54,31 +53,35 @@ class BoatsController extends Controller {
     public function show(Boat $boat) {
         $this->checkUser($boat);
 
-        $boatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
-        $allBoatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
+        $boatBoatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
+        $boatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
 
-        $users = $boat->crewUsers->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
-        $allUsers = User::all()->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE);
+        $boatUsers = $boat->users->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
+        $boatCaptains = $boatUsers->filter(function ($user) { return $user->pivot->role == BoatUser::ROLE_CAPTAIN; });
+        $boatUser = $boatUsers->firstWhere('id', Auth::id());
+        $users = User::all()->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE);
 
         return view('boats.show', [
             'boat' => $boat,
+            'boatBoatTypes' => $boatBoatTypes,
             'boatTypes' => $boatTypes,
-            'allBoatTypes' => $allBoatTypes,
-            'users' => $users,
-            'allUsers' => $allUsers
+            'boatUsers' => $boatUsers,
+            'boatCaptains' => $boatCaptains,
+            'boatUser' => $boatUser,
+            'users' => $users
         ]);
     }
 
     // Boats edit route
     public function edit(Boat $boat) {
-        $this->checkUser($boat);
+        $this->checkUserAsCaptain($boat);
 
         return view('boats.edit', [ 'boat' => $boat ]);
     }
 
     // Boats update route
     public function update(Request $request, Boat $boat) {
-        $this->checkUser($boat);
+        $this->checkUserAsCaptain($boat);
 
         // Validate input
         $fields = $request->validate([
@@ -97,7 +100,7 @@ class BoatsController extends Controller {
 
     // Boats delete route
     public function delete(Boat $boat) {
-        $this->checkUser($boat);
+        $this->checkUserAsCaptain($boat);
 
         // Delete boat
         $boat->delete();
@@ -106,9 +109,18 @@ class BoatsController extends Controller {
         return redirect()->route('boats.index');
     }
 
-    // Check if user is onwer of boat
+    // Check if user is connected to the boat
     private function checkUser($boat) {
-        if ($boat->user_id != Auth::id()) {
+        if (BoatUser::where('boat_id', $boat->id)->where('user_id', Auth::id())->count() == 0) {
+            abort(404);
+        }
+    }
+
+    // Check if user is connected to the boat and is captain
+    private function checkUserAsCaptain($boat) {
+        $this->checkUser($boat);
+
+        if (BoatUser::where('boat_id', $boat->id)->where('user_id', Auth::id())->first()->role != BoatUser::ROLE_CAPTAIN) {
             abort(404);
         }
     }

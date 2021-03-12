@@ -31,6 +31,13 @@ class AdminBoatUserController extends Controller {
 
     // Admin boat user delete route
     public function delete(Request $request, Boat $boat, User $user) {
+        // Check if user is not the last capatain
+        $boatUser = $boat->users->firstWhere('id', $user->id);
+        $boatCaptains = $boat->users->filter(function ($user) { return $user->pivot->role == BoatUser::ROLE_CAPTAIN; });
+        if ($boatUser->pivot->role == BoatUser::ROLE_CAPTAIN && $boatCaptains->count() <= 1) {
+            return redirect()->route('admin.boats.show', $boat);
+        }
+
         // Delete boat user connection
         BoatUser::where('boat_id', $boat->id)
             ->where('user_id', $user->id)

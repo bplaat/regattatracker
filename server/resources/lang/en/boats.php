@@ -7,6 +7,8 @@ return [
     'index.header' => 'All your boats',
     'index.search_field' => 'Search for boats...',
     'index.search_button' => 'Search',
+    'index.role_crew' => 'CREW',
+    'index.role_captain' => 'CAPTAIN',
     'index.empty' => 'There are no boats found',
     'index.create' => 'Create new boat',
 

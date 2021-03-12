@@ -7,7 +7,6 @@ return [
     'index.header' => 'All the boats',
     'index.search_field' => 'Search for boats...',
     'index.search_button' => 'Search',
-    'index.owner' => 'Owner:',
     'index.empty' => 'There are no boats found',
     'index.create' => 'Create new boat',
 
@@ -22,7 +21,6 @@ return [
 
     // Admin boats show page
     'show.title' => ':boat.name - Boats - Admin',
-    'show.owner' => 'Owner:',
     'show.description_empty' => 'This boat has no description',
     'show.edit' => 'Edit boat',
     'show.delete' => 'Delete boat',

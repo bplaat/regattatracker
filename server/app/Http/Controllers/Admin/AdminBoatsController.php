@@ -40,7 +40,6 @@ class AdminBoatsController extends Controller {
 
         // Create boat
         $boat = Boat::create([
-            'user_id' => $fields['user_id'],
             'name' => $fields['name'],
             'description' => request('description')
         ]);
@@ -58,38 +57,37 @@ class AdminBoatsController extends Controller {
 
     // Admin boats show route
     public function show(Boat $boat) {
-        $boatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
-        $allBoatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
+        $boatBoatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
+        $boatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
 
-        $users = $boat->crewUsers->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
-        $allUsers = User::all()->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE);
+        $boatUsers = $boat->users->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
+        $boatCaptains = $boatUsers->filter(function ($user) { return $user->pivot->role == BoatUser::ROLE_CAPTAIN; });
+        $users = User::all()->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE);
 
         return view('admin.boats.show', [
             'boat' => $boat,
+            'boatBoatTypes' => $boatBoatTypes,
             'boatTypes' => $boatTypes,
-            'allBoatTypes' => $allBoatTypes,
-            'users' => $users,
-            'allUsers' => $allUsers
+            'boatUsers' => $boatUsers,
+            'boatCaptains' => $boatCaptains,
+            'users' => $users
         ]);
     }
 
     // Admin boats edit route
     public function edit(Boat $boat) {
-        $users = User::all()->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE);
-        return view('admin.boats.edit', [ 'boat' => $boat, 'users' => $users ]);
+        return view('admin.boats.edit', [ 'boat' => $boat ]);
     }
 
     // Admin boats update route
     public function update(Request $request, Boat $boat) {
         // Validate input
         $fields = $request->validate([
-            'user_id' => 'required|exists:users,id',
             'name' => 'required|min:2'
         ]);
 
         // Update boat
         $boat->update([
-            'user_id' => $fields['user_id'],
             'name' => $fields['name'],
             'description' => request('description')
         ]);
