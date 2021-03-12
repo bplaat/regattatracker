@@ -27,11 +27,11 @@ Route::middleware([ 'auth' ])->group(function () {
     Route::view('/boats/create', 'boats.create')->name('boats.create');
     Route::post('/boats', [ BoatsController::class, 'store' ])->name('boats.store');
     Route::get('/boats/{boat}/edit', [ BoatsController::class, 'edit' ])->name('boats.edit')
-        ->middleware('can:edit,boat');
+        ->middleware('can:update,boat');
     Route::get('/boats/{boat}/delete', [ BoatsController::class, 'delete' ])->name('boats.delete')
         ->middleware('can:delete,boat');
     Route::get('/boats/{boat}', [ BoatsController::class, 'show' ])->name('boats.show')
-        ->middleware('can:show,boat');
+        ->middleware('can:view,boat');
     Route::post('/boats/{boat}', [ BoatsController::class, 'update' ])->name('boats.update')
         ->middleware('can:update,boat');
 
@@ -46,7 +46,7 @@ Route::middleware([ 'auth' ])->group(function () {
     Route::post('/boats/{boat}/users', [ BoatUserController::class, 'create' ])->name('boats.users.create')
         ->middleware('can:create_boat_user,boat');
     Route::get('/boats/{boat}/users/{user}/update', [ BoatUserController::class, 'update' ])->name('boats.users.update')
-        ->middleware('can:user_boat_user,boat');
+        ->middleware('can:update_boat_user,boat');
     Route::get('/boats/{boat}/users/{user}/delete', [ BoatUserController::class, 'delete' ])->name('boats.users.delete')
         ->middleware('can:delete_boat_user,boat');
 
