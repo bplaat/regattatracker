@@ -20,7 +20,7 @@ class BoatsController extends Controller {
         } else {
             $boats = Auth::user()->boats;
         }
-        $boats = $boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
+        $boats = $boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->sortByDesc('pivot.role')->paginate(5)->withQueryString();
 
         return view('boats.index', [ 'boats' => $boats ]);
     }
@@ -56,7 +56,7 @@ class BoatsController extends Controller {
         $boatBoatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
         $boatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
 
-        $boatUsers = $boat->users->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
+        $boatUsers = $boat->users->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)->sortByDesc('pivot.role')->paginate(5)->withQueryString();
         $boatCaptains = $boatUsers->filter(function ($user) { return $user->pivot->role == BoatUser::ROLE_CAPTAIN; });
         $boatUser = $boatUsers->firstWhere('id', Auth::id());
         $users = User::all()->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE);

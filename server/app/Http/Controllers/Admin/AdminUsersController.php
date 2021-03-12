@@ -49,7 +49,7 @@ class AdminUsersController extends Controller {
 
     // Admin users show route
     public function show(User $user) {
-        $boats = $user->boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
+        $boats = $user->boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->sortByDesc('pivot.role')->paginate(5)->withQueryString();
         return view('admin.users.show', [ 'user' => $user, 'boats' => $boats ]);
     }
 

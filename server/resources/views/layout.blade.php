@@ -20,7 +20,7 @@
                             <div class="navbar-item has-dropdown is-hoverable">
                                 <a class="navbar-link is-arrowless" href="{{ route('boats.index') }}">@lang('layout.header.boats')</a>
                                 <div class="navbar-dropdown">
-                                    @foreach (Auth::user()->boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE) as $boat)
+                                    @foreach (Auth::user()->boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->sortByDesc('pivot.role')->take(10) as $boat)
                                         <a class="navbar-item" href="{{ route('boats.show', $boat) }}">{{ $boat->name }}</a>
                                     @endforeach
                                 </div>
