@@ -47,7 +47,10 @@ class AdminBoatTypesController extends Controller
     public function show(BoatType $boatType)
     {
         $boats = $boatType->boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
-        return view('admin.boat_types.show', ['boatType' => $boatType, 'boats' => $boats]);
+        return view('admin.boat_types.show', [
+            'boatType' => $boatType,
+            'boats' => $boats
+        ]);
     }
 
     // Admin boat types edit route

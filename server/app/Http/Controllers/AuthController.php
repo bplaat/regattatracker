@@ -16,12 +16,17 @@ class AuthController extends Controller
     {
         // Validate input
         $fields = $request->validate([
-            'email' => 'nullable',
-            'password' => 'nullable'
+            'email' => 'required',
+            'password' => 'required'
         ]);
 
         // Try to login when successfull go to home page
-        if (Auth::attempt(['email' => $fields['email'], 'password' => $fields['password']], true)) {
+        if (
+            Auth::attempt([
+                'email' => $fields['email'],
+                'password' => $fields['password']
+            ], true)
+        ) {
             return redirect()->route('home');
         }
 
@@ -52,7 +57,10 @@ class AuthController extends Controller
         ]);
 
         // Login user in
-        Auth::attempt(['email' => $fields['email'], 'password' => $fields['password']], true);
+        Auth::attempt([
+            'email' => $fields['email'],
+            'password' => $fields['password']
+        ], true);
 
         // Go to home page
         return redirect()->route('home');

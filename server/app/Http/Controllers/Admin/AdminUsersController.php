@@ -56,7 +56,10 @@ class AdminUsersController extends Controller
     public function show(User $user)
     {
         $boats = $user->boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->sortByDesc('pivot.role')->paginate(5)->withQueryString();
-        return view('admin.users.show', ['user' => $user, 'boats' => $boats]);
+        return view('admin.users.show', [
+            'user' => $user,
+            'boats' => $boats
+        ]);
     }
 
     // Admin users edit route
