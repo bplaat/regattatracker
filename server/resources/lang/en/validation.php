@@ -120,7 +120,6 @@ return [
     'uuid' => 'The :attribute must be a valid UUID.',
 
     // Custom rules
-    'not_unique_email' => 'The :attribute is already used by an other user.',
     'current_password' => 'The :attribute must contain your current password.',
 
     /*

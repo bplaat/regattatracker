@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class SettingsController extends Controller {
     // Change details route
@@ -18,11 +19,7 @@ class SettingsController extends Controller {
             'email' => [
                 'required',
                 'email',
-                function ($attribute, $value, $fail) {
-                    if ($value != Auth::user()->email && User::where('email', $value)->count() > 0) {
-                        $fail(__('validation.not_unique_email', [ 'attribute' => $attribute ]));
-                    }
-                }
+                Rule::unique('users')->ignore(Auth::user()->email, 'email')
             ]
         ]);
 

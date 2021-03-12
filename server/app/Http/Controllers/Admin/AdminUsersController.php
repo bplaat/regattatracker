@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class AdminUsersController extends Controller {
     // Admin users index route
@@ -73,14 +74,13 @@ class AdminUsersController extends Controller {
         $fields = $request->validate([
             'firstname' => 'required|min:2',
             'lastname' => 'required|min:2',
-            'email' => 'required|email',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($user->email, 'email')
+            ],
             'role' => 'required|integer|digits_between:' . User::ROLE_NORMAL . ',' . User::ROLE_ADMIN
         ]);
-
-        // Validate email for uniqueness or it is the same
-        if ($fields['email'] != $user->email && User::where('email', $fields['email'])->count() > 0) {
-            return back()->withInput()->withErrors([ 'email' => __('validation.not_unique_email', [ 'attribute' => 'email' ]) ]);
-        }
 
         // Update user
         $user->update([
