@@ -21,6 +21,7 @@ class AdminUsersController extends Controller {
         }
         $users = $users->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
 
+        // Return users index view
         return view('admin.users.index', [ 'users' => $users ]);
     }
 

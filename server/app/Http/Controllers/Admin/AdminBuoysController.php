@@ -18,6 +18,7 @@ class AdminBuoysController extends Controller {
         }
         $buoys = $buoys->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
 
+        // Return buoys index view
         return view('admin.buoys.index', [ 'buoys' => $buoys ]);
     }
 

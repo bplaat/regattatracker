@@ -21,6 +21,7 @@ class AdminBoatsController extends Controller {
         }
         $boats = $boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
 
+        // Return admin boat index view
         return view('admin.boats.index', [ 'boats' => $boats ]);
     }
 
@@ -57,6 +58,7 @@ class AdminBoatsController extends Controller {
 
     // Admin boats show route
     public function show(Boat $boat) {
+        // Select boat information
         $boatBoatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->paginate(5)->withQueryString();
         $boatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
 
@@ -64,6 +66,7 @@ class AdminBoatsController extends Controller {
         $boatCaptains = $boatUsers->filter(function ($user) { return $user->pivot->role == BoatUser::ROLE_CAPTAIN; });
         $users = User::all()->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE);
 
+        // Return boat show view
         return view('admin.boats.show', [
             'boat' => $boat,
 

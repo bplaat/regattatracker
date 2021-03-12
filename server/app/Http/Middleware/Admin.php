@@ -8,7 +8,7 @@ use App\Models\User;
 class Admin {
     public function handle($request, $next, $guard = null) {
         if (!Auth::check() || Auth::user()->role != User::ROLE_ADMIN) {
-            abort(404);
+            abort(403);
         }
 
         return $next($request);

@@ -21,6 +21,7 @@ class AuthController extends Controller {
             return redirect()->route('home');
         }
 
+        // When not successfull go back with error
         return back()->withInput()->with('error', __('auth.login.error'));
     }
 

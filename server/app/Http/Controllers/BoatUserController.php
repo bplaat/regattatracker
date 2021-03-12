@@ -7,6 +7,7 @@ use App\Models\Boat;
 use App\Models\BoatUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BoatUserController extends Controller {
     // Boat user create route
