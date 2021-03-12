@@ -1,50 +1,6 @@
 # RegattaTracker
 The brand new RegattaTracker deluxe tracking system
 
-## Database structure idea
-
-### Users
-- id
-- firstname
-- lastname
-- email
-- password
-- role
-    - 0: Normal
-    - 1: Admin
-
-### Boats
-- id
-- user_id
-- name
-- description
-- api key
-
-### boat_types
-- id
-- name
-
-### boat_types_connection?
-- boat_id
-- boat_type_id
-
-### boat_positions
-- boat_id
-- lat
-- lng
-- time
-
-### buoys
-- id
-- name
-- api key
-
-### buoy_positions
-- buoy_id
-- lat
-- lng
-- time
-
 ## Test Environment Installation
 
 ### Windows
@@ -186,7 +142,7 @@ TODO
     ```
 - Goto http://regattatracker.local/ and you're done! 🎉
 
-#### Arch based disto's
+#### Arch based disto's (Not working yet)
 - Install packages.
     ```
     # pacman -Sy
