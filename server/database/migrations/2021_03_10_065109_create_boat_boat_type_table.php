@@ -19,6 +19,8 @@ class CreateBoatBoatTypeTable extends Migration
             $table->unsignedBigInteger('boat_type_id');
             $table->timestamps();
 
+            $table->unique([ 'boat_id', 'boat_type_id' ]);
+
             $table->foreign('boat_id')
                 ->references('id')
                 ->on('boats')
