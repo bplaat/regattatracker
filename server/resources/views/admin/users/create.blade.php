@@ -17,6 +17,7 @@
     <form method="POST" action="{{ route('admin.users.store') }}">
         @csrf
 
+
         <div class="columns">
             <div class="column">
                 <div class="field">
@@ -28,6 +29,20 @@
 
                     @error('firstname')
                         <p class="help is-danger">{{ $errors->first('firstname') }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="insertion">@lang('admin/users.create.insertion')</label>
+
+                    <div class="control">
+                        <input class="input @error('insertion') is-danger @enderror" type="text" id="insertion" name="insertion" value="{{ old('insertion') }}">
+                    </div>
+
+                    @error('insertion')
+                        <p class="help is-danger">{{ $errors->first('insertion') }}</p>
                     @enderror
                 </div>
             </div>
@@ -47,35 +62,169 @@
             </div>
         </div>
 
-        <div class="field">
-            <label class="label" for="email">@lang('admin/users.create.email')</label>
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="gender">@lang('admin/users.create.gender')</label>
 
-            <div class="control">
-                <input class="input @error('email') is-danger @enderror" type="email" id="email" name="email" value="{{ old('email') }}" required>
+                    <div class="control">
+                        <div class="select is-fullwidth @error('gender') is-danger @enderror">
+                            <select id="gender" name="gender" required>
+                                <option value="{{ App\Models\User::GENDER_MALE }}" @if (App\Models\User::GENDER_MALE == old('gender', App\Models\User::GENDER_MALE)) selected @endif>
+                                    @lang('admin/users.create.gender_male')
+                                </option>
+
+                                <option value="{{ App\Models\User::GENDER_FEMALE }}" @if (App\Models\User::GENDER_FEMALE == old('gender', App\Models\User::GENDER_MALE)) selected @endif>
+                                    @lang('admin/users.create.gender_female')
+                                </option>
+
+                                <option value="{{ App\Models\User::GENDER_OTHER }}" @if (App\Models\User::GENDER_OTHER == old('gender', App\Models\User::GENDER_MALE)) selected @endif>
+                                    @lang('admin/users.create.gender_other')
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    @error('gender')
+                        <p class="help is-danger">{{ $errors->first('gender') }}</p>
+                    @enderror
+                </div>
             </div>
 
-            @error('email')
-                <p class="help is-danger">{{ $errors->first('email') }}</p>
-            @enderror
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="birthday">@lang('admin/users.create.birthday')</label>
+
+                    <div class="control">
+                        <input class="input @error('birthday') is-danger @enderror" type="date" id="birthday" name="birthday" value="{{ old('birthday') }}" required>
+                    </div>
+
+                    @error('birthday')
+                        <p class="help is-danger">{{ $errors->first('birthday') }}</p>
+                    @enderror
+                </div>
+            </div>
         </div>
 
-        <div class="field">
-            <label class="label" for="password">@lang('admin/users.create.password')</label>
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="email">@lang('admin/users.create.email')</label>
 
-            <div class="control">
-                <input class="input @error('password') is-danger @enderror" type="password" id="password" name="password" required>
+                    <div class="control">
+                        <input class="input @error('email') is-danger @enderror" type="email" id="email" name="email" value="{{ old('email') }}" required>
+                    </div>
+
+                    @error('email')
+                        <p class="help is-danger">{{ $errors->first('email') }}</p>
+                    @enderror
+                </div>
             </div>
 
-            @error('password')
-                <p class="help is-danger">{{ $errors->first('password') }}</p>
-            @enderror
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="phone">@lang('admin/users.create.phone')</label>
+
+                    <div class="control">
+                        <input class="input @error('phone') is-danger @enderror" type="tel" id="phone" name="phone" value="{{ old('phone') }}">
+                    </div>
+
+                    @error('phone')
+                        <p class="help is-danger">{{ $errors->first('phone') }}</p>
+                    @enderror
+                </div>
+            </div>
         </div>
 
-        <div class="field">
-            <label class="label" for="password_confirmation">@lang('admin/users.create.password_confirmation')</label>
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="address">@lang('admin/users.create.address')</label>
 
-            <div class="control">
-                <input class="input @error('password') is-danger @enderror" type="password" id="password_confirmation" name="password_confirmation" required>
+                    <div class="control">
+                        <input class="input @error('address') is-danger @enderror" type="text" id="address" name="address" value="{{ old('address') }}" required>
+                    </div>
+
+                    @error('address')
+                        <p class="help is-danger">{{ $errors->first('address') }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="postcode">@lang('admin/users.create.postcode')</label>
+
+                    <div class="control">
+                        <input class="input @error('postcode') is-danger @enderror" type="text" id="postcode" name="postcode" value="{{ old('postcode') }}" required>
+                    </div>
+
+                    @error('postcode')
+                        <p class="help is-danger">{{ $errors->first('postcode') }}</p>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="city">@lang('admin/users.create.city')</label>
+
+                    <div class="control">
+                        <input class="input @error('city') is-danger @enderror" type="text" id="city" name="city" value="{{ old('city') }}" required>
+                    </div>
+
+                    @error('city')
+                        <p class="help is-danger">{{ $errors->first('city') }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="country">@lang('admin/users.create.country')</label>
+
+                    <div class="control">
+                        <div class="select is-fullwidth @error('country') is-danger @enderror">
+                            <select id="country" name="country" required>
+                                @foreach ($countries as $country)
+                                    <option {{ $country == old('country', 'Netherlands') ? 'selected' : '' }} value="{{ $country }}">{{ $country }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    @error('country')
+                        <p class="help is-danger">{{ $errors->first('country') }}</p>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="password">@lang('admin/users.create.password')</label>
+
+                    <div class="control">
+                        <input class="input @error('password') is-danger @enderror" type="password" id="password" name="password" required>
+                    </div>
+
+                    @error('password')
+                        <p class="help is-danger">{{ $errors->first('password') }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="password_confirmation">@lang('admin/users.create.password_confirmation')</label>
+
+                    <div class="control">
+                        <input class="input @error('password') is-danger @enderror" type="password" id="password_confirmation" name="password_confirmation" required>
+                    </div>
+                </div>
             </div>
         </div>
 

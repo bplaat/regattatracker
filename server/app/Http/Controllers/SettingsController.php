@@ -17,19 +17,35 @@ class SettingsController extends Controller
         // Validate input
         $fields = $request->validate([
             'firstname' => 'required|min:2',
+            'insertion' => 'nullable',
             'lastname' => 'required|min:2',
+            'gender' => 'required|integer|digits_between:' . User::GENDER_MALE . ',' . User::GENDER_OTHER,
+            'birthday' => 'required|date',
             'email' => [
                 'required',
                 'email',
                 Rule::unique('users')->ignore(Auth::user()->email, 'email')
-            ]
+            ],
+            'phone' => 'nullable',
+            'address' => 'required|min:2',
+            'postcode' => 'required|min:2',
+            'city' => 'required|min:2',
+            'country' => 'required|min:2',
         ]);
 
         // Update user details
         Auth::user()->update([
             'firstname' => $fields['firstname'],
+            'insertion' => $fields['insertion'],
             'lastname' => $fields['lastname'],
-            'email' => $fields['email']
+            'gender' => $fields['gender'],
+            'birthday' => $fields['birthday'],
+            'email' => $fields['email'],
+            'phone' => $fields['phone'],
+            'address' => $fields['address'],
+            'postcode' => $fields['postcode'],
+            'city' => $fields['city'],
+            'country' => $fields['country']
         ]);
 
         // Go back with message

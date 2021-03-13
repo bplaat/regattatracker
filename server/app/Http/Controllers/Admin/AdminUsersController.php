@@ -34,8 +34,16 @@ class AdminUsersController extends Controller
         // Validate input
         $fields = $request->validate([
             'firstname' => 'required|min:2',
+            'insertion' => 'nullable',
             'lastname' => 'required|min:2',
+            'gender' => 'required|integer|digits_between:' . User::GENDER_MALE . ',' . User::GENDER_OTHER,
+            'birthday' => 'required|date',
             'email' => 'required|email|unique:users',
+            'phone' => 'nullable',
+            'address' => 'required|min:2',
+            'postcode' => 'required|min:2',
+            'city' => 'required|min:2',
+            'country' => 'required|min:2',
             'password' => 'required|min:6|confirmed',
             'role' => 'required|integer|digits_between:' . User::ROLE_NORMAL . ',' . User::ROLE_ADMIN
         ]);
@@ -43,8 +51,16 @@ class AdminUsersController extends Controller
         // Create user
         $user = User::create([
             'firstname' => $fields['firstname'],
+            'insertion' => $fields['insertion'],
             'lastname' => $fields['lastname'],
+            'gender' => $fields['gender'],
+            'birthday' => $fields['birthday'],
             'email' => $fields['email'],
+            'phone' => $fields['phone'],
+            'address' => $fields['address'],
+            'postcode' => $fields['postcode'],
+            'city' => $fields['city'],
+            'country' => $fields['country'],
             'password' => Hash::make($fields['password']),
             'role' => $fields['role']
         ]);
@@ -70,7 +86,7 @@ class AdminUsersController extends Controller
     // Admin users edit route
     public function edit(User $user)
     {
-        return view('admin.users.edit', ['user' => $user]);
+        return view('admin.users.edit', [ 'user' => $user, 'countries' => User::COUNTRIES ]);
     }
 
     // Admin users hijack route
@@ -89,20 +105,36 @@ class AdminUsersController extends Controller
         // Validate input
         $fields = $request->validate([
             'firstname' => 'required|min:2',
+            'insertion' => 'nullable',
             'lastname' => 'required|min:2',
+            'gender' => 'required|integer|digits_between:' . User::GENDER_MALE . ',' . User::GENDER_OTHER,
+            'birthday' => 'required|date',
             'email' => [
                 'required',
                 'email',
                 Rule::unique('users')->ignore($user->email, 'email')
             ],
+            'phone' => 'nullable',
+            'address' => 'required|min:2',
+            'postcode' => 'required|min:2',
+            'city' => 'required|min:2',
+            'country' => 'required|min:2',
             'role' => 'required|integer|digits_between:' . User::ROLE_NORMAL . ',' . User::ROLE_ADMIN
         ]);
 
         // Update user
         $user->update([
             'firstname' => $fields['firstname'],
+            'insertion' => $fields['insertion'],
             'lastname' => $fields['lastname'],
+            'gender' => $fields['gender'],
+            'birthday' => $fields['birthday'],
             'email' => $fields['email'],
+            'phone' => $fields['phone'],
+            'address' => $fields['address'],
+            'postcode' => $fields['postcode'],
+            'city' => $fields['city'],
+            'country' => $fields['country'],
             'role' => $fields['role']
         ]);
 
