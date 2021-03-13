@@ -42,7 +42,7 @@
                     @endif
 
                     <div class="buttons">
-                        <a class="button is-danger" href="{{ route('admin.boats.boat_types.delete', [ $boat, $boatType ]) }}">@lang('admin/boats.show.boat_types_remove_button')</a>
+                        <a class="button is-danger" href="{{ route('admin.boats.boat_types.delete', [$boat, $boatType]) }}">@lang('admin/boats.show.boat_types_remove_button')</a>
                     </div>
                 </div>
             @endforeach
@@ -107,12 +107,12 @@
                     @if ($user->pivot->role != App\Models\BoatUser::ROLE_CAPTAIN || $boatCaptains->count() > 1)
                         <div class="buttons">
                             @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
-                                <a class="button is-success" href="{{ route('admin.boats.users.update', [ $boat, $user ]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">@lang('admin/boats.show.users_make_crew_button')</a>
+                                <a class="button is-success" href="{{ route('admin.boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">@lang('admin/boats.show.users_make_crew_button')</a>
                             @else
-                                <a class="button is-info" href="{{ route('admin.boats.users.update', [ $boat, $user ]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">@lang('admin/boats.show.users_make_captain_button')</a>
+                                <a class="button is-info" href="{{ route('admin.boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">@lang('admin/boats.show.users_make_captain_button')</a>
                             @endif
 
-                            <a class="button is-danger" href="{{ route('admin.boats.users.delete', [ $boat, $user ]) }}">@lang('admin/boats.show.users_remove_button')</a>
+                            <a class="button is-danger" href="{{ route('admin.boats.users.delete', [$boat, $user]) }}">@lang('admin/boats.show.users_remove_button')</a>
                         </div>
                     @endif
                 </div>
@@ -147,7 +147,7 @@
                     </div>
 
                     <div class="control">
-                        <div class="select @error('role') is-danger @enderror">
+                        <div class="select is-fullwidth @error('role') is-danger @enderror">
                             <select id="role" name="role" required>
                                 <option value="{{ App\Models\BoatUser::ROLE_CREW }}" @if (App\Models\BoatUser::ROLE_CREW == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
                                     @lang('admin/boats.show.users_role_field_crew')

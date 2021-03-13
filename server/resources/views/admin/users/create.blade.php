@@ -232,7 +232,7 @@
             <label class="label" for="role">@lang('admin/users.create.role')</label>
 
             <div class="control">
-                <div class="select @error('role') is-danger @enderror">
+                <div class="select is-fullwidth @error('role') is-danger @enderror">
                     <select id="role" name="role" required>
                         <option value="{{ App\Models\User::ROLE_NORMAL }}" @if (App\Models\User::ROLE_NORMAL == old('role', App\Models\User::ROLE_NORMAL)) selected @endif>
                             @lang('admin/users.create.role_normal')

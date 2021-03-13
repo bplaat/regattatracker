@@ -66,7 +66,7 @@ class User extends Authenticatable
 
     // Get user full name
     public function name() {
-        return implode(' ', [$this->firstname, $this->lastname]);
+        return implode(' ', [$this->firstname, $this->insertion, $this->lastname]);
     }
 
     // Search by a query

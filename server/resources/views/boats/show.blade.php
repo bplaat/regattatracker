@@ -47,7 +47,7 @@
 
                     @can('delete_boat_boat_type', $boat)
                         <div class="buttons">
-                            <a class="button is-danger" href="{{ route('boats.boat_types.delete', [ $boat, $boatType ]) }}">@lang('boats.show.boat_types_remove_button')</a>
+                            <a class="button is-danger" href="{{ route('boats.boat_types.delete', [$boat, $boatType]) }}">@lang('boats.show.boat_types_remove_button')</a>
                         </div>
                     @endcan
                 </div>
@@ -59,33 +59,35 @@
         @endif
 
         @can('create_boat_boat_type', $boat)
-            <form method="POST" action="{{ route('boats.boat_types.create', $boat) }}">
-                @csrf
+            @if ($boatBoatTypes->count() != $boatTypes->count())
+                <form method="POST" action="{{ route('boats.boat_types.create', $boat) }}">
+                    @csrf
 
-                <div class="field has-addons">
-                    <div class="control">
-                        <div class="select @error('boat_type_id') is-danger @enderror">
-                            <select id="boat_type_id" name="boat_type_id" required>
-                                <option selected disabled>
-                                    @lang('admin/boats.show.boat_types_field')
-                                </option>
+                    <div class="field has-addons">
+                        <div class="control">
+                            <div class="select @error('boat_type_id') is-danger @enderror">
+                                <select id="boat_type_id" name="boat_type_id" required>
+                                    <option selected disabled>
+                                        @lang('admin/boats.show.boat_types_field')
+                                    </option>
 
-                                @foreach ($boatTypes as $boatType)
-                                    @if (!in_array($boatType->name, $boatBoatTypes->pluck('name')->toArray()))
-                                        <option value="{{ $boatType->id }}" @if ($boatType->id == old('boat_type_id')) selected @endif>
-                                            {{ $boatType->name }}
-                                        </option>
-                                    @endif
-                                @endforeach
-                            </select>
+                                    @foreach ($boatTypes as $boatType)
+                                        @if (!in_array($boatType->name, $boatBoatTypes->pluck('name')->toArray()))
+                                            <option value="{{ $boatType->id }}" @if ($boatType->id == old('boat_type_id')) selected @endif>
+                                                {{ $boatType->name }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control">
+                            <button class="button is-link" type="submit">@lang('boats.show.boat_types_add_button')</button>
                         </div>
                     </div>
-
-                    <div class="control">
-                        <button class="button is-link" type="submit">@lang('boats.show.boat_types_add_button')</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            @endif
         @endcan
     </div>
 
@@ -115,14 +117,14 @@
                             <div class="buttons">
                                 @can('update_boat_user', $boat)
                                     @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
-                                        <a class="button is-success" href="{{ route('boats.users.update', [ $boat, $user ]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">@lang('boats.show.users_make_crew_button')</a>
+                                        <a class="button is-success" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">@lang('boats.show.users_make_crew_button')</a>
                                     @else
-                                        <a class="button is-info" href="{{ route('boats.users.update', [ $boat, $user ]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">@lang('boats.show.users_make_captain_button')</a>
+                                        <a class="button is-info" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">@lang('boats.show.users_make_captain_button')</a>
                                     @endif
                                 @endcan
 
                                 @can('delete_boat_user', $boat)
-                                    <a class="button is-danger" href="{{ route('boats.users.delete', [ $boat, $user ]) }}">@lang('boats.show.users_remove_button')</a>
+                                    <a class="button is-danger" href="{{ route('boats.users.delete', [$boat, $user]) }}">@lang('boats.show.users_remove_button')</a>
                                 @endcan
                             </div>
                         @endif
@@ -136,47 +138,49 @@
         @endif
 
         @can('create_boat_user', $boat)
-            <form method="POST" action="{{ route('boats.users.create', $boat) }}">
-                @csrf
+            @if ($boatUsers->count() != $users->count())
+                <form method="POST" action="{{ route('boats.users.create', $boat) }}">
+                    @csrf
 
-                <div class="field has-addons">
-                    <div class="control">
-                        <div class="select @error('user_id') is-danger @enderror">
-                            <select id="user_id" name="user_id" required>
-                                <option selected disabled>
-                                    @lang('boats.show.users_field')
-                                </option>
+                    <div class="field has-addons">
+                        <div class="control">
+                            <div class="select @error('user_id') is-danger @enderror">
+                                <select id="user_id" name="user_id" required>
+                                    <option selected disabled>
+                                        @lang('boats.show.users_field')
+                                    </option>
 
-                                @foreach ($users as $user)
-                                    @if (!in_array($user->id, $boatUsers->pluck('id')->toArray()))
-                                        <option value="{{ $user->id }}"  @if ($user->id == old('user_id')) selected @endif>
-                                            {{ $user->name() }}
-                                        </option>
-                                    @endif
-                                @endforeach
-                            </select>
+                                    @foreach ($users as $user)
+                                        @if (!in_array($user->id, $boatUsers->pluck('id')->toArray()))
+                                            <option value="{{ $user->id }}"  @if ($user->id == old('user_id')) selected @endif>
+                                                {{ $user->name() }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control">
+                            <div class="select @error('role') is-danger @enderror">
+                                <select id="role" name="role" required>
+                                    <option value="{{ App\Models\BoatUser::ROLE_CREW }}" @if (App\Models\BoatUser::ROLE_CREW == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
+                                        @lang('boats.show.users_role_field_crew')
+                                    </option>
+
+                                    <option value="{{ App\Models\BoatUser::ROLE_CAPTAIN }}" @if (App\Models\BoatUser::ROLE_CAPTAIN == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
+                                        @lang('boats.show.users_role_field_captain')
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control">
+                            <button class="button is-link" type="submit">@lang('boats.show.users_add_button')</button>
                         </div>
                     </div>
-
-                    <div class="control">
-                        <div class="select @error('role') is-danger @enderror">
-                            <select id="role" name="role" required>
-                                <option value="{{ App\Models\BoatUser::ROLE_CREW }}" @if (App\Models\BoatUser::ROLE_CREW == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
-                                    @lang('boats.show.users_role_field_crew')
-                                </option>
-
-                                <option value="{{ App\Models\BoatUser::ROLE_CAPTAIN }}" @if (App\Models\BoatUser::ROLE_CAPTAIN == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
-                                    @lang('boats.show.users_role_field_captain')
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="control">
-                        <button class="button is-link" type="submit">@lang('boats.show.users_add_button')</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            @endif
         @endcan
     </div>
 @endsection

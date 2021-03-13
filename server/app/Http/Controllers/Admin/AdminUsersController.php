@@ -86,7 +86,7 @@ class AdminUsersController extends Controller
     // Admin users edit route
     public function edit(User $user)
     {
-        return view('admin.users.edit', [ 'user' => $user, 'countries' => User::COUNTRIES ]);
+        return view('admin.users.edit', ['user' => $user, 'countries' => User::COUNTRIES]);
     }
 
     // Admin users hijack route

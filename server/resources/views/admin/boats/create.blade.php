@@ -21,7 +21,7 @@
             <label class="label" for="user_id">@lang('admin/boats.create.user')</label>
 
             <div class="control">
-                <div class="select @error('user_id') is-danger @enderror">
+                <div class="select is-fullwidth @error('user_id') is-danger @enderror">
                     <select id="user_id" name="user_id" required>
                         @foreach ($users as $user)
                             <option value="{{ $user->id }}" @if ($user->id == old('user_id', Auth::id())) selected @endif>

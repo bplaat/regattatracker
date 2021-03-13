@@ -13,7 +13,7 @@
     </div>
 
     <div class="box content">
-        <h1 class="title is-4">
+        <h1 class="title is-spaced is-4">
             {{ $user->name() }}
 
             @if ($user->role == App\Models\User::ROLE_NORMAL)
@@ -24,7 +24,30 @@
                 <span class="tag is-pulled-right is-danger">@lang('admin/users.show.role_admin')</span>
             @endif
         </h1>
-        <p><a class="tag" href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
+
+        <h2 class="subtitle is-5">@lang('admin/users.show.personal_info')</h2>
+        @if ($user->gender == App\Models\User::GENDER_MALE)
+            <p>@lang('admin/users.show.gender'): @lang('admin/users.show.gender_male')</p>
+        @endif
+        @if ($user->gender == App\Models\User::GENDER_FEMALE)
+            <p>@lang('admin/users.show.gender'): @lang('admin/users.show.gender_female')</p>
+        @endif
+        @if ($user->gender == App\Models\User::GENDER_OTHER)
+            <p>@lang('admin/users.show.gender'): @lang('admin/users.show.gender_other')</p>
+        @endif
+        <p>@lang('admin/users.show.birthday'): {{ $user->birthday }}</p>
+
+        <h2 class="subtitle is-5">@lang('admin/users.show.contact_info')</h2>
+        <p>@lang('admin/users.show.email'): <a href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
+        @if ($user->phone != null)
+            <p>@lang('admin/users.show.phone'): <a href="tel:{{ $user->phone }}">{{ $user->phone }}</a></p>
+        @else
+            <p>@lang('admin/users.show.phone'): ?</p>
+        @endif
+
+        <h2 class="subtitle is-5">@lang('admin/users.show.address_info')</h2>
+        <p>{{ $user->address }}</a></p>
+        <p>{{ $user->postcode }}, {{ $user->city }} {{ $user->country }}</a></p>
 
         <div class="buttons">
             @if ($user->id != Auth::id())

@@ -208,7 +208,7 @@
                     <label class="label" for="password">@lang('admin/users.edit.password')</label>
 
                     <div class="control">
-                        <input class="input @error('password') is-danger @enderror" type="password" id="password" name="password" required>
+                        <input class="input @error('password') is-danger @enderror" type="password" id="password" name="password">
                     </div>
 
                     @error('password')
@@ -224,7 +224,7 @@
                     <label class="label" for="password_confirmation">@lang('admin/users.edit.password_confirmation')</label>
 
                     <div class="control">
-                        <input class="input @error('password') is-danger @enderror" type="password" id="password_confirmation" name="password_confirmation" required>
+                        <input class="input @error('password') is-danger @enderror" type="password" id="password_confirmation" name="password_confirmation">
                     </div>
                 </div>
             </div>
@@ -234,7 +234,7 @@
             <label class="label" for="role">@lang('admin/users.edit.role')</label>
 
             <div class="control">
-                <div class="select @error('role') is-danger @enderror">
+                <div class="select is-fullwidth @error('role') is-danger @enderror">
                     <select id="role" name="role" required>
                         <option value="{{ App\Models\User::ROLE_NORMAL }}" @if (App\Models\User::ROLE_NORMAL == old('role', $user->role)) selected @endif>
                             @lang('admin/users.edit.role_normal')
