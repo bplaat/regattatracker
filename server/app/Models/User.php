@@ -64,15 +64,33 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // Get user full name
-    public function name() {
-        return implode(' ', [$this->firstname, $this->insertion, $this->lastname]);
+    // Get user full name (firstname insertion lastname)
+    public function name()
+    {
+        if ($this->insertion != null) {
+            return $this->firstname . ' ' . $this->insertion . ' ' . $this->lastname;
+        } else {
+            return $this->firstname . ' ' . $this->lastname;
+        }
+    }
+
+    // Return a sort function to sort user by sort name (lastname, insertion firstname)
+    public static function sortByName()
+    {
+        return function ($user, $key) {
+            if ($user->insertion != null) {
+                return $user->lastname . ', ' . $user->insertion . ' ' . $user->firstname;
+            } else {
+                return $user->lastname . ' ' . $user->firstname;
+            }
+        };
     }
 
     // Search by a query
     public static function search($query)
     {
         return static::where('firstname', 'LIKE', '%' . $query . '%')
+            ->orWhere('insertion', 'LIKE', '%' . $query . '%')
             ->orWhere('lastname', 'LIKE', '%' . $query . '%')
             ->orWhere('email', 'LIKE', '%' . $query . '%');
     }

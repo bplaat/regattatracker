@@ -21,7 +21,7 @@ class AdminUsersController extends Controller
         } else {
             $users = User::all();
         }
-        $users = $users->sortBy('firstname', SORT_NATURAL | SORT_FLAG_CASE)
+        $users = $users->sortBy(User::sortByName(), SORT_NATURAL | SORT_FLAG_CASE)
             ->paginate(5)->withQueryString();
 
         // Return admin users index view
