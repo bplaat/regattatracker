@@ -30,14 +30,14 @@ class AdminUsersController extends Controller {
             'firstname' => 'required|min:2',
             'insertion' => 'nullable',
             'lastname' => 'required|min:2',
-            'gender' => 'required|int|digits_between:0,' . (count(User::GENDERS) - 1),
+            'gender' => 'required|integer|digits_between:' . User::GENDER_MALE . ',' . User::GENDER_OTHER,
             'birthday' => 'required|date',
-            'country' => 'required',
-            'city' => 'required',
-            'street' => 'required',
-            'zipcode' => 'required',
-            'phone' => 'required|min:9|numeric',
             'email' => 'required|email|unique:users',
+            'phone' => 'nullable',
+            'address' => 'required|min:2',
+            'postcode' => 'required|min:2',
+            'city' => 'required|min:2',
+            'country' => 'required|min:2',
             'password' => 'required|min:6|confirmed',
             'role' => 'required|integer|digits_between:' . User::ROLE_NORMAL . ',' . User::ROLE_ADMIN
         ]);
@@ -49,12 +49,12 @@ class AdminUsersController extends Controller {
             'lastname' => $fields['lastname'],
             'gender' => $fields['gender'],
             'birthday' => $fields['birthday'],
-            'country' => $fields['country'],
-            'city' => $fields['city'],
-            'street' => $fields['street'],
-            'zipcode' => $fields['zipcode'],
-            'phone' => $fields['phone'],
             'email' => $fields['email'],
+            'phone' => $fields['phone'],
+            'address' => $fields['address'],
+            'postcode' => $fields['postcode'],
+            'city' => $fields['city'],
+            'country' => $fields['country'],
             'password' => Hash::make($fields['password']),
             'role' => $fields['role']
         ]);
@@ -72,8 +72,7 @@ class AdminUsersController extends Controller {
 
     // Admin users edit route
     public function edit(User $user) {
-        //return $user;
-        return view('admin.users.edit', [ 'user' => $user, 'genders' => User::GENDERS, 'countries' => User::COUNTRIES ]);
+        return view('admin.users.edit', [ 'user' => $user, 'countries' => User::COUNTRIES ]);
     }
 
     // Admin users hijack route
@@ -92,14 +91,14 @@ class AdminUsersController extends Controller {
             'firstname' => 'required|min:2',
             'insertion' => 'nullable',
             'lastname' => 'required|min:2',
-            'gender' => 'required|int|digits_between:0,' . (count(User::GENDERS) - 1),
+            'gender' => 'required|integer|digits_between:' . User::GENDER_MALE . ',' . User::GENDER_OTHER,
             'birthday' => 'required|date',
-            'country' => 'required',
-            'city' => 'required',
-            'street' => 'required',
-            'zipcode' => 'required',
-            'phone' => 'required|min:9|numeric',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email',
+            'phone' => 'nullable',
+            'address' => 'required|min:2',
+            'postcode' => 'required|min:2',
+            'city' => 'required|min:2',
+            'country' => 'required|min:2',
             'role' => 'required|integer|digits_between:' . User::ROLE_NORMAL . ',' . User::ROLE_ADMIN
         ]);
 
@@ -115,12 +114,12 @@ class AdminUsersController extends Controller {
             'lastname' => $fields['lastname'],
             'gender' => $fields['gender'],
             'birthday' => $fields['birthday'],
-            'country' => $fields['country'],
-            'city' => $fields['city'],
-            'street' => $fields['street'],
-            'zipcode' => $fields['zipcode'],
-            'phone' => $fields['phone'],
             'email' => $fields['email'],
+            'phone' => $fields['phone'],
+            'address' => $fields['address'],
+            'postcode' => $fields['postcode'],
+            'city' => $fields['city'],
+            'country' => $fields['country'],
             'role' => $fields['role']
         ]);
 

@@ -34,14 +34,14 @@ class AuthController extends Controller
             'firstname' => 'required|min:2',
             'insertion' => 'nullable',
             'lastname' => 'required|min:2',
-            'gender' => 'required|int|digits_between:0,' . (count(User::GENDERS) - 1),
+            'gender' => 'required|integer|digits_between:' . User::GENDER_MALE . ',' . User::GENDER_OTHER,
             'birthday' => 'required|date',
-            'country' => 'required',
-            'city' => 'required',
-            'street' => 'required',
-            'zipcode' => 'required',
-            'phone' => 'required|min:9|numeric',
             'email' => 'required|email|unique:users',
+            'phone' => 'nullable',
+            'address' => 'required|min:2',
+            'postcode' => 'required|min:2',
+            'city' => 'required|min:2',
+            'country' => 'required|min:2',
             'password' => 'required|min:6|confirmed'
         ]);
 
@@ -52,15 +52,15 @@ class AuthController extends Controller
             'lastname' => $fields['lastname'],
             'gender' => $fields['gender'],
             'birthday' => $fields['birthday'],
-            'country' => $fields['country'],
-            'city' => $fields['city'],
-            'street' => $fields['street'],
-            'zipcode' => $fields['zipcode'],
-            'phone' => $fields['phone'],
             'email' => $fields['email'],
+            'phone' => $fields['phone'],
+            'address' => $fields['address'],
+            'postcode' => $fields['postcode'],
+            'city' => $fields['city'],
+            'country' => $fields['country'],
             'password' => Hash::make($fields['password']),
 
-            // First account is always admin
+            // First created account is always admin
             'role' => User::count() == 0 ? User::ROLE_ADMIN : User::ROLE_NORMAL
         ]);
 
