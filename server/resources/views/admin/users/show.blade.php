@@ -46,8 +46,8 @@
         @endif
 
         <h2 class="subtitle is-5">@lang('admin/users.show.address_info')</h2>
-        <p>{{ $user->address }}</a></p>
-        <p>{{ $user->postcode }}, {{ $user->city }} {{ $user->country }}</a></p>
+        <p>{{ $user->address }}</p>
+        <p>{{ $user->postcode }}, {{ $user->city }} {{ $user->country }}</p>
 
         <div class="buttons">
             @if ($user->id != Auth::id())
@@ -80,7 +80,7 @@
                     </h3>
 
                     @if ($boat->description != null)
-                        <p>{{ Str::limit($boat->description, 64) }}</a></p>
+                        <p>{{ Str::limit($boat->description, 64) }}</p>
                     @endif
                 </div>
             @endforeach

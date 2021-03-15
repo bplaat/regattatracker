@@ -40,7 +40,7 @@
                 <div class="box">
                     <h2 class="title is-4"><a href="{{ route('admin.buoys.show', $buoy) }}">{{ $buoy->name }}</a></h2>
                     @if ($buoy->description != null)
-                        <p>{{ Str::limit($buoy->description, 64) }}</a></p>
+                        <p>{{ Str::limit($buoy->description, 64) }}</p>
                     @endif
                 </div>
             @endforeach

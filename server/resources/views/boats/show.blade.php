@@ -14,28 +14,19 @@
     <div class="box content">
         <h1 class="title is-4">{{ $boat->name }}</h1>
         @if ($boat->description != null)
-            <p style="white-space: pre-wrap;">{{ $boat->description }}</a></p>
+            <p style="white-space: pre-wrap;">{{ $boat->description }}</p>
         @else
             <p><i>@lang('boats.show.description_empty')</i></p>
         @endif
 
-        <label class="label" for="MMSI">@lang('boats.show.MMSI')</label>
-        <p style="white-space: pre-wrap;">{{ $boat->MMSI }}</a></p>
-
-        <label class="label" for="LOA">@lang('boats.show.LOA')</label>
-        <p style="white-space: pre-wrap;">{{ $boat->LOA }}</a></p>
-
-        <label class="label" for="BOA">@lang('boats.show.BOA')</label>
-        <p style="white-space: pre-wrap;">{{ $boat->BOA }}</a></p>
-
-        <label class="label" for="weight">@lang('boats.show.weight')</label>
-        <p style="white-space: pre-wrap;">{{ $boat->weight }}</a></p>
-
-        <label class="label" for="sail_number">@lang('boats.show.sail_number')</label>
-        <p style="white-space: pre-wrap;">{{ $boat->sail_number }}</a></p>
-
-        <label class="label" for="sail_area">@lang('boats.show.sail_area')</label>
-        <p style="white-space: pre-wrap;">{{ $boat->sail_area }}</a></p>
+        <h2 class="subtitle is-5">@lang('boats.show.boat_info')</h2>
+        <p>@lang('boats.show.mmsi'): {{ $boat->mmsi }}</p>
+        <p>@lang('boats.show.length'): {{ $boat->length }} m</p>
+        <p>@lang('boats.show.breadth'): {{ $boat->breadth }} m</p>
+        <p>@lang('boats.show.weight'): {{ $boat->weight }} kg</p>
+        <p>@lang('boats.show.sail_number'): {{ $boat->sail_number }}</p>
+        <p>@lang('boats.show.sail_area'): {{ $boat->sail_area }} m<sup>2</sup></p>
+        <p>@lang('boats.show.kr_rating'): {{ $boat->krRating() }}</p>
 
         @canany(['update', 'delete'], $boat)
             <div class="buttons">
@@ -60,7 +51,7 @@
                 <div class="box">
                     <h3 class="title is-4">{{ $boatType->name }}</h3>
                     @if ($boatType->description != null)
-                        <p>{{ Str::limit($boatType->description, 64) }}</a></p>
+                        <p>{{ Str::limit($boatType->description, 64) }}</p>
                     @endif
 
                     @can('delete_boat_boat_type', $boat)

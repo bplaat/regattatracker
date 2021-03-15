@@ -21,23 +21,14 @@
             <p><i>@lang('admin/boats.show.description_empty')</i></p>
         @endif
 
-        <label class="label" for="MMSI">@lang('boats.show.MMSI')</label>
-        <p style="white-space: pre-wrap;">{{ $boat->MMSI }}</a></p>
-
-        <label class="label" for="LOA">@lang('boats.show.LOA')</label>
-        <p style="white-space: pre-wrap;">{{ $boat->LOA }}</a></p>
-
-        <label class="label" for="BOA">@lang('boats.show.BOA')</label>
-        <p style="white-space: pre-wrap;">{{ $boat->BOA }}</a></p>
-
-        <label class="label" for="weight">@lang('boats.show.weight')</label>
-        <p style="white-space: pre-wrap;">{{ $boat->weight }}</a></p>
-
-        <label class="label" for="sail_number">@lang('boats.show.sail_number')</label>
-        <p style="white-space: pre-wrap;">{{ $boat->sail_number }}</a></p>
-
-        <label class="label" for="sail_area">@lang('boats.show.sail_area')</label>
-        <p style="white-space: pre-wrap;">{{ $boat->sail_area }}</a></p>
+        <h2 class="subtitle is-5">@lang('admin/boats.show.boat_info')</h2>
+        <p>@lang('admin/boats.show.mmsi'): {{ $boat->mmsi }}</p>
+        <p>@lang('admin/boats.show.length'): {{ $boat->length }} m</p>
+        <p>@lang('admin/boats.show.breadth'): {{ $boat->breadth }} m</p>
+        <p>@lang('admin/boats.show.weight'): {{ $boat->weight }} kg</p>
+        <p>@lang('admin/boats.show.sail_number'): {{ $boat->sail_number }}</p>
+        <p>@lang('admin/boats.show.sail_area'): {{ $boat->sail_area }} m<sup>2</sup></p>
+        <p>@lang('boats.show.kr_rating'): {{ $boat->krRating() }}</p>
 
         <div class="buttons">
             <a class="button is-link" href="{{ route('admin.boats.edit', $boat) }}">@lang('admin/boats.show.edit')</a>

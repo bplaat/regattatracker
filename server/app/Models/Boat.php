@@ -12,19 +12,18 @@ class Boat extends Model
     protected $fillable = [
         'name',
         'description',
-        'MMSI',
-        'LOA',
-        'BOA',
+        'mmsi',
+        'length',
+        'breadth',
         'weight',
         'sail_number',
-        'sail_area',
-        'KR_rating'
+        'sail_area'
     ];
 
-    // Calculates the KR-rating of the boat
-    public function calcKRRating()
+    // Get the kr-rating of the boat
+    public function krRating()
     {
-        $this->KR_rating = $this->LOA * $this->sail_area / sqrt($this->BOA * $this->weight);
+        return $this->length * $this->sail_area / sqrt($this->breadth * $this->weight);
     }
 
     // A boat has many boat types

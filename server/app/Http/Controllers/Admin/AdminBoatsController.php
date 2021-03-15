@@ -46,11 +46,11 @@ class AdminBoatsController extends Controller
             'user_id' => 'required|exists:users,id',
             'name' => 'required|min:2',
             'description' => 'nullable',
-            'MMSI' => 'required|digits:9|numeric',
-            'LOA' => 'required|numeric',
-            'BOA' => 'required|numeric',
+            'mmsi' => 'required|digits:9|integer',
+            'length' => 'required|numeric',
+            'breadth' => 'required|numeric',
             'weight' => 'required|numeric',
-            'sail_number' => 'required|numeric',
+            'sail_number' => 'required|integer',
             'sail_area' => 'required|numeric',
         ]);
 
@@ -58,17 +58,13 @@ class AdminBoatsController extends Controller
         $boat = Boat::create([
             'name' => $fields['name'],
             'description' => $fields['description'],
-            'MMSI' => $fields['MMSI'],
-            'LOA' => $fields['LOA'],
-            'BOA' => $fields['BOA'],
+            'mmsi' => $fields['mmsi'],
+            'length' => $fields['length'],
+            'breadth' => $fields['breadth'],
             'weight' => $fields['weight'],
             'sail_number' => $fields['sail_number'],
             'sail_area' => $fields['sail_area']
         ]);
-
-        // Calculate KR-rating
-        $boat->calcKRRating();
-        $boat->save();
 
         // Add user to boat as captain
         BoatUser::create([
@@ -122,11 +118,11 @@ class AdminBoatsController extends Controller
         $fields = $request->validate([
             'name' => 'required|min:2',
             'description' => 'nullable',
-            'MMSI' => 'required|digits:9|numeric',
-            'LOA' => 'required|numeric',
-            'BOA' => 'required|numeric',
+            'mmsi' => 'required|digits:9|integer',
+            'length' => 'required|numeric',
+            'breadth' => 'required|numeric',
             'weight' => 'required|numeric',
-            'sail_number' => 'required|numeric',
+            'sail_number' => 'required|integer',
             'sail_area' => 'required|numeric',
         ]);
 
@@ -134,17 +130,13 @@ class AdminBoatsController extends Controller
         $boat->update([
             'name' => $fields['name'],
             'description' => $fields['description'],
-            'MMSI' => $fields['MMSI'],
-            'LOA' => $fields['LOA'],
-            'BOA' => $fields['BOA'],
+            'mmsi' => $fields['mmsi'],
+            'length' => $fields['length'],
+            'breadth' => $fields['breadth'],
             'weight' => $fields['weight'],
             'sail_number' => $fields['sail_number'],
             'sail_area' => $fields['sail_area']
         ]);
-
-        // Calculate KR-rating
-        $boat->calcKRRating();
-        $boat->save();
 
         // Go to the admin boat page
         return redirect()->route('admin.boats.show', $boat);
