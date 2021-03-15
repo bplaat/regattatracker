@@ -14,10 +14,19 @@
     <div class="box content">
         <h1 class="title is-4">{{ $boat->name }}</h1>
         @if ($boat->description != null)
-            <p style="white-space: pre-wrap;">{{ $boat->description }}</a></p>
+            <p style="white-space: pre-wrap;">{{ $boat->description }}</p>
         @else
             <p><i>@lang('boats.show.description_empty')</i></p>
         @endif
+
+        <h2 class="subtitle is-5">@lang('boats.show.boat_info')</h2>
+        <p>@lang('boats.show.mmsi'): {{ $boat->mmsi }}</p>
+        <p>@lang('boats.show.length'): {{ $boat->length }} m</p>
+        <p>@lang('boats.show.breadth'): {{ $boat->breadth }} m</p>
+        <p>@lang('boats.show.weight'): {{ $boat->weight }} kg</p>
+        <p>@lang('boats.show.sail_number'): {{ $boat->sail_number }}</p>
+        <p>@lang('boats.show.sail_area'): {{ $boat->sail_area }} m<sup>2</sup></p>
+        <p>@lang('boats.show.kr_rating'): {{ $boat->krRating() }}</p>
 
         @canany(['update', 'delete'], $boat)
             <div class="buttons">
@@ -42,7 +51,7 @@
                 <div class="box">
                     <h3 class="title is-4">{{ $boatType->name }}</h3>
                     @if ($boatType->description != null)
-                        <p>{{ Str::limit($boatType->description, 64) }}</a></p>
+                        <p>{{ Str::limit($boatType->description, 64) }}</p>
                     @endif
 
                     @can('delete_boat_boat_type', $boat)

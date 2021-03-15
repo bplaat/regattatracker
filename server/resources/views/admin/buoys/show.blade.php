@@ -15,7 +15,7 @@
     <div class="box content">
         <h1 class="title is-4">{{ $buoy->name }}</h1>
         @if ($buoy->description != null)
-            <p style="white-space: pre-wrap;">{{ $buoy->description }}</a></p>
+            <p style="white-space: pre-wrap;">{{ $buoy->description }}</p>
         @endif
 
         <div class="buttons">

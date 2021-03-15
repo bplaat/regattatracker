@@ -15,7 +15,7 @@
     <div class="box content">
         <h1 class="title is-4">{{ $boatType->name }}</h1>
         @if ($boatType->description != null)
-            <p style="white-space: pre-wrap;">{{ $boatType->description }}</a></p>
+            <p style="white-space: pre-wrap;">{{ $boatType->description }}</p>
         @endif
 
         <div class="buttons">
@@ -34,7 +34,7 @@
                 <div class="box">
                     <h3 class="title is-4"><a href="{{ route('admin.boats.show', $boat) }}">{{ $boat->name }}</a></h3>
                     @if ($boat->description != null)
-                        <p>{{ Str::limit($boat->description, 64) }}</a></p>
+                        <p>{{ Str::limit($boat->description, 64) }}</p>
                     @endif
                 </div>
             @endforeach

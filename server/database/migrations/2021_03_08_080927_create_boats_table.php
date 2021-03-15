@@ -17,6 +17,12 @@ class CreateBoatsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->integer('mmsi');
+            $table->float('length');
+            $table->float('breadth');
+            $table->float('weight');
+            $table->integer('sail_number');
+            $table->float('sail_area');
             $table->timestamps();
         });
     }

@@ -17,11 +17,25 @@ return [
     'create.user' => 'User',
     'create.name' => 'Name',
     'create.description' => 'Description',
+    'create.mmsi' => 'MMSI',
+    'create.length' => 'Length overall (m)',
+    'create.breadth' => 'Breadth overall (m)',
+    'create.weight' => 'Weight (kg)',
+    'create.sail_number' => 'Sail number',
+    'create.sail_area' => 'Sail area (m<sup>2</sup>)',
     'create.button' => 'Create new boat',
 
     // Admin boats show page
     'show.title' => ':boat.name - Boats - Admin',
     'show.description_empty' => 'This boat has no description',
+    'show.boat_info' => 'Boat Information',
+    'show.mmsi' => 'MMSI',
+    'show.length' => 'Length overall (m)',
+    'show.breadth' => 'Breadth overall (m)',
+    'show.weight' => 'Weight (kg)',
+    'show.sail_number' => 'Sail number',
+    'show.sail_area' => 'Sail area (m<sup>2</sup>)',
+    'show.kr_rating' => 'KlipperRace rating',
     'show.edit' => 'Edit boat',
     'show.delete' => 'Delete boat',
 
@@ -50,5 +64,11 @@ return [
     'edit.user' => 'User',
     'edit.name' => 'Name',
     'edit.description' => 'Description',
+    'edit.mmsi' => 'MMSI',
+    'edit.length' => 'Length overall (m)',
+    'edit.breadth' => 'Breadth overall (m)',
+    'edit.weight' => 'Weight (kg)',
+    'edit.sail_number' => 'Sail number',
+    'edit.sail_area' => 'Sail area (m<sup>2</sup>)',
     'edit.button' => 'Edit boat'
 ];
