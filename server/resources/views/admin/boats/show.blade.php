@@ -21,14 +21,18 @@
             <p><i>@lang('admin/boats.show.description_empty')</i></p>
         @endif
 
-        <h2 class="subtitle is-5">@lang('admin/boats.show.boat_info')</h2>
-        <p>@lang('admin/boats.show.mmsi'): {{ $boat->mmsi }}</p>
-        <p>@lang('admin/boats.show.length'): {{ $boat->length }} m</p>
-        <p>@lang('admin/boats.show.breadth'): {{ $boat->breadth }} m</p>
-        <p>@lang('admin/boats.show.weight'): {{ $boat->weight }} kg</p>
-        <p>@lang('admin/boats.show.sail_number'): {{ $boat->sail_number }}</p>
-        <p>@lang('admin/boats.show.sail_area'): {{ $boat->sail_area }} m<sup>2</sup></p>
-        <p>@lang('boats.show.kr_rating'): {{ $boat->krRating() }}</p>
+        <h2 class="subtitle is-5">@lang('boats.show.boat_info')</h2>
+        <p>@lang('boats.show.mmsi'): {{ $boat->mmsi }}</p>
+        <p>@lang('boats.show.length'): {{ round($boat->length, 2) }} m</p>
+        <p>@lang('boats.show.breadth'): {{ round($boat->breadth, 2) }} m</p>
+        <p>@lang('boats.show.weight'): {{ round($boat->weight, 2) }} kg</p>
+
+        <h2 class="subtitle is-5">@lang('boats.show.sail_info')</h2>
+        <p>@lang('boats.show.sail_number'): {{ $boat->sail_number }}</p>
+        <p>@lang('boats.show.sail_area'): {{ round($boat->sail_area, 2) }} m<sup>2</sup></p>
+
+        <h2 class="subtitle is-5">@lang('boats.show.klipperrace_info')</h2>
+        <p>@lang('boats.show.klipperrace_rating'): {{ round($boat->klipperraceRating(), 2) }}</p>
 
         <div class="buttons">
             <a class="button is-link" href="{{ route('admin.boats.edit', $boat) }}">@lang('admin/boats.show.edit')</a>

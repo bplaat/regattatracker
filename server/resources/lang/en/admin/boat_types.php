@@ -19,7 +19,7 @@ return [
     'create.button' => 'Create new boat type',
 
     // Admin boat types show page
-    'show.title' => ':boat.name - Boat Types - Admin',
+    'show.title' => ':boat_type.name - Boat Types - Admin',
     'show.edit' => 'Edit boat type',
     'show.delete' => 'Delete boat type',
 
@@ -27,7 +27,7 @@ return [
     'show.boats_empty' => 'There are no boats found',
 
     // Admin boat types edit page
-    'edit.title' => 'Edit - :boat.name - Boat Types',
+    'edit.title' => 'Edit - :boat_type.name - Boat Types',
     'edit.breadcrumb' => 'Edit',
     'edit.header' => 'Edit boat type',
     'edit.name' => 'Name',

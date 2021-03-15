@@ -35,8 +35,10 @@ return [
     'show.breadth' => 'Breadth overall',
     'show.weight' => 'Weight',
     'show.sail_number' => 'Sail number',
+    'show.sail_info' => 'Sail information',
     'show.sail_area' => 'Sail area',
-    'show.kr_rating' => 'KlipperRace rating',
+    'show.klipperrace_info' => 'KlipperRace information',
+    'show.klipperrace_rating' => 'KlipperRace rating',
     'show.edit' => 'Edit boat',
     'show.delete' => 'Delete boat',
 
