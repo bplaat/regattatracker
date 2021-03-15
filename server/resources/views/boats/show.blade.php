@@ -19,6 +19,24 @@
             <p><i>@lang('boats.show.description_empty')</i></p>
         @endif
 
+        <label class="label" for="MMSI">@lang('boats.show.MMSI')</label>
+        <p style="white-space: pre-wrap;">{{ $boat->MMSI }}</a></p>
+
+        <label class="label" for="LOA">@lang('boats.show.LOA')</label>
+        <p style="white-space: pre-wrap;">{{ $boat->LOA }}</a></p>
+
+        <label class="label" for="BOA">@lang('boats.show.BOA')</label>
+        <p style="white-space: pre-wrap;">{{ $boat->BOA }}</a></p>
+
+        <label class="label" for="weight">@lang('boats.show.weight')</label>
+        <p style="white-space: pre-wrap;">{{ $boat->weight }}</a></p>
+
+        <label class="label" for="sail_number">@lang('boats.show.sail_number')</label>
+        <p style="white-space: pre-wrap;">{{ $boat->sail_number }}</a></p>
+
+        <label class="label" for="sail_area">@lang('boats.show.sail_area')</label>
+        <p style="white-space: pre-wrap;">{{ $boat->sail_area }}</a></p>
+
         @canany(['update', 'delete'], $boat)
             <div class="buttons">
                 @can('update', $boat)

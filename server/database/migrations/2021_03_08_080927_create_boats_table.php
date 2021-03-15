@@ -17,6 +17,13 @@ class CreateBoatsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->integer('MMSI');
+            $table->float('LOA');
+            $table->float('BOA');
+            $table->float('weight');
+            $table->integer('sail_number');
+            $table->float('sail_area');
+            $table->float('KR_rating')->nullable();
             $table->timestamps();
         });
     }

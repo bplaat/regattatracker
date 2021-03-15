@@ -45,14 +45,30 @@ class AdminBoatsController extends Controller
         $fields = $request->validate([
             'user_id' => 'required|exists:users,id',
             'name' => 'required|min:2',
-            'description' => 'nullable'
+            'description' => 'nullable',
+            'MMSI' => 'required|digits:9|numeric',
+            'LOA' => 'required|numeric',
+            'BOA' => 'required|numeric',
+            'weight' => 'required|numeric',
+            'sail_number' => 'required|numeric',
+            'sail_area' => 'required|numeric',
         ]);
 
         // Create boat
         $boat = Boat::create([
             'name' => $fields['name'],
-            'description' => $fields['description']
+            'description' => $fields['description'],
+            'MMSI' => $fields['MMSI'],
+            'LOA' => $fields['LOA'],
+            'BOA' => $fields['BOA'],
+            'weight' => $fields['weight'],
+            'sail_number' => $fields['sail_number'],
+            'sail_area' => $fields['sail_area']
         ]);
+
+        // Calculate KR-rating
+        $boat->calcKRRating();
+        $boat->save();
 
         // Add user to boat as captain
         BoatUser::create([
@@ -105,14 +121,30 @@ class AdminBoatsController extends Controller
         // Validate input
         $fields = $request->validate([
             'name' => 'required|min:2',
-            'description' => 'nullable'
+            'description' => 'nullable',
+            'MMSI' => 'required|digits:9|numeric',
+            'LOA' => 'required|numeric',
+            'BOA' => 'required|numeric',
+            'weight' => 'required|numeric',
+            'sail_number' => 'required|numeric',
+            'sail_area' => 'required|numeric',
         ]);
 
         // Update boat
         $boat->update([
             'name' => $fields['name'],
-            'description' => $fields['description']
+            'description' => $fields['description'],
+            'MMSI' => $fields['MMSI'],
+            'LOA' => $fields['LOA'],
+            'BOA' => $fields['BOA'],
+            'weight' => $fields['weight'],
+            'sail_number' => $fields['sail_number'],
+            'sail_area' => $fields['sail_area']
         ]);
+
+        // Calculate KR-rating
+        $boat->calcKRRating();
+        $boat->save();
 
         // Go to the admin boat page
         return redirect()->route('admin.boats.show', $boat);
