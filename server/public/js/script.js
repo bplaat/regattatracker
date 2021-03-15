@@ -1,3 +1,10 @@
+// Register service worker
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/js/serviceworker.js').then(function (registration) {
+        registration.update();
+    });
+}
+
 // Bulma mobile navigation bar
 var navbarBurger = document.querySelector('.navbar-burger');
 var navbarMenu = document.querySelector('.navbar-menu');

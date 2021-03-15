@@ -20,6 +20,9 @@ use App\Models\User;
 // Home page
 Route::view('/', 'home')->name('home');
 
+// Offline page
+Route::view('/offline', 'offline')->name('offline');
+
 // Normal routes
 Route::middleware('auth')->group(function () {
     // Boats
