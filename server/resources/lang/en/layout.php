@@ -1,6 +1,9 @@
 <?php
 
 return [
+    // Metadata
+    'description' => 'The brand new RegattaTracker deluxe tracking system',
+
     // Layout header
     'header.boats' => 'Boats',
     'header.admin.home' => 'Admin',
