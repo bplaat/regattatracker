@@ -22,6 +22,10 @@ The brand new RegattaTracker deluxe tracking system
     ```
     php artisan key:generate
     ```
+- Register a [MapBox](https://www.mapbox.com/) account to get an MapBox access token, insert your token add the end of the `.env` file
+    ```
+    MAPBOX_ACCESS_TOKEN={ INSERT YOUR ACCESS TOKEN HERE }
+    ```
 - Add following lines to `C:/xampp/apache/conf/extra/httpd-vhosts.conf` file
     ```
     # RegattaTracker vhosts
@@ -92,6 +96,10 @@ TODO
 - Generate Laravel security key
     ```
     php artisan key:generate
+    ```
+- Register a [MapBox](https://www.mapbox.com/) account to get an MapBox access token, insert your token add the end of the `.env` file
+    ```
+    MAPBOX_ACCESS_TOKEN={ INSERT YOUR ACCESS TOKEN HERE }
     ```
 - Create the file `/etc/apache2/sites-available/regattatracker.conf` **as root**
     ```
