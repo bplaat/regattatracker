@@ -14,6 +14,9 @@
     <meta name="theme-color" content="#f5f5f5">
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="/css/bulma.min.css">
+    @hasSection('head')
+        @yield('head')
+    @endif
 </head>
 <body>
     @hasSection('navbar')

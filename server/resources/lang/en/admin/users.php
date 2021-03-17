@@ -61,7 +61,7 @@ return [
     'show.boats_empty' => 'There are no boats found',
 
     // Admin users edit page
-    'edit.title' => 'Edit - :user.name - Users',
+    'edit.title' => 'Edit - :user.name - Users - Admin',
     'edit.breadcrumb' => 'Edit',
     'edit.header' => 'Edit user',
     'edit.firstname' => 'First name',

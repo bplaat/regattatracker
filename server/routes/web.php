@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/boats', [BoatsController::class, 'index'])->name('boats.index');
     Route::view('/boats/create', 'boats.create')->name('boats.create');
     Route::post('/boats', [BoatsController::class, 'store'])->name('boats.store');
+    Route::get('/boats/{boat}/track', [BoatsController::class, 'track'])->name('boats.track')
+        ->middleware('can:track,boat');
     Route::get('/boats/{boat}/edit', [BoatsController::class, 'edit'])->name('boats.edit')
         ->middleware('can:update,boat');
     Route::get('/boats/{boat}/delete', [BoatsController::class, 'delete'])->name('boats.delete')
@@ -81,6 +83,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/boats', [AdminBoatsController::class, 'index'])->name('admin.boats.index');
     Route::get('/admin/boats/create', [AdminBoatsController::class, 'create'])->name('admin.boats.create');
     Route::post('/admin/boats', [AdminBoatsController::class, 'store'])->name('admin.boats.store');
+    Route::get('/admin/boats/{boat}/track', [AdminBoatsController::class, 'track'])->name('admin.boats.track');
     Route::get('/admin/boats/{boat}/edit', [AdminBoatsController::class, 'edit'])->name('admin.boats.edit');
     Route::get('/admin/boats/{boat}/delete', [AdminBoatsController::class, 'delete'])->name('admin.boats.delete');
     Route::get('/admin/boats/{boat}', [AdminBoatsController::class, 'show'])->name('admin.boats.show');

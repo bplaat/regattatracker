@@ -39,6 +39,7 @@ return [
     'show.sail_area' => 'Sail area',
     'show.klipperrace_info' => 'KlipperRace information',
     'show.klipperrace_rating' => 'KlipperRace rating',
+    'show.track' => 'Track boat',
     'show.edit' => 'Edit boat',
     'show.delete' => 'Delete boat',
 
@@ -59,6 +60,10 @@ return [
     'show.users_role_field_crew' => 'As crew',
     'show.users_role_field_captain' => 'As captain',
     'show.users_add_button' => 'Add user',
+
+    // Boats track page
+    'track.title' => 'Track - :boat.name - Boats',
+    'track.breadcrumb' => 'Track',
 
     // Boats edit page
     'edit.title' => 'Edit - :boat.name - Boats',

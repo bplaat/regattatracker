@@ -27,7 +27,7 @@ return [
     'show.boats_empty' => 'There are no boats found',
 
     // Admin boat types edit page
-    'edit.title' => 'Edit - :boat_type.name - Boat Types',
+    'edit.title' => 'Edit - :boat_type.name - Boat Types - Admin',
     'edit.breadcrumb' => 'Edit',
     'edit.header' => 'Edit boat type',
     'edit.name' => 'Name',

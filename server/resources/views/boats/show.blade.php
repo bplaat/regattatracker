@@ -32,8 +32,11 @@
         <h2 class="subtitle is-5">@lang('boats.show.klipperrace_info')</h2>
         <p>@lang('boats.show.klipperrace_rating'): {{ round($boat->klipperraceRating(), 2) }}</p>
 
-        @canany(['update', 'delete'], $boat)
+        @canany(['track', 'update', 'delete'], $boat)
             <div class="buttons">
+                @can('track', $boat)
+                    <a class="button is-warning" href="{{ route('boats.track', $boat) }}">@lang('boats.show.track')</a>
+                @endcan
                 @can('update', $boat)
                     <a class="button is-link" href="{{ route('boats.edit', $boat) }}">@lang('boats.show.edit')</a>
                 @endcan

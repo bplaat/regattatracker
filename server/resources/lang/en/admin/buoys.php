@@ -24,7 +24,7 @@ return [
     'show.delete' => 'Delete buoy',
 
     // Admin buoys edit page
-    'edit.title' => 'Edit - :buoy.name - Buoys',
+    'edit.title' => 'Edit - :buoy.name - Buoys - Admin',
     'edit.breadcrumb' => 'Edit',
     'edit.header' => 'Edit buoy',
     'edit.name' => 'Name',

@@ -95,6 +95,13 @@ class BoatsController extends Controller
         ]);
     }
 
+    // Boats track route
+    public function track(Boat $boat)
+    {
+        // Return boat track view
+        return view('boats.track', [ 'boat' => $boat ]);
+    }
+
     // Boats edit route
     public function edit(Boat $boat)
     {

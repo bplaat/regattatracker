@@ -18,7 +18,12 @@ class BoatPolicy
         return $boatUser->count() == 1;
     }
 
-    // You need to be a captain to edit the boat
+    // You need to be a captain to track and update the boat
+    public function track(User $user, Boat $boat)
+    {
+        return $this->update($user, $boat);
+    }
+
     public function update(User $user, Boat $boat)
     {
         $boatUser = BoatUser::where('boat_id', $boat->id)->where('user_id', $user->id);
