@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class BuoyPosition extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'buoy_id',
+        'latitude',
+        'longitude'
+    ];
 }
