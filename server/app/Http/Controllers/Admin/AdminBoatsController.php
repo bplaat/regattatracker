@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Boat;
+use App\Models\BoatPosition;
 use App\Models\BoatType;
 use App\Models\BoatUser;
 use App\Models\User;
@@ -84,6 +85,7 @@ class AdminBoatsController extends Controller
         $boatBoatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
             ->paginate(5)->withQueryString();
         $boatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
+        $boatPositions = BoatPosition::all()->where('boat_id', '=', $boat->id)->sortBy('created_at', SORT_NATURAL | SORT_FLAG_CASE);
 
         $boatUsers = $boat->users->sortBy(User::sortByName(), SORT_NATURAL | SORT_FLAG_CASE)
             ->sortByDesc('pivot.role')->paginate(5)->withQueryString();
@@ -98,6 +100,7 @@ class AdminBoatsController extends Controller
 
             'boatBoatTypes' => $boatBoatTypes,
             'boatTypes' => $boatTypes,
+            'boatPositions' => $boatPositions,
 
             'boatUsers' => $boatUsers,
             'boatCaptains' => $boatCaptains,

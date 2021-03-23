@@ -102,6 +102,7 @@
             <div id="map-container" style="position: absolute; top: 0; width: 100%; height: 100%;"></div>
         </div>
     </div>
+
     <!-- Boat boat types -->
     <div class="box content">
         <h2 class="title is-4">@lang('boats.show.boat_types')</h2>

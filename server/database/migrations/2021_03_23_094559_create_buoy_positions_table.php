@@ -15,7 +15,15 @@ class CreateBuoyPositionsTable extends Migration
     {
         Schema::create('buoy_positions', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('buoy_id');
+            $table->decimal('latitude', 10, 8);
+            $table->decimal('longitude', 11, 8);
             $table->timestamps();
+
+            $table->foreign('buoy_id')
+                ->references('id')
+                ->on('buoys')
+                ->onDelete('cascade');
         });
     }
 

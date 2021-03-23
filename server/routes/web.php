@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminBoatPositionController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
@@ -101,6 +102,9 @@ Route::middleware('admin')->group(function () {
     Route::post('/admin/boats/{boat}/users', [AdminBoatUserController::class, 'create'])->name('admin.boats.users.create');
     Route::get('/admin/boats/{boat}/users/{user}/update', [AdminBoatUserController::class, 'update'])->name('admin.boats.users.update');
     Route::get('/admin/boats/{boat}/users/{user}/delete', [AdminBoatUserController::class, 'delete'])->name('admin.boats.users.delete');
+
+    // Boat Locations
+    Route::post('/boats/{boat}/add_location', [AdminBoatPositionController::class, 'create'])->name('admin.boats.location.add_location');
 
     // Admin boat types
     Route::get('/admin/boat_types', [AdminBoatTypesController::class, 'index'])->name('admin.boat_types.index');
