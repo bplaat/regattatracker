@@ -2,6 +2,11 @@
 
 @section('title', __('admin/buoys.show.title', ['buoy.name' => $buoy->name]))
 
+@section('head')
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css"/>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+@endsection
+
 @section('content')
     <div class="breadcrumb">
         <ul>
@@ -27,16 +32,16 @@
 
     <!-- Buoy location -->
     <div class="box content">
-        <h2 class="tile is-4">@lang('admin.buoys.show.locations')</h2>
+        <h2 class="tile is-4">@lang('admin/buoys.show.locations')</h2>
 
         <form method="POST" action="{{route('admin.buoys.location.add_location', $buoy)}}">
             @csrf
 
-            <h2 class="subtitle is-5">@lang('admin.buoys.show.location_creator')</h2>
+            <h2 class="subtitle is-5">@lang('admin/buoys.show.location_creator')</h2>
             <div class="columns">
                 <div class="column">
                     <div class="field">
-                        <label class="label" for="latitude">@lang('admin.buoys.show.latitude')</label>
+                        <label class="label" for="latitude">@lang('admin/buoys.show.latitude')</label>
                         <div class="control">
                             <input class="input @error('latitude') is-danger @enderror" type="text" id="latitude"
                                    name="latitude" value="{{old('latitude')}}" required>
@@ -46,7 +51,7 @@
 
                 <div class="column">
                     <div class="field">
-                        <label class="label" for="longitude">@lang('admin.buoys.show.longitude')</label>
+                        <label class="label" for="longitude">@lang('admin/buoys.show.longitude')</label>
                         <div class="control">
                             <input class="input @error('longitude') is-danger @enderror" type="text" id="longitude"
                                    name="longitude" value="{{old('longitude')}}" required>
@@ -65,12 +70,12 @@
             @endif
             <div class="field">
                 <div class="control">
-                    <button class="button is-link" type="submit">@lang('admin.buoys.show.create_point')</button>
+                    <button class="button is-link" type="submit">@lang('admin/buoys.show.create_point')</button>
                 </div>
             </div>
         </form>
 
-        <h2 class="subtitle is-5">@lang('admin.buoys.show.location_map')</h2>
+        <h2 class="subtitle is-5">@lang('admin/buoys.show.location_map')</h2>
         <div style="position: relative; width: 100%; padding-top: 55%; margin-bottom: 24px; background-color: #191a1a;">
             <div id="map-container" style="position: absolute; top: 0; width: 100%; height: 100%;"></div>
         </div>
