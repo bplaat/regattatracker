@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BoatsController;
 use App\Http\Controllers\BoatBoatTypeController;
 use App\Http\Controllers\BoatUserController;
+use App\Http\Controllers\BoatPositionController;
 use App\Http\Controllers\SettingsController;
 
 use App\Http\Controllers\Admin\AdminUsersController;
@@ -54,6 +55,9 @@ Route::middleware('auth')->group(function () {
         ->middleware('can:update_boat_user,boat');
     Route::get('/boats/{boat}/users/{user}/delete', [BoatUserController::class, 'delete'])->name('boats.users.delete')
         ->middleware('can:delete_boat_user,boat');
+
+    // Boat Locations
+    Route::post('/boats/{boat}/add_location', [BoatPositionController::class, 'create'])->name('boats.location.add_location');
 
     // Settings
     Route::view('/settings', 'settings', ['countries' => User::COUNTRIES])->name('settings');
