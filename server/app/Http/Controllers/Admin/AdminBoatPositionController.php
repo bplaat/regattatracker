@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Boat;
 use App\Models\BoatPosition;
 use App\Rules\Latitude;
 use App\Rules\Longitude;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AdminBoatPositionController extends Controller
 {

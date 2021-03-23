@@ -22,6 +22,13 @@ return [
     'show.title' => ':buoy.name - Buoys - Admin',
     'show.edit' => 'Edit buoy',
     'show.delete' => 'Delete buoy',
+    'show.locations' => 'Boat Location',
+    'show.location_creator' => 'Add a new point',
+    'show.location_map' => 'Location map',
+    'show.create_point' => 'Create point',
+    'show.latitude' => 'Latitude',
+    'show.longitude' => 'Longitude',
+
 
     // Admin buoys edit page
     'edit.title' => 'Edit - :buoy.name - Buoys - Admin',

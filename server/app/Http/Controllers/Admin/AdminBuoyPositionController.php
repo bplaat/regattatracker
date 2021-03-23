@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Buoy;
 use App\Models\BuoyPosition;
 use App\Rules\Latitude;
 use App\Rules\Longitude;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AdminBuoyPositionController extends Controller
 {
