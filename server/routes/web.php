@@ -1,9 +1,5 @@
 <?php
 
-
-use App\Http\Controllers\Admin\AdminBuoyPositionController;
-use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BoatsController;
 use App\Http\Controllers\BoatBoatTypeController;
@@ -12,14 +8,20 @@ use App\Http\Controllers\BoatPositionController;
 use App\Http\Controllers\SettingsController;
 
 use App\Http\Controllers\Admin\AdminUsersController;
+
 use App\Http\Controllers\Admin\AdminBoatsController;
+use App\Http\Controllers\Admin\AdminBoatPositionController;
 use App\Http\Controllers\Admin\AdminBoatBoatTypeController;
 use App\Http\Controllers\Admin\AdminBoatUserController;
+
 use App\Http\Controllers\Admin\AdminBoatTypesController;
+
 use App\Http\Controllers\Admin\AdminBuoysController;
-use App\Http\Controllers\Admin\AdminBoatPositionController;
+use App\Http\Controllers\Admin\AdminBuoyPositionController;
 
 use App\Models\User;
+
+use Illuminate\Support\Facades\Route;
 
 // Home page
 Route::view('/', 'home')->name('home');
@@ -59,8 +61,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/boats/{boat}/users/{user}/delete', [BoatUserController::class, 'delete'])->name('boats.users.delete')
         ->middleware('can:delete_boat_user,boat');
 
-    // Boat Locations
-    Route::post('/boats/{boat}/add_location', [BoatPositionController::class, 'create'])->name('boats.location.add_location');
+    // Boat Positions
+    Route::post('/boats/{boat}/positions', [BoatPositionController::class, 'create'])->name('boats.positions.create');
 
     // Settings
     Route::view('/settings', 'settings', ['countries' => User::COUNTRIES])->name('settings');
@@ -105,8 +107,8 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/boats/{boat}/users/{user}/update', [AdminBoatUserController::class, 'update'])->name('admin.boats.users.update');
     Route::get('/admin/boats/{boat}/users/{user}/delete', [AdminBoatUserController::class, 'delete'])->name('admin.boats.users.delete');
 
-    // Admin boat Locations
-    Route::post('/admin/boats/{boat}/add_location', [AdminBoatPositionController::class, 'create'])->name('admin.boats.location.add_location');
+    // Admin boat positions
+    Route::post('/admin/boats/{boat}/positions', [AdminBoatPositionController::class, 'create'])->name('admin.boats.positions.create');
 
     // Admin boat types
     Route::get('/admin/boat_types', [AdminBoatTypesController::class, 'index'])->name('admin.boat_types.index');
@@ -126,8 +128,8 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/buoys/{buoy}', [AdminBuoysController::class, 'show'])->name('admin.buoys.show');
     Route::post('/admin/buoys/{buoy}', [AdminBuoysController::class, 'update'])->name('admin.buoys.update');
 
-    // Admin buoy Locations
-    Route::post('/admin/buoys/{buoy}/add_location', [AdminBuoyPositionController::class, 'create'])->name('admin.buoys.location.add_location');
+    // Admin buoy positions
+    Route::post('/admin/buoys/{buoy}/positions', [AdminBuoyPositionController::class, 'create'])->name('admin.buoys.positions.create');
 });
 
 // Guest routes

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Boat;
 use Illuminate\Database\Eloquent\Model;
 
 class BoatType extends Model

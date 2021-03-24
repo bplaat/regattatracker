@@ -48,7 +48,10 @@ class AdminBuoysController extends Controller
     // Admin buoys show route
     public function show(Buoy $buoy)
     {
-        $buoyPositions = BuoyPosition::all()->where('buoy_id', '=', $buoy->id)->sortBy('created_at', SORT_NATURAL | SORT_FLAG_CASE);
+        // Select buoy information
+        $buoyPositions = $buoy->positions;
+
+        // Return buoy show view
         return view('admin.buoys.show', ['buoy' => $buoy, 'buoyPositions' => $buoyPositions]);
     }
 

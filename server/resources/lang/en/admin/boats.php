@@ -42,6 +42,12 @@ return [
     'show.edit' => 'Edit boat',
     'show.delete' => 'Delete boat',
 
+    'show.positions' => 'Boat Positions',
+    'show.positions_empty' => 'This boat has no known positions',
+    'show.positions_latitude_field' => 'Latitude',
+    'show.positions_longitude_field' => 'Longitude',
+    'show.positions_add_button' => 'Add position',
+
     'show.boat_types' => 'Boat Types',
     'show.boat_types_remove_button' => 'Remove boat type',
     'show.boat_types_empty' => 'This boat has no assigned boat types',

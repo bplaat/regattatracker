@@ -30,115 +30,95 @@
         </div>
     </div>
 
-    <!-- Buoy location -->
+    <!-- Buoy positions -->
     <div class="box content">
-        <h2 class="tile is-4">@lang('admin/buoys.show.locations')</h2>
+        <h2 class="tile is-4">@lang('admin/buoys.show.positions')</h2>
 
-        <form method="POST" action="{{route('admin.buoys.location.add_location', $buoy)}}">
+        @if (count($buoyPositions) > 0)
+            <div class="box" style="position: relative; padding-top: 45%; background-color: #191a1a; overflow: hidden;">
+                <div id="map-container" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+            </div>
+
+            <script>
+                mapboxgl.accessToken = @json(config('mapbox.access_token'));
+
+                var buoyPositions = @json($buoyPositions);
+
+                var latestPosition = [
+                    parseFloat(buoyPositions[buoyPositions.length - 1].longitude),
+                    parseFloat(buoyPositions[buoyPositions.length - 1].latitude)
+                ];
+
+                var map = new mapboxgl.Map({
+                    container: 'map-container',
+                    style: 'mapbox://styles/mapbox/dark-v10',
+                    center: latestPosition,
+                    zoom: 9
+                });
+
+                map.on('load', function () {
+                    if (buoyPositions.length > 1) {
+                        var lineCoordinates = [];
+                        for (var i = 0; i < buoyPositions.length; i++) {
+                            lineCoordinates.push([
+                                buoyPositions[i].longitude,
+                                buoyPositions[i].latitude
+                            ]);
+                        }
+                        map.addSource('route', {
+                            'type': 'geojson',
+                            'data': {
+                                'type': 'Feature',
+                                'properties': {},
+                                'geometry': {
+                                    'type': 'LineString',
+                                    'coordinates': lineCoordinates
+                                }
+                            }
+                        });
+
+                        map.addLayer({
+                            'id': 'route',
+                            'type': 'line',
+                            'source': 'route',
+                            'layout': {
+                                'line-join': 'round',
+                                'line-cap': 'round'
+                            },
+                            'paint': {
+                                'line-color': '#a2a2a2',
+                                'line-width': 8
+                            }
+                        });
+                    }
+
+                    new mapboxgl.Marker().setLngLat(latestPosition).addTo(map);
+                });
+            </script>
+        @else
+            <p><i>@lang('admin/buoys.show.positions_empty')</i></p>
+        @endif
+
+        <form method="POST" action="{{ route('admin.buoys.positions.create', $buoy) }}">
             @csrf
 
-            <h2 class="subtitle is-5">@lang('admin/buoys.show.location_creator')</h2>
-            <div class="columns">
-                <div class="column">
-                    <div class="field">
-                        <label class="label" for="latitude">@lang('admin/buoys.show.latitude')</label>
-                        <div class="control">
-                            <input class="input @error('latitude') is-danger @enderror" type="text" id="latitude"
-                                   name="latitude" value="{{old('latitude')}}" required>
-                        </div>
-                    </div>
+            <div class="field has-addons">
+                <div class="control">
+                    <input class="input @error('latitude') is-danger @enderror" type="text" id="latitude" name="latitude"
+                        placeholder="@lang('admin/buoys.show.positions_latitude_field')"
+                        value="{{ old('latitude', count($buoyPositions) >= 1 ? $buoyPositions[count($buoyPositions) - 1]->latitude : '') }}" required>
                 </div>
 
-                <div class="column">
-                    <div class="field">
-                        <label class="label" for="longitude">@lang('admin/buoys.show.longitude')</label>
-                        <div class="control">
-                            <input class="input @error('longitude') is-danger @enderror" type="text" id="longitude"
-                                   name="longitude" value="{{old('longitude')}}" required>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @if ($errors->any())
-                <div class="message is-danger">
-                    <div class="message-body">
-                        @foreach ($errors->all() as $error)
-                            {{ $error }}<br>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-            <div class="field">
                 <div class="control">
-                    <button class="button is-link" type="submit">@lang('admin/buoys.show.create_point')</button>
+                    <input class="input @error('longitude') is-danger @enderror" type="text" id="longitude" name="longitude"
+                        placeholder="@lang('admin/buoys.show.positions_longitude_field')"
+                        value="{{ old('longitude', count($buoyPositions) >= 1 ? $buoyPositions[count($buoyPositions) - 1]->longitude : '') }}" required>
+                </div>
+
+                <div class="control">
+                    <button class="button is-link" type="submit">@lang('admin/buoys.show.positions_add_button')</button>
                 </div>
             </div>
         </form>
-
-        <h2 class="subtitle is-5">@lang('admin/buoys.show.location_map')</h2>
-        <div style="position: relative; width: 100%; padding-top: 55%; margin-bottom: 24px; background-color: #191a1a;">
-            <div id="map-container" style="position: absolute; top: 0; width: 100%; height: 100%;"></div>
-        </div>
     </div>
-    <script>
-        mapboxgl.accessToken = @json(config('mapbox.access_token'));
-        var map = new mapboxgl.Map({
-            container: 'map-container',
-            style: 'mapbox://styles/mapbox/dark-v10',
-            center: [5.4059754, 52.6758974],
-            zoom: 9
-        });
-
-        @if ($buoyPositions->count() > 0)
-        new mapboxgl.Marker()
-            .setLngLat([{{$buoyPositions[0]->latitude}}, {{$buoyPositions[0]->longitude}}])
-            .addTo(map);
-        @endif
-
-        @if ($buoyPositions->count() > 1)
-        var line = [];
-        @foreach($buoyPositions as $buoyPosition)
-        line.push([{{$buoyPosition->latitude}}, {{$buoyPosition->longitude}}]);
-        @endforeach
-        map.on('load', function () {
-            map.addSource('route', {
-                'type': 'geojson',
-                'data': {
-                    'type': 'Feature',
-                    'properties': {},
-                    'geometry': {
-                        'type': 'LineString',
-                        'coordinates': line
-                    }
-                }
-            });
-            map.addLayer({
-                'id': 'route',
-                'type': 'line',
-                'source': 'route',
-                'layout': {
-                    'line-join': 'round',
-                    'line-cap': 'round'
-                },
-                'paint': {
-                    'line-color': '#a2a2a2',
-                    'line-width': 8
-                }
-            });
-        });
-        new mapboxgl.Marker()
-            .setLngLat([{{$buoyPositions->last()->latitude}}, {{$buoyPositions->last()->longitude}}])
-            .addTo(map);
-        @endif
-
-        // if ('geolocation' in navigator) {
-        //     navigator.geolocation.watchPosition(function (position) {
-        //         console.log(position.cords);
-        //     }, function (error) {
-        //         alert(error.message);
-        //     });
-        // } else {
-        //     alert('Your browser doesn\t support geolocation tracking!');
-        // }
-    </script>
 @endsection

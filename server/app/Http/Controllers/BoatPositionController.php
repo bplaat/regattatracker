@@ -10,22 +10,23 @@ use Illuminate\Http\Request;
 
 class BoatPositionController extends Controller
 {
+    // Boat position create route
     public function create(Request $request, Boat $boat)
     {
-        // Validate input.
+        // Validate input
         $fields = $request->validate([
             'latitude' => [new Latitude],
             'longitude' => [new Longitude]
         ]);
 
-        // Create point.
+        // Create boat position
         BoatPosition::create([
             'boat_id' => $boat->id,
             'latitude' => $fields['latitude'],
             'longitude' => $fields['longitude']
         ]);
 
-        // Return to the boat.
+        // Return to the boat show page
         return redirect()->route('boats.show', $boat);
     }
 }

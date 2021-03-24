@@ -42,12 +42,12 @@ return [
     'show.track' => 'Track boat',
     'show.edit' => 'Edit boat',
     'show.delete' => 'Delete boat',
-    'show.locations' => 'Boat Location',
-    'show.location_creator' => 'Add a new point',
-    'show.location_map' => 'Location map',
-    'show.create_point' => 'Create point',
-    'show.latitude' => 'Latitude',
-    'show.longitude' => 'Longitude',
+
+    'show.positions' => 'Boat Positions',
+    'show.positions_empty' => 'This boat has no known positions',
+    'show.positions_latitude_field' => 'Latitude',
+    'show.positions_longitude_field' => 'Longitude',
+    'show.positions_add_button' => 'Add position',
 
     'show.boat_types' => 'Boat Types',
     'show.boat_types_remove_button' => 'Remove boat type',
