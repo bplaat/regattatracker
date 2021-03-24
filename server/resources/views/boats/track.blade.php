@@ -27,16 +27,22 @@
 
     <script>
         mapboxgl.accessToken = @json(config('mapbox.access_token'));
+
+        var boatPositions = @json($boatPositions);
+
+        var latestPosition = [
+            parseFloat(boatPositions[boatPositions.length - 1].longitude),
+            parseFloat(boatPositions[boatPositions.length - 1].latitude)
+        ];
+
         var map = new mapboxgl.Map({
             container: 'map-container',
             style: 'mapbox://styles/mapbox/dark-v10',
-            center: [5.4059754, 52.6758974],
+            center: latestPosition,
             zoom: 9
         });
 
-        new mapboxgl.Marker()
-            .setLngLat([5.4059754, 52.6758974])
-            .addTo(map);
+        new mapboxgl.Marker().setLngLat(latestPosition).addTo(map);
 
         // if ('geolocation' in navigator) {
         //     navigator.geolocation.watchPosition(function (position) {

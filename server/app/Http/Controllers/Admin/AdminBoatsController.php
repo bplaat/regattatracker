@@ -113,8 +113,15 @@ class AdminBoatsController extends Controller
     // Admin boats track route
     public function track(Boat $boat)
     {
+        // Select boat information
+        $boatPositions = $boat->positions;
+
         // Return admin boat track view
-        return view('admin.boats.track', [ 'boat' => $boat ]);
+        return view('admin.boats.track', [
+            'boat' => $boat,
+
+            'boatPositions' => $boatPositions
+        ]);
     }
 
     // Admin boats edit route

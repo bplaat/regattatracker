@@ -26,27 +26,33 @@
         <button id="track-button" class="button is-link">Start tracking</button>
     </div>
 
-<script>
-    mapboxgl.accessToken = @json(config('mapbox.access_token'));
-    var map = new mapboxgl.Map({
-        container: 'map-container',
-        style: 'mapbox://styles/mapbox/dark-v10',
-        center: [5.4059754, 52.6758974],
-        zoom: 9
-    });
+    <script>
+        mapboxgl.accessToken = @json(config('mapbox.access_token'));
 
-    new mapboxgl.Marker()
-        .setLngLat([5.4059754, 52.6758974])
-        .addTo(map);
+        var boatPositions = @json($boatPositions);
 
-    // if ('geolocation' in navigator) {
-    //     navigator.geolocation.watchPosition(function (position) {
-    //         console.log(position.cords);
-    //     }, function (error) {
-    //         alert(error.message);
-    //     });
-    // } else {
-    //     alert('Your browser doesn\t support geolocation tracking!');
-    // }
-</script>
+        var latestPosition = [
+            parseFloat(boatPositions[boatPositions.length - 1].longitude),
+            parseFloat(boatPositions[boatPositions.length - 1].latitude)
+        ];
+
+        var map = new mapboxgl.Map({
+            container: 'map-container',
+            style: 'mapbox://styles/mapbox/dark-v10',
+            center: latestPosition,
+            zoom: 9
+        });
+
+        new mapboxgl.Marker().setLngLat(latestPosition).addTo(map);
+
+        // if ('geolocation' in navigator) {
+        //     navigator.geolocation.watchPosition(function (position) {
+        //         console.log(position.cords);
+        //     }, function (error) {
+        //         alert(error.message);
+        //     });
+        // } else {
+        //     alert('Your browser doesn\t support geolocation tracking!');
+        // }
+    </script>
 @endsection
