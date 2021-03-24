@@ -2,6 +2,11 @@
 
 @section('title', __('boats.show.title', ['boat.name' => $boat->name]))
 
+@section('head')
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css"/>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+@endsection
+
 @section('content')
     <div class="breadcrumb">
         <ul>
@@ -47,6 +52,100 @@
         @endcanany
     </div>
 
+    <!-- Boat positions -->
+    <div class="box content">
+        <h2 class="tile is-4">@lang('boats.show.positions')</h2>
+
+        @if (count($boatPositions) > 0)
+            <div class="box" style="position: relative; padding-top: 45%; background-color: #191a1a; overflow: hidden;">
+                <div id="map-container" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+            </div>
+
+            <script>
+                mapboxgl.accessToken = @json(config('mapbox.access_token'));
+
+                var boatPositions = @json($boatPositions);
+
+                var latestPosition = [
+                    parseFloat(boatPositions[boatPositions.length - 1].longitude),
+                    parseFloat(boatPositions[boatPositions.length - 1].latitude)
+                ];
+
+                var map = new mapboxgl.Map({
+                    container: 'map-container',
+                    style: 'mapbox://styles/mapbox/dark-v10',
+                    center: latestPosition,
+                    zoom: 9
+                });
+
+                map.on('load', function () {
+                    if (boatPositions.length > 1) {
+                        var lineCoordinates = [];
+                        for (var i = 0; i < boatPositions.length; i++) {
+                            lineCoordinates.push([
+                                boatPositions[i].longitude,
+                                boatPositions[i].latitude
+                            ]);
+                        }
+                        map.addSource('route', {
+                            'type': 'geojson',
+                            'data': {
+                                'type': 'Feature',
+                                'properties': {},
+                                'geometry': {
+                                    'type': 'LineString',
+                                    'coordinates': lineCoordinates
+                                }
+                            }
+                        });
+
+                        map.addLayer({
+                            'id': 'route',
+                            'type': 'line',
+                            'source': 'route',
+                            'layout': {
+                                'line-join': 'round',
+                                'line-cap': 'round'
+                            },
+                            'paint': {
+                                'line-color': '#a2a2a2',
+                                'line-width': 8
+                            }
+                        });
+                    }
+
+                    new mapboxgl.Marker().setLngLat(latestPosition).addTo(map);
+                });
+            </script>
+        @else
+            <p><i>@lang('boats.show.positions_empty')</i></p>
+        @endif
+
+        @can('create_boat_position', $boat)
+            <form method="POST" action="{{ route('boats.positions.create', $boat) }}">
+                @csrf
+
+                <div class="field has-addons">
+                    <div class="control">
+                        <input class="input @error('latitude') is-danger @enderror" type="text" id="latitude" name="latitude"
+                            placeholder="@lang('boats.show.positions_latitude_field')"
+                            value="{{ old('latitude', count($boatPositions) >= 1 ? $boatPositions[count($boatPositions) - 1]->latitude : '') }}" required>
+                    </div>
+
+                    <div class="control">
+                        <input class="input @error('longitude') is-danger @enderror" type="text" id="longitude" name="longitude"
+                            placeholder="@lang('boats.show.positions_longitude_field')"
+                            value="{{ old('longitude', count($boatPositions) >= 1 ? $boatPositions[count($boatPositions) - 1]->longitude : '') }}" required>
+                    </div>
+
+                    <div class="control">
+                        <button class="button is-link" type="submit">@lang('boats.show.positions_add_button')</button>
+                    </div>
+                </div>
+            </form>
+        @endcan
+    </div>
+
     <!-- Boat boat types -->
     <div class="box content">
         <h2 class="title is-4">@lang('boats.show.boat_types')</h2>
@@ -63,7 +162,8 @@
 
                     @can('delete_boat_boat_type', $boat)
                         <div class="buttons">
-                            <a class="button is-danger" href="{{ route('boats.boat_types.delete', [$boat, $boatType]) }}">@lang('boats.show.boat_types_remove_button')</a>
+                            <a class="button is-danger"
+                               href="{{ route('boats.boat_types.delete', [$boat, $boatType]) }}">@lang('boats.show.boat_types_remove_button')</a>
                         </div>
                     @endcan
                 </div>
@@ -89,7 +189,8 @@
 
                                     @foreach ($boatTypes as $boatType)
                                         @if (!in_array($boatType->name, $boatBoatTypes->pluck('name')->toArray()))
-                                            <option value="{{ $boatType->id }}" @if ($boatType->id == old('boat_type_id')) selected @endif>
+                                            <option value="{{ $boatType->id }}"
+                                                    @if ($boatType->id == old('boat_type_id')) selected @endif>
                                                 {{ $boatType->name }}
                                             </option>
                                         @endif
@@ -99,7 +200,8 @@
                         </div>
 
                         <div class="control">
-                            <button class="button is-link" type="submit">@lang('boats.show.boat_types_add_button')</button>
+                            <button class="button is-link"
+                                    type="submit">@lang('boats.show.boat_types_add_button')</button>
                         </div>
                     </div>
                 </form>
@@ -133,14 +235,17 @@
                             <div class="buttons">
                                 @can('update_boat_user', $boat)
                                     @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
-                                        <a class="button is-success" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">@lang('boats.show.users_make_crew_button')</a>
+                                        <a class="button is-success"
+                                           href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">@lang('boats.show.users_make_crew_button')</a>
                                     @else
-                                        <a class="button is-info" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">@lang('boats.show.users_make_captain_button')</a>
+                                        <a class="button is-info"
+                                           href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">@lang('boats.show.users_make_captain_button')</a>
                                     @endif
                                 @endcan
 
                                 @can('delete_boat_user', $boat)
-                                    <a class="button is-danger" href="{{ route('boats.users.delete', [$boat, $user]) }}">@lang('boats.show.users_remove_button')</a>
+                                    <a class="button is-danger"
+                                       href="{{ route('boats.users.delete', [$boat, $user]) }}">@lang('boats.show.users_remove_button')</a>
                                 @endcan
                             </div>
                         @endif
@@ -168,7 +273,8 @@
 
                                     @foreach ($users as $user)
                                         @if (!in_array($user->id, $boatUsers->pluck('id')->toArray()))
-                                            <option value="{{ $user->id }}"  @if ($user->id == old('user_id')) selected @endif>
+                                            <option value="{{ $user->id }}"
+                                                    @if ($user->id == old('user_id')) selected @endif>
                                                 {{ $user->name() }}
                                             </option>
                                         @endif
@@ -180,11 +286,13 @@
                         <div class="control">
                             <div class="select @error('role') is-danger @enderror">
                                 <select id="role" name="role" required>
-                                    <option value="{{ App\Models\BoatUser::ROLE_CREW }}" @if (App\Models\BoatUser::ROLE_CREW == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
+                                    <option value="{{ App\Models\BoatUser::ROLE_CREW }}"
+                                            @if (App\Models\BoatUser::ROLE_CREW == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
                                         @lang('boats.show.users_role_field_crew')
                                     </option>
 
-                                    <option value="{{ App\Models\BoatUser::ROLE_CAPTAIN }}" @if (App\Models\BoatUser::ROLE_CAPTAIN == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
+                                    <option value="{{ App\Models\BoatUser::ROLE_CAPTAIN }}"
+                                            @if (App\Models\BoatUser::ROLE_CAPTAIN == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
                                         @lang('boats.show.users_role_field_captain')
                                     </option>
                                 </select>

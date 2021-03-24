@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Buoy;
+use App\Models\BuoyPosition;
 use Illuminate\Http\Request;
 
 class AdminBuoysController extends Controller
@@ -47,7 +48,11 @@ class AdminBuoysController extends Controller
     // Admin buoys show route
     public function show(Buoy $buoy)
     {
-        return view('admin.buoys.show', ['buoy' => $buoy]);
+        // Select buoy information
+        $buoyPositions = $buoy->positions;
+
+        // Return buoy show view
+        return view('admin.buoys.show', ['buoy' => $buoy, 'buoyPositions' => $buoyPositions]);
     }
 
     // Admin buoys edit route

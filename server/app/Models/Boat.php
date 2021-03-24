@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use App\Models\BoatType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -26,7 +24,13 @@ class Boat extends Model
         return $this->length * $this->sail_area / sqrt($this->breadth * $this->weight);
     }
 
-    // A boat has many boat types
+    // A boat has many positions
+    public function positions()
+    {
+        return $this->hasMany(BoatPosition::class);
+    }
+
+    // A boat belongs to many boat types
     public function boatTypes()
     {
         return $this->belongsToMany(BoatType::class);

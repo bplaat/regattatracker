@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Boat;
+use App\Models\BoatPosition;
 use App\Models\BoatType;
 use App\Models\BoatUser;
 use App\Models\User;
@@ -71,6 +72,8 @@ class BoatsController extends Controller
     public function show(Boat $boat)
     {
         // Select boat information
+        $boatPositions = $boat->positions;
+
         $boatBoatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
             ->paginate(5)->withQueryString();
         $boatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
@@ -85,6 +88,8 @@ class BoatsController extends Controller
         // Return boat show view
         return view('boats.show', [
             'boat' => $boat,
+
+            'boatPositions' => $boatPositions,
 
             'boatBoatTypes' => $boatBoatTypes,
             'boatTypes' => $boatTypes,

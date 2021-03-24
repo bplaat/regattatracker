@@ -23,6 +23,12 @@ return [
     'show.edit' => 'Edit buoy',
     'show.delete' => 'Delete buoy',
 
+    'show.positions' => 'Buoy Positions',
+    'show.positions_empty' => 'This buoy has no known positions',
+    'show.positions_latitude_field' => 'Latitude',
+    'show.positions_longitude_field' => 'Longitude',
+    'show.positions_add_button' => 'Add position',
+
     // Admin buoys edit page
     'edit.title' => 'Edit - :buoy.name - Buoys - Admin',
     'edit.breadcrumb' => 'Edit',

@@ -11,6 +11,12 @@ class Buoy extends Model
         'description'
     ];
 
+    // A buoy has many positions
+    public function positions()
+    {
+        return $this->hasMany(BuoyPosition::class);
+    }
+
     // Search by a query
     public static function search($query)
     {

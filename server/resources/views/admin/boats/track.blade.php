@@ -18,8 +18,8 @@
         </ul>
     </div>
 
-    <div style="position: relative; width: 100%; padding-top: 55%; margin-bottom: 24px; background-color: #191a1a;">
-        <div id="map-container" style="position: absolute; top: 0; width: 100%; height: 100%;"></div>
+    <div class="box" style="position: relative; padding-top: 55%; background-color: #191a1a; overflow: hidden;">
+        <div id="map-container" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
     </div>
 
     <div class="buttons is-centered">
@@ -32,7 +32,6 @@
         container: 'map-container',
         style: 'mapbox://styles/mapbox/dark-v10',
         center: [5.4059754, 52.6758974],
-        pitch: 60,
         zoom: 9
     });
 

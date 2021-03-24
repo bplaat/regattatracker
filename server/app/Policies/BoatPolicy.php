@@ -35,6 +35,12 @@ class BoatPolicy
         return $this->update($user, $boat);
     }
 
+    // Boat Position connection
+    public function create_boat_position(User $user, Boat $boat)
+    {
+        return $this->update($user, $boat);
+    }
+
     // Boat Boat Type connection
     public function create_boat_boat_type(User $user, Boat $boat)
     {
