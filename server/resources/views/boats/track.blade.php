@@ -42,16 +42,18 @@
             zoom: 9
         });
 
-        new mapboxgl.Marker().setLngLat(latestPosition).addTo(map);
+        map.on('load', function () {
+            new mapboxgl.Marker().setLngLat(latestPosition).addTo(map);
 
-        // if ('geolocation' in navigator) {
-        //     navigator.geolocation.watchPosition(function (position) {
-        //         console.log(position.cords);
-        //     }, function (error) {
-        //         alert(error.message);
-        //     });
-        // } else {
-        //     alert('Your browser doesn\t support geolocation tracking!');
-        // }
+            // if ('geolocation' in navigator) {
+            //     navigator.geolocation.watchPosition(function (position) {
+            //         console.log(position.cords);
+            //     }, function (error) {
+            //         alert(error.message);
+            //     });
+            // } else {
+            //     alert('Your browser doesn\t support geolocation tracking!');
+            // }
+        });
     </script>
 @endsection

@@ -40,9 +40,9 @@ class BoatsController extends Controller
             'mmsi' => 'required|digits:9|integer',
             'length' => 'required|numeric|min:1|max:1000',
             'breadth' => 'required|numeric|min:1|max:1000',
-            'weight' => 'required|numeric|min:01|max:10000000000',
+            'weight' => 'required|numeric|min:1|max:10000000000',
             'sail_number' => 'required|integer|min:1|max:100000000',
-            'sail_area' => 'required|numeric|min:0.1|max:10000'
+            'sail_area' => 'required|numeric|min:1|max:10000'
         ]);
 
         // Create boat
@@ -131,9 +131,9 @@ class BoatsController extends Controller
             'mmsi' => 'required|digits:9|integer',
             'length' => 'required|numeric|min:1|max:1000',
             'breadth' => 'required|numeric|min:1|max:1000',
-            'weight' => 'required|numeric|min:01|max:10000000000',
+            'weight' => 'required|numeric|min:1|max:10000000000',
             'sail_number' => 'required|integer|min:1|max:100000000',
-            'sail_area' => 'required|numeric|min:0.1|max:10000'
+            'sail_area' => 'required|numeric|min:1|max:10000'
         ]);
 
         // Update boat

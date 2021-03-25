@@ -34,7 +34,7 @@ class UserFactory extends Factory
             'address' => $this->faker->streetAddress,
             'postcode' => $this->faker->postcode,
             'city' => $this->faker->city,
-            'country' => $this->faker->country,
+            'country' => $this->faker->randomElement(User::COUNTRIES),
             'password' => Hash::make($this->faker->password)
         ];
     }
