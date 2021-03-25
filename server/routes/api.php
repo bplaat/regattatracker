@@ -1,30 +1,23 @@
 <?php
 
-use App\Http\Controllers\Api\ApiBoatPositionController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\ApiBoatsController;
+use App\Http\Controllers\Api\ApiBoatPositionsController;
+use App\Http\Controllers\Api\ApiBoatBoatTypesController;
+use App\Http\Controllers\Api\ApiBoatUsersController;
+
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+// TODO: API auth
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Api boat routes
+Route::get('boats', [ApiBoatsController::class, 'index']);
 
-Route::get('boats/positions/{id}',[ApiBoatPositionController::class, 'show']);
+Route::get('boats/{boat}', [ApiBoatsController::class, 'show']);
 
-Route::get('boats/positions', [ApiBoatPositionController::class, 'index']);
+Route::get('boats/{boat}/positions', [ApiBoatPositionsController::class, 'index']);
 
-Route::post('boats/positions/{id}', [ApiBoatPositionController::class, 'store']);
+Route::post('boats/{boat}/positions', [ApiBoatPositionsController::class, 'store']);
 
-Route::put('boats/positions/{id}', [ApiBoatPositionController::class, 'update']);
+Route::get('boats/{boat}/boat_types', [ApiBoatBoatTypesController::class, 'index']);
 
-
+Route::get('boats/{boat}/users', [ApiBoatUsersController::class, 'index']);

@@ -9,10 +9,10 @@ use App\Rules\Latitude;
 use App\Rules\Longitude;
 use Illuminate\Http\Request;
 
-class AdminBoatPositionController extends Controller
+class AdminBoatPositionsController extends Controller
 {
-    // Admin boat position create route
-    public function create(Request $request, Boat $boat)
+    // Admin boat positions store route
+    public function store(Request $request, Boat $boat)
     {
         // Validate input
         $fields = $request->validate([
@@ -20,7 +20,7 @@ class AdminBoatPositionController extends Controller
             'longitude' => [new Longitude]
         ]);
 
-        // Create boet position
+        // Create boat position
         BoatPosition::create([
             'boat_id' => $boat->id,
             'latitude' => $fields['latitude'],

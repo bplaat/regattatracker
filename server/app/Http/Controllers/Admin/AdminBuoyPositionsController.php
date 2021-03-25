@@ -9,10 +9,10 @@ use App\Rules\Latitude;
 use App\Rules\Longitude;
 use Illuminate\Http\Request;
 
-class AdminBuoyPositionController extends Controller
+class AdminBuoyPositionsController extends Controller
 {
-    // Admin buoy position create route
-    public function create(Request $request, Buoy $buoy)
+    // Admin buoy positions store route
+    public function store(Request $request, Buoy $buoy)
     {
         // Validate input
         $fields = $request->validate([

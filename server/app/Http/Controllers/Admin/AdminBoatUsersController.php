@@ -9,10 +9,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminBoatUserController extends Controller
+class AdminBoatUsersController extends Controller
 {
-    // Admin boat user create route
-    public function create(Request $request, Boat $boat)
+    // Admin boat users store route
+    public function store(Request $request, Boat $boat)
     {
         // Validate input
         $fields = $request->validate([
@@ -31,7 +31,7 @@ class AdminBoatUserController extends Controller
         return redirect()->route('admin.boats.show', $boat);
     }
 
-    // Admin boat user update route
+    // Admin boat users update route
     public function update(Request $request, Boat $boat, User $user)
     {
         // Validate input
@@ -61,7 +61,7 @@ class AdminBoatUserController extends Controller
         return redirect()->route('admin.boats.show', $boat);
     }
 
-    // Admin boat user delete route
+    // Admin boat users delete route
     public function delete(Request $request, Boat $boat, User $user)
     {
         // Check if user is not the last capatain

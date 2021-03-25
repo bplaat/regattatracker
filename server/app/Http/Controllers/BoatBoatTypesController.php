@@ -10,10 +10,10 @@ use App\Models\BoatUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class BoatBoatTypeController extends Controller
+class BoatBoatTypesController extends Controller
 {
-    // Boat boat type create route
-    public function create(Request $request, Boat $boat)
+    // Boat boat types store route
+    public function store(Request $request, Boat $boat)
     {
         // Validate input
         $fields = $request->validate([
@@ -30,7 +30,7 @@ class BoatBoatTypeController extends Controller
         return redirect()->route('boats.show', $boat);
     }
 
-    // Boat boat type delete route
+    // Boat boat types delete route
     public function delete(Request $request, Boat $boat, BoatType $boatType)
     {
         // Delete boat boat type connection

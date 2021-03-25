@@ -8,10 +8,10 @@ use App\Models\BoatType;
 use App\Models\BoatBoatType;
 use Illuminate\Http\Request;
 
-class AdminBoatBoatTypeController extends Controller
+class AdminBoatBoatTypesController extends Controller
 {
-    // Admin boat boat type create route
-    public function create(Request $request, Boat $boat)
+    // Admin boat boat types store route
+    public function store(Request $request, Boat $boat)
     {
         // Validate input
         $fields = $request->validate([
@@ -28,7 +28,7 @@ class AdminBoatBoatTypeController extends Controller
         return redirect()->route('admin.boats.show', $boat);
     }
 
-    // Admin boat boat type delete route
+    // Admin boat boat types delete route
     public function delete(Request $request, Boat $boat, BoatType $boatType)
     {
         // Delete boat boat type connection

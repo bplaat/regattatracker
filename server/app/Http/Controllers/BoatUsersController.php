@@ -9,10 +9,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class BoatUserController extends Controller
+class BoatUsersController extends Controller
 {
-    // Boat user create route
-    public function create(Request $request, Boat $boat)
+    // Boat users store route
+    public function store(Request $request, Boat $boat)
     {
         // Validate input
         $fields = $request->validate([
@@ -31,7 +31,7 @@ class BoatUserController extends Controller
         return redirect()->route('boats.show', $boat);
     }
 
-    // Boat user update route
+    // Boat users update route
     public function update(Request $request, Boat $boat, User $user)
     {
         // Validate input
