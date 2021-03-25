@@ -31,8 +31,8 @@ class AdminBuoysController extends Controller
     {
         // Validate input
         $fields = $request->validate([
-            'name' => 'required|min:2',
-            'description' => 'nullable'
+            'name' => 'required|min:2|max:48',
+            'description' => 'nullable|max:20000'
         ]);
 
         // Create buoy
@@ -66,8 +66,8 @@ class AdminBuoysController extends Controller
     {
         // Validate input
         $fields = $request->validate([
-            'name' => 'required|min:2',
-            'description' => 'nullable'
+            'name' => 'required|min:2|max:48',
+            'description' => 'nullable|max:20000'
         ]);
 
         // Update buoy

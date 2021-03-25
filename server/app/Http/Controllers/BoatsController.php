@@ -35,14 +35,14 @@ class BoatsController extends Controller
     {
         // Validate input
         $fields = $request->validate([
-            'name' => 'required|min:2',
-            'description' => 'nullable',
+            'name' => 'required|min:2|max:48',
+            'description' => 'nullable|max:20000',
             'mmsi' => 'required|digits:9|integer',
-            'length' => 'required|numeric',
-            'breadth' => 'required|numeric',
-            'weight' => 'required|numeric',
-            'sail_number' => 'required|integer',
-            'sail_area' => 'required|numeric',
+            'length' => 'required|numeric|min:1|max:1000',
+            'breadth' => 'required|numeric|min:1|max:1000',
+            'weight' => 'required|numeric|min:01|max:10000000000',
+            'sail_number' => 'required|integer|min:1|max:100000000',
+            'sail_area' => 'required|numeric|min:0.1|max:10000'
         ]);
 
         // Create boat
@@ -126,14 +126,14 @@ class BoatsController extends Controller
     {
         // Validate input
         $fields = $request->validate([
-            'name' => 'required|min:2',
-            'description' => 'nullable',
+            'name' => 'required|min:2|max:48',
+            'description' => 'nullable|max:20000',
             'mmsi' => 'required|digits:9|integer',
-            'length' => 'required|numeric',
-            'breadth' => 'required|numeric',
-            'weight' => 'required|numeric',
-            'sail_number' => 'required|integer',
-            'sail_area' => 'required|numeric'
+            'length' => 'required|numeric|min:1|max:1000',
+            'breadth' => 'required|numeric|min:1|max:1000',
+            'weight' => 'required|numeric|min:01|max:10000000000',
+            'sail_number' => 'required|integer|min:1|max:100000000',
+            'sail_area' => 'required|numeric|min:0.1|max:10000'
         ]);
 
         // Update boat

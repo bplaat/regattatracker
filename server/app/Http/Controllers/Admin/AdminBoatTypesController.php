@@ -30,8 +30,8 @@ class AdminBoatTypesController extends Controller
     {
         // Validate input
         $fields = $request->validate([
-            'name' => 'required|min:2',
-            'description' => 'nullable'
+            'name' => 'required|min:2|max:48',
+            'description' => 'nullable|max:20000'
         ]);
 
         // Create boat type
@@ -69,8 +69,8 @@ class AdminBoatTypesController extends Controller
     {
         // Validate input
         $fields = $request->validate([
-            'name' => 'required|min:2',
-            'description' => 'nullable'
+            'name' => 'required|min:2|max:48',
+            'description' => 'nullable|max:20000'
         ]);
 
         // Update boat type

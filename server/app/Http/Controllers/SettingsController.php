@@ -16,21 +16,22 @@ class SettingsController extends Controller
     {
         // Validate input
         $fields = $request->validate([
-            'firstname' => 'required|min:2',
-            'insertion' => 'nullable',
-            'lastname' => 'required|min:2',
+            'firstname' => 'required|min:2|max:48',
+            'insertion' => 'nullable|max:16',
+            'lastname' => 'required|min:2|max:48',
             'gender' => 'required|integer|digits_between:' . User::GENDER_MALE . ',' . User::GENDER_OTHER,
             'birthday' => 'required|date',
             'email' => [
                 'required',
                 'email',
+                'max:255',
                 Rule::unique('users')->ignore(Auth::user()->email, 'email')
             ],
-            'phone' => 'nullable',
-            'address' => 'required|min:2',
-            'postcode' => 'required|min:2',
-            'city' => 'required|min:2',
-            'country' => 'required|min:2',
+            'phone' => 'nullable|max:255',
+            'address' => 'required|min:2|max:255',
+            'postcode' => 'required|min:2|max:255',
+            'city' => 'required|min:2|max:255',
+            'country' => 'required|min:2|max:255'
         ]);
 
         // Update user details
@@ -57,11 +58,14 @@ class SettingsController extends Controller
     {
         // Validate input
         $fields = $request->validate([
-            'current_password' => function ($attribute, $value, $fail) {
-                if (!Hash::check($value, Auth::user()->password)) {
-                    $fail(__('validation.current_password', ['attribute' => $attribute]));
+            'current_password' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!Hash::check($value, Auth::user()->password)) {
+                        $fail(__('validation.current_password', ['attribute' => $attribute]));
+                    }
                 }
-            },
+            ],
             'password' => 'required|min:6'
         ]);
 

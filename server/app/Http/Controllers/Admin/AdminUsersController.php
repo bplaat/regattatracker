@@ -33,17 +33,17 @@ class AdminUsersController extends Controller
     {
         // Validate input
         $fields = $request->validate([
-            'firstname' => 'required|min:2',
-            'insertion' => 'nullable',
-            'lastname' => 'required|min:2',
+            'firstname' => 'required|min:2|max:48',
+            'insertion' => 'nullable|max:16',
+            'lastname' => 'required|min:2|max:48',
             'gender' => 'required|integer|digits_between:' . User::GENDER_MALE . ',' . User::GENDER_OTHER,
             'birthday' => 'required|date',
-            'email' => 'required|email|unique:users',
-            'phone' => 'nullable',
-            'address' => 'required|min:2',
-            'postcode' => 'required|min:2',
-            'city' => 'required|min:2',
-            'country' => 'required|min:2',
+            'email' => 'required|email|max:255|unique:users',
+            'phone' => 'nullable|max:255',
+            'address' => 'required|min:2|max:255',
+            'postcode' => 'required|min:2|max:255',
+            'city' => 'required|min:2|max:255',
+            'country' => 'required|min:2|max:255',
             'password' => 'required|min:6|confirmed',
             'role' => 'required|integer|digits_between:' . User::ROLE_NORMAL . ',' . User::ROLE_ADMIN
         ]);
@@ -104,21 +104,22 @@ class AdminUsersController extends Controller
     {
         // Validate input
         $fields = $request->validate([
-            'firstname' => 'required|min:2',
-            'insertion' => 'nullable',
-            'lastname' => 'required|min:2',
+            'firstname' => 'required|min:2|max:48',
+            'insertion' => 'nullable|max:16',
+            'lastname' => 'required|min:2|max:48',
             'gender' => 'required|integer|digits_between:' . User::GENDER_MALE . ',' . User::GENDER_OTHER,
             'birthday' => 'required|date',
             'email' => [
                 'required',
                 'email',
+                'max:255',
                 Rule::unique('users')->ignore($user->email, 'email')
             ],
-            'phone' => 'nullable',
-            'address' => 'required|min:2',
-            'postcode' => 'required|min:2',
-            'city' => 'required|min:2',
-            'country' => 'required|min:2',
+            'phone' => 'nullable|max:255',
+            'address' => 'required|min:2|max:255',
+            'postcode' => 'required|min:2|max:255',
+            'city' => 'required|min:2|max:255',
+            'country' => 'required|min:2|max:255',
             'role' => 'required|integer|digits_between:' . User::ROLE_NORMAL . ',' . User::ROLE_ADMIN
         ]);
 
