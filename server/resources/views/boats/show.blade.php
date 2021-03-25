@@ -5,6 +5,9 @@
 @section('head')
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css"/>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+    @if (config('app.debug'))
+        <style>.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl{display:none!important}</style>
+    @endif
 @endsection
 
 @section('content')
@@ -71,11 +74,16 @@
                     parseFloat(boatPositions[boatPositions.length - 1].latitude)
                 ];
 
+                function isDarkModeEnabled() {
+                    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+                }
+
                 var map = new mapboxgl.Map({
                     container: 'map-container',
-                    style: 'mapbox://styles/mapbox/dark-v10',
+                    style: isDarkModeEnabled() ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10',
                     center: latestPosition,
-                    zoom: 9
+                    zoom: 9,
+                    attributionControl: false
                 });
 
                 map.on('load', function () {

@@ -5,6 +5,9 @@
 @section('head')
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" />
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+    @if (config('app.debug'))
+        <style>.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl{display:none!important}</style>
+    @endif
 @endsection
 
 @section('content')
@@ -28,18 +31,25 @@
             var boats = @json(\App\Models\Boat::with(['positions'])->get());
             var buoys = @json(\App\Models\Buoy::with(['positions'])->get());
 
+            function isDarkModeEnabled() {
+                return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+            }
+
             var map = new mapboxgl.Map({
                 container: 'map-container',
-                style: 'mapbox://styles/mapbox/dark-v10',
-                center: ( boats.length > 0 ? [
+                style: isDarkModeEnabled() ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10',
+                center: (boats.length > 0 ? [
                     boats[0].positions[boats[0].positions.length - 1].longitude,
                     boats[0].positions[boats[0].positions.length - 1].latitude
                 ] : [
                     buoys[0].positions[buoys[0].positions.length - 1].longitude,
                     buoys[0].positions[buoys[0].positions.length - 1].latitude
-                ] ),
-                zoom: 9
+                ]),
+                zoom: 9,
+                attributionControl: false
             });
+
+            map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
             map.on('load', function () {
                 map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png', function (error, image) {
