@@ -8,6 +8,7 @@ use App\Models\BoatPosition;
 use App\Rules\Latitude;
 use App\Rules\Longitude;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ApiBoatPositionsController extends Controller
 {
@@ -22,16 +23,19 @@ class ApiBoatPositionsController extends Controller
     public function store(Request $request, Boat $boat)
     {
         // Validate input
-        $fields = $request->validate([
-            'latitude' => [new Latitude],
-            'longitude' => [new Longitude]
+        $validation = Validator::make($request->all(), [
+            'latitude' => ['required', new Latitude],
+            'longitude' => ['required', new Longitude]
         ]);
+        if ($validation->fails()) {
+            return response([ 'errors' => $validation->errors() ], 400);
+        }
 
         // Create boat position
         $boatPosition = BoatPosition::create([
             'boat_id' => $boat->id,
-            'latitude' => $fields['latitude'],
-            'longitude' => $fields['longitude']
+            'latitude' => request('latitude'),
+            'longitude' => request('longitude')
         ]);
 
         // Return the new created boat position

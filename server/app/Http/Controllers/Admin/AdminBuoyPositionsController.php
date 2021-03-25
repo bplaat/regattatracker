@@ -16,8 +16,8 @@ class AdminBuoyPositionsController extends Controller
     {
         // Validate input
         $fields = $request->validate([
-            'latitude' => [new Latitude],
-            'longitude' => [new Longitude]
+            'latitude' => ['required', new Latitude],
+            'longitude' => ['required', new Longitude]
         ]);
 
         // Create buoy position
