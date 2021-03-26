@@ -5,7 +5,7 @@
 @section('content')
     <div class="breadcrumb">
         <ul>
-            <li><a href="/">RegattaTracker</a></li>
+            <li><a href="{{ route('home') }}">RegattaTracker</a></li>
             <li class="is-active"><a href="{{ route('settings') }}">@lang('settings.breadcrumb')</a></li>
         </ul>
     </div>
