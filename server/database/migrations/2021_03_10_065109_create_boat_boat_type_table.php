@@ -17,7 +17,8 @@ class CreateBoatBoatTypeTable extends Migration
             $table->id();
             $table->unsignedBigInteger('boat_id');
             $table->unsignedBigInteger('boat_type_id');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
             $table->unique(['boat_id', 'boat_type_id']);
 

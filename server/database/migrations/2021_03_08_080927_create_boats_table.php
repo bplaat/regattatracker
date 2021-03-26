@@ -23,7 +23,8 @@ class CreateBoatsTable extends Migration
             $table->float('weight');
             $table->integer('sail_number');
             $table->float('sail_area');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 
