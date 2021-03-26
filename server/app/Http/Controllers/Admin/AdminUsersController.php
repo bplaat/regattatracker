@@ -22,7 +22,7 @@ class AdminUsersController extends Controller
             $users = User::all();
         }
         $users = $users->sortBy(User::sortByName(), SORT_NATURAL | SORT_FLAG_CASE)
-            ->paginate(5)->withQueryString();
+            ->paginate(config('pagination.web.limit'))->withQueryString();
 
         // Return admin users index view
         return view('admin.users.index', ['users' => $users]);
@@ -74,7 +74,7 @@ class AdminUsersController extends Controller
     {
         // Get all user boats
         $boats = $user->boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
-            ->sortByDesc('pivot.role')->paginate(5)->withQueryString();
+            ->sortByDesc('pivot.role')->paginate(config('pagination.web.limit'))->withQueryString();
 
         // Return admin users show view
         return view('admin.users.show', [

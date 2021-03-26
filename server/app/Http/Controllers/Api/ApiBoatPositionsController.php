@@ -16,7 +16,7 @@ class ApiBoatPositionsController extends Controller
     public function index(Boat $boat)
     {
         // Return the boat positions
-        return $boat->positions->paginate(20);
+        return $boat->positions->paginate(config('pagination.api.limit'));
     }
 
     // Api boat positions store route

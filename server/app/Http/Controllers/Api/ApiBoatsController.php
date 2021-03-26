@@ -21,7 +21,7 @@ class ApiBoatsController extends Controller
             $boats = Boat::all();
         }
         $boats = $boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
-            ->paginate(10)->withQueryString();
+            ->paginate(config('pagination.api.limit'))->withQueryString();
 
         // Return the boats
         return $boats;

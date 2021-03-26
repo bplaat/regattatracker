@@ -11,6 +11,6 @@ class ApiBoatUsersController extends Controller
     public function index(Boat $boat)
     {
         // Return the boat users
-        return $boat->users->paginate(20);
+        return $boat->users->paginate(config('pagination.api.limit'));
     }
 }

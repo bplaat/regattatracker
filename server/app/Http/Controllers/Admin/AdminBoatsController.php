@@ -23,7 +23,7 @@ class AdminBoatsController extends Controller
             $boats = Boat::all();
         }
         $boats = $boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
-            ->paginate(5)->withQueryString();
+            ->paginate(config('pagination.web.limit'))->withQueryString();
 
         // Return admin boat index view
         return view('admin.boats.index', ['boats' => $boats]);
@@ -85,11 +85,11 @@ class AdminBoatsController extends Controller
         $boatPositions = $boat->positions;
 
         $boatBoatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
-            ->paginate(5)->withQueryString();
+            ->paginate(config('pagination.web.limit'))->withQueryString();
         $boatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
 
         $boatUsers = $boat->users->sortBy(User::sortByName(), SORT_NATURAL | SORT_FLAG_CASE)
-            ->sortByDesc('pivot.role')->paginate(5)->withQueryString();
+            ->sortByDesc('pivot.role')->paginate(config('pagination.web.limit'))->withQueryString();
         $boatCaptains = $boatUsers->filter(function ($user) {
             return $user->pivot->role == BoatUser::ROLE_CAPTAIN;
         });

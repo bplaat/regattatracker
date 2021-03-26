@@ -11,6 +11,6 @@ class ApiBoatBoatTypesController extends Controller
     public function index(Boat $boat)
     {
         // Return the boat boat types
-        return $boat->boatTypes->paginate(20);
+        return $boat->boatTypes->paginate(config('pagination.api.limit'));
     }
 }
