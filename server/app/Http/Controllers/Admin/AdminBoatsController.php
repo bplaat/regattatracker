@@ -68,9 +68,7 @@ class AdminBoatsController extends Controller
         ]);
 
         // Add user to boat as captain
-        BoatUser::create([
-            'boat_id' => $boat->id,
-            'user_id' => $fields['user_id'],
+        $boat->users()->attach($fields['user_id'], [
             'role' => BoatUser::ROLE_CAPTAIN
         ]);
 

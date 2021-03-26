@@ -21,9 +21,7 @@ class AdminBoatUsersController extends Controller
         ]);
 
         // Create boat user connection
-        BoatUser::create([
-            'boat_id' => $boat->id,
-            'user_id' => $fields['user_id'],
+        $boat->users()->attach($fields['user_id'], [
             'role' => $fields['role']
         ]);
 
@@ -51,11 +49,9 @@ class AdminBoatUsersController extends Controller
         }
 
         // Update boat user connection
-        $boatUser = BoatUser::where('boat_id', $boat->id)
-            ->where('user_id', $user->id)
-            ->first();
-        $boatUser->role = $fields['role'];
-        $boatUser->update();
+        $boat->users()->updateExistingPivot($user, [
+            'role' => $fields['role']
+        ]);
 
         // Go back to the boat page
         return redirect()->route('admin.boats.show', $boat);
@@ -74,10 +70,7 @@ class AdminBoatUsersController extends Controller
         }
 
         // Delete boat user connection
-        BoatUser::where('boat_id', $boat->id)
-            ->where('user_id', $user->id)
-            ->first()
-            ->delete();
+        $boat->users()->detach($user);
 
         // Go back to the boat page
         return redirect()->route('admin.boats.show', $boat);

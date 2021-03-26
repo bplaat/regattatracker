@@ -21,8 +21,7 @@ class AdminBuoyPositionsController extends Controller
         ]);
 
         // Create buoy position
-        BuoyPosition::create([
-            'buoy_id' => $buoy->id,
+        $buoy->positions()->create([
             'latitude' => $fields['latitude'],
             'longitude' => $fields['longitude']
         ]);

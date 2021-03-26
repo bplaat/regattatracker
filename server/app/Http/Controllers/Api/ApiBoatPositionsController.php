@@ -32,8 +32,7 @@ class ApiBoatPositionsController extends Controller
         }
 
         // Create boat position
-        $boatPosition = BoatPosition::create([
-            'boat_id' => $boat->id,
+        $boatPosition = $boat->positions()->create([
             'latitude' => request('latitude'),
             'longitude' => request('longitude')
         ]);

@@ -21,8 +21,7 @@ class AdminBoatPositionsController extends Controller
         ]);
 
         // Create boat position
-        BoatPosition::create([
-            'boat_id' => $boat->id,
+        $boat->positions()->create([
             'latitude' => $fields['latitude'],
             'longitude' => $fields['longitude']
         ]);

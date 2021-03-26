@@ -57,10 +57,8 @@ class BoatsController extends Controller
             'sail_area' => $fields['sail_area']
         ]);
 
-        // Add user to boat as captain
-        BoatUser::create([
-            'boat_id' => $boat->id,
-            'user_id' => Auth::id(),
+        // Add authed user to boat as captain
+        $boat->users()->attach(Auth::user(), [
             'role' => BoatUser::ROLE_CAPTAIN
         ]);
 
