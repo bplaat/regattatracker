@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Buoy;
-use App\Models\BuoyPosition;
 use Illuminate\Http\Request;
 
 class AdminBuoysController extends Controller

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Boat;
-use App\Models\BoatPosition;
 use App\Rules\Latitude;
 use App\Rules\Longitude;
 use Illuminate\Http\Request;

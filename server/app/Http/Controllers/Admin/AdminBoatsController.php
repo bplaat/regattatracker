@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Boat;
-use App\Models\BoatPosition;
 use App\Models\BoatType;
 use App\Models\BoatUser;
 use App\Models\User;
