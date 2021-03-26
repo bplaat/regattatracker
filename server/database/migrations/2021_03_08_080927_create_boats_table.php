@@ -18,11 +18,11 @@ class CreateBoatsTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->unsignedInteger('mmsi');
-            $table->float('length');
-            $table->float('breadth');
-            $table->float('weight');
+            $table->unsignedDecimal('length', 6, 2);
+            $table->unsignedDecimal('breadth', 6, 2);
+            $table->unsignedDecimal('weight', 9, 3);
             $table->unsignedInteger('sail_number');
-            $table->float('sail_area');
+            $table->unsignedDecimal('sail_area', 6, 2);
             $table->timestamps();
         });
     }
