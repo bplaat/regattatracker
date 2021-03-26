@@ -49,7 +49,8 @@ class SettingsController extends Controller
         ]);
 
         // Go back with message
-        return back()->with('message', __('settings.change_details_message'));
+        return redirect()->route('settings')
+            ->with('message', __('settings.change_details_message'));
     }
 
     // Change password route
@@ -71,6 +72,7 @@ class SettingsController extends Controller
         ]);
 
         // Go back with message
-        return back()->with('message', __('settings.change_password_message'));
+        return redirect()->route('settings')
+            ->with('message', __('settings.change_password_message'));
     }
 }
