@@ -20,7 +20,7 @@
         @endauth
     </div>
 
-    @if (\App\Models\Boat::count() + \App\Models\Buoy::count() > 0)
+    @if (\App\Models\Boat::count() + \App\Models\Buoy::count() > 0 && \App\Models\BoatPosition::count() + \App\Models\BuoyPosition::count() > 0)
         <div class="box" style="position: relative; padding-top: 55%; background-color: #191a1a; overflow: hidden;">
             <div id="map-container" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
         </div>
@@ -61,19 +61,21 @@
                     for (var i = 0; i < boats.length; i++) {
                         var boat = boats[i];
 
-                        boatFeatures.push({
-                            type: 'Feature',
-                            properties: {
-                                boat: boat
-                            },
-                            geometry: {
-                                type: 'Point',
-                                coordinates: [
-                                    boat.positions[boat.positions.length - 1].longitude,
-                                    boat.positions[boat.positions.length - 1].latitude
-                                ]
-                            }
-                        });
+                        if (boat.positions.length > 0) {
+                            boatFeatures.push({
+                                type: 'Feature',
+                                properties: {
+                                    boat: boat
+                                },
+                                geometry: {
+                                    type: 'Point',
+                                    coordinates: [
+                                        boat.positions[boat.positions.length - 1].longitude,
+                                        boat.positions[boat.positions.length - 1].latitude
+                                    ]
+                                }
+                            });
+                        }
                     }
 
                     map.addSource('boats', {
@@ -119,19 +121,21 @@
                     for (var i = 0; i < buoys.length; i++) {
                         var buoy = buoys[i];
 
-                        buoyFeatures.push({
-                            type: 'Feature',
-                            properties: {
-                                buoy: buoy
-                            },
-                            geometry: {
-                                type: 'Point',
-                                coordinates: [
-                                    buoy.positions[buoy.positions.length - 1].longitude,
-                                    buoy.positions[buoy.positions.length - 1].latitude
-                                ]
-                            }
-                        });
+                        if (buoy.positions.length > 0) {
+                            buoyFeatures.push({
+                                type: 'Feature',
+                                properties: {
+                                    buoy: buoy
+                                },
+                                geometry: {
+                                    type: 'Point',
+                                    coordinates: [
+                                        buoy.positions[buoy.positions.length - 1].longitude,
+                                        buoy.positions[buoy.positions.length - 1].latitude
+                                    ]
+                                }
+                            });
+                        }
                     }
 
                     map.addSource('buoys', {
