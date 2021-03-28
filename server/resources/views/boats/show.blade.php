@@ -10,7 +10,7 @@
 @section('content')
     <div class="breadcrumb">
         <ul>
-            <li><a href="{{ route('home') }}">RegattaTracker</a></li>
+            <li><a href="{{ route('home') }}">{{ config('app.name') }}</a></li>
             <li><a href="{{ route('boats.index') }}">@lang('boats.index.breadcrumb')</a></li>
             <li class="is-active"><a href="{{ route('boats.show', $boat) }}">{{ $boat->name }}</a></li>
         </ul>
@@ -164,8 +164,9 @@
 
                             @can('delete_boat_boat_type', $boat)
                                 <div class="buttons">
-                                    <a class="button is-danger"
-                                    href="{{ route('boats.boat_types.delete', [$boat, $boatType]) }}">@lang('boats.show.boat_types_remove_button')</a>
+                                    <a class="button is-danger is-light is-small" href="{{ route('boats.boat_types.delete', [$boat, $boatType]) }}">
+                                        @lang('boats.show.boat_types_remove_button')
+                                    </a>
                                 </div>
                             @endcan
                         </div>
@@ -192,7 +193,7 @@
                                     </option>
 
                                     @foreach ($boatTypes as $boatType)
-                                        @if (!in_array($boatType->name, $boatBoatTypes->pluck('name')->toArray()))
+                                        @if (!$boatBoatTypes->pluck('name')->contains($boatType->name))
                                             <option value="{{ $boatType->id }}"
                                                     @if ($boatType->id == old('boat_type_id')) selected @endif>
                                                 {{ $boatType->name }}
@@ -204,8 +205,9 @@
                         </div>
 
                         <div class="control">
-                            <button class="button is-link"
-                                    type="submit">@lang('boats.show.boat_types_add_button')</button>
+                            <button class="button is-link" type="submit">
+                                @lang('boats.show.boat_types_add_button')
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -241,17 +243,20 @@
                                     <div class="buttons">
                                         @can('update_boat_user', $boat)
                                             @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
-                                                <a class="button is-success"
-                                                href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">@lang('boats.show.users_make_crew_button')</a>
+                                                <a class="button is-success is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">
+                                                    @lang('boats.show.users_make_crew_button')
+                                                </a>
                                             @else
-                                                <a class="button is-info"
-                                                href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">@lang('boats.show.users_make_captain_button')</a>
+                                                <a class="button is-info is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">
+                                                    @lang('boats.show.users_make_captain_button')
+                                                </a>
                                             @endif
                                         @endcan
 
                                         @can('delete_boat_user', $boat)
-                                            <a class="button is-danger"
-                                            href="{{ route('boats.users.delete', [$boat, $user]) }}">@lang('boats.show.users_remove_button')</a>
+                                            <a class="button is-danger is-light is-small" href="{{ route('boats.users.delete', [$boat, $user]) }}">
+                                                @lang('boats.show.users_remove_button')
+                                            </a>
                                         @endcan
                                     </div>
                                 @endif
@@ -280,7 +285,7 @@
                                     </option>
 
                                     @foreach ($users as $user)
-                                        @if (!in_array($user->id, $boatUsers->pluck('id')->toArray()))
+                                        @if (!$boatUsers->pluck('id')->contains($user->id))
                                             <option value="{{ $user->id }}"
                                                     @if ($user->id == old('user_id')) selected @endif>
                                                 {{ $user->name() }}
