@@ -33,13 +33,13 @@ class Boat extends Model
     // A boat belongs to many boat types
     public function boatTypes()
     {
-        return $this->belongsToMany(BoatType::class);
+        return $this->belongsToMany(BoatType::class)->withTimestamps();
     }
 
     // A boat belongs to many users
     public function users()
     {
-        return $this->belongsToMany(User::class)->withPivot('role');
+        return $this->belongsToMany(User::class)->withPivot('role')->withTimestamps();
     }
 
     // Search by a query

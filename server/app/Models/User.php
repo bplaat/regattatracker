@@ -96,6 +96,6 @@ class User extends Authenticatable
     // A boat belongs to many boats
     public function boats()
     {
-        return $this->belongsToMany(Boat::class)->withPivot('role');
+        return $this->belongsToMany(Boat::class)->withPivot('role')->withTimestamps();
     }
 }
