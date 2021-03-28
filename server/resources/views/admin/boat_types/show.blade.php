@@ -30,14 +30,18 @@
         @if ($boats->count() > 0)
             {{ $boats->links() }}
 
-            @foreach ($boats as $boat)
-                <div class="box">
-                    <h3 class="title is-4"><a href="{{ route('admin.boats.show', $boat) }}">{{ $boat->name }}</a></h3>
-                    @if ($boat->description != null)
-                        <p>{{ Str::limit($boat->description, 64) }}</p>
-                    @endif
-                </div>
-            @endforeach
+            <div class="columns is-multiline">
+                @foreach ($boats as $boat)
+                    <div class="column is-one-third">
+                        <div class="box content" style="height: 100%">
+                            <h3 class="title is-4"><a href="{{ route('admin.boats.show', $boat) }}">{{ $boat->name }}</a></h3>
+                            @if ($boat->description != null)
+                                <p>{{ Str::limit($boat->description, 64) }}</p>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
 
             {{ $boats->links() }}
         @else

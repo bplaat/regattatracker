@@ -145,18 +145,22 @@
         @if ($boatBoatTypes->count() > 0)
             {{ $boatBoatTypes->links() }}
 
-            @foreach ($boatBoatTypes as $boatType)
-                <div class="box">
-                    <h3 class="title is-4"><a href="{{ route('admin.boat_types.show', $boatType) }}">{{ $boatType->name }}</a></h3>
-                    @if ($boatType->description != null)
-                        <p>{{ Str::limit($boatType->description, 64) }}</a></p>
-                    @endif
+            <div class="columns is-multiline">
+                @foreach ($boatBoatTypes as $boatType)
+                    <div class="column is-one-third">
+                        <div class="box content" style="height: 100%">
+                            <h3 class="title is-4"><a href="{{ route('admin.boat_types.show', $boatType) }}">{{ $boatType->name }}</a></h3>
+                            @if ($boatType->description != null)
+                                <p>{{ Str::limit($boatType->description, 64) }}</a></p>
+                            @endif
 
-                    <div class="buttons">
-                        <a class="button is-danger" href="{{ route('admin.boats.boat_types.delete', [$boat, $boatType]) }}">@lang('admin/boats.show.boat_types_remove_button')</a>
+                            <div class="buttons">
+                                <a class="button is-danger" href="{{ route('admin.boats.boat_types.delete', [$boat, $boatType]) }}">@lang('admin/boats.show.boat_types_remove_button')</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
 
             {{ $boatBoatTypes->links() }}
         @else
@@ -201,33 +205,37 @@
         @if ($boatUsers->count() > 0)
             {{ $boatUsers->links() }}
 
-            @foreach ($boatUsers as $user)
-                <div class="box">
-                    <h3 class="title is-4">
-                        <a href="{{ route('admin.users.show', $user) }}">{{ $user->name() }}</a>
+            <div class="columns is-multiline">
+                @foreach ($boatUsers as $user)
+                    <div class="column is-one-third">
+                        <div class="box content" style="height: 100%">
+                            <h3 class="title is-4">
+                                <a href="{{ route('admin.users.show', $user) }}">{{ $user->name() }}</a>
 
-                        @if ($user->pivot->role == App\Models\BoatUser::ROLE_CREW)
-                            <span class="tag is-pulled-right is-success">@lang('admin/boats.show.users_role_crew')</span>
-                        @endif
+                                @if ($user->pivot->role == App\Models\BoatUser::ROLE_CREW)
+                                    <span class="tag is-pulled-right is-success">@lang('admin/boats.show.users_role_crew')</span>
+                                @endif
 
-                        @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
-                            <span class="tag is-pulled-right is-info">@lang('admin/boats.show.users_role_captain')</span>
-                        @endif
-                    </h3>
+                                @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
+                                    <span class="tag is-pulled-right is-info">@lang('admin/boats.show.users_role_captain')</span>
+                                @endif
+                            </h3>
 
-                    @if ($user->pivot->role != App\Models\BoatUser::ROLE_CAPTAIN || $boatCaptains->count() > 1)
-                        <div class="buttons">
-                            @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
-                                <a class="button is-success" href="{{ route('admin.boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">@lang('admin/boats.show.users_make_crew_button')</a>
-                            @else
-                                <a class="button is-info" href="{{ route('admin.boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">@lang('admin/boats.show.users_make_captain_button')</a>
+                            @if ($user->pivot->role != App\Models\BoatUser::ROLE_CAPTAIN || $boatCaptains->count() > 1)
+                                <div class="buttons">
+                                    @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
+                                        <a class="button is-success" href="{{ route('admin.boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">@lang('admin/boats.show.users_make_crew_button')</a>
+                                    @else
+                                        <a class="button is-info" href="{{ route('admin.boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">@lang('admin/boats.show.users_make_captain_button')</a>
+                                    @endif
+
+                                    <a class="button is-danger" href="{{ route('admin.boats.users.delete', [$boat, $user]) }}">@lang('admin/boats.show.users_remove_button')</a>
+                                </div>
                             @endif
-
-                            <a class="button is-danger" href="{{ route('admin.boats.users.delete', [$boat, $user]) }}">@lang('admin/boats.show.users_remove_button')</a>
                         </div>
-                    @endif
-                </div>
-            @endforeach
+                    </div>
+                @endforeach
+            </div>
 
             {{ $boatUsers->links() }}
         @else

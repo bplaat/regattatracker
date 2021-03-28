@@ -35,25 +35,29 @@
         @if ($boats->count() > 0)
             {{ $boats->links() }}
 
-            @foreach ($boats as $boat)
-                <div class="box">
-                    <h2 class="title is-4">
-                        <a href="{{ route('boats.show', $boat) }}">{{ $boat->name }}</a>
+            <div class="columns is-multiline">
+                @foreach ($boats as $boat)
+                    <div class="column is-one-third">
+                        <div class="box content" style="height: 100%">
+                            <h2 class="title is-4">
+                                <a href="{{ route('boats.show', $boat) }}">{{ $boat->name }}</a>
 
-                        @if ($boat->pivot->role == App\Models\BoatUser::ROLE_CREW)
-                            <span class="tag is-pulled-right is-success">@lang('boats.index.role_crew')</span>
-                        @endif
+                                @if ($boat->pivot->role == App\Models\BoatUser::ROLE_CREW)
+                                    <span class="tag is-pulled-right is-success">@lang('boats.index.role_crew')</span>
+                                @endif
 
-                        @if ($boat->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
-                            <span class="tag is-pulled-right is-info">@lang('boats.index.role_captain')</span>
-                        @endif
-                    </h2>
+                                @if ($boat->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
+                                    <span class="tag is-pulled-right is-info">@lang('boats.index.role_captain')</span>
+                                @endif
+                            </h2>
 
-                    @if ($boat->description != null)
-                        <p>{{ Str::limit($boat->description, 64) }}</p>
-                    @endif
-                </div>
-            @endforeach
+                            @if ($boat->description != null)
+                                <p>{{ Str::limit($boat->description, 64) }}</p>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
 
             {{ $boats->links() }}
         @else

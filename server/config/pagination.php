@@ -5,6 +5,6 @@ return [
         'limit' => 20
     ],
     'web' => [
-        'limit' => 5
+        'limit' => 5 * 3
     ]
 ];
