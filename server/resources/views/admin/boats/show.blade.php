@@ -180,7 +180,7 @@
                                 </option>
 
                                 @foreach ($boatTypes as $boatType)
-                                    @if (!in_array($boatType->name, $boatBoatTypes->pluck('name')->toArray()))
+                                    @if (!$boatBoatTypes->pluck('name')->contains($boatType->name))
                                         <option value="{{ $boatType->id }}" @if ($boatType->id == old('boat_type_id')) selected @endif>
                                             {{ $boatType->name }}
                                         </option>
@@ -255,7 +255,7 @@
                                 </option>
 
                                 @foreach ($users as $user)
-                                    @if (!in_array($user->id, $boatUsers->pluck('id')->toArray()))
+                                    @if (!$boatUsers->pluck('id')->contains($user->id))
                                         <option value="{{ $user->id }}"  @if ($user->id == old('user_id')) selected @endif>
                                             {{ $user->name() }}
                                         </option>
