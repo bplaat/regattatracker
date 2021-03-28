@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('firstname');
             $table->string('insertion')->nullable();
             $table->string('lastname');
-            $table->tinyInteger('gender')->default(User::GENDER_MALE);
+            $table->unsignedTinyInteger('gender')->default(User::GENDER_MALE);
             $table->date('birthday');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
             $table->string('country');
             $table->string('password');
             $table->rememberToken();
-            $table->tinyInteger('role')->default(User::ROLE_NORMAL);
+            $table->unsignedTinyInteger('role')->default(User::ROLE_NORMAL);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

@@ -5,7 +5,7 @@
 @section('content')
     <div class="breadcrumb">
         <ul>
-            <li><a href="/">RegattaTracker</a></li>
+            <li><a href="{{ route('home') }}">{{ config('app.name') }}</a></li>
             <li><a href="{{ route('admin.home') }}">@lang('admin/home.breadcrumb')</a></li>
             <li class="is-active"><a href="{{ route('admin.users.index') }}">@lang('admin/users.index.breadcrumb')</a></li>
         </ul>
@@ -36,23 +36,27 @@
         @if ($users->count() > 0)
             {{ $users->links() }}
 
-            @foreach ($users as $user)
-                <div class="box">
-                    <h2 class="title is-4">
-                        <a href="{{ route('admin.users.show', $user) }}">{{ $user->name() }}</a>
+            <div class="columns is-multiline">
+                @foreach ($users as $user)
+                    <div class="column is-one-third">
+                        <div class="box content" style="height: 100%">
+                            <h2 class="title is-4">
+                                <a href="{{ route('admin.users.show', $user) }}">{{ $user->name() }}</a>
 
-                        @if ($user->role == App\Models\User::ROLE_NORMAL)
-                            <span class="tag is-pulled-right is-success">@lang('admin/users.index.role_normal')</span>
-                        @endif
+                                @if ($user->role == App\Models\User::ROLE_NORMAL)
+                                    <span class="tag is-pulled-right is-success">@lang('admin/users.index.role_normal')</span>
+                                @endif
 
-                        @if ($user->role == App\Models\User::ROLE_ADMIN)
-                            <span class="tag is-pulled-right is-danger">@lang('admin/users.index.role_admin')</span>
-                        @endif
-                    </h2>
+                                @if ($user->role == App\Models\User::ROLE_ADMIN)
+                                    <span class="tag is-pulled-right is-danger">@lang('admin/users.index.role_admin')</span>
+                                @endif
+                            </h2>
 
-                    <p><a class="tag" href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
-                </div>
-            @endforeach
+                            <p><a class="tag" href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
 
             {{ $users->links() }}
         @else

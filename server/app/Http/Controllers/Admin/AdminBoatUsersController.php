@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Boat;
@@ -9,10 +9,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class BoatUserController extends Controller
+class AdminBoatUsersController extends Controller
 {
-    // Boat user create route
-    public function create(Request $request, Boat $boat)
+    // Admin boat users store route
+    public function store(Request $request, Boat $boat)
     {
         // Validate input
         $fields = $request->validate([
@@ -21,17 +21,15 @@ class BoatUserController extends Controller
         ]);
 
         // Create boat user connection
-        BoatUser::create([
-            'boat_id' => $boat->id,
-            'user_id' => $fields['user_id'],
+        $boat->users()->attach($fields['user_id'], [
             'role' => $fields['role']
         ]);
 
         // Go back to the boat page
-        return redirect()->route('boats.show', $boat);
+        return redirect()->route('admin.boats.show', $boat);
     }
 
-    // Boat user update route
+    // Admin boat users update route
     public function update(Request $request, Boat $boat, User $user)
     {
         // Validate input
@@ -46,22 +44,20 @@ class BoatUserController extends Controller
                 return $user->pivot->role == BoatUser::ROLE_CAPTAIN;
             });
             if ($boatUser->pivot->role == BoatUser::ROLE_CAPTAIN && $boatCaptains->count() <= 1) {
-                return redirect()->route('boats.show', $boat);
+                return redirect()->route('admin.boats.show', $boat);
             }
         }
 
         // Update boat user connection
-        $boatUser = BoatUser::where('boat_id', $boat->id)
-            ->where('user_id', $user->id)
-            ->first();
-        $boatUser->role = $fields['role'];
-        $boatUser->update();
+        $boat->users()->updateExistingPivot($user, [
+            'role' => $fields['role']
+        ]);
 
         // Go back to the boat page
-        return redirect()->route('boats.show', $boat);
+        return redirect()->route('admin.boats.show', $boat);
     }
 
-    // Boat user delete route
+    // Admin boat users delete route
     public function delete(Request $request, Boat $boat, User $user)
     {
         // Check if user is not the last capatain
@@ -70,21 +66,13 @@ class BoatUserController extends Controller
             return $user->pivot->role == BoatUser::ROLE_CAPTAIN;
         });
         if ($boatUser->pivot->role == BoatUser::ROLE_CAPTAIN && $boatCaptains->count() <= 1) {
-            return redirect()->route('boats.show', $boat);
+            return redirect()->route('admin.boats.show', $boat);
         }
 
         // Delete boat user connection
-        BoatUser::where('boat_id', $boat->id)
-            ->where('user_id', $user->id)
-            ->first()
-            ->delete();
+        $boat->users()->detach($user);
 
-        // Go back to the boat index page when you remove yourself
-        if ($user->id == Auth::id()) {
-            return redirect()->route('boats.index');
-        } else {
-            // Or go back to the boat page
-            return redirect()->route('boats.show', $boat);
-        }
+        // Go back to the boat page
+        return redirect()->route('admin.boats.show', $boat);
     }
 }

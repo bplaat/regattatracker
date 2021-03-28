@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Boat;
-use App\Models\BoatPosition;
 use App\Models\BoatType;
 use App\Models\BoatUser;
 use App\Models\User;
@@ -23,7 +22,7 @@ class AdminBoatsController extends Controller
             $boats = Boat::all();
         }
         $boats = $boats->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
-            ->paginate(5)->withQueryString();
+            ->paginate(config('pagination.web.limit'))->withQueryString();
 
         // Return admin boat index view
         return view('admin.boats.index', ['boats' => $boats]);
@@ -68,9 +67,7 @@ class AdminBoatsController extends Controller
         ]);
 
         // Add user to boat as captain
-        BoatUser::create([
-            'boat_id' => $boat->id,
-            'user_id' => $fields['user_id'],
+        $boat->users()->attach($fields['user_id'], [
             'role' => BoatUser::ROLE_CAPTAIN
         ]);
 
@@ -85,11 +82,11 @@ class AdminBoatsController extends Controller
         $boatPositions = $boat->positions;
 
         $boatBoatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
-            ->paginate(5)->withQueryString();
+            ->paginate(config('pagination.web.limit'))->withQueryString();
         $boatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
 
         $boatUsers = $boat->users->sortBy(User::sortByName(), SORT_NATURAL | SORT_FLAG_CASE)
-            ->sortByDesc('pivot.role')->paginate(5)->withQueryString();
+            ->sortByDesc('pivot.role')->paginate(config('pagination.web.limit'))->withQueryString();
         $boatCaptains = $boatUsers->filter(function ($user) {
             return $user->pivot->role == BoatUser::ROLE_CAPTAIN;
         });

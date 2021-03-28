@@ -4,25 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Buoy;
-use App\Models\BuoyPosition;
 use App\Rules\Latitude;
 use App\Rules\Longitude;
 use Illuminate\Http\Request;
 
-class AdminBuoyPositionController extends Controller
+class AdminBuoyPositionsController extends Controller
 {
-    // Admin buoy position create route
-    public function create(Request $request, Buoy $buoy)
+    // Admin buoy positions store route
+    public function store(Request $request, Buoy $buoy)
     {
         // Validate input
         $fields = $request->validate([
-            'latitude' => [new Latitude],
-            'longitude' => [new Longitude]
+            'latitude' => ['required', new Latitude],
+            'longitude' => ['required', new Longitude]
         ]);
 
         // Create buoy position
-        BuoyPosition::create([
-            'buoy_id' => $buoy->id,
+        $buoy->positions()->create([
             'latitude' => $fields['latitude'],
             'longitude' => $fields['longitude']
         ]);

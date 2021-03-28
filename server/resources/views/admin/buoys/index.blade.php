@@ -5,7 +5,7 @@
 @section('content')
     <div class="breadcrumb">
         <ul>
-            <li><a href="/">RegattaTracker</a></li>
+            <li><a href="{{ route('home') }}">{{ config('app.name') }}</a></li>
             <li><a href="{{ route('admin.home') }}">@lang('admin/home.breadcrumb')</a></li>
             <li class="is-active"><a href="{{ route('admin.buoys.index') }}">@lang('admin/buoys.index.breadcrumb')</a></li>
         </ul>
@@ -36,14 +36,18 @@
         @if ($buoys->count() > 0)
             {{ $buoys->links() }}
 
-            @foreach ($buoys as $buoy)
-                <div class="box">
-                    <h2 class="title is-4"><a href="{{ route('admin.buoys.show', $buoy) }}">{{ $buoy->name }}</a></h2>
-                    @if ($buoy->description != null)
-                        <p>{{ Str::limit($buoy->description, 64) }}</p>
-                    @endif
-                </div>
-            @endforeach
+            <div class="columns is-multiline">
+                @foreach ($buoys as $buoy)
+                    <div class="column is-one-third">
+                        <div class="box content" style="height: 100%">
+                            <h2 class="title is-4"><a href="{{ route('admin.buoys.show', $buoy) }}">{{ $buoy->name }}</a></h2>
+                            @if ($buoy->description != null)
+                                <p>{{ Str::limit($buoy->description, 64) }}</p>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
 
             {{ $buoys->links() }}
         @else

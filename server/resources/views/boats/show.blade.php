@@ -13,7 +13,7 @@
 @section('content')
     <div class="breadcrumb">
         <ul>
-            <li><a href="/">RegattaTracker</a></li>
+            <li><a href="{{ route('home') }}">{{ config('app.name') }}</a></li>
             <li><a href="{{ route('boats.index') }}">@lang('boats.index.breadcrumb')</a></li>
             <li class="is-active"><a href="{{ route('boats.show', $boat) }}">{{ $boat->name }}</a></li>
         </ul>
@@ -161,21 +161,26 @@
         @if ($boatBoatTypes->count() > 0)
             {{ $boatBoatTypes->links() }}
 
-            @foreach ($boatBoatTypes as $boatType)
-                <div class="box">
-                    <h3 class="title is-4">{{ $boatType->name }}</h3>
-                    @if ($boatType->description != null)
-                        <p>{{ Str::limit($boatType->description, 64) }}</p>
-                    @endif
+            <div class="columns is-multiline">
+                @foreach ($boatBoatTypes as $boatType)
+                    <div class="column is-one-third">
+                        <div class="box content" style="height: 100%">
+                            <h3 class="title is-4">{{ $boatType->name }}</h3>
+                            @if ($boatType->description != null)
+                                <p>{{ Str::limit($boatType->description, 64) }}</p>
+                            @endif
 
-                    @can('delete_boat_boat_type', $boat)
-                        <div class="buttons">
-                            <a class="button is-danger"
-                               href="{{ route('boats.boat_types.delete', [$boat, $boatType]) }}">@lang('boats.show.boat_types_remove_button')</a>
+                            @can('delete_boat_boat_type', $boat)
+                                <div class="buttons">
+                                    <a class="button is-danger is-light is-small" href="{{ route('boats.boat_types.delete', [$boat, $boatType]) }}">
+                                        @lang('boats.show.boat_types_remove_button')
+                                    </a>
+                                </div>
+                            @endcan
                         </div>
-                    @endcan
-                </div>
-            @endforeach
+                    </div>
+                @endforeach
+            </div>
 
             {{ $boatBoatTypes->links() }}
         @else
@@ -196,7 +201,7 @@
                                     </option>
 
                                     @foreach ($boatTypes as $boatType)
-                                        @if (!in_array($boatType->name, $boatBoatTypes->pluck('name')->toArray()))
+                                        @if (!$boatBoatTypes->pluck('name')->contains($boatType->name))
                                             <option value="{{ $boatType->id }}"
                                                     @if ($boatType->id == old('boat_type_id')) selected @endif>
                                                 {{ $boatType->name }}
@@ -208,8 +213,9 @@
                         </div>
 
                         <div class="control">
-                            <button class="button is-link"
-                                    type="submit">@lang('boats.show.boat_types_add_button')</button>
+                            <button class="button is-link" type="submit">
+                                @lang('boats.show.boat_types_add_button')
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -224,42 +230,49 @@
         @if ($boatUsers->count() > 0)
             {{ $boatUsers->links() }}
 
-            @foreach ($boatUsers as $user)
-                <div class="box">
-                    <h3 class="title is-4">
-                        {{ $user->name() }}
+            <div class="columns is-multiline">
+                @foreach ($boatUsers as $user)
+                    <div class="column is-one-third">
+                        <div class="box content" style="height: 100%">
+                            <h3 class="title is-4">
+                                {{ $user->name() }}
 
-                        @if ($user->pivot->role == App\Models\BoatUser::ROLE_CREW)
-                            <span class="tag is-pulled-right is-success">@lang('boats.show.users_role_crew')</span>
-                        @endif
+                                @if ($user->pivot->role == App\Models\BoatUser::ROLE_CREW)
+                                    <span class="tag is-pulled-right is-success">@lang('boats.show.users_role_crew')</span>
+                                @endif
 
-                        @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
-                            <span class="tag is-pulled-right is-info">@lang('boats.show.users_role_captain')</span>
-                        @endif
-                    </h3>
+                                @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
+                                    <span class="tag is-pulled-right is-info">@lang('boats.show.users_role_captain')</span>
+                                @endif
+                            </h3>
 
-                    @canany(['update_boat_user', 'delete_boat_user'], $boat)
-                        @if ($user->pivot->role != App\Models\BoatUser::ROLE_CAPTAIN || $boatCaptains->count() > 1)
-                            <div class="buttons">
-                                @can('update_boat_user', $boat)
-                                    @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
-                                        <a class="button is-success"
-                                           href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">@lang('boats.show.users_make_crew_button')</a>
-                                    @else
-                                        <a class="button is-info"
-                                           href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">@lang('boats.show.users_make_captain_button')</a>
-                                    @endif
-                                @endcan
+                            @canany(['update_boat_user', 'delete_boat_user'], $boat)
+                                @if ($user->pivot->role != App\Models\BoatUser::ROLE_CAPTAIN || $boatCaptains->count() > 1)
+                                    <div class="buttons">
+                                        @can('update_boat_user', $boat)
+                                            @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
+                                                <a class="button is-success is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">
+                                                    @lang('boats.show.users_make_crew_button')
+                                                </a>
+                                            @else
+                                                <a class="button is-info is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">
+                                                    @lang('boats.show.users_make_captain_button')
+                                                </a>
+                                            @endif
+                                        @endcan
 
-                                @can('delete_boat_user', $boat)
-                                    <a class="button is-danger"
-                                       href="{{ route('boats.users.delete', [$boat, $user]) }}">@lang('boats.show.users_remove_button')</a>
-                                @endcan
-                            </div>
-                        @endif
-                    @endcanany
-                </div>
-            @endforeach
+                                        @can('delete_boat_user', $boat)
+                                            <a class="button is-danger is-light is-small" href="{{ route('boats.users.delete', [$boat, $user]) }}">
+                                                @lang('boats.show.users_remove_button')
+                                            </a>
+                                        @endcan
+                                    </div>
+                                @endif
+                            @endcanany
+                        </div>
+                    </div>
+                @endforeach
+            </div>
 
             {{ $boatUsers->links() }}
         @else
@@ -280,7 +293,7 @@
                                     </option>
 
                                     @foreach ($users as $user)
-                                        @if (!in_array($user->id, $boatUsers->pluck('id')->toArray()))
+                                        @if (!$boatUsers->pluck('id')->contains($user->id))
                                             <option value="{{ $user->id }}"
                                                     @if ($user->id == old('user_id')) selected @endif>
                                                 {{ $user->name() }}

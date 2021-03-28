@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Buoy;
-use App\Models\BuoyPosition;
 use Illuminate\Http\Request;
 
 class AdminBuoysController extends Controller
@@ -20,7 +19,7 @@ class AdminBuoysController extends Controller
             $buoys = Buoy::all();
         }
         $buoys = $buoys->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
-            ->paginate(5)->withQueryString();
+            ->paginate(config('pagination.web.limit'))->withQueryString();
 
         // Return admin buoys index view
         return view('admin.buoys.index', ['buoys' => $buoys]);

@@ -5,7 +5,7 @@
 @section('content')
     <div class="breadcrumb">
         <ul>
-            <li><a href="/">RegattaTracker</a></li>
+            <li><a href="{{ route('home') }}">{{ config('app.name') }}</a></li>
             <li><a href="{{ route('admin.home') }}">@lang('admin/home.breadcrumb')</a></li>
             <li class="is-active"><a href="{{ route('admin.boats.index') }}">@lang('admin/boats.index.breadcrumb')</a></li>
         </ul>
@@ -36,14 +36,18 @@
         @if ($boats->count() > 0)
             {{ $boats->links() }}
 
-            @foreach ($boats as $boat)
-                <div class="box">
-                    <h2 class="title is-4"><a href="{{ route('admin.boats.show', $boat) }}">{{ $boat->name }}</a></h2>
-                    @if ($boat->description != null)
-                        <p>{{ Str::limit($boat->description, 64) }}</p>
-                    @endif
-                </div>
-            @endforeach
+            <div class="columns is-multiline">
+                @foreach ($boats as $boat)
+                    <div class="column is-one-third">
+                        <div class="box content" style="height: 100%">
+                            <h2 class="title is-4"><a href="{{ route('admin.boats.show', $boat) }}">{{ $boat->name }}</a></h2>
+                            @if ($boat->description != null)
+                                <p>{{ Str::limit($boat->description, 64) }}</p>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
 
             {{ $boats->links() }}
         @else
