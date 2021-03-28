@@ -5,7 +5,7 @@
 @section('content')
     <div class="breadcrumb">
         <ul>
-            <li><a href="{{ route('home') }}">RegattaTracker</a></li>
+            <li><a href="{{ route('home') }}">{{ config('app.name') }}</a></li>
             <li><a href="{{ route('admin.home') }}">@lang('admin/home.breadcrumb')</a></li>
             <li class="is-active"><a href="{{ route('admin.boat_types.index') }}">@lang('admin/boat_types.index.breadcrumb')</a></li>
         </ul>
