@@ -70,6 +70,9 @@ return [
     // Boats track page
     'track.title' => 'Track - :boat.name - Boats',
     'track.breadcrumb' => 'Track',
+    'track.start_button' => 'Start tracking',
+    'track.stop_button' => 'Stop tracking',
+    'track.error' => 'Your browser doesn\'t support geolocation tracking!',
 
     // Boats edit page
     'edit.title' => 'Edit - :boat.name - Boats',
