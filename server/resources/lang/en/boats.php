@@ -73,6 +73,9 @@ return [
     'track.start_button' => 'Start tracking',
     'track.stop_button' => 'Stop tracking',
     'track.error' => 'Your browser doesn\'t support geolocation tracking!',
+    'track.loading_text' => 'Loading...',
+    'track.send_text_prefix' => 'Sending in',
+    'track.send_text_suffix' => 'seconds...',
 
     // Boats edit page
     'edit.title' => 'Edit - :boat.name - Boats',

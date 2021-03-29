@@ -54,6 +54,17 @@ class AdminBuoysController extends Controller
         return view('admin.buoys.show', ['buoy' => $buoy, 'buoyPositions' => $buoyPositions]);
     }
 
+
+    // Admin buoys track route
+    public function track(Buoy $buoy)
+    {
+        // Active buoy position relationship
+        $buoy->positions;
+
+        // Return admin buoy track view
+        return view('admin.buoys.track', ['buoy' => $buoy]);
+    }
+
     // Admin buoys edit route
     public function edit(Buoy $buoy)
     {

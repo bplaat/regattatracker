@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', __('admin/boats.track.title', ['boat.name' => $boat->name]))
+@section('title', __('admin/buoys.track.title', ['buoy.name' => $buoy->name]))
 
 @section('head')
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" />
@@ -15,9 +15,9 @@
         <ul>
             <li><a href="{{ route('home') }}">{{ config('app.name') }}</a></li>
             <li><a href="{{ route('admin.home') }}">@lang('admin/home.breadcrumb')</a></li>
-            <li><a href="{{ route('admin.boats.index') }}">@lang('admin/boats.index.breadcrumb')</a></li>
-            <li><a href="{{ route('admin.boats.show', $boat) }}">{{ $boat->name }}</a></li>
-            <li class="is-active"><a href="{{ route('admin.boats.track', $boat) }}">@lang('admin/boats.track.breadcrumb')</a></li>
+            <li><a href="{{ route('admin.buoys.index') }}">@lang('admin/buoys.index.breadcrumb')</a></li>
+            <li><a href="{{ route('admin.buoys.show', $buoy) }}">{{ $buoy->name }}</a></li>
+            <li class="is-active"><a href="{{ route('admin.buoys.track', $buoy) }}">@lang('admin/buoys.track.breadcrumb')</a></li>
         </ul>
     </div>
 
@@ -26,7 +26,7 @@
     </div>
 
     <div class="buttons is-centered">
-        <button id="track-button" class="button is-link">@lang('admin/boats.track.start_button')</button>
+        <button id="track-button" class="button is-link">@lang('admin/buoys.track.start_button')</button>
         <span id="time-label" class="tag" style="display: none; margin-left: 24px;"></span>
     </div>
 
@@ -54,11 +54,11 @@
 
         var TRACKING_UPDATE_TIMEOUT = @json(config('tracker.update_timeout'));
 
-        var boat = @json($boat);
+        var buoy = @json($buoy);
 
         var oldPosition = {
-            lat: parseFloat(boat.positions[boat.positions.length - 1].latitude),
-            lng: parseFloat(boat.positions[boat.positions.length - 1].longitude)
+            lat: parseFloat(buoy.positions[buoy.positions.length - 1].latitude),
+            lng: parseFloat(buoy.positions[buoy.positions.length - 1].longitude)
         };
 
         function isDarkModeEnabled() {
@@ -86,14 +86,14 @@
             log('Send position: ' + JSON.stringify(currentPosition));
 
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/api/boats/' + boat.id + '/positions', true);
+            xhr.open('POST', '/api/buoys/' + buoy.id + '/positions', true);
             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             xhr.send('latitude=' + currentPosition.lat.toFixed(8) + '&longitude=' + currentPosition.lng.toFixed(8));
         }
 
         function updateText() {
-            timeLabel.textContent = "@lang('admin/boats.track.send_text_prefix') " +
-                ((nextUpdateTime - Date.now()) / 1000).toFixed(0) + " @lang('admin/boats.track.send_text_suffix')";
+            timeLabel.textContent = "@lang('admin/buoys.track.send_text_prefix') " +
+                ((nextUpdateTime - Date.now()) / 1000).toFixed(0) + " @lang('admin/buoys.track.send_text_suffix')";
         }
 
         map.on('load', function () {
@@ -103,9 +103,9 @@
                 if ('geolocation' in navigator) {
                     if (!isTracking) {
                         isTracking = true;
-                        trackButton.textContent = "@lang('admin/boats.track.stop_button')";
+                        trackButton.textContent = "@lang('admin/buoys.track.stop_button')";
                         timeLabel.style.display = 'inline-block';
-                        timeLabel.textContent = "@lang('admin/boats.track.loading_text')";
+                        timeLabel.textContent = "@lang('admin/buoys.track.loading_text')";
                         log('Start tracking');
                         isFirstTime = true;
 
@@ -125,7 +125,7 @@
                                 isFirstTime = false;
 
                                 sendCurrentPosition(currentPosition);
-                                updateIntervalId = setInterval(function () {
+                                sendUpdateInterval = setInterval(function () {
                                     nextUpdateTime = Date.now() + TRACKING_UPDATE_TIMEOUT;
                                     sendCurrentPosition(currentPosition);
                                 }, TRACKING_UPDATE_TIMEOUT);
@@ -141,7 +141,7 @@
                         });
                     } else {
                         isTracking = false;
-                        trackButton.textContent = "@lang('admin/boats.track.start_button')";
+                        trackButton.textContent = "@lang('admin/buoys.track.start_button')";
                         timeLabel.style.display = 'none';
                         log('Stop tracking');
 
@@ -150,7 +150,7 @@
                         clearInterval(textUpdateInterval);
                     }
                 } else {
-                    alert("@lang('admin/boats.track.error')");
+                    alert("@lang('admin/buoys.track.error')");
                 }
             });
         });

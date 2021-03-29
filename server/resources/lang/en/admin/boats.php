@@ -69,6 +69,12 @@ return [
     // Admin boats track page
     'track.title' => 'Track - :boat.name - Boats - Admin',
     'track.breadcrumb' => 'Track',
+    'track.start_button' => 'Start tracking',
+    'track.stop_button' => 'Stop tracking',
+    'track.error' => 'Your browser doesn\'t support geolocation tracking!',
+    'track.loading_text' => 'Loading...',
+    'track.send_text_prefix' => 'Sending in',
+    'track.send_text_suffix' => 'seconds...',
 
     // Admin boats edit page
     'edit.title' => 'Edit - :boat.name - Boats - Admin',

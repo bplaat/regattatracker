@@ -125,6 +125,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/buoys', [AdminBuoysController::class, 'index'])->name('admin.buoys.index');
     Route::view('/admin/buoys/create', 'admin.buoys.create')->name('admin.buoys.create');
     Route::post('/admin/buoys', [AdminBuoysController::class, 'store'])->name('admin.buoys.store');
+    Route::get('/admin/buoys/{buoy}/track', [AdminBuoysController::class, 'track'])->name('admin.buoys.track');
     Route::get('/admin/buoys/{buoy}/edit', [AdminBuoysController::class, 'edit'])->name('admin.buoys.edit');
     Route::get('/admin/buoys/{buoy}/delete', [AdminBuoysController::class, 'delete'])->name('admin.buoys.delete');
     Route::get('/admin/buoys/{buoy}', [AdminBuoysController::class, 'show'])->name('admin.buoys.show');

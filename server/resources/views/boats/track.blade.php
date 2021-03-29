@@ -26,6 +26,7 @@
 
     <div class="buttons is-centered">
         <button id="track-button" class="button is-link">@lang('boats.track.start_button')</button>
+        <span id="time-label" class="tag" style="display: none; margin-left: 24px;"></span>
     </div>
 
     @if (config('app.debug'))
@@ -72,10 +73,13 @@
         });
 
         var trackButton = document.getElementById('track-button');
+        var timeLabel = document.getElementById('time-label');
         var isTracking = false;
         var isFirstTime;
         var geolocationWatchId;
-        var updateIntervalId;
+        var sendUpdateInterval;
+        var nextUpdateTime;
+        var textUpdateInterval;
 
         function sendCurrentPosition(currentPosition) {
             log('Send position: ' + JSON.stringify(currentPosition));
@@ -86,6 +90,11 @@
             xhr.send('latitude=' + currentPosition.lat.toFixed(8) + '&longitude=' + currentPosition.lng.toFixed(8));
         }
 
+        function updateText() {
+            timeLabel.textContent = "@lang('boats.track.send_text_prefix') " +
+                ((nextUpdateTime - Date.now()) / 1000).toFixed(0) + " @lang('boats.track.send_text_suffix')";
+        }
+
         map.on('load', function () {
             var marker = new mapboxgl.Marker().setLngLat(oldPosition).addTo(map);
 
@@ -94,6 +103,8 @@
                     if (!isTracking) {
                         isTracking = true;
                         trackButton.textContent = "@lang('boats.track.stop_button')";
+                        timeLabel.style.display = 'inline-block';
+                        timeLabel.textContent = "@lang('boats.track.loading_text')";
                         log('Start tracking');
                         isFirstTime = true;
 
@@ -111,10 +122,16 @@
 
                             if (isFirstTime) {
                                 isFirstTime = false;
+
                                 sendCurrentPosition(currentPosition);
                                 updateIntervalId = setInterval(function () {
+                                    nextUpdateTime = Date.now() + TRACKING_UPDATE_TIMEOUT;
                                     sendCurrentPosition(currentPosition);
                                 }, TRACKING_UPDATE_TIMEOUT);
+                                nextUpdateTime = Date.now() + TRACKING_UPDATE_TIMEOUT;
+
+                                updateText();
+                                textUpdateInterval = setInterval(updateText, 500);
                             }
 
                             oldPosition = currentPosition;
@@ -124,11 +141,12 @@
                     } else {
                         isTracking = false;
                         trackButton.textContent = "@lang('boats.track.start_button')";
+                        timeLabel.style.display = 'none';
                         log('Stop tracking');
 
                         navigator.geolocation.clearWatch(geolocationWatchId);
-
-                        clearInterval(updateIntervalId);
+                        clearInterval(sendUpdateInterval);
+                        clearInterval(textUpdateInterval);
                     }
                 } else {
                     alert("@lang('boats.track.error')");

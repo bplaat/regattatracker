@@ -20,6 +20,7 @@ return [
 
     // Admin buoys show page
     'show.title' => ':buoy.name - Buoys - Admin',
+    'show.track' => 'Track buoy',
     'show.edit' => 'Edit buoy',
     'show.delete' => 'Delete buoy',
 
@@ -28,6 +29,16 @@ return [
     'show.positions_latitude_field' => 'Latitude',
     'show.positions_longitude_field' => 'Longitude',
     'show.positions_add_button' => 'Add position',
+
+    // Admin buoys track page
+    'track.title' => 'Track - :buoy.name - Buoys - Admin',
+    'track.breadcrumb' => 'Track',
+    'track.start_button' => 'Start tracking',
+    'track.stop_button' => 'Stop tracking',
+    'track.error' => 'Your browser doesn\'t support geolocation tracking!',
+    'track.loading_text' => 'Loading...',
+    'track.send_text_prefix' => 'Sending in',
+    'track.send_text_suffix' => 'seconds...',
 
     // Admin buoys edit page
     'edit.title' => 'Edit - :buoy.name - Buoys - Admin',

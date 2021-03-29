@@ -27,7 +27,7 @@ class ApiBuoyPositionsController extends Controller
             'longitude' => ['required', new Longitude]
         ]);
         if ($validation->fails()) {
-            return response([ 'errors' => $validation->errors() ], 400);
+            return response(['errors' => $validation->errors()], 400);
         }
 
         // Create buoy position
