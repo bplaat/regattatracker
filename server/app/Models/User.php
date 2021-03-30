@@ -22,11 +22,6 @@ class User extends Authenticatable
     const ROLE_NORMAL = 0;
     const ROLE_ADMIN = 1;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'firstname',
         'insertion',
@@ -43,27 +38,23 @@ class User extends Authenticatable
         'role'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
+    // A boat belongs to many boats
+    public function boats()
+    {
+        return $this->belongsToMany(Boat::class)->withPivot('role')->withTimestamps();
+    }
+
     // Get user full name (firstname insertion lastname)
-    public function name()
+    public function getNameAttribute()
     {
         if ($this->insertion != null) {
             return $this->firstname . ' ' . $this->insertion . ' ' . $this->lastname;
@@ -91,11 +82,5 @@ class User extends Authenticatable
             ->orWhere('insertion', 'LIKE', '%' . $query . '%')
             ->orWhere('lastname', 'LIKE', '%' . $query . '%')
             ->orWhere('email', 'LIKE', '%' . $query . '%');
-    }
-
-    // A boat belongs to many boats
-    public function boats()
-    {
-        return $this->belongsToMany(Boat::class)->withPivot('role')->withTimestamps();
     }
 }

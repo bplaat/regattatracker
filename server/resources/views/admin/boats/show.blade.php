@@ -40,7 +40,7 @@
         <p>@lang('boats.show.sail_area'): {{ round($boat->sail_area, 2) }} m<sup>2</sup></p>
 
         <h2 class="subtitle is-5">@lang('boats.show.klipperrace_info')</h2>
-        <p>@lang('boats.show.klipperrace_rating'): {{ round($boat->klipperraceRating(), 2) }}</p>
+        <p>@lang('boats.show.klipperrace_rating'): {{ round($boat->klipperraceRating, 2) }}</p>
 
         <div class="buttons">
             <a class="button is-warning" href="{{ route('admin.boats.track', $boat) }}">@lang('admin/boats.show.track')</a>
@@ -218,7 +218,7 @@
                     <div class="column is-one-third">
                         <div class="box content" style="height: 100%">
                             <h3 class="title is-4">
-                                <a href="{{ route('admin.users.show', $user) }}">{{ $user->name() }}</a>
+                                <a href="{{ route('admin.users.show', $user) }}">{{ $user->name }}</a>
 
                                 @if ($user->pivot->role == App\Models\BoatUser::ROLE_CREW)
                                     <span class="tag is-pulled-right is-success">@lang('admin/boats.show.users_role_crew')</span>
@@ -271,7 +271,7 @@
                                 @foreach ($users as $user)
                                     @if (!$boatUsers->pluck('id')->contains($user->id))
                                         <option value="{{ $user->id }}"  @if ($user->id == old('user_id')) selected @endif>
-                                            {{ $user->name() }}
+                                            {{ $user->name }}
                                         </option>
                                     @endif
                                 @endforeach

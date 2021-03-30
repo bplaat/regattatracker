@@ -18,8 +18,8 @@ class Boat extends Model
         'sail_area'
     ];
 
-    // Get the KlipperRace rating of the boat
-    public function klipperraceRating()
+    // Get the Klipperrace rating of the boat
+    public function getKlipperraceRatingAttribute()
     {
         return $this->length * $this->sail_area / sqrt($this->breadth * $this->weight);
     }
