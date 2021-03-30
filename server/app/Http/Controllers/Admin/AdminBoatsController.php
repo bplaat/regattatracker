@@ -46,7 +46,7 @@ class AdminBoatsController extends Controller
             'user_id' => 'required|exists:users,id',
             'name' => 'required|min:2|max:48',
             'description' => 'nullable|max:20000',
-            'mmsi' => 'required|digits:9|integer',
+            'mmsi' => 'required|digits:9|unique:boats',
             'length' => 'required|numeric|min:1|max:1000',
             'breadth' => 'required|numeric|min:1|max:1000',
             'weight' => 'required|numeric|min:1|max:100000000',
@@ -130,7 +130,11 @@ class AdminBoatsController extends Controller
         $fields = $request->validate([
             'name' => 'required|min:2|max:48',
             'description' => 'nullable|max:20000',
-            'mmsi' => 'required|digits:9|integer',
+            'mmsi' => [
+                'required',
+                'digits:9',
+                Rule::unique('boats')->ignore($boat->mmsi, 'mmsi')
+            ],
             'length' => 'required|numeric|min:1|max:1000',
             'breadth' => 'required|numeric|min:1|max:1000',
             'weight' => 'required|numeric|min:1|max:100000000',
