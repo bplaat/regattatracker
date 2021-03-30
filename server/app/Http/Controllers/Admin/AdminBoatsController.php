@@ -8,6 +8,7 @@ use App\Models\BoatType;
 use App\Models\BoatUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AdminBoatsController extends Controller
 {
