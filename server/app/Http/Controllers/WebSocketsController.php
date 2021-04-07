@@ -16,31 +16,34 @@ class WebSocketsController extends Controller implements MessageComponentInterfa
         $this->connections[$connection->resourceId] = ['connection' => $connection];
     }
 
-    public function newBoatPosition($boatPositionId)
+    // Broadcast message to all open websocket connections
+    public function broadcast(array $message): void
     {
-        // Get new boat position
-        $boatPosition = BoatPosition::where('id', $boatPositionId)->first();
-
-        // Broadcast new boat position message
         foreach ($this->connections as $connection) {
-            $connection['connection']->send(json_encode([
-                'type' => 'new_boat_position',
-                'boatPosition' => $boatPosition
-            ]));
+            $connection['connection']->send(json_encode($message));
         }
     }
 
-    public function newBuoyPosition($buoyPositionId)
+    public function onSignal(string $type, object $data): void
     {
-        // Get new buoy position
-        $buoyPosition = BuoyPosition::where('id', $buoyPositionId)->first();
+        // On new boat position signal
+        if ($type == 'new_boat_position') {
+            $boatPosition = BoatPosition::where('id', $data->boat_position_id)->first();
 
-        // Broadcast new buoy position message
-        foreach ($this->connections as $connection) {
-            $connection['connection']->send(json_encode([
+            $this->broadcast([
+                'type' => 'new_boat_position',
+                'boatPosition' => $boatPosition
+            ]);
+        }
+
+        // On new buoy position signal
+        if ($type == 'new_buoy_position') {
+            $buoyPosition = BuoyPosition::where('id', $data->buoy_position_id)->first();
+
+            $this->broadcast([
                 'type' => 'new_buoy_position',
                 'buoyPosition' => $buoyPosition
-            ]));
+            ]);
         }
     }
 

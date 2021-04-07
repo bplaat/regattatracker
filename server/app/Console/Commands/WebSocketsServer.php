@@ -56,15 +56,9 @@ class WebSocketsServer extends Command
             $connection->on('data', function ($data) use ($websocketsController) {
                 $data = json_decode($data);
 
-                echo '[INFO] Signal: ' . $data->type . PHP_EOL;
+                echo '[INFO] Signal: ' . $data->type . ' ' . json_encode($data->data). PHP_EOL;
 
-                if ($data->type == 'new_boat_position') {
-                    $websocketsController->newBoatPosition($data->boat_position_id);
-                }
-
-                if ($data->type == 'new_buoy_position') {
-                    $websocketsController->newBuoyPosition($data->buoy_position_id);
-                }
+                $websocketsController->onSignal($data->type, $data->data);
             });
 
             $connection->on('error', function (\Exception $exception) {
