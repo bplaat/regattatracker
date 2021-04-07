@@ -21,6 +21,8 @@ use App\Http\Controllers\Admin\AdminBoatTypesController;
 use App\Http\Controllers\Admin\AdminBuoysController;
 use App\Http\Controllers\Admin\AdminBuoyPositionsController;
 
+use App\Http\Controllers\Admin\AdminApiKeysController;
+
 use App\Models\User;
 
 use Illuminate\Support\Facades\Route;
@@ -133,6 +135,15 @@ Route::middleware('admin')->group(function () {
 
     // Admin buoy position routes
     Route::post('/admin/buoys/{buoy}/positions', [AdminBuoyPositionsController::class, 'store'])->name('admin.buoys.positions.create');
+
+    // Admin API key routes
+    Route::get('/admin/api_keys', [AdminApiKeysController::class, 'index'])->name('admin.api_keys.index');
+    Route::view('/admin/api_keys/create', 'admin.api_keys.create')->name('admin.api_keys.create');
+    Route::post('/admin/api_keys', [AdminApiKeysController::class, 'store'])->name('admin.api_keys.store');
+    Route::get('/admin/api_keys/{api_key}/edit', [AdminApiKeysController::class, 'edit'])->name('admin.api_keys.edit');
+    Route::get('/admin/api_keys/{api_key}/delete', [AdminApiKeysController::class, 'delete'])->name('admin.api_keys.delete');
+    Route::get('/admin/api_keys/{api_key}', [AdminApiKeysController::class, 'show'])->name('admin.api_keys.show');
+    Route::post('/admin/api_keys/{api_key}', [AdminApiKeysController::class, 'update'])->name('admin.api_keys.update');
 });
 
 // Guest routes

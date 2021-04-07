@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\ApiKey;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(100)->create();
+        // Create 100 random users
+        User::factory(100)->create();
+
+        // Create default API Key
+        ApiKey::create([
+            'name' => 'Default API Key',
+            'key' => ApiKey::generateKey()
+        ]);
     }
 }
