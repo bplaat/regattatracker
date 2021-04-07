@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class Admin
+class VerifyAdmin
 {
     public function handle($request, $next, $guard = null)
     {
