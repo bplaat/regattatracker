@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Signals\NewBoatPositionSignal;
 use App\Http\Controllers\Controller;
 use App\Models\Boat;
 use App\Rules\Latitude;
@@ -20,10 +21,13 @@ class AdminBoatPositionsController extends Controller
         ]);
 
         // Create boat position
-        $boat->positions()->create([
+        $boatPosition = $boat->positions()->create([
             'latitude' => $fields['latitude'],
             'longitude' => $fields['longitude']
         ]);
+
+        // Send new boat position signal to websockets server
+        new NewBoatPositionSignal($boatPosition);
 
         // Return to the admin boat show page
         return redirect()->route('admin.boats.show', $boat);

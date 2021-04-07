@@ -181,12 +181,10 @@
             // Open websocket connection with the server
             var ws = new WebSocket('ws://' + @json(config('websockets.host')) + ':' + @json(config('websockets.port')) + '/');
 
-            ws.onopen = function () {
-                ws.send('hello!');
-            };
-
             ws.onmessage = function (event) {
-                console.log(event);
+                var data = JSON.parse(event.data);
+                // Just log the incoming messages
+                console.log(data);
             };
         </script>
     @endif

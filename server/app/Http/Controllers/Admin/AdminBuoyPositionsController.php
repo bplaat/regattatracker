@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Signals\NewBuoyPositionSignal;
 use App\Http\Controllers\Controller;
 use App\Models\Buoy;
 use App\Rules\Latitude;
@@ -20,10 +21,13 @@ class AdminBuoyPositionsController extends Controller
         ]);
 
         // Create buoy position
-        $buoy->positions()->create([
+        $buoyPosition = $buoy->positions()->create([
             'latitude' => $fields['latitude'],
             'longitude' => $fields['longitude']
         ]);
+
+        // Send new buoy position signal to websockets server
+        new NewBuoyPositionSignal($buoyPosition);
 
         // Return to the admin buoy show page
         return redirect()->route('admin.buoys.show', $buoy);

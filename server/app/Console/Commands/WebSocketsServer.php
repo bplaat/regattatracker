@@ -9,6 +9,7 @@ use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 use React\EventLoop\Factory;
+use React\Socket\ConnectionInterface;
 use React\Socket\Server;
 
 class WebSocketsServer extends Command
@@ -44,14 +45,41 @@ class WebSocketsServer extends Command
      */
     public function handle()
     {
-        echo '[INFO] Starting websocket servet at: ws://' . config('websockets.host') . ':' . config('websockets.port'). "/\n";
-
         $loop = Factory::create();
-        $server = new IoServer(
-            new HttpServer(new WsServer(new WebSocketsController())),
+
+        $websocketsController = new WebSocketsController();
+
+        // Start signals server
+        echo '[INFO] Starting signals server at: ' . config('signals.host') . ':' . config('signals.port') . PHP_EOL;
+        $socketServer = new Server(config('signals.host') . ':' . config('signals.port'), $loop);
+        $socketServer->on('connection', function (ConnectionInterface $connection) use ($websocketsController) {
+            $connection->on('data', function ($data) use ($websocketsController) {
+                $data = json_decode($data);
+
+                echo '[INFO] Signal: ' . $data->type . PHP_EOL;
+
+                if ($data->type == 'new_boat_position') {
+                    $websocketsController->newBoatPosition($data->boat_position_id);
+                }
+
+                if ($data->type == 'new_buoy_position') {
+                    $websocketsController->newBuoyPosition($data->buoy_position_id);
+                }
+            });
+
+            $connection->on('error', function (\Exception $exception) {
+                echo '[ERROR] Signal error: ' . $exception->getMessage() . PHP_EOL;
+            });
+        });
+
+        // Start websockets server
+        echo '[INFO] Starting websockets server at: ws://' . config('websockets.host') . ':' . config('websockets.port') . '/' . PHP_EOL;
+        $websocketServer = new IoServer(
+            new HttpServer(new WsServer($websocketsController)),
             new Server(config('websockets.host') . ':' . config('websockets.port'), $loop),
             $loop
         );
-        $server->run();
+
+        $loop->run();
     }
 }

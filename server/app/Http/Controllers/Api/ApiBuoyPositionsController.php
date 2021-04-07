@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Signals\NewBuoyPositionSignal;
 use App\Http\Controllers\Controller;
 use App\Models\Buoy;
 use App\Rules\Latitude;
@@ -35,6 +36,9 @@ class ApiBuoyPositionsController extends Controller
             'latitude' => request('latitude'),
             'longitude' => request('longitude')
         ]);
+
+        // Send new buoy position signal to websockets server
+        new NewBuoyPositionSignal($buoyPosition);
 
         // Return the new created boat position
         return $buoyPosition;
