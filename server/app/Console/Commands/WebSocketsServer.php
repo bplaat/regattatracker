@@ -46,10 +46,6 @@ class WebSocketsServer extends Command
     {
         echo '[INFO] Starting websocket servet at: ws://' . config('websockets.host') . ':' . config('websockets.port'). "/\n";
 
-        Event::listen(function (NewBoatPositionEvent $event) {
-            echo 'New boat position';
-        });
-
         $loop = Factory::create();
         $server = new IoServer(
             new HttpServer(new WsServer(new WebSocketsController())),

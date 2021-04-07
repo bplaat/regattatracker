@@ -37,8 +37,6 @@ class ApiBoatPositionsController extends Controller
             'longitude' => request('longitude')
         ]);
 
-        event(new NewBoatPositionEvent($boatPosition));
-
         // Return the new created boat position
         return $boatPosition;
     }
