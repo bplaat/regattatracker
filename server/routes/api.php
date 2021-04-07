@@ -21,7 +21,7 @@ Route::get('', function () {
 
 // Verify API key
 Route::middleware('api_key')->group(function () {
-    // Normal routes
+    // API normal routes
     Route::middleware('auth:sanctum')->group(function () {
         // API boat routes
         Route::get('boats', [ApiBoatsController::class, 'index']);

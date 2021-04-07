@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Session;
@@ -36,7 +35,7 @@ class ApiAuthController extends Controller
 
         // When successfull create new token and return it
         return [
-            'token' => $user->createToken('API auth token')->plainTextToken
+            'token' => $user->createToken('API auth token for api')->plainTextToken
         ];
     }
 
@@ -83,7 +82,7 @@ class ApiAuthController extends Controller
 
         // When successfull create new token for new user and return it
         return [
-            'token' => $user->createToken('API auth token')->plainTextToken
+            'token' => $user->createToken('API auth token for api')->plainTextToken
         ];
     }
 

@@ -18,9 +18,9 @@ class DatabaseSeeder extends Seeder
         // Create 100 random users
         User::factory(100)->create();
 
-        // Create default API Key
+        // Create API key for the website
         ApiKey::create([
-            'name' => 'Default API Key',
+            'name' => 'Website',
             'key' => ApiKey::generateKey()
         ]);
     }

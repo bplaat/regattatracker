@@ -84,4 +84,12 @@ class User extends Authenticatable
             ->orWhere('lastname', 'LIKE', '%' . $query . '%')
             ->orWhere('email', 'LIKE', '%' . $query . '%');
     }
+
+    // Get the current used api token from session storage or create a new one
+    public function apiToken() {
+        if (session('api_token') == null) {
+            session(['api_token' => $this->createToken('API auth token for website')->plainTextToken]);
+        }
+        return session('api_token');
+    }
 }
