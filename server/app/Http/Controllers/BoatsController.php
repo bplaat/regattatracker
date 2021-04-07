@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Boat;
 use App\Models\BoatPosition;
 use App\Models\BoatType;

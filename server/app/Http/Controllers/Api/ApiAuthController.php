@@ -1,44 +1,49 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Session;
 
-class AuthController extends Controller
+class ApiAuthController extends Controller
 {
-    // Login route
+    // API login route
     public function login(Request $request)
     {
         // Validate input
-        $fields = $request->validate([
+        $validation = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required'
         ]);
-
-        // Try to login when successfull go to home page
-        if (
-            Auth::attempt([
-                'email' => $fields['email'],
-                'password' => $fields['password']
-            ], true)
-        ) {
-            return redirect()->route('home');
+        if ($validation->fails()) {
+            return response(['errors' => $validation->errors()], 400);
         }
 
-        // When not successfull go back with error
-        return redirect()->route('auth.login')->withInput()
-            ->with('error', __('auth.login.error'));
+        // Try to login
+        $user = User::where('email', request('email'))->first();
+        if (!$user || !Hash::check(request('password'), $user->password)) {
+            return response(['errors' => [
+                'email' => [
+                    __('auth.login.error')
+                ]
+            ]], 400);
+        }
+
+        // When successfull create new token and return it
+        return [
+            'token' => $user->createToken('API auth token for api')->plainTextToken
+        ];
     }
 
-    // Register route
+    // API register route
     public function register(Request $request)
     {
         // Validate input
-        $fields = $request->validate([
+        $validation = Validator::make($request->all(), [
             'firstname' => 'required|min:2|max:48',
             'insertion' => 'nullable|max:16',
             'lastname' => 'required|min:2|max:48',
@@ -50,11 +55,14 @@ class AuthController extends Controller
             'postcode' => 'required|min:2|max:255',
             'city' => 'required|min:2|max:255',
             'country' => 'required|min:2|max:255',
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:6'
         ]);
+        if ($validation->fails()) {
+            return response(['errors' => $validation->errors()], 400);
+        }
 
         // Create user
-        User::create([
+        $user = User::create([
             'firstname' => $fields['firstname'],
             'insertion' => $fields['insertion'],
             'lastname' => $fields['lastname'],
@@ -72,24 +80,21 @@ class AuthController extends Controller
             'role' => User::count() == 0 ? User::ROLE_ADMIN : User::ROLE_NORMAL
         ]);
 
-        // Login user in
-        Auth::attempt([
-            'email' => $fields['email'],
-            'password' => $fields['password']
-        ], true);
-
-        // Go to home page
-        return redirect()->route('home');
+        // When successfull create new token for new user and return it
+        return [
+            'token' => $user->createToken('API auth token for api')->plainTextToken
+        ];
     }
 
-    // Logout route
-    public function logout()
+    // API logout route
+    public function logout(Request $request)
     {
-        // Logout user
-        Session::flush();
-        Auth::logout();
+        // Revoke current used token
+        $request->user()->currentAccessToken()->delete();
 
-        // Go to login page
-        return redirect()->route('auth.login');
+        // Return success message
+        return [
+            'message' => 'Your current token has been signed out!'
+        ];
     }
 }

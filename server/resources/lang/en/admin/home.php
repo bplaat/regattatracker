@@ -8,5 +8,6 @@ return [
     'users' => 'Users',
     'boats' => 'Boats',
     'boat_types' => 'Boat Types',
-    'buoys' => 'Buoys'
+    'buoys' => 'Buoys',
+    'api_keys' => 'API Keys'
 ];

@@ -34,9 +34,11 @@
     @endif
 
     <script>
-        mapboxgl.accessToken = @json(config('mapbox.access_token'));
-
         var DEBUG = @json(config('app.debug'));
+        var CSRF_TOKEN = @json(csrf_token());
+        var API_KEY = @json(App\Models\ApiKey::where('name', 'Website')->first()->key);
+        var API_TOKEN = @json(Auth::user()->apiToken());
+        mapboxgl.accessToken = @json(config('mapbox.access_token'));
 
         var log_lines = [];
         function log(message) {
@@ -86,8 +88,10 @@
 
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/api/boats/' + boat.id + '/positions', true);
+            xhr.setRequestHeader('X-CSRF-TOKEN', CSRF_TOKEN);
+            xhr.setRequestHeader('Authorization', 'Bearer ' + API_TOKEN);
             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhr.send('latitude=' + currentPosition.lat.toFixed(8) + '&longitude=' + currentPosition.lng.toFixed(8));
+            xhr.send('api_key=' + API_KEY + '&latitude=' + currentPosition.lat.toFixed(8) + '&longitude=' + currentPosition.lng.toFixed(8));
         }
 
         function updateText() {
