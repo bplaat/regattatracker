@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\NewBoatPositionEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Boat;
 use App\Rules\Latitude;
@@ -35,6 +36,8 @@ class ApiBoatPositionsController extends Controller
             'latitude' => request('latitude'),
             'longitude' => request('longitude')
         ]);
+
+        event(new NewBoatPositionEvent($boatPosition));
 
         // Return the new created boat position
         return $boatPosition;

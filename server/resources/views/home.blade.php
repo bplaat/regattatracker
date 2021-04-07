@@ -177,6 +177,17 @@
                     });
                 });
             });
+
+            // Open websocket connection with the server
+            var ws = new WebSocket('ws://' + @json(config('websockets.host')) + ':' + @json(config('websockets.port')) + '/');
+
+            ws.onopen = function () {
+                ws.send('hello!');
+            };
+
+            ws.onmessage = function (event) {
+                console.log(event);
+            };
         </script>
     @endif
 @endsection
