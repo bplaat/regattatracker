@@ -54,6 +54,11 @@ The brand new RegattaTracker deluxe tracking system
     cd server
     php artisan migrate
     ```
+- Start the websocketsserver (must be running when using the site)
+    ```
+    cd server
+    php artisan websockets:serve
+    ```
 - Goto http://regattatracker.local/ and you're done! 🎉
 
 ### macOS
@@ -148,6 +153,11 @@ TODO
     cd server
     php artisan migrate
     ```
+- Start the websocketsserver (must be running when using the site)
+    ```
+    cd server
+    php artisan websockets:serve
+    ```
 - Goto http://regattatracker.local/ and you're done! 🎉
 
 #### Arch based disto's (Not working yet)
@@ -207,5 +217,10 @@ TODO
     ```
     cd server
     php artisan migrate
+    ```
+- Start the websockets server (must be running when using the site)
+    ```
+    cd server
+    php artisan websockets:serve
     ```
 - Everything should now be running under your chosen domain name! 🎉
