@@ -45,42 +45,36 @@
             <script>
                 mapboxgl.accessToken = @json(config('mapbox.access_token'));
 
-                var buoyPositions = @json($buoyPositions);
+                const buoyPositions = @json($buoyPositions);
 
-                var latestPosition = [
-                    parseFloat(buoyPositions[buoyPositions.length - 1].longitude),
-                    parseFloat(buoyPositions[buoyPositions.length - 1].latitude)
-                ];
+                const lastPosition = {
+                    lng: buoyPositions[buoyPositions.length - 1].longitude,
+                    lat: buoyPositions[buoyPositions.length - 1].latitude
+                };
 
                 function isDarkModeEnabled() {
-                    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+                    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
                 }
 
-                var map = new mapboxgl.Map({
+                const map = new mapboxgl.Map({
                     container: 'map-container',
                     style: isDarkModeEnabled() ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10',
-                    center: latestPosition,
-                    zoom: 9,
+                    center: lastPosition,
+                    zoom: 12,
                     attributionControl: false
                 });
 
-                map.on('load', function () {
+                map.on('load', () => {
                     if (buoyPositions.length > 1) {
-                        var lineCoordinates = [];
-                        for (var i = 0; i < buoyPositions.length; i++) {
-                            lineCoordinates.push([
-                                buoyPositions[i].longitude,
-                                buoyPositions[i].latitude
-                            ]);
-                        }
                         map.addSource('route', {
                             type: 'geojson',
                             data: {
                                 type: 'Feature',
-                                properties: {},
                                 geometry: {
                                     type: 'LineString',
-                                    coordinates: lineCoordinates
+                                    coordinates: buoyPositions.map(buoyPosition =>
+                                        [buoyPosition.longitude, buoyPosition.latitude]
+                                    )
                                 }
                             }
                         });
@@ -95,12 +89,12 @@
                             },
                             paint: {
                                 'line-color': '#a2a2a2',
-                                'line-width': 8
+                                'line-width': 4
                             }
                         });
                     }
 
-                    new mapboxgl.Marker().setLngLat(latestPosition).addTo(map);
+                    new mapboxgl.Marker().setLngLat(lastPosition).addTo(map);
                 });
             </script>
         @else

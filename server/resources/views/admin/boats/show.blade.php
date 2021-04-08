@@ -61,42 +61,36 @@
             <script>
                 mapboxgl.accessToken = @json(config('mapbox.access_token'));
 
-                var boatPositions = @json($boatPositions);
+                const boatPositions = @json($boatPositions);
 
-                var latestPosition = [
-                    parseFloat(boatPositions[boatPositions.length - 1].longitude),
-                    parseFloat(boatPositions[boatPositions.length - 1].latitude)
-                ];
+                const lastPosition = {
+                    lng: boatPositions[boatPositions.length - 1].longitude,
+                    lat: boatPositions[boatPositions.length - 1].latitude
+                };
 
                 function isDarkModeEnabled() {
-                    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+                    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
                 }
 
-                var map = new mapboxgl.Map({
+                const map = new mapboxgl.Map({
                     container: 'map-container',
                     style: isDarkModeEnabled() ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10',
-                    center: latestPosition,
-                    zoom: 9,
+                    center: lastPosition,
+                    zoom: 12,
                     attributionControl: false
                 });
 
-                map.on('load', function () {
+                map.on('load', () => {
                     if (boatPositions.length > 1) {
-                        var lineCoordinates = [];
-                        for (var i = 0; i < boatPositions.length; i++) {
-                            lineCoordinates.push([
-                                boatPositions[i].longitude,
-                                boatPositions[i].latitude
-                            ]);
-                        }
                         map.addSource('route', {
                             type: 'geojson',
                             data: {
                                 type: 'Feature',
-                                properties: {},
                                 geometry: {
                                     type: 'LineString',
-                                    coordinates: lineCoordinates
+                                    coordinates: boatPositions.map(boatPosition =>
+                                        [boatPosition.longitude, boatPosition.latitude]
+                                    )
                                 }
                             }
                         });
@@ -111,12 +105,12 @@
                             },
                             paint: {
                                 'line-color': '#a2a2a2',
-                                'line-width': 8
+                                'line-width': 4
                             }
                         });
                     }
 
-                    new mapboxgl.Marker().setLngLat(latestPosition).addTo(map);
+                    new mapboxgl.Marker().setLngLat(lastPosition).addTo(map);
                 });
             </script>
         @else

@@ -28,39 +28,37 @@
         <script>
             mapboxgl.accessToken = @json(config('mapbox.access_token'));
 
-            var boats = @json(\App\Models\Boat::with(['positions'])->get());
-            var buoys = @json(\App\Models\Buoy::with(['positions'])->get());
+            const boats = @json(\App\Models\Boat::with(['positions'])->get());
+            const buoys = @json(\App\Models\Buoy::with(['positions'])->get());
 
             function isDarkModeEnabled() {
-                return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+                return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
             }
 
-            var map = new mapboxgl.Map({
+            const map = new mapboxgl.Map({
                 container: 'map-container',
                 style: isDarkModeEnabled() ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10',
-                center: (boats.length > 0 ? [
-                    boats[0].positions[boats[0].positions.length - 1].longitude,
-                    boats[0].positions[boats[0].positions.length - 1].latitude
-                ] : [
-                    buoys[0].positions[buoys[0].positions.length - 1].longitude,
-                    buoys[0].positions[buoys[0].positions.length - 1].latitude
-                ]),
-                zoom: 9,
+                center: (boats.length > 0 ? {
+                    lng: boats[0].positions[boats[0].positions.length - 1].longitude,
+                    lat: boats[0].positions[boats[0].positions.length - 1].latitude
+                } : {
+                    lng: buoys[0].positions[buoys[0].positions.length - 1].longitude,
+                    lat: buoys[0].positions[buoys[0].positions.length - 1].latitude
+                }),
+                zoom: 10,
                 attributionControl: false
             });
 
             map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
-            map.on('load', function () {
-                map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png', function (error, image) {
+            map.on('load', () => {
+                map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png', (error, image) => {
                     if (error) throw error;
                     map.addImage('custom-marker', image);
 
                     // Boats
-                    var boatFeatures = [];
-                    for (var i = 0; i < boats.length; i++) {
-                        var boat = boats[i];
-
+                    const boatFeatures = [];
+                    for (const boat of boats) {
                         if (boat.positions.length > 0) {
                             boatFeatures.push({
                                 type: 'Feature',
@@ -96,9 +94,9 @@
                         }
                     });
 
-                    map.on('click', 'boats', function (event) {
-                        var boat = JSON.parse(event.features[0].properties.boat);
-                        var boatPosition = event.features[0].geometry.coordinates.slice();
+                    map.on('click', 'boats', event => {
+                        const boat = JSON.parse(event.features[0].properties.boat);
+                        const boatPosition = event.features[0].geometry.coordinates.slice();
 
                         new mapboxgl.Popup()
                             .setLngLat(boatPosition)
@@ -108,19 +106,17 @@
                             .addTo(map);
                     });
 
-                    map.on('mouseenter', 'boats', function () {
+                    map.on('mouseenter', 'boats', () => {
                         map.getCanvas().style.cursor = 'pointer';
                     });
 
-                    map.on('mouseleave', 'boats', function () {
+                    map.on('mouseleave', 'boats', () => {
                         map.getCanvas().style.cursor = '';
                     });
 
                     // Buoys
-                    var buoyFeatures = [];
-                    for (var i = 0; i < buoys.length; i++) {
-                        var buoy = buoys[i];
-
+                    const buoyFeatures = [];
+                    for (const buoy of buoys) {
                         if (buoy.positions.length > 0) {
                             buoyFeatures.push({
                                 type: 'Feature',
@@ -156,9 +152,9 @@
                         }
                     });
 
-                    map.on('click', 'buoys', function (event) {
-                        var buoy = JSON.parse(event.features[0].properties.buoy);
-                        var buoyPosition = event.features[0].geometry.coordinates.slice();
+                    map.on('click', 'buoys', event => {
+                        const buoy = JSON.parse(event.features[0].properties.buoy);
+                        const buoyPosition = event.features[0].geometry.coordinates.slice();
 
                         new mapboxgl.Popup()
                             .setLngLat(buoyPosition)
@@ -168,21 +164,21 @@
                             .addTo(map);
                     });
 
-                    map.on('mouseenter', 'buoys', function () {
+                    map.on('mouseenter', 'buoys', () => {
                         map.getCanvas().style.cursor = 'pointer';
                     });
 
-                    map.on('mouseleave', 'buoys', function () {
+                    map.on('mouseleave', 'buoys', () => {
                         map.getCanvas().style.cursor = '';
                     });
                 });
             });
 
             // Open websocket connection with the server
-            var ws = new WebSocket('ws://' + @json(config('websockets.host')) + ':' + @json(config('websockets.port')) + '/');
+            const ws = new WebSocket('ws://' + @json(config('websockets.host')) + ':' + @json(config('websockets.port')) + '/');
 
-            ws.onmessage = function (event) {
-                var data = JSON.parse(event.data);
+            ws.onmessage = event => {
+                const data = JSON.parse(event.data);
                 // Just log the incoming messages
                 console.log(data);
             };

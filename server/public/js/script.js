@@ -1,15 +1,15 @@
 // Register service worker
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/js/serviceworker.js').then(function (registration) {
+    navigator.serviceWorker.register('/js/serviceworker.js').then(registration => {
         registration.update();
     });
 }
 
 // Bulma mobile navigation bar
-var navbarBurger = document.querySelector('.navbar-burger');
-var navbarMenu = document.querySelector('.navbar-menu');
+const navbarBurger = document.querySelector('.navbar-burger');
+const navbarMenu = document.querySelector('.navbar-menu');
 if (navbarBurger != undefined && navbarMenu != undefined) {
-    navbarBurger.addEventListener('click', function (event) {
+    navbarBurger.addEventListener('click', event => {
         event.preventDefault();
         navbarBurger.classList.toggle('is-active');
         navbarMenu.classList.toggle('is-active');
@@ -17,9 +17,9 @@ if (navbarBurger != undefined && navbarMenu != undefined) {
 }
 
 // Bulma alerts close button
-var notificationDeleteButtons = document.querySelectorAll('.notification .delete');
-for (var i = 0; i < notificationDeleteButtons.length; i++) {
-    notificationDeleteButtons[i].addEventListener('click', function (event) {
+const notificationDeleteButtons = document.querySelectorAll('.notification .delete');
+for (let notificationDeleteButton of notificationDeleteButtons) {
+    notificationDeleteButton.addEventListener('click', function (event) {
         event.preventDefault();
         this.parentNode.parentNode.removeChild(this.parentNode);
     });
