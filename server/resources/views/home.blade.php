@@ -38,16 +38,19 @@
             const map = new mapboxgl.Map({
                 container: 'map-container',
                 style: isDarkModeEnabled() ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10',
-                center: (boats.length > 0 ? {
-                    lng: boats[0].positions[boats[0].positions.length - 1].longitude,
-                    lat: boats[0].positions[boats[0].positions.length - 1].latitude
-                } : {
-                    lng: buoys[0].positions[buoys[0].positions.length - 1].longitude,
-                    lat: buoys[0].positions[buoys[0].positions.length - 1].latitude
-                }),
-                zoom: 10,
                 attributionControl: false
             });
+
+            const boatPositions = boats.map(boat => boat.positions[boat.positions.length - 1]);
+            const buoyPositions = buoys.map(buoy => buoy.positions[buoy.positions.length - 1]);
+            const allPositions = boatPositions.concat(buoyPositions).map(position => [position.longitude, position.latitude ]);
+
+            console.log(allPositions);
+
+            var bounds = allPositions.reduce(function (bounds, position) {
+                return bounds.extend(position);
+            }, new mapboxgl.LngLatBounds(allPositions[0], allPositions[0]));
+            map.fitBounds(bounds, { padding: 50, maxZoom: 10 });
 
             map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
@@ -179,8 +182,41 @@
 
             ws.onmessage = event => {
                 const data = JSON.parse(event.data);
-                // Just log the incoming messages
                 console.log(data);
+
+                // On new boat position
+                if (data.type == 'new_boat_position') {
+                    const boatFeatures = map.getSource('boats')._data; // Ugly???
+
+                    const boatFeature = boatFeatures.features.find(boatFeature =>
+                        boatFeature.properties.boat.id == data.boatPosition.boat_id);
+
+                    if (boatFeature != null) {
+                        boatFeature.geometry.coordinates = [
+                            data.boatPosition.longitude,
+                            data.boatPosition.latitude
+                        ];
+
+                        map.getSource('boats').setData(boatFeatures);
+                    }
+                }
+
+                // On new buoy position
+                if (data.type == 'new_buoy_position') {
+                    const buoyFeatures = map.getSource('buoys')._data; // Ugly???
+
+                    const buoyFeature = buoyFeatures.features.find(buoyFeature =>
+                        buoyFeature.properties.buoy.id == data.buoyPosition.buoy_id);
+
+                    if (buoyFeature != null) {
+                        buoyFeature.geometry.coordinates = [
+                            data.buoyPosition.longitude,
+                            data.buoyPosition.latitude
+                        ];
+
+                        map.getSource('buoys').setData(buoyFeatures);
+                    }
+                }
             };
         </script>
     @endif
