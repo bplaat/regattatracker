@@ -26,6 +26,7 @@
         </div>
 
         <script>
+            const WEBSOCKETS_RECONNECT_TIMEOUT = @json(config('websockets.reconnect_timeout'));
             mapboxgl.accessToken = @json(config('mapbox.access_token'));
 
             const boats = @json(\App\Models\Boat::with(['positions'])->get());
@@ -40,19 +41,16 @@
                 style: isDarkModeEnabled() ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10',
                 attributionControl: false
             });
+            map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
             const boatPositions = boats.map(boat => boat.positions[boat.positions.length - 1]);
             const buoyPositions = buoys.map(buoy => buoy.positions[buoy.positions.length - 1]);
             const allPositions = boatPositions.concat(buoyPositions).map(position => [position.longitude, position.latitude ]);
 
-            console.log(allPositions);
-
             var bounds = allPositions.reduce(function (bounds, position) {
                 return bounds.extend(position);
             }, new mapboxgl.LngLatBounds(allPositions[0], allPositions[0]));
             map.fitBounds(bounds, { padding: 50, maxZoom: 10 });
-
-            map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
             map.on('load', () => {
                 map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png', (error, image) => {
@@ -177,47 +175,68 @@
                 });
             });
 
-            // Open websocket connection with the server
-            const ws = new WebSocket('ws://' + @json(config('websockets.host')) + ':' + @json(config('websockets.port')) + '/');
+            // Connect to websocket server
+            let isFirstWebSocketError = true;
+            function connectToWebSocketServer() {
+                const ws = new WebSocket('ws://' + @json(config('websockets.host')) + ':' + @json(config('websockets.port')) + '/');
 
-            ws.onmessage = event => {
-                const data = JSON.parse(event.data);
-                console.log(data);
+                ws.onopen = () => {
+                    console.log('WebSocket connected!');
+                };
 
-                // On new boat position
-                if (data.type == 'new_boat_position') {
-                    const boatFeatures = map.getSource('boats')._data; // Ugly???
+                ws.onmessage = event => {
+                    const data = JSON.parse(event.data);
+                    console.log(data);
 
-                    const boatFeature = boatFeatures.features.find(boatFeature =>
-                        boatFeature.properties.boat.id == data.boatPosition.boat_id);
+                    // On new boat position
+                    if (data.type == 'new_boat_position') {
+                        const boatFeatures = map.getSource('boats')._data; // Ugly???
 
-                    if (boatFeature != null) {
-                        boatFeature.geometry.coordinates = [
-                            data.boatPosition.longitude,
-                            data.boatPosition.latitude
-                        ];
+                        const boatFeature = boatFeatures.features.find(boatFeature =>
+                            boatFeature.properties.boat.id == data.boatPosition.boat_id);
 
-                        map.getSource('boats').setData(boatFeatures);
+                        if (boatFeature != null) {
+                            boatFeature.geometry.coordinates = [
+                                data.boatPosition.longitude,
+                                data.boatPosition.latitude
+                            ];
+
+                            map.getSource('boats').setData(boatFeatures);
+                        }
                     }
+
+                    // On new buoy position
+                    if (data.type == 'new_buoy_position') {
+                        const buoyFeatures = map.getSource('buoys')._data; // Ugly???
+
+                        const buoyFeature = buoyFeatures.features.find(buoyFeature =>
+                            buoyFeature.properties.buoy.id == data.buoyPosition.buoy_id);
+
+                        if (buoyFeature != null) {
+                            buoyFeature.geometry.coordinates = [
+                                data.buoyPosition.longitude,
+                                data.buoyPosition.latitude
+                            ];
+
+                            map.getSource('buoys').setData(buoyFeatures);
+                        }
+                    }
+                };
+
+                // When the connection to the websocket server is lost try to reconnect after
+                ws.onclose = () => {
+                    console.log('WebSocket disconnected!');
+                    setTimeout(connectToWebSocketServer, WEBSOCKETS_RECONNECT_TIMEOUT);
                 }
 
-                // On new buoy position
-                if (data.type == 'new_buoy_position') {
-                    const buoyFeatures = map.getSource('buoys')._data; // Ugly???
-
-                    const buoyFeature = buoyFeatures.features.find(buoyFeature =>
-                        buoyFeature.properties.buoy.id == data.buoyPosition.buoy_id);
-
-                    if (buoyFeature != null) {
-                        buoyFeature.geometry.coordinates = [
-                            data.buoyPosition.longitude,
-                            data.buoyPosition.latitude
-                        ];
-
-                        map.getSource('buoys').setData(buoyFeatures);
+                ws.onerror = event => {
+                    if (isFirstWebSocketError) {
+                        isFirstWebSocketError = false;
+                        alert('Can\'t connect to the websocket server!');
                     }
-                }
-            };
+                };
+            }
+            connectToWebSocketServer();
         </script>
     @endif
 @endsection
