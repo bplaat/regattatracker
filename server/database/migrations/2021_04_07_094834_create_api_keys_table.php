@@ -17,6 +17,8 @@ class CreateApiKeysTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('key');
+            $table->unsignedTinyInteger('level');
+            $table->unsignedBigInteger('requests')->default(0);
             $table->timestamps();
         });
     }

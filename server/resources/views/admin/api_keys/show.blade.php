@@ -14,7 +14,18 @@
 
     <div class="box content">
         <h1 class="title is-4">{{ $apiKey->name }}</h1>
-        <p><code>{{ $apiKey->key }}</code></p>
+
+        <p>
+            @if ($apiKey->level == App\Models\ApiKey::LEVEL_REQUIRE_AUTH)
+                <span class="tag is-success">@lang('admin/api_keys.show.level_require_auth')</span>
+            @endif
+
+            @if ($apiKey->level == App\Models\ApiKey::LEVEL_NO_AUTH)
+                <span class="tag is-danger">@lang('admin/api_keys.show.level_no_auth')</span>
+            @endif
+        </p>
+        <p>@lang('admin/api_keys.show.key') <code>{{ $apiKey->key }}</code></p>
+        <p>@lang('admin/api_keys.show.requests') <strong>{{ $apiKey->requests }}</strong></p>
 
         <div class="buttons">
             <a class="button is-link" href="{{ route('admin.api_keys.edit', $apiKey) }}">@lang('admin/api_keys.show.edit')</a>

@@ -6,9 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class ApiKey extends Model
 {
+    // The api key security levels
+    const LEVEL_REQUIRE_AUTH = 0;
+    const LEVEL_NO_AUTH = 1;
+
     protected $fillable = [
         'name',
-        'key'
+        'key',
+        'level'
     ];
 
     // Generate a random key

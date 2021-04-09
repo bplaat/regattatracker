@@ -30,13 +30,15 @@ class AdminApiKeysController extends Controller
     {
         // Validate input
         $fields = $request->validate([
-            'name' => 'required|min:2|max:48'
+            'name' => 'required|min:2|max:48',
+            'level' => 'required|integer|digits_between:' . ApiKey::LEVEL_REQUIRE_AUTH . ',' . ApiKey::LEVEL_NO_AUTH
         ]);
 
         // Create API key
         $apiKey = ApiKey::create([
             'name' => $fields['name'],
-            'key' => ApiKey::generateKey()
+            'key' => ApiKey::generateKey(),
+            'level' => $fields['level']
         ]);
 
         // Go to the new admin API key page
@@ -60,12 +62,14 @@ class AdminApiKeysController extends Controller
     {
         // Validate input
         $fields = $request->validate([
-            'name' => 'required|min:2|max:48'
+            'name' => 'required|min:2|max:48',
+            'level' => 'required|integer|digits_between:' . ApiKey::LEVEL_REQUIRE_AUTH . ',' . ApiKey::LEVEL_NO_AUTH
         ]);
 
         // Update API key
         $apiKey->update([
-            'name' => $fields['name']
+            'name' => $fields['name'],
+            'level' => $fields['level']
         ]);
 
         // Go to the admin API key page

@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
         // Create API key for the website
         ApiKey::create([
             'name' => 'Website',
-            'key' => ApiKey::generateKey()
+            'key' => ApiKey::generateKey(),
+            'level' => ApiKey::LEVEL_REQUIRE_AUTH
         ]);
     }
 }

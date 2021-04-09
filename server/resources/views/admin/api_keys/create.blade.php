@@ -30,6 +30,28 @@
         </div>
 
         <div class="field">
+            <label class="label" for="level">@lang('admin/api_keys.create.level')</label>
+
+            <div class="control">
+                <div class="select is-fullwidth @error('level') is-danger @enderror">
+                    <select id="level" name="level" required>
+                        <option value="{{ App\Models\ApiKey::LEVEL_REQUIRE_AUTH }}" @if (App\Models\ApiKey::LEVEL_REQUIRE_AUTH == old('level', App\Models\ApiKey::LEVEL_REQUIRE_AUTH)) selected @endif>
+                            @lang('admin/api_keys.create.level_require_auth')
+                        </option>
+
+                        <option value="{{ App\Models\ApiKey::LEVEL_NO_AUTH }}" @if (App\Models\ApiKey::LEVEL_NO_AUTH == old('level', App\Models\ApiKey::LEVEL_REQUIRE_AUTH)) selected @endif>
+                            @lang('admin/api_keys.create.level_no_auth')
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            @error('level')
+                <p class="help is-danger">{{ $errors->first('level') }}</p>
+            @enderror
+        </div>
+
+        <div class="field">
             <div class="control">
                 <button class="button is-link" type="submit">@lang('admin/api_keys.create.button')</button>
             </div>

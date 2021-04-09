@@ -40,8 +40,19 @@
                 @foreach ($apiKeys as $apiKey)
                     <div class="column is-one-third">
                         <div class="box content" style="height: 100%">
-                            <h2 class="title"><a href="{{ route('admin.api_keys.show', $apiKey) }}">{{ $apiKey->name }}</a></h2>
-                            <p><code>{{ $apiKey->key }}</code></p>
+                            <h2 class="title">
+                                <a href="{{ route('admin.api_keys.show', $apiKey) }}">{{ $apiKey->name }}</a>
+
+                                @if ($apiKey->level == App\Models\ApiKey::LEVEL_REQUIRE_AUTH)
+                                    <span class="tag is-pulled-right is-success">@lang('admin/api_keys.index.level_require_auth')</span>
+                                @endif
+
+                                @if ($apiKey->level == App\Models\ApiKey::LEVEL_NO_AUTH)
+                                    <span class="tag is-pulled-right is-danger">@lang('admin/api_keys.index.level_no_auth')</span>
+                                @endif
+                            </h2>
+                            <p>@lang('admin/api_keys.index.key') <code>{{ $apiKey->key }}</code></p>
+                            <p>@lang('admin/api_keys.index.requests') <strong>{{ $apiKey->requests }}</strong></p>
                         </div>
                     </div>
                 @endforeach

@@ -19,28 +19,28 @@ Route::get('', function () {
     ];
 });
 
-// Verify API key
+// Verify API key with auth token check
 Route::middleware('api_key')->group(function () {
-    // API normal routes
-    Route::middleware('auth:sanctum')->group(function () {
-        // API boat routes
-        Route::get('boats', [ApiBoatsController::class, 'index']);
-        Route::get('boats/{boat}', [ApiBoatsController::class, 'show']);
-        Route::get('boats/{boat}/positions', [ApiBoatPositionsController::class, 'index']);
-        Route::post('boats/{boat}/positions', [ApiBoatPositionsController::class, 'store']);
-        Route::get('boats/{boat}/boat_types', [ApiBoatBoatTypesController::class, 'index']);
-        Route::get('boats/{boat}/users', [ApiBoatUsersController::class, 'index']);
+    // API boat routes
+    Route::get('boats', [ApiBoatsController::class, 'index']);
+    Route::get('boats/{boat}', [ApiBoatsController::class, 'show']);
+    Route::get('boats/{boat}/positions', [ApiBoatPositionsController::class, 'index']);
+    Route::post('boats/{boat}/positions', [ApiBoatPositionsController::class, 'store']);
+    Route::get('boats/{boat}/boat_types', [ApiBoatBoatTypesController::class, 'index']);
+    Route::get('boats/{boat}/users', [ApiBoatUsersController::class, 'index']);
 
-        // API buoy routes
-        Route::get('buoys', [ApiBuoysController::class, 'index']);
-        Route::get('buoys/{buoy}', [ApiBuoysController::class, 'show']);
-        Route::get('buoys/{buoy}/positions', [ApiBuoyPositionsController::class, 'index']);
-        Route::post('buoys/{buoy}/positions', [ApiBuoyPositionsController::class, 'store']);
+    // API buoy routes
+    Route::get('buoys', [ApiBuoysController::class, 'index']);
+    Route::get('buoys/{buoy}', [ApiBuoysController::class, 'show']);
+    Route::get('buoys/{buoy}/positions', [ApiBuoyPositionsController::class, 'index']);
+    Route::post('buoys/{buoy}/positions', [ApiBuoyPositionsController::class, 'store']);
 
-        // API auth routes
-        Route::get('auth/logout', [ApiAuthController::class, 'logout']);
-    });
+    // API auth routes
+    Route::get('auth/logout', [ApiAuthController::class, 'logout']);
+});
 
+// Verify API key without auth token check
+Route::middleware('api_key:false')->group(function () {
     // API auth routes
     Route::any('auth/login', [ApiAuthController::class, 'login']);
     Route::any('auth/register', [ApiAuthController::class, 'register']);
