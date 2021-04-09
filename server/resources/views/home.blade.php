@@ -53,125 +53,128 @@
             map.fitBounds(bounds, { padding: 50, maxZoom: 10 });
 
             map.on('load', () => {
-                map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png', (error, image) => {
+                map.loadImage(isDarkModeEnabled() ? '/images/markers/boat-dark.png' : '/images/markers/boat-light.png', (error, boatImage) => {
                     if (error) throw error;
-                    map.addImage('custom-marker', image);
+                    map.addImage('boat-marker', boatImage);
+                });
 
-                    // Boats
-                    const boatFeatures = [];
-                    for (const boat of boats) {
-                        if (boat.positions.length > 0) {
-                            boatFeatures.push({
-                                type: 'Feature',
-                                properties: {
-                                    boat: boat
-                                },
-                                geometry: {
-                                    type: 'Point',
-                                    coordinates: [
-                                        boat.positions[boat.positions.length - 1].longitude,
-                                        boat.positions[boat.positions.length - 1].latitude
-                                    ]
-                                }
-                            });
-                        }
+                map.loadImage(isDarkModeEnabled() ? '/images/markers/buoy-dark.png' : '/images/markers/buoy-light.png', (error, buoyImage) => {
+                    if (error) throw error;
+                    map.addImage('buoy-marker', buoyImage);
+                });
+
+                // Boats
+                const boatFeatures = [];
+                for (const boat of boats) {
+                    if (boat.positions.length > 0) {
+                        boatFeatures.push({
+                            type: 'Feature',
+                            properties: {
+                                boat: boat
+                            },
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [
+                                    boat.positions[boat.positions.length - 1].longitude,
+                                    boat.positions[boat.positions.length - 1].latitude
+                                ]
+                            }
+                        });
                     }
+                }
 
-                    map.addSource('boats', {
-                        type: 'geojson',
-                        data: {
-                            type: 'FeatureCollection',
-                            features: boatFeatures
-                        }
-                    });
-
-                    map.addLayer({
-                        id: 'boats',
-                        type: 'symbol',
-                        source: 'boats',
-                        layout: {
-                            'icon-image': 'custom-marker',
-                            'text-field': 'Boat'
-                        }
-                    });
-
-                    map.on('click', 'boats', event => {
-                        const boat = JSON.parse(event.features[0].properties.boat);
-                        const boatPosition = event.features[0].geometry.coordinates.slice();
-
-                        new mapboxgl.Popup()
-                            .setLngLat(boatPosition)
-                            .setHTML('<h2 style="font-weight: bold; font-size: 18px; margin-bottom: 12px;">' + boat.name + '</h2>' +
-                                (boat.description != null ? '<p>' + boat.description + '</p>' : '')
-                            )
-                            .addTo(map);
-                    });
-
-                    map.on('mouseenter', 'boats', () => {
-                        map.getCanvas().style.cursor = 'pointer';
-                    });
-
-                    map.on('mouseleave', 'boats', () => {
-                        map.getCanvas().style.cursor = '';
-                    });
-
-                    // Buoys
-                    const buoyFeatures = [];
-                    for (const buoy of buoys) {
-                        if (buoy.positions.length > 0) {
-                            buoyFeatures.push({
-                                type: 'Feature',
-                                properties: {
-                                    buoy: buoy
-                                },
-                                geometry: {
-                                    type: 'Point',
-                                    coordinates: [
-                                        buoy.positions[buoy.positions.length - 1].longitude,
-                                        buoy.positions[buoy.positions.length - 1].latitude
-                                    ]
-                                }
-                            });
-                        }
+                map.addSource('boats', {
+                    type: 'geojson',
+                    data: {
+                        type: 'FeatureCollection',
+                        features: boatFeatures
                     }
+                });
 
-                    map.addSource('buoys', {
-                        type: 'geojson',
-                        data: {
-                            type: 'FeatureCollection',
-                            features: buoyFeatures
-                        }
-                    });
+                map.addLayer({
+                    id: 'boats',
+                    type: 'symbol',
+                    source: 'boats',
+                    layout: {
+                        'icon-image': 'boat-marker'
+                    }
+                });
 
-                    map.addLayer({
-                        id: 'buoys',
-                        type: 'symbol',
-                        source: 'buoys',
-                        layout: {
-                            'icon-image': 'custom-marker',
-                            'text-field': 'Buoy'
-                        }
-                    });
+                map.on('click', 'boats', event => {
+                    const boat = JSON.parse(event.features[0].properties.boat);
+                    const boatPosition = event.features[0].geometry.coordinates.slice();
 
-                    map.on('click', 'buoys', event => {
-                        const buoy = JSON.parse(event.features[0].properties.buoy);
-                        const buoyPosition = event.features[0].geometry.coordinates.slice();
+                    new mapboxgl.Popup()
+                        .setLngLat(boatPosition)
+                        .setHTML('<h2 style="font-weight: bold; font-size: 18px; margin-bottom: 12px;">' + boat.name + '</h2>' +
+                            (boat.description != null ? '<p>' + boat.description + '</p>' : '')
+                        )
+                        .addTo(map);
+                });
+
+                map.on('mouseenter', 'boats', () => {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+
+                map.on('mouseleave', 'boats', () => {
+                    map.getCanvas().style.cursor = '';
+                });
+
+                // Buoys
+                const buoyFeatures = [];
+                for (const buoy of buoys) {
+                    if (buoy.positions.length > 0) {
+                        buoyFeatures.push({
+                            type: 'Feature',
+                            properties: {
+                                buoy: buoy
+                            },
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [
+                                    buoy.positions[buoy.positions.length - 1].longitude,
+                                    buoy.positions[buoy.positions.length - 1].latitude
+                                ]
+                            }
+                        });
+                    }
+                }
+
+                map.addSource('buoys', {
+                    type: 'geojson',
+                    data: {
+                        type: 'FeatureCollection',
+                        features: buoyFeatures
+                    }
+                });
+
+                map.addLayer({
+                    id: 'buoys',
+                    type: 'symbol',
+                    source: 'buoys',
+                    layout: {
+                        'icon-image': 'buoy-marker'
+                    }
+                });
+
+                map.on('click', 'buoys', event => {
+                    const buoy = JSON.parse(event.features[0].properties.buoy);
+                    const buoyPosition = event.features[0].geometry.coordinates.slice();
 
                         new mapboxgl.Popup()
                             .setLngLat(buoyPosition)
                             .setHTML('<h2 style="font-weight: bold; font-size: 18px; margin-bottom: 12px;">' + buoy.name + '</h2>' +
-                                (buoy.description != null ? '<p>' + buoy.description + '</p>' : '')
-                            )
-                            .addTo(map);
-                    });
+                            (buoy.description != null ? '<p>' + buoy.description + '</p>' : '')
+                        )
+                        .addTo(map);
+                });
 
-                    map.on('mouseenter', 'buoys', () => {
-                        map.getCanvas().style.cursor = 'pointer';
-                    });
+                map.on('mouseenter', 'buoys', () => {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
 
-                    map.on('mouseleave', 'buoys', () => {
-                        map.getCanvas().style.cursor = '';
-                    });
+                map.on('mouseleave', 'buoys', () => {
+                    map.getCanvas().style.cursor = '';
                 });
             });
 
@@ -227,7 +230,7 @@
                 ws.onclose = () => {
                     console.log('WebSocket disconnected!');
                     setTimeout(connectToWebSocketServer, WEBSOCKETS_RECONNECT_TIMEOUT);
-                }
+                };
 
                 ws.onerror = event => {
                     if (isFirstWebSocketError) {

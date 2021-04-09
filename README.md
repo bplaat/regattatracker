@@ -54,7 +54,7 @@ The brand new RegattaTracker deluxe tracking system
     cd server
     php artisan migrate
     ```
-- Start the websocketsserver (must be running when using the site)
+- Start the websockets server (must be running when using the site)
     ```
     cd server
     php artisan websockets:serve
@@ -153,7 +153,7 @@ TODO
     cd server
     php artisan migrate
     ```
-- Start the websocketsserver (must be running when using the site)
+- Start the websockets server (must be running when using the site)
     ```
     cd server
     php artisan websockets:serve
