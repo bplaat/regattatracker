@@ -30,6 +30,39 @@ class Boat extends Model
         return $this->hasMany(BoatPosition::class);
     }
 
+    // Get boat positions by day
+    public function positionsByDay($time)
+    {
+        if ($time > time()) {
+            return collect();
+        }
+
+        $day = $time - ($time % (24 * 60 * 60));
+
+        $positions = $this->positions()
+            ->where('created_at', '>=', date('Y-m-d', $day))
+            ->where('created_at', '<', date('Y-m-d', $day + 24 * 60 * 60))
+            ->get();
+
+        if ($positions->count() == 0) {
+            $positions = $this->positions()
+                ->where('created_at', '<', date('Y-m-d', $day + 24 * 60 * 60))
+                ->orderByDesc('created_at');
+
+            if ($positions->count() > 0) {
+                $position = $positions->first();
+
+                if ($time >= $position->created_at->getTimestamp()) {
+                    return collect([$position]);
+                }
+            }
+
+            return collect();
+        } else {
+            return $positions;
+        }
+    }
+
     // A boat belongs to many boat types
     public function boatTypes()
     {

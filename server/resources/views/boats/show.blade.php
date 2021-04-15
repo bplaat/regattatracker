@@ -123,29 +123,55 @@
             <p><i>@lang('boats.show.positions_empty')</i></p>
         @endif
 
-        @can('create_boat_position', $boat)
-            <form method="POST" action="{{ route('boats.positions.create', $boat) }}">
-                @csrf
-
-                <div class="field has-addons">
-                    <div class="control">
-                        <input class="input @error('latitude') is-danger @enderror" type="text" id="latitude" name="latitude"
-                            placeholder="@lang('boats.show.positions_latitude_field')"
-                            value="{{ old('latitude', count($boatPositions) >= 1 ? $boatPositions[count($boatPositions) - 1]->latitude : '') }}" required>
+        <div class="columns">
+            <div class="column">
+                @if ($boat->positionsByDay($time - 24 * 60 * 60)->count() > 0)
+                    <div class="buttons is-left">
+                        <a class="button" href="?day={{ date('Y-m-d', $time - 24 * 60 * 60) }}">@lang('boats.show.positions_previous')</a>
                     </div>
+                @endif
+            </div>
 
-                    <div class="control">
-                        <input class="input @error('longitude') is-danger @enderror" type="text" id="longitude" name="longitude"
-                            placeholder="@lang('boats.show.positions_longitude_field')"
-                            value="{{ old('longitude', count($boatPositions) >= 1 ? $boatPositions[count($boatPositions) - 1]->longitude : '') }}" required>
-                    </div>
-
-                    <div class="control">
-                        <button class="button is-link" type="submit">@lang('boats.show.positions_add_button')</button>
-                    </div>
+            <div class="column">
+                <div class="buttons is-centered">
+                    <a class="button is-disabled" href="?day={{ date('Y-m-d') }}">@lang('boats.show.positions_today')</a>
                 </div>
-            </form>
-        @endcan
+            </div>
+
+            <div class="column">
+                @if ($boat->positionsByDay($time + 24 * 60 * 60)->count() > 0)
+                    <div class="buttons is-right">
+                        <a class="button" href="?day={{ date('Y-m-d', $time + 24 * 60 * 60) }}">@lang('boats.show.positions_next')</a>
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        @if (date('Y-m-d', $time) == date('Y-m-d'))
+            @can('create_boat_position', $boat)
+                <form method="POST" action="{{ route('boats.positions.create', $boat) }}">
+                    @csrf
+
+                    <div class="field has-addons">
+                        <div class="control">
+                            <input class="input @error('latitude') is-danger @enderror" type="text" id="latitude" name="latitude"
+                                placeholder="@lang('boats.show.positions_latitude_field')"
+                                value="{{ old('latitude', count($boatPositions) >= 1 ? $boatPositions[count($boatPositions) - 1]->latitude : '') }}" required>
+                        </div>
+
+                        <div class="control">
+                            <input class="input @error('longitude') is-danger @enderror" type="text" id="longitude" name="longitude"
+                                placeholder="@lang('boats.show.positions_longitude_field')"
+                                value="{{ old('longitude', count($boatPositions) >= 1 ? $boatPositions[count($boatPositions) - 1]->longitude : '') }}" required>
+                        </div>
+
+                        <div class="control">
+                            <button class="button is-link" type="submit">@lang('boats.show.positions_add_button')</button>
+                        </div>
+                    </div>
+                </form>
+            @endcan
+        @endif
     </div>
 
     <!-- Boat boat types -->
