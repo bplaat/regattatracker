@@ -80,7 +80,13 @@ class AdminBoatsController extends Controller
     public function show(Boat $boat)
     {
         // Select boat information
-        $boatPositions = $boat->positions;
+        $day = request('day');
+        if ($day != null) {
+            $time = strtotime($day);
+        } else {
+            $time = time();
+        }
+        $boatPositions = $boat->positionsByDay($time);
 
         $boatBoatTypes = $boat->boatTypes->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
             ->paginate(config('pagination.web.limit'))->withQueryString();
@@ -97,6 +103,7 @@ class AdminBoatsController extends Controller
         return view('admin.boats.show', [
             'boat' => $boat,
 
+            'time' => $time,
             'boatPositions' => $boatPositions,
 
             'boatBoatTypes' => $boatBoatTypes,

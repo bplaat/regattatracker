@@ -39,28 +39,23 @@ class Boat extends Model
 
         $day = $time - ($time % (24 * 60 * 60));
 
-        $positions = $this->positions()
+        $todayPositions = $this->positions()
             ->where('created_at', '>=', date('Y-m-d', $day))
             ->where('created_at', '<', date('Y-m-d', $day + 24 * 60 * 60))
             ->get();
 
-        if ($positions->count() == 0) {
-            $positions = $this->positions()
-                ->where('created_at', '<', date('Y-m-d', $day + 24 * 60 * 60))
-                ->orderByDesc('created_at');
+        $oldPositions = $this->positions()
+            ->where('created_at', '<', date('Y-m-d', $day - 1))
+            ->orderByDesc('created_at');
 
-            if ($positions->count() > 0) {
-                $position = $positions->first();
-
-                if ($time >= $position->created_at->getTimestamp()) {
-                    return collect([$position]);
-                }
+        if ($oldPositions->count() > 0) {
+            $oldPosition = $oldPositions->first();
+            if ($time >= $oldPosition->created_at->getTimestamp()) {
+                $todayPositions->prepend($oldPosition);
             }
-
-            return collect();
-        } else {
-            return $positions;
         }
+
+        return $todayPositions;
     }
 
     // A boat belongs to many boat types

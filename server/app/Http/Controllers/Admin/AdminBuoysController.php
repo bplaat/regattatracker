@@ -48,10 +48,21 @@ class AdminBuoysController extends Controller
     public function show(Buoy $buoy)
     {
         // Select buoy information
-        $buoyPositions = $buoy->positions;
+        $day = request('day');
+        if ($day != null) {
+            $time = strtotime($day);
+        } else {
+            $time = time();
+        }
+        $buoyPositions = $buoy->positionsByDay($time);
 
         // Return buoy show view
-        return view('admin.buoys.show', ['buoy' => $buoy, 'buoyPositions' => $buoyPositions]);
+        return view('admin.buoys.show', [
+            'buoy' => $buoy,
+
+            'time' => $time,
+            'buoyPositions' => $buoyPositions
+        ]);
     }
 
 

@@ -44,6 +44,9 @@ return [
 
     'show.positions' => 'Boat Positions',
     'show.positions_empty' => 'This boat has no known positions',
+    'show.positions_previous' => '&laquo; Previous day',
+    'show.positions_today' => 'Today',
+    'show.positions_next' => 'Next day &raquo;',
     'show.positions_latitude_field' => 'Latitude',
     'show.positions_longitude_field' => 'Longitude',
     'show.positions_add_button' => 'Add position',

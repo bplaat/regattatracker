@@ -101,26 +101,52 @@
             <p><i>@lang('admin/buoys.show.positions_empty')</i></p>
         @endif
 
-        <form method="POST" action="{{ route('admin.buoys.positions.create', $buoy) }}">
-            @csrf
+        <div class="columns">
+            <div class="column">
+                @if ($buoy->positionsByDay($time - 24 * 60 * 60)->count() > 0)
+                    <div class="buttons is-left">
+                        <a class="button" href="?day={{ date('Y-m-d', $time - 24 * 60 * 60) }}">@lang('admin/buoys.show.positions_previous')</a>
+                    </div>
+                @endif
+            </div>
 
-            <div class="field has-addons">
-                <div class="control">
-                    <input class="input @error('latitude') is-danger @enderror" type="text" id="latitude" name="latitude"
-                        placeholder="@lang('admin/buoys.show.positions_latitude_field')"
-                        value="{{ old('latitude', count($buoyPositions) >= 1 ? $buoyPositions[count($buoyPositions) - 1]->latitude : '') }}" required>
-                </div>
-
-                <div class="control">
-                    <input class="input @error('longitude') is-danger @enderror" type="text" id="longitude" name="longitude"
-                        placeholder="@lang('admin/buoys.show.positions_longitude_field')"
-                        value="{{ old('longitude', count($buoyPositions) >= 1 ? $buoyPositions[count($buoyPositions) - 1]->longitude : '') }}" required>
-                </div>
-
-                <div class="control">
-                    <button class="button is-link" type="submit">@lang('admin/buoys.show.positions_add_button')</button>
+            <div class="column">
+                <div class="buttons is-centered">
+                    <a class="button is-disabled" href="?day={{ date('Y-m-d') }}">@lang('admin/buoys.show.positions_today')</a>
                 </div>
             </div>
-        </form>
+
+            <div class="column">
+                @if ($buoy->positionsByDay($time + 24 * 60 * 60)->count() > 0)
+                    <div class="buttons is-right">
+                        <a class="button" href="?day={{ date('Y-m-d', $time + 24 * 60 * 60) }}">@lang('admin/buoys.show.positions_next')</a>
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        @if (date('Y-m-d', $time) == date('Y-m-d'))
+            <form method="POST" action="{{ route('admin.buoys.positions.create', $buoy) }}">
+                @csrf
+
+                <div class="field has-addons">
+                    <div class="control">
+                        <input class="input @error('latitude') is-danger @enderror" type="text" id="latitude" name="latitude"
+                            placeholder="@lang('admin/buoys.show.positions_latitude_field')"
+                            value="{{ old('latitude', count($buoyPositions) >= 1 ? $buoyPositions[count($buoyPositions) - 1]->latitude : '') }}" required>
+                    </div>
+
+                    <div class="control">
+                        <input class="input @error('longitude') is-danger @enderror" type="text" id="longitude" name="longitude"
+                            placeholder="@lang('admin/buoys.show.positions_longitude_field')"
+                            value="{{ old('longitude', count($buoyPositions) >= 1 ? $buoyPositions[count($buoyPositions) - 1]->longitude : '') }}" required>
+                    </div>
+
+                    <div class="control">
+                        <button class="button is-link" type="submit">@lang('admin/buoys.show.positions_add_button')</button>
+                    </div>
+                </div>
+            </form>
+        @endif
     </div>
 @endsection
