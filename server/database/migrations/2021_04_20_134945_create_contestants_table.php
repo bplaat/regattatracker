@@ -15,7 +15,21 @@ class CreateContestantsTable extends Migration
     {
         Schema::create('contestants', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('fleet_id');
+            $table->unsignedBigInteger('boat_id');
             $table->timestamps();
+
+            $table->unique(['fleet_id', 'boat_id']);
+
+            $table->foreign('fleet_id')
+                ->references('id')
+                ->on('fleets')
+                ->onDelete('cascade');
+
+            $table->foreign('boat_id')
+                ->references('id')
+                ->on('boats')
+                ->onDelete('cascade');
         });
     }
 

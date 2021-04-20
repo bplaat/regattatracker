@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Contestant;
+use App\Models\Fleet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ContestantFactory extends Factory
@@ -22,7 +23,8 @@ class ContestantFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'fleet_id' => $this->faker->randomElement(Fleet::all()->pluck('id')->toArray()),
+            'boat_id' => $this->faker->randomElement(Boat::all()->pluck('id')->toArray())
         ];
     }
 }
