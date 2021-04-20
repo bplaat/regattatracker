@@ -19,8 +19,7 @@ class CreateBoatUserTable extends Migration
             $table->unsignedBigInteger('boat_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedTinyInteger('role');
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->timestamps();
 
             $table->unique(['boat_id', 'user_id']);
 

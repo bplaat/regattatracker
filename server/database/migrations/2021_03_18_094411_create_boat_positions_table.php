@@ -18,8 +18,7 @@ class CreateBoatPositionsTable extends Migration
             $table->unsignedBigInteger('boat_id');
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->timestamps();
 
             $table->foreign('boat_id')
                 ->references('id')
