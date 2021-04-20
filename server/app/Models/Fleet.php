@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Fleet extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'competition_class_id'
+    ];
 }
