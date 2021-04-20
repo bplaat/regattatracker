@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class CompetitionClass extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'competition_id'
+    ];
 }

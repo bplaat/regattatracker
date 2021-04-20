@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Competition;
 use App\Models\CompetitionClass;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +23,8 @@ class CompetitionClassFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->name,
+            'competition_id' => $this->faker->randomElement(Competition::all()->pluck('id')->toArray())
         ];
     }
 }
