@@ -28,7 +28,7 @@ class AdminCompetitionsController extends Controller
     // Admin competitions store route
     public function store(Request $request)
     {
-        //TODO datetime validation.
+        //TODO complete datetime validation.
 
         // Validate input
         $fields = $request->validate([
@@ -65,7 +65,9 @@ class AdminCompetitionsController extends Controller
         $fields = $request->validate([
             'name' => 'required|min:2|max:255',
             'start' => 'nullable|date',
-            'end' => 'nullable|date'
+            'starttime' => 'required_with:start',
+            'end' => 'nullable|date',
+            'endtime' => 'required_with:end'
         ]);
 
         // Update competition

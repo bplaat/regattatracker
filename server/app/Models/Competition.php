@@ -20,15 +20,6 @@ class Competition extends Model
         return $this->belongsToMany(CompetitionClass::class);
     }
 
-    // Competition start and end time for the forums.
-    public function startTime() {
-        return strtotime($this->getAttribute('start'));
-    }
-
-    public function endTime() {
-        return strtotime($this->getAttribute('end'));
-    }
-
     // Search by a query.
     public function search($query) {
         return Competition::all()->where('name', 'LIKE', '%' . $query . '%')

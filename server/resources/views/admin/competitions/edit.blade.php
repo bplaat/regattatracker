@@ -30,8 +30,6 @@
             @enderror
         </div>
 
-        {{--  TODO: Correctly insert old dates and times.      --}}
-
         <div class="columns">
             <div class="column">
                 <label class="label" for="end">@lang('admin/competitions.edit.start')</label>
@@ -40,7 +38,7 @@
                         <div class="field">
                             <div class="control">
                                 <input class="input @error('start') is-danger @enderror" type="date" id="start"
-                                       name="start" value="{{ old('start', date($competition->start)) }}">
+                                       name="start" value="{{ old('start', $competition->start == null ? '' : date('Y-m-d', strtotime($competition->start))) }}">
                             </div>
 
                             @error('start')
@@ -52,7 +50,7 @@
                         <div class="field">
                             <div class="control">
                                 <input class="input @error('start') is-danger @enderror" type="time" step="1" id="starttime"
-                                       name="starttime" value="{{ old('starttime', $competition->startTime()) }}">
+                                       name="starttime" value="{{ old('starttime', $competition->start == null ? '' : date('H:i:s', strtotime($competition->start))) }}">
                             </div>
                         </div>
                     </div>
@@ -66,7 +64,7 @@
                         <div class="field">
                             <div class="control">
                                 <input class="input @error('end') is-danger @enderror" type="date" id="end"
-                                       name="end" value="{{ old('end', date($competition->end)) }}">
+                                       name="end" value="{{ old('end', $competition->end == null ? '' : date('Y-m-d', strtotime($competition->end))) }}">
                             </div>
 
                             @error('end')
@@ -78,7 +76,7 @@
                         <div class="field">
                             <div class="control">
                                 <input class="input @error('end') is-danger @enderror" type="time" step="1" id="endtime"
-                                       name="endtime" value="{{ old('endtime', $competition->endTime()) }}">
+                                       name="endtime" value="{{ old('endtime', $competition->end == null ? '' : date('H:i:s', strtotime($competition->end))) }}">
                             </div>
                         </div>
                     </div>
