@@ -148,6 +148,8 @@ Route::middleware('admin')->group(function () {
 
     // Admin competition routes
     Route::get('/admin/competitions', [AdminCompetitionsController::class, 'index'])->name('admin.competitions.index');
+    Route::view('/admin/competitions/create', 'admin.competitions.create')->name('admin.competitions.create');
+    Route::post('/admin/competitions', [AdminCompetitionsController::class, 'store'])->name('admin.competitions.store');
 });
 
 // Guest routes
