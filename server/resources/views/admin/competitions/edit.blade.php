@@ -30,6 +30,8 @@
             @enderror
         </div>
 
+        {{--  TODO: Correctly insert old dates and times.      --}}
+
         <div class="columns">
             <div class="column">
                 <label class="label" for="end">@lang('admin/competitions.edit.start')</label>
@@ -38,7 +40,7 @@
                         <div class="field">
                             <div class="control">
                                 <input class="input @error('start') is-danger @enderror" type="date" id="start"
-                                       name="start" value="{{ old('start', $competition->start) }}">
+                                       name="start" value="{{ old('start', date($competition->start)) }}">
                             </div>
 
                             @error('start')
@@ -64,7 +66,7 @@
                         <div class="field">
                             <div class="control">
                                 <input class="input @error('end') is-danger @enderror" type="date" id="end"
-                                       name="end" value="{{ old('end', $competition->end) }}">
+                                       name="end" value="{{ old('end', date($competition->end)) }}">
                             </div>
 
                             @error('end')
