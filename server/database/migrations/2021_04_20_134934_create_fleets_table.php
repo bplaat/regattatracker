@@ -21,7 +21,7 @@ class CreateFleetsTable extends Migration
 
             $table->foreign('competition_class_id')
                 ->references('id')
-                ->on('competition_class')
+                ->on('competition_classes')
                 ->onDelete('cascade');
         });
     }

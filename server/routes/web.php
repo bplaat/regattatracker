@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminCompetitionsController;
 use App\Http\Controllers\AuthController;
 
 use App\Http\Controllers\BoatsController;
@@ -144,6 +145,15 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/api_keys/{api_key}/delete', [AdminApiKeysController::class, 'delete'])->name('admin.api_keys.delete');
     Route::get('/admin/api_keys/{api_key}', [AdminApiKeysController::class, 'show'])->name('admin.api_keys.show');
     Route::post('/admin/api_keys/{api_key}', [AdminApiKeysController::class, 'update'])->name('admin.api_keys.update');
+
+    // Admin competition routes
+    Route::get('/admin/competitions', [AdminCompetitionsController::class, 'index'])->name('admin.competitions.index');
+    Route::view('/admin/competitions/create', 'admin.competitions.create')->name('admin.competitions.create');
+    Route::post('/admin/competitions', [AdminCompetitionsController::class, 'store'])->name('admin.competitions.store');
+    Route::get('/admin/competitions/{competition}/edit', [AdminCompetitionsController::class, 'edit'])->name('admin.competitions.edit');
+    Route::get('/admin/competitions/{competition}/delete', [AdminCompetitionsController::class, 'delete'])->name('admin.competitions.delete');
+    Route::get('/admin/competitions/{competition}', [AdminCompetitionsController::class, 'show'])->name('admin.competitions.show');
+    Route::post('/admin/competitions/{competition}', [AdminCompetitionsController::class, 'update'])->name('admin.competitions.update');
 });
 
 // Guest routes

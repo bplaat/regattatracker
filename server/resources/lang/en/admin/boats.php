@@ -7,7 +7,7 @@ return [
     'index.header' => 'All the boats',
     'index.search_field' => 'Search for boats...',
     'index.search_button' => 'Search',
-    'index.empty' => 'There are no boats found',
+    'index.empty' => 'No boats found',
     'index.create' => 'Create new boat',
 
     // Admin boats create page
