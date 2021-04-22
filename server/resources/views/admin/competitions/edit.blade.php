@@ -30,28 +30,58 @@
             @enderror
         </div>
 
-        <div class="field">
-            <label class="label" for="start">@lang('admin/competitions.edit.start')</label>
+        <div class="columns">
+            <div class="column">
+                <label class="label" for="end">@lang('admin/competitions.edit.start')</label>
+                <div class="columns">
+                    <div class="column">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input @error('start') is-danger @enderror" type="date" id="start"
+                                       name="start" value="{{ old('start', $competition->start) }}">
+                            </div>
 
-            <div class="control">
-                <input class="input @error('start') is-danger @enderror" type="datetime-local" id="start" name="start" value="{{ old('start', $competition->start) }}" required>
+                            @error('start')
+                            <p class="help is-danger">{{ $errors->first('start') }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input @error('start') is-danger @enderror" type="time" step="1" id="starttime"
+                                       name="starttime" value="{{ old('starttime', $competition->startTime()) }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            @error('start')
-            <p class="help is-danger">{{ $errors->first('start') }}</p>
-            @enderror
-        </div>
+            <div class="column">
+                <label class="label" for="end">@lang('admin/competitions.edit.end')</label>
+                <div class="columns">
+                    <div class="column">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input @error('end') is-danger @enderror" type="date" id="end"
+                                       name="end" value="{{ old('end', $competition->end) }}">
+                            </div>
 
-        <div class="field">
-            <label class="label" for="start">@lang('admin/competitions.edit.end')</label>
-
-            <div class="control">
-                <input class="input @error('end') is-danger @enderror" type="datetime-local" id="end" name="end" value="{{ old('end', $competition->end) }}" required>
+                            @error('end')
+                            <p class="help is-danger">{{ $errors->first('end') }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input @error('end') is-danger @enderror" type="time" step="1" id="endtime"
+                                       name="endtime" value="{{ old('endtime', $competition->endTime()) }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            @error('end')
-            <p class="help is-danger">{{ $errors->first('end') }}</p>
-            @enderror
         </div>
 
         <div class="field">

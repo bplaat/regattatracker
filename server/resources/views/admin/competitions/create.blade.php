@@ -31,30 +31,54 @@
 
         <div class="columns">
             <div class="column">
-                <div class="field">
-                    <label class="label" for="start">@lang('admin/competitions.create.start')</label>
+                <label class="label" for="end">@lang('admin/competitions.create.start')</label>
+                <div class="columns">
+                    <div class="column">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input @error('start') is-danger @enderror" type="date" id="start"
+                                       name="start" value="{{ old('start') }}">
+                            </div>
 
-                    <div class="control">
-                        <input class="input @error('start') is-danger @enderror" type="datetime-local" id="start" name="start" value="{{ old('start') }}" required>
+                            @error('start')
+                            <p class="help is-danger">{{ $errors->first('start') }}</p>
+                            @enderror
+                        </div>
                     </div>
-
-                    @error('start')
-                    <p class="help is-danger">{{ $errors->first('start') }}</p>
-                    @enderror
+                    <div class="column">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input @error('start') is-danger @enderror" type="time" step="1" id="starttime"
+                                       name="starttime" value="{{ old('starttime') }}">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="column">
-                <div class="field">
-                    <label class="label" for="end">@lang('admin/competitions.create.end')</label>
+                <label class="label" for="end">@lang('admin/competitions.create.end')</label>
+                <div class="columns">
+                    <div class="column">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input @error('end') is-danger @enderror" type="date" id="end"
+                                       name="end" value="{{ old('end') }}">
+                            </div>
 
-                    <div class="control">
-                        <input class="input @error('end') is-danger @enderror" type="datetime-local" id="end" name="end" value="{{ old('end') }}" required>
+                            @error('end')
+                            <p class="help is-danger">{{ $errors->first('end') }}</p>
+                            @enderror
+                        </div>
                     </div>
-
-                    @error('end')
-                    <p class="help is-danger">{{ $errors->first('end') }}</p>
-                    @enderror
+                    <div class="column">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input @error('end') is-danger @enderror" type="time" step="1" id="endtime"
+                                       name="endtime" value="{{ old('endtime') }}">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

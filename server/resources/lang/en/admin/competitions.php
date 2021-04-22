@@ -17,7 +17,7 @@ return [
     'create.name' => 'Competition Name',
     'create.start' => 'Competition starting date',
     'create.end' => 'Competition end date',
-    'create.create_button' => 'Create new competition',
+    'create.button' => 'Create new competition',
 
     // Admin competitions show page
     'show.title' => ':competition.name - Competitions - Admin',

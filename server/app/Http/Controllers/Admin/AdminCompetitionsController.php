@@ -28,18 +28,22 @@ class AdminCompetitionsController extends Controller
     // Admin competitions store route
     public function store(Request $request)
     {
+        //TODO datetime validation.
+
         // Validate input
         $fields = $request->validate([
             'name' => 'required|min:2|max:255',
             'start' => 'nullable|date',
-            'end' => 'nullable|date'
+            'starttime' => 'required_with:start',
+            'end' => 'nullable|date',
+            'endtime' => 'required_with:end'
         ]);
 
         // Create Competition
         $competition = Competition::create([
             'name' => $fields['name'],
-            'start' => $fields['start'],
-            'end' => $fields['end']
+            'start' => $fields['start'] . ' ' . $fields['starttime'],
+            'end' => $fields['end'] != null ? $fields['end'] . ' ' . $fields['endtime'] : null,
         ]);
 
         // Go to the new competition page
