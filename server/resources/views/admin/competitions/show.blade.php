@@ -18,8 +18,8 @@
         </h1>
 
         <h2 class="subtitle is-5">@lang('admin/competitions.show.dates')</h2>
-        <p>Start: {{ $competition->start != null ? $competition->start : @lang('admin/competitions.show.dates.empty') }}</p>
-        <p>End: {{ $competition->end != null ? $competition->end : @lang('admin/competitions.show.dates.empty') }}</p>
+        <p>Start: {{ $competition->start != null ? $competition->start : __('admin/competitions.show.dates.empty') }}</p>
+        <p>End: {{ $competition->end != null ? $competition->end : __('admin/competitions.show.dates.empty') }}</p>
 
         <div class="buttons">
             <a class="button is-link" href="{{ route('admin.competitions.edit', $competition) }}">@lang('admin/competitions.show.edit')</a>
