@@ -26,7 +26,7 @@ class AdminCompetitionsController extends Controller
     }
 
     // Admin competitions store route
-    public function store($request)
+    public function store(Request $request)
     {
         // Validate input
         $fields = $request->validate([
@@ -48,8 +48,18 @@ class AdminCompetitionsController extends Controller
 
     // Admin competitions show route
     public function show($competition) {
-        return view('admin.competitions.show', [
-            'competition' => $competition
-        ]);
+        return view('admin.competitions.show', ['competition' => $competition]);
     }
+
+    // Admin competitions edit route
+    public function edit(Competition $competition) {
+        return view('admin.competitions.edit', ['competition' => $competition]);
+    }
+
+    // Admin competitions delete route
+    public function delete(Competition $competition) {
+        $competition->delete();
+        return redirect()->route('admin.competitions.index');
+    }
+
 }
