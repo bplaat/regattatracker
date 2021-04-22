@@ -13,7 +13,7 @@ return [
     // Admin competitions create page
     'create.title' => 'Create - Competitions - Admin',
     'create.breadcrumb' => 'Create',
-    'create.header' => 'Create new boat',
+    'create.header' => 'Create new competition',
     'create.name' => 'Competition Name',
     'create.start' => 'Competition starting date',
     'create.end' => 'Competition end date',
@@ -26,5 +26,12 @@ return [
     'show.edit' => 'Edit',
     'show.delete' => 'Delete',
 
-
+    // Admin competitions edit page
+    'edit.title' => 'Edit - :competition.name - Competitions - Admin',
+    'edit.breadcrumb' => 'Edit',
+    'edit.header' => 'Edit competition',
+    'edit.name' => 'Name',
+    'edit.start' => 'Competition starting date',
+    'edit.end' => 'Competition end date',
+    'edit.button' => 'Edit competition'
 ];
