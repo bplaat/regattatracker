@@ -153,6 +153,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/competitions/{competition}/edit', [AdminCompetitionsController::class, 'edit'])->name('admin.competitions.edit');
     Route::get('/admin/competitions/{competition}/delete', [AdminCompetitionsController::class, 'delete'])->name('admin.competitions.delete');
     Route::get('/admin/competitions/{competition}', [AdminCompetitionsController::class, 'show'])->name('admin.competitions.show');
+    Route::post('/admin/competitions/{competition}', [AdminCompetitionsController::class, 'update'])->name('admin.competitions.update');
 });
 
 // Guest routes

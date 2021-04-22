@@ -47,13 +47,32 @@ class AdminCompetitionsController extends Controller
     }
 
     // Admin competitions show route
-    public function show($competition) {
+    public function show(Competition $competition) {
         return view('admin.competitions.show', ['competition' => $competition]);
     }
 
     // Admin competitions edit route
     public function edit(Competition $competition) {
         return view('admin.competitions.edit', ['competition' => $competition]);
+    }
+
+    public function update(Request $request, Competition $competition) {
+        // Validate input
+        $fields = $request->validate([
+            'name' => 'required|min:2|max:255',
+            'start' => 'nullable|date',
+            'end' => 'nullable|date'
+        ]);
+
+        // Update competition
+        $competition->update([
+            'name' => $fields['name'],
+            'start' => $fields['start'],
+            'end' => $fields['end']
+        ]);
+
+        // Go to the competition page
+        return redirect()->route('admin.competitions.show', $competition);
     }
 
     // Admin competitions delete route
