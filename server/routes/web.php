@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminCompetitionsController;
 use App\Http\Controllers\AuthController;
 
 use App\Http\Controllers\BoatsController;
@@ -144,6 +145,9 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/api_keys/{api_key}/delete', [AdminApiKeysController::class, 'delete'])->name('admin.api_keys.delete');
     Route::get('/admin/api_keys/{api_key}', [AdminApiKeysController::class, 'show'])->name('admin.api_keys.show');
     Route::post('/admin/api_keys/{api_key}', [AdminApiKeysController::class, 'update'])->name('admin.api_keys.update');
+
+    // Admin competition routes
+    Route::get('/admin/competitions', [AdminCompetitionsController::class, 'index'])->name('admin.competitions.index');
 });
 
 // Guest routes
