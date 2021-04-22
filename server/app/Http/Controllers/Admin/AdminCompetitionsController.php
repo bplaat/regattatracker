@@ -28,25 +28,23 @@ class AdminCompetitionsController extends Controller
     // Admin competitions store route
     public function store(Request $request)
     {
-        //TODO complete datetime validation.
-
         // Validate input
         $fields = $request->validate([
             'name' => 'required|min:2|max:255',
-            'start' => 'nullable|date',
-            'starttime' => 'required_with:start',
-            'end' => 'nullable|date',
-            'endtime' => 'required_with:end'
+            'start_date' => 'nullable|date_format:Y-m-d',
+            'start_time' => 'nullable|date_format:H:i',
+            'end_date' => 'nullable|date_format:Y-m-d',
+            'end_time' => 'nullable|date_format:H:i'
         ]);
 
         // Create Competition
         $competition = Competition::create([
             'name' => $fields['name'],
-            'start' => $fields['start'] . ' ' . $fields['starttime'],
-            'end' => $fields['end'] != null ? $fields['end'] . ' ' . $fields['endtime'] : null,
+            'start' => $fields['start_date'] != null && $fields['start_time'] != null ? $fields['start_date'] . ' ' . $fields['start_time'] : null,
+            'end' => $fields['end_date'] != null && $fields['end_time'] != null ? $fields['end_date'] . ' ' . $fields['end_time'] : null
         ]);
 
-        // Go to the new competition page
+        // Go to the new competition show page
         return redirect()->route('admin.competitions.show', $competition);
     }
 
@@ -64,26 +62,29 @@ class AdminCompetitionsController extends Controller
         // Validate input
         $fields = $request->validate([
             'name' => 'required|min:2|max:255',
-            'start' => 'nullable|date',
-            'starttime' => 'required_with:start',
-            'end' => 'nullable|date',
-            'endtime' => 'required_with:end'
+            'start_date' => 'nullable|date_format:Y-m-d',
+            'start_time' => 'nullable|date_format:H:i',
+            'end_date' => 'nullable|date_format:Y-m-d',
+            'end_time' => 'nullable|date_format:H:i'
         ]);
 
         // Update competition
         $competition->update([
             'name' => $fields['name'],
-            'start' => $fields['start'],
-            'end' => $fields['end']
+            'start' => $fields['start_date'] != null && $fields['start_time'] != null ? $fields['start_date'] . ' ' . $fields['start_time'] : null,
+            'end' => $fields['end_date'] != null && $fields['end_time'] != null ? $fields['end_date'] . ' ' . $fields['end_time'] : null
         ]);
 
-        // Go to the competition page
+        // Go to the competition show page
         return redirect()->route('admin.competitions.show', $competition);
     }
 
     // Admin competitions delete route
     public function delete(Competition $competition) {
+        // Delete competition
         $competition->delete();
+
+        // Go to the competition index page
         return redirect()->route('admin.competitions.index');
     }
 

@@ -6,9 +6,9 @@ return [
     'breadcrumb' => 'Admin',
     'header' => 'The admin zone',
     'users' => 'Users',
+    'api_keys' => 'API Keys',
     'boats' => 'Boats',
     'boat_types' => 'Boat Types',
     'buoys' => 'Buoys',
-    'api_keys' => 'API Keys',
     'competitions' => 'Competitions'
 ];

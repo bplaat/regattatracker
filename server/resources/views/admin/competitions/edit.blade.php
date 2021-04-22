@@ -26,58 +26,70 @@
             </div>
 
             @error('name')
-            <p class="help is-danger">{{ $errors->first('name') }}</p>
+                <p class="help is-danger">{{ $errors->first('name') }}</p>
             @enderror
         </div>
 
         <div class="columns">
             <div class="column">
-                <label class="label" for="end">@lang('admin/competitions.edit.start')</label>
+                <label class="label" for="start_date">@lang('admin/competitions.edit.start')</label>
+
                 <div class="columns">
                     <div class="column">
                         <div class="field">
                             <div class="control">
-                                <input class="input @error('start') is-danger @enderror" type="date" id="start"
-                                       name="start" value="{{ old('start', $competition->start == null ? '' : date('Y-m-d', strtotime($competition->start))) }}">
+                                <input class="input @error('start_date') is-danger @enderror" type="date" id="start_date"
+                                       name="start_date" value="{{ old('start_date', $competition->start == null ? '' : date('Y-m-d', strtotime($competition->start))) }}">
                             </div>
 
-                            @error('start')
-                            <p class="help is-danger">{{ $errors->first('start') }}</p>
+                            @error('start_date')
+                                <p class="help is-danger">{{ $errors->first('start_date') }}</p>
                             @enderror
                         </div>
                     </div>
+
                     <div class="column">
                         <div class="field">
                             <div class="control">
-                                <input class="input @error('start') is-danger @enderror" type="time" step="1" id="starttime"
-                                       name="starttime" value="{{ old('starttime', $competition->start == null ? '' : date('H:i:s', strtotime($competition->start))) }}">
+                                <input class="input @error('start_time') is-danger @enderror" type="time" id="start_time"
+                                       name="start_time" value="{{ old('start_time', $competition->start == null ? '' : date('H:i', strtotime($competition->start))) }}">
                             </div>
+
+                            @error('start_time')
+                                <p class="help is-danger">{{ $errors->first('start_time') }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="column">
-                <label class="label" for="end">@lang('admin/competitions.edit.end')</label>
+                <label class="label" for="end_date">@lang('admin/competitions.edit.end')</label>
+
                 <div class="columns">
                     <div class="column">
                         <div class="field">
                             <div class="control">
-                                <input class="input @error('end') is-danger @enderror" type="date" id="end"
-                                       name="end" value="{{ old('end', $competition->end == null ? '' : date('Y-m-d', strtotime($competition->end))) }}">
+                                <input class="input @error('end_date') is-danger @enderror" type="date" id="end_date"
+                                       name="end_date" value="{{ old('end_date', $competition->end == null ? '' : date('Y-m-d', strtotime($competition->end))) }}">
                             </div>
 
-                            @error('end')
-                            <p class="help is-danger">{{ $errors->first('end') }}</p>
+                            @error('end_date')
+                                <p class="help is-danger">{{ $errors->first('end_date') }}</p>
                             @enderror
                         </div>
                     </div>
+
                     <div class="column">
                         <div class="field">
                             <div class="control">
-                                <input class="input @error('end') is-danger @enderror" type="time" step="1" id="endtime"
-                                       name="endtime" value="{{ old('endtime', $competition->end == null ? '' : date('H:i:s', strtotime($competition->end))) }}">
+                                <input class="input @error('end_time') is-danger @enderror" type="time" id="end_time"
+                                       name="end_time" value="{{ old('end_time', $competition->end == null ? '' : date('H:i', strtotime($competition->end))) }}">
                             </div>
+
+                            @error('end_time')
+                                <p class="help is-danger">{{ $errors->first('end_time') }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>

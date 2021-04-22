@@ -9,10 +9,10 @@ return [
 
     'header.admin.home' => 'Admin',
     'header.admin.users' => 'Users',
+    'header.admin.api_keys' => 'API Keys',
     'header.admin.boats' => 'Boats',
     'header.admin.boat_types' => 'Boat Types',
     'header.admin.buoys' => 'Buoys',
-    'header.admin.api_keys' => 'API Keys',
     'header.admin.competitions' => 'Competitions',
 
     'header.settings' => 'Settings',

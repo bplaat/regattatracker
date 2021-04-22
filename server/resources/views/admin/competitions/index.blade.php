@@ -37,20 +37,30 @@
             {{ $competitions->links() }}
 
             <div class="columns is-multiline">
-                @foreach ($competitions as $competitions)
+                @foreach ($competitions as $competition)
                     <div class="column is-one-third">
                         <div class="box content" style="height: 100%">
-                            <h2 class="title is-4"><a href="{{ route('admin.competitions.show', $competitions) }}">{{ $competitions->name }}</a></h2>
-                            @if ($competitions->start != null)
-                                <p>Start: {{ $competitions->start }}</p>
+                            <h2 class="title is-4">
+                                <a href="{{ route('admin.competitions.show', $competition) }}">{{ $competition->name }}</a>
+                            </h2>
+
+                            @if ($competition->start != null)
+                                <p>@lang('admin/competitions.index.start') {{ $competition->start }}</p>
+                            @else
+                                <p><i>@lang('admin/competitions.index.start_empty')</i></p>
                             @endif
-                            @if ($competitions->end != null)
-                                <p>End: {{ $competitions->end }}</p>
+
+                            @if ($competition->end != null)
+                                <p>@lang('admin/competitions.index.end') {{ $competition->end }}</p>
+                            @else
+                                <p><i>@lang('admin/competitions.index.end_empty')</i></p>
                             @endif
                         </div>
                     </div>
                 @endforeach
             </div>
+
+            {{ $competitions->links() }}
         @else
             <p><i>@lang('admin/competitions.index.empty')</i></p>
         @endif
