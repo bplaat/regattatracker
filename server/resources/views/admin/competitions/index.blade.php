@@ -51,8 +51,6 @@
                     </div>
                 @endforeach
             </div>
-
-            {{ $competitions->links() }}
         @else
             <p><i>@lang('admin/competitions.index.empty')</i></p>
         @endif

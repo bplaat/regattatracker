@@ -13,6 +13,7 @@ return [
     'header.admin.boat_types' => 'Boat Types',
     'header.admin.buoys' => 'Buoys',
     'header.admin.api_keys' => 'API Keys',
+    'header.admin.competitions' => 'Competitions',
 
     'header.settings' => 'Settings',
     'header.logout' => 'Logout',
