@@ -10,5 +10,5 @@ return [
     'boats' => 'Boats',
     'boat_types' => 'Boat Types',
     'buoys' => 'Buoys',
-    'competitions' => 'Competitions'
+    'events' => 'Events'
 ];

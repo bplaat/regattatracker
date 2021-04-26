@@ -1,28 +1,27 @@
 @extends('layout')
 
-@section('title', __('admin/competitions.edit.title', ['competition.name' => $competition->name]))
+@section('title', __('admin/events.create.title'))
 
 @section('content')
     <div class="breadcrumb">
         <ul>
             <li><a href="{{ route('home') }}">{{ config('app.name') }}</a></li>
-            <li><a href="{{ route('admin.home') }}">@lang('admin/home.breadcrumb')</a></li>
-            <li><a href="{{ route('admin.competitions.index') }}">@lang('admin/competitions.index.breadcrumb')</a></li>
-            <li><a href="{{ route('admin.competitions.show', $competition) }}">{{ $competition->name }}</a></li>
-            <li class="is-active"><a href="{{ route('admin.competitions.edit', $competition) }}">@lang('admin/competitions.edit.breadcrumb')</a></li>
+            <li><a href="{{ route('admin.home') }}">@lang('admin/home.title')</a></li>
+            <li><a href="{{ route('admin.events.index') }}">@lang('admin/events.index.breadcrumb')</a></li>
+            <li class="is-active"><a href="{{ route('admin.events.create') }}">@lang('admin/events.create.breadcrumb')</a></li>
         </ul>
     </div>
 
-    <h1 class="title">@lang('admin/competitions.edit.header')</h1>
+    <h1 class="title">@lang('admin/events.create.header')</h1>
 
-    <form method="POST" action="{{ route('admin.competitions.update', $competition) }}">
+    <form method="POST" action="{{ route('admin.events.store') }}">
         @csrf
 
         <div class="field">
-            <label class="label" for="name">@lang('admin/competitions.edit.name')</label>
+            <label class="label" for="name">@lang('admin/events.create.name')</label>
 
             <div class="control">
-                <input class="input @error('name') is-danger @enderror" type="text" id="name" name="name" value="{{ old('name', $competition->name) }}" required>
+                <input class="input @error('name') is-danger @enderror" type="text" id="name" name="name" value="{{ old('name') }}" required>
             </div>
 
             @error('name')
@@ -32,14 +31,14 @@
 
         <div class="columns">
             <div class="column">
-                <label class="label" for="start_date">@lang('admin/competitions.edit.start')</label>
+                <label class="label" for="start_date">@lang('admin/events.create.start')</label>
 
                 <div class="columns">
                     <div class="column">
                         <div class="field">
                             <div class="control">
                                 <input class="input @error('start_date') is-danger @enderror" type="date" id="start_date"
-                                       name="start_date" value="{{ old('start_date', $competition->start == null ? '' : date('Y-m-d', strtotime($competition->start))) }}">
+                                       name="start_date" value="{{ old('start_date') }}">
                             </div>
 
                             @error('start_date')
@@ -52,7 +51,7 @@
                         <div class="field">
                             <div class="control">
                                 <input class="input @error('start_time') is-danger @enderror" type="time" id="start_time"
-                                       name="start_time" value="{{ old('start_time', $competition->start == null ? '' : date('H:i', strtotime($competition->start))) }}">
+                                       name="start_time" value="{{ old('start_time') }}">
                             </div>
 
                             @error('start_time')
@@ -64,14 +63,14 @@
             </div>
 
             <div class="column">
-                <label class="label" for="end_date">@lang('admin/competitions.edit.end')</label>
+                <label class="label" for="end_date">@lang('admin/events.create.end')</label>
 
                 <div class="columns">
                     <div class="column">
                         <div class="field">
                             <div class="control">
                                 <input class="input @error('end_date') is-danger @enderror" type="date" id="end_date"
-                                       name="end_date" value="{{ old('end_date', $competition->end == null ? '' : date('Y-m-d', strtotime($competition->end))) }}">
+                                       name="end_date" value="{{ old('end_date') }}">
                             </div>
 
                             @error('end_date')
@@ -84,7 +83,7 @@
                         <div class="field">
                             <div class="control">
                                 <input class="input @error('end_time') is-danger @enderror" type="time" id="end_time"
-                                       name="end_time" value="{{ old('end_time', $competition->end == null ? '' : date('H:i', strtotime($competition->end))) }}">
+                                       name="end_time" value="{{ old('end_time') }}">
                             </div>
 
                             @error('end_time')
@@ -98,7 +97,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" type="submit">@lang('admin/competitions.edit.button')</button>
+                <button class="button is-link" type="submit">@lang('admin/events.create.button')</button>
             </div>
         </div>
     </form>

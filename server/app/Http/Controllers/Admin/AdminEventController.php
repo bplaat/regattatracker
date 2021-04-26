@@ -3,29 +3,29 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Competition;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
-class AdminCompetitionsController extends Controller
+class AdminEventController extends Controller
 {
-    // Admin competitions index route
+    // Admin events index route
     public function index()
     {
         // When a query is given search by query
         $query = request('q');
         if ($query != null) {
-            $competitions = Competition::search($query)->get();
+            $events = Event::search($query)->get();
         } else {
-            $competitions = Competition::all();
+            $events = Event::all();
         }
-        $competitions = $competitions->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
+        $events = $events->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
             ->paginate(config('pagination.web.limit'))->withQueryString();
 
         // Return admin boat index view
-        return view('admin.competitions.index', ['competitions' => $competitions]);
+        return view('admin.events.index', ['events' => $events]);
     }
 
-    // Admin competitions store route
+    // Admin events store route
     public function store(Request $request)
     {
         // Validate input
@@ -37,28 +37,28 @@ class AdminCompetitionsController extends Controller
             'end_time' => 'nullable|date_format:H:i'
         ]);
 
-        // Create Competition
-        $competition = Competition::create([
+        // Create Event
+        $event = Event::create([
             'name' => $fields['name'],
             'start' => $fields['start_date'] != null && $fields['start_time'] != null ? $fields['start_date'] . ' ' . $fields['start_time'] : null,
             'end' => $fields['end_date'] != null && $fields['end_time'] != null ? $fields['end_date'] . ' ' . $fields['end_time'] : null
         ]);
 
-        // Go to the new competition show page
-        return redirect()->route('admin.competitions.show', $competition);
+        // Go to the new event show page
+        return redirect()->route('admin.events.show', $event);
     }
 
-    // Admin competitions show route
-    public function show(Competition $competition) {
-        return view('admin.competitions.show', ['competition' => $competition]);
+    // Admin events show route
+    public function show(Event $event) {
+        return view('admin.events.show', ['event' => $event]);
     }
 
-    // Admin competitions edit route
-    public function edit(Competition $competition) {
-        return view('admin.competitions.edit', ['competition' => $competition]);
+    // Admin events edit route
+    public function edit(Event $event) {
+        return view('admin.events.edit', ['event' => $event]);
     }
 
-    public function update(Request $request, Competition $competition) {
+    public function update(Request $request, Event $event) {
         // Validate input
         $fields = $request->validate([
             'name' => 'required|min:2|max:255',
@@ -68,24 +68,24 @@ class AdminCompetitionsController extends Controller
             'end_time' => 'nullable|date_format:H:i'
         ]);
 
-        // Update competition
-        $competition->update([
+        // Update event
+        $event->update([
             'name' => $fields['name'],
             'start' => $fields['start_date'] != null && $fields['start_time'] != null ? $fields['start_date'] . ' ' . $fields['start_time'] : null,
             'end' => $fields['end_date'] != null && $fields['end_time'] != null ? $fields['end_date'] . ' ' . $fields['end_time'] : null
         ]);
 
-        // Go to the competition show page
-        return redirect()->route('admin.competitions.show', $competition);
+        // Go to the event show page
+        return redirect()->route('admin.events.show', $event);
     }
 
-    // Admin competitions delete route
-    public function delete(Competition $competition) {
-        // Delete competition
-        $competition->delete();
+    // Admin events delete route
+    public function delete(Event $event) {
+        // Delete event
+        $event->delete();
 
-        // Go to the competition index page
-        return redirect()->route('admin.competitions.index');
+        // Go to the event index page
+        return redirect()->route('admin.events.index');
     }
 
 }

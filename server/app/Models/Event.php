@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Competition extends Model
+class Event extends Model
 {
     use HasFactory;
 
@@ -15,14 +15,14 @@ class Competition extends Model
       'end'
     ];
 
-    // A competition belongs to many classes.
+    // A event belongs to many classes.
     public function classes() {
-        return $this->belongsToMany(CompetitionClass::class);
+        return $this->belongsToMany(EventClass::class);
     }
 
     // Search by a query.
     public function search($query) {
-        return Competition::all()->where('name', 'LIKE', '%' . $query . '%')
+        return Event::all()->where('name', 'LIKE', '%' . $query . '%')
             ->orWhere('start', 'LIKE', '%' . $query . '%')
             ->orWhere('end', 'LIKE', '%' . $query . '%');
     }

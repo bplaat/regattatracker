@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Finish extends Model
 {
     protected $fillable = [
-        'competition',
+        'event',
         'latitude_a',
         'longitude_a',
         'latitude_b',
