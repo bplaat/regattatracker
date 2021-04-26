@@ -15,13 +15,13 @@ class CreateFinishesTable extends Migration
     {
         Schema::create('finishes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('event');
+            $table->unsignedBigInteger('event_id');
             $table->decimal('latitude_a', 10, 8);
             $table->decimal('longitude_a', 11, 8);
             $table->decimal('latitude_b', 10, 8);
             $table->decimal('longitude_b', 11, 8);
 
-            $table->foreign('event')
+            $table->foreign('event_id')
                 ->references('id')
                 ->on('events')
                 ->onDelete('cascade');

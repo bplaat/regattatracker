@@ -15,9 +15,14 @@ class Event extends Model
       'end'
     ];
 
-    // A event belongs to many classes.
+    // An event belongs to many classes.
     public function classes() {
         return $this->belongsToMany(EventClass::class);
+    }
+
+    // An event belongs to many finishes.
+    public function finishes() {
+        return $this->belongsToMany(Finish::class);
     }
 
     // Search by a query.
