@@ -13,15 +13,15 @@ class CreateCompetitionClassesTable extends Migration
      */
     public function up()
     {
-        Schema::create('competition_classes', function (Blueprint $table) {
+        Schema::create('event_classes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('competition_id');
+            $table->unsignedBigInteger('event_id');
             $table->timestamps();
 
-            $table->foreign('competition_id')
+            $table->foreign('event_id')
                 ->references('id')
-                ->on('competitions')
+                ->on('events')
                 ->onDelete('cascade');
         });
     }
@@ -33,6 +33,6 @@ class CreateCompetitionClassesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('competition_classes');
+        Schema::dropIfExists('event_classes');
     }
 }

@@ -16,12 +16,12 @@ class CreateFleetsTable extends Migration
         Schema::create('fleets', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('competition_class_id');
+            $table->unsignedBigInteger('event_class_id');
             $table->timestamps();
 
-            $table->foreign('competition_class_id')
+            $table->foreign('event_class_id')
                 ->references('id')
-                ->on('competition_classes')
+                ->on('event_classes')
                 ->onDelete('cascade');
         });
     }
