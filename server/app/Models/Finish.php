@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Finish extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'competition',
+        'latitude_a',
+        'longitude_a',
+        'latitude_b',
+        'longitude_b'
+    ];
 }
