@@ -1,8 +1,7 @@
+const type = window.data.type;
 mapboxgl.accessToken = window.data.mapboxAccessToken;
-
 const positions = window.data.positions;
-const lastPosition = positions[positions.length - 1];
-
+const link = window.data.link;
 const strings = window.data.strings;
 
 function isDarkModeEnabled() {
@@ -12,7 +11,7 @@ function isDarkModeEnabled() {
 const map = new mapboxgl.Map({
     container: 'map-container',
     style: isDarkModeEnabled() ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10',
-    center: [lastPosition.longitude, lastPosition.latitude],
+    center: [positions[0].longitude, positions[0].latitude],
     zoom: 12,
     attributionControl: false
 });
@@ -53,7 +52,7 @@ map.on('load', () => {
             type: 'geojson',
             data: {
                 type: 'FeatureCollection',
-                features: positions.slice(0, -1).map(position => ({
+                features: positions.slice(1).map(position => ({
                     type: 'Feature',
                     properties: {
                         position: position
@@ -84,8 +83,9 @@ map.on('load', () => {
                 .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + strings.title + ' #' + position.id + '</h3>' +
                     '<div>' + strings.latitude + ': ' + position.latitude + '</div>' +
                     '<div>' + strings.longitude + ': ' + position.longitude + '</div>' +
-                    '<div>' + strings.time + ': ' + new Date(position.updated_at).toLocaleString('en-US') + '</div>' +
-                    '<div><a href="#">' + strings.edit + '</a> <a href="#">' + strings.delete + '</a></div>'
+                    '<div>' + strings.time + ': ' + new Date(position.created_at).toLocaleString('en-US') + '</div>' +
+                    '<div><a href="' + link + '/' + position.id + '/edit">' + strings.edit + '</a> ' +
+                        '<a href="' + link + '/' + position.id + '/delete">' + strings.delete + '</a></div>'
                 )
                 .addTo(map);
         });
@@ -97,11 +97,11 @@ map.on('load', () => {
         data: {
             type: 'Feature',
             properties: {
-                position: lastPosition
+                position: positions[0]
             },
             geometry: {
                 type: 'Point',
-                coordinates: [lastPosition.longitude, lastPosition.latitude]
+                coordinates: [positions[0].longitude, positions[0].latitude]
             }
         }
     });
@@ -111,10 +111,10 @@ map.on('load', () => {
         source: 'current_position_point',
         type: 'circle',
         paint: {
-            'circle-color': 'rgb(246, 140, 30)',
+            'circle-color': type == 'boat' ? 'rgb(246, 140, 30)' : 'rgb(50, 148, 209)',
             'circle-radius': 10,
             'circle-stroke-width': 2,
-            'circle-stroke-color': 'rgb(245, 198, 147)'
+            'circle-stroke-color': type == 'boat' ? 'rgb(245, 198, 147)' : 'rgb(49, 206, 255)'
         }
     });
 
@@ -127,8 +127,9 @@ map.on('load', () => {
                 '<div><b>' + strings.current + '</b></div>' +
                 '<div>' + strings.latitude + ': ' + position.latitude + '</div>' +
                 '<div>' + strings.longitude + ': ' + position.longitude + '</div>' +
-                '<div>' + strings.time + ': ' + new Date(position.updated_at).toLocaleString('en-US') + '</div>' +
-                '<div><a href="#">' + strings.edit + '</a> <a href="#">' + strings.delete + '</a></div>'
+                '<div>' + strings.time + ': ' + new Date(position.created_at).toLocaleString('en-US') + '</div>' +
+                '<div><a href="' + link + '/' + position.id + '/edit">' + strings.edit + '</a> ' +
+                    '<a href="' + link + '/' + position.id + '/delete">' + strings.delete + '</a></div>'
             )
             .addTo(map);
     });

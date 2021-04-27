@@ -52,17 +52,23 @@ Route::middleware('auth')->group(function () {
         ->middleware('can:update,boat');
 
     // Boat position routes
-    Route::post('/boats/{boat}/positions', [BoatPositionsController::class, 'store'])->name('boats.positions.create');
+    Route::post('/boats/{boat}/positions', [BoatPositionsController::class, 'store'])->name('boats.positions.store')
+        ->middleware('can:create_boat_position,boat');
+    Route::get('/boats/{boat}/positions/{boatPosition}/edit', [BoatPositionsController::class, 'edit'])->name('boats.positions.edit')
+        ->middleware('can:update_boat_position,boat');
+    Route::get('/boats/{boat}/positions/{boatPosition}/delete', [BoatPositionsController::class, 'delete'])->name('boats.positions.delete')
+        ->middleware('can:delete_boat_position,boat');
+    Route::post('/boats/{boat}/positions/{boatPosition}', [BoatPositionsController::class, 'update'])->name('boats.positions.update')
+        ->middleware('can:update_boat_position,boat');
 
     // Boat boat type routes
-    Route::post('/boats/{boat}/boat_types', [BoatBoatTypesController::class, 'store'])->name('boats.boat_types.create')
+    Route::post('/boats/{boat}/boat_types', [BoatBoatTypesController::class, 'store'])->name('boats.boat_types.store')
         ->middleware('can:create_boat_boat_type,boat');
-
     Route::get('/boats/{boat}/boat_types/{boatType}/delete', [BoatBoatTypesController::class, 'delete'])->name('boats.boat_types.delete')
         ->middleware('can:delete_boat_boat_type,boat');
 
     // Boat user routes
-    Route::post('/boats/{boat}/users', [BoatUsersController::class, 'store'])->name('boats.users.create')
+    Route::post('/boats/{boat}/users', [BoatUsersController::class, 'store'])->name('boats.users.store')
         ->middleware('can:create_boat_user,boat');
     Route::get('/boats/{boat}/users/{user}/update', [BoatUsersController::class, 'update'])->name('boats.users.update')
         ->middleware('can:update_boat_user,boat');
@@ -95,7 +101,7 @@ Route::middleware('admin')->group(function () {
 
     // Admin boat routes
     Route::get('/admin/boats', [AdminBoatsController::class, 'index'])->name('admin.boats.index');
-    Route::get('/admin/boats/create', [AdminBoatsController::class, 'store'])->name('admin.boats.create');
+    Route::get('/admin/boats/create', [AdminBoatsController::class, 'create'])->name('admin.boats.create');
     Route::post('/admin/boats', [AdminBoatsController::class, 'store'])->name('admin.boats.store');
     Route::get('/admin/boats/{boat}/track', [AdminBoatsController::class, 'track'])->name('admin.boats.track');
     Route::get('/admin/boats/{boat}/edit', [AdminBoatsController::class, 'edit'])->name('admin.boats.edit');
@@ -104,14 +110,17 @@ Route::middleware('admin')->group(function () {
     Route::post('/admin/boats/{boat}', [AdminBoatsController::class, 'update'])->name('admin.boats.update');
 
     // Admin boat position routes
-    Route::post('/admin/boats/{boat}/positions', [AdminBoatPositionsController::class, 'store'])->name('admin.boats.positions.create');
+    Route::post('/admin/boats/{boat}/positions', [AdminBoatPositionsController::class, 'store'])->name('admin.boats.positions.store');
+    Route::get('/admin/boats/{boat}/positions/{boatPosition}/edit', [AdminBoatPositionsController::class, 'edit'])->name('admin.boats.positions.edit');
+    Route::get('/admin/boats/{boat}/positions/{boatPosition}/delete', [AdminBoatPositionsController::class, 'delete'])->name('admin.boats.positions.delete');
+    Route::post('/admin/boats/{boat}/positions/{boatPosition}', [AdminBoatPositionsController::class, 'update'])->name('admin.boats.positions.update');
 
     // Admin boat boat type routes
-    Route::post('/admin/boats/{boat}/boat_types', [AdminBoatBoatTypesController::class, 'store'])->name('admin.boats.boat_types.create');
+    Route::post('/admin/boats/{boat}/boat_types', [AdminBoatBoatTypesController::class, 'store'])->name('admin.boats.boat_types.store');
     Route::get('/admin/boats/{boat}/boat_types/{boatType}/delete', [AdminBoatBoatTypesController::class, 'delete'])->name('admin.boats.boat_types.delete');
 
     // Admin boat user routes
-    Route::post('/admin/boats/{boat}/users', [AdminBoatUsersController::class, 'store'])->name('admin.boats.users.create');
+    Route::post('/admin/boats/{boat}/users', [AdminBoatUsersController::class, 'store'])->name('admin.boats.users.store');
     Route::get('/admin/boats/{boat}/users/{user}/update', [AdminBoatUsersController::class, 'update'])->name('admin.boats.users.update');
     Route::get('/admin/boats/{boat}/users/{user}/delete', [AdminBoatUsersController::class, 'delete'])->name('admin.boats.users.delete');
 
@@ -135,7 +144,10 @@ Route::middleware('admin')->group(function () {
     Route::post('/admin/buoys/{buoy}', [AdminBuoysController::class, 'update'])->name('admin.buoys.update');
 
     // Admin buoy position routes
-    Route::post('/admin/buoys/{buoy}/positions', [AdminBuoyPositionsController::class, 'store'])->name('admin.buoys.positions.create');
+    Route::post('/admin/buoys/{buoy}/positions', [AdminBuoyPositionsController::class, 'store'])->name('admin.buoys.positions.store');
+    Route::get('/admin/buoys/{buoy}/positions/{buoyPosition}/edit', [AdminBuoyPositionsController::class, 'edit'])->name('admin.buoys.positions.edit');
+    Route::get('/admin/buoys/{buoy}/positions/{buoyPosition}/delete', [AdminBuoyPositionsController::class, 'delete'])->name('admin.buoys.positions.delete');
+    Route::post('/admin/buoys/{buoy}/positions/{buoyPosition}', [AdminBuoyPositionsController::class, 'update'])->name('admin.buoys.positions.update');
 
     // Admin API key routes
     Route::get('/admin/api_keys', [AdminApiKeysController::class, 'index'])->name('admin.api_keys.index');

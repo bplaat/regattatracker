@@ -58,5 +58,23 @@ return [
     'edit.header' => 'Edit buoy',
     'edit.name' => 'Name',
     'edit.description' => 'Description',
-    'edit.button' => 'Edit buoy'
+    'edit.button' => 'Edit buoy',
+
+    // ### Buoy positions pages ###
+
+    // Buoy positions index page
+    'positions.index.breadcrumb' => 'Positions',
+
+    // Buoy positions show page
+    'positions.show.breadcrumb' => 'Buoy Position',
+
+    // Buoy positions edit page
+    'positions.edit.title' => 'Edit - :buoy_position.name - Positions - :buoy.name - Buoys - Admin',
+    'positions.edit.breadcrumb' => 'Edit',
+    'positions.edit.header' => 'Edit buoy position',
+    'positions.edit.latitude' => 'Latitude',
+    'positions.edit.longitude' => 'Longitude',
+    'positions.edit.created_at_date' => 'Date',
+    'positions.edit.created_at_time' => 'Time',
+    'positions.edit.button' => 'Edit buoy position'
 ];

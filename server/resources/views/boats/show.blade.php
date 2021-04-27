@@ -66,9 +66,10 @@
 
             <script>
                 window.data = {
-                    page: 'boats.show',
+                    type: 'boat',
                     mapboxAccessToken: @json(config('mapbox.access_token')),
                     positions: @json($boatPositions),
+                    link: @json(route('boats.positions.store', $boat)),
                     strings: {
                         title: @json(__('boats.show.positions_map_title')),
                         current: @json(__('boats.show.positions_map_current')),
@@ -111,20 +112,20 @@
 
         @if (date('Y-m-d', $time) == date('Y-m-d'))
             @can('create_boat_position', $boat)
-                <form method="POST" action="{{ route('boats.positions.create', $boat) }}">
+                <form method="POST" action="{{ route('boats.positions.store', $boat) }}">
                     @csrf
 
                     <div class="field has-addons">
                         <div class="control">
                             <input class="input @error('latitude') is-danger @enderror" type="text" id="latitude" name="latitude"
                                 placeholder="@lang('boats.show.positions_latitude_field')"
-                                value="{{ old('latitude', $boatPositions->count() >= 1 ? $boatPositions[$boatPositions->count() - 1]->latitude : '') }}" required>
+                                value="{{ old('latitude', $boatPositions->count() > 0 ? $boatPositions[0]->latitude : '') }}" required>
                         </div>
 
                         <div class="control">
                             <input class="input @error('longitude') is-danger @enderror" type="text" id="longitude" name="longitude"
                                 placeholder="@lang('boats.show.positions_longitude_field')"
-                                value="{{ old('longitude', $boatPositions->count() >= 1 ? $boatPositions[$boatPositions->count() - 1]->longitude : '') }}" required>
+                                value="{{ old('longitude', $boatPositions->count() > 0 ? $boatPositions[0]->longitude : '') }}" required>
                         </div>
 
                         <div class="control">
@@ -171,7 +172,7 @@
 
         @can('create_boat_boat_type', $boat)
             @if ($boatBoatTypes->count() != $boatTypes->count())
-                <form method="POST" action="{{ route('boats.boat_types.create', $boat) }}">
+                <form method="POST" action="{{ route('boats.boat_types.store', $boat) }}">
                     @csrf
 
                     <div class="field has-addons">
@@ -263,7 +264,7 @@
 
         @can('create_boat_user', $boat)
             @if ($boatUsers->count() != $users->count())
-                <form method="POST" action="{{ route('boats.users.create', $boat) }}">
+                <form method="POST" action="{{ route('boats.users.store', $boat) }}">
                     @csrf
 
                     <div class="field has-addons">

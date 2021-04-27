@@ -44,9 +44,10 @@
 
             <script>
                 window.data = {
-                    page: 'admin.buoys.show',
+                    type: 'buoy',
                     mapboxAccessToken: @json(config('mapbox.access_token')),
                     positions: @json($buoyPositions),
+                    link: @json(route('admin.buoys.positions.store', $buoy)),
                     strings: {
                         title: @json(__('admin/buoys.show.positions_map_title')),
                         current: @json(__('admin/buoys.show.positions_map_current')),
@@ -88,20 +89,20 @@
         </div>
 
         @if (date('Y-m-d', $time) == date('Y-m-d'))
-            <form method="POST" action="{{ route('admin.buoys.positions.create', $buoy) }}">
+            <form method="POST" action="{{ route('admin.buoys.positions.store', $buoy) }}">
                 @csrf
 
                 <div class="field has-addons">
                     <div class="control">
                         <input class="input @error('latitude') is-danger @enderror" type="text" id="latitude" name="latitude"
                             placeholder="@lang('admin/buoys.show.positions_latitude_field')"
-                            value="{{ old('latitude', count($buoyPositions) >= 1 ? $buoyPositions[count($buoyPositions) - 1]->latitude : '') }}" required>
+                            value="{{ old('latitude', count($buoyPositions) > 0 ? $buoyPositions[0]->latitude : '') }}" required>
                     </div>
 
                     <div class="control">
                         <input class="input @error('longitude') is-danger @enderror" type="text" id="longitude" name="longitude"
                             placeholder="@lang('admin/buoys.show.positions_longitude_field')"
-                            value="{{ old('longitude', count($buoyPositions) >= 1 ? $buoyPositions[count($buoyPositions) - 1]->longitude : '') }}" required>
+                            value="{{ old('longitude', count($buoyPositions) > 0 ? $buoyPositions[0]->longitude : '') }}" required>
                     </div>
 
                     <div class="control">

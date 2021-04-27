@@ -101,5 +101,23 @@ return [
     'edit.weight' => 'Weight (kg)',
     'edit.sail_number' => 'Sail number',
     'edit.sail_area' => 'Sail area (m<sup>2</sup>)',
-    'edit.button' => 'Edit boat'
+    'edit.button' => 'Edit boat',
+
+    // ### Boat positions pages ###
+
+    // Boat positions index page
+    'positions.index.breadcrumb' => 'Positions',
+
+    // Boat positions show page
+    'positions.show.breadcrumb' => 'Boat Position',
+
+    // Boat positions edit page
+    'positions.edit.title' => 'Edit - :boat_position.name - Positions - :boat.name - Boats - Admin',
+    'positions.edit.breadcrumb' => 'Edit',
+    'positions.edit.header' => 'Edit boat position',
+    'positions.edit.latitude' => 'Latitude',
+    'positions.edit.longitude' => 'Longitude',
+    'positions.edit.created_at_date' => 'Date',
+    'positions.edit.created_at_time' => 'Time',
+    'positions.edit.button' => 'Edit boat position'
 ];
