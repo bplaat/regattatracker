@@ -108,11 +108,14 @@ class BoatsController extends Controller
     // Boats track route
     public function track(Boat $boat)
     {
-        // Active boat position relationship
-        $boat->positions;
+        // Get boat positions of today
+        $boatPositions = $boat->positionsByDay(time());
 
         // Return boat track view
-        return view('boats.track', ['boat' => $boat]);
+        return view('boats.track', [
+            'boat' => $boat,
+            'boatPositions' => $boatPositions
+        ]);
     }
 
     // Boats edit route

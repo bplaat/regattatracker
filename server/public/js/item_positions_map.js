@@ -134,7 +134,7 @@ map.on('load', () => {
             .addTo(map);
     });
 
-    // Handle mouse hover events
+    // Handle mouse hover events on items
     function mapMouseEnter(event) {
         map.getCanvas().style.cursor = 'pointer';
         map.getCanvas().title = event.lngLat.lat + ', ' + event.lngLat.lng;

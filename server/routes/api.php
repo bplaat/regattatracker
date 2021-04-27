@@ -26,7 +26,7 @@ Route::middleware('api_key')->group(function () {
     Route::get('boats/{boat}', [ApiBoatsController::class, 'show']);
 
     Route::get('boats/{boat}/positions', [ApiBoatPositionsController::class, 'index']);
-    Route::post('boats/{boat}/positions', [ApiBoatPositionsController::class, 'store']);
+    Route::post('boats/{boat}/positions', [ApiBoatPositionsController::class, 'store'])->name('api.boats.positions.store');
     Route::get('boats/{boat}/positions/{boatPosition}/delete', [ApiBoatPositionsController::class, 'delete']);
     Route::get('boats/{boat}/positions/{boatPosition}', [ApiBoatPositionsController::class, 'show']);
     Route::post('boats/{boat}/positions/{boatPosition}', [ApiBoatPositionsController::class, 'update']);
@@ -39,7 +39,7 @@ Route::middleware('api_key')->group(function () {
     Route::get('buoys/{buoy}', [ApiBuoysController::class, 'show']);
 
     Route::get('buoys/{buoy}/positions', [ApiBuoyPositionsController::class, 'index']);
-    Route::post('buoys/{buoy}/positions', [ApiBuoyPositionsController::class, 'store']);
+    Route::post('buoys/{buoy}/positions', [ApiBuoyPositionsController::class, 'store'])->name('api.buoys.positions.store');
     Route::get('buoys/{buoy}/positions/{buoyPosition}/delete', [ApiBuoyPositionsController::class, 'delete']);
     Route::get('buoys/{buoy}/positions/{buoyPosition}', [ApiBuoyPositionsController::class, 'show']);
     Route::post('buoys/{buoy}/positions/{buoyPosition}', [ApiBuoyPositionsController::class, 'update']);

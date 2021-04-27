@@ -45,12 +45,21 @@ return [
     // Admin buoys track page
     'track.title' => 'Track - :buoy.name - Buoys - Admin',
     'track.breadcrumb' => 'Track',
+
+    'track.map_title' => 'Buoy positions',
+    'track.map_current' => 'Current buoy position',
+    'track.map_latitude' => 'Latitude',
+    'track.map_longitude' => 'Longitude',
+    'track.map_time' => 'Time',
+    'track.map_edit' => 'Edit',
+    'track.map_delete' => 'Delete',
+
     'track.start_button' => 'Start tracking',
     'track.stop_button' => 'Stop tracking',
-    'track.error' => 'Your browser doesn\'t support geolocation tracking!',
     'track.loading_text' => 'Loading...',
     'track.send_text_prefix' => 'Sending in',
     'track.send_text_suffix' => 'seconds...',
+    'track.error' => 'Your browser doesn\'t support geolocation tracking!',
 
     // Admin buoys edit page
     'edit.title' => 'Edit - :buoy.name - Buoys - Admin',
