@@ -43,6 +43,15 @@ return [
     'show.delete' => 'Delete boat',
 
     'show.positions' => 'Boat Positions',
+
+    'show.positions_map_title' => 'Boat positions',
+    'show.positions_map_current' => 'Current boat position',
+    'show.positions_map_latitude' => 'Latitude',
+    'show.positions_map_longitude' => 'Longitude',
+    'show.positions_map_time' => 'Time',
+    'show.positions_map_edit' => 'Edit',
+    'show.positions_map_delete' => 'Delete',
+
     'show.positions_empty' => 'This boat has no known positions',
     'show.positions_previous' => '&laquo; Previous day',
     'show.positions_today' => 'Today',

@@ -65,60 +65,22 @@
             </div>
 
             <script>
-                mapboxgl.accessToken = @json(config('mapbox.access_token'));
-
-                const boatPositions = @json($boatPositions);
-
-                const lastPosition = {
-                    lng: boatPositions[boatPositions.length - 1].longitude,
-                    lat: boatPositions[boatPositions.length - 1].latitude
-                };
-
-                function isDarkModeEnabled() {
-                    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-                }
-
-                const map = new mapboxgl.Map({
-                    container: 'map-container',
-                    style: isDarkModeEnabled() ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10',
-                    center: lastPosition,
-                    zoom: 12,
-                    attributionControl: false
-                });
-
-                map.on('load', () => {
-                    if (boatPositions.length > 1) {
-                        map.addSource('route', {
-                            type: 'geojson',
-                            data: {
-                                type: 'Feature',
-                                geometry: {
-                                    type: 'LineString',
-                                    coordinates: boatPositions.map(boatPosition =>
-                                        [boatPosition.longitude, boatPosition.latitude]
-                                    )
-                                }
-                            }
-                        });
-
-                        map.addLayer({
-                            id: 'route',
-                            type: 'line',
-                            source: 'route',
-                            layout: {
-                                'line-join': 'round',
-                                'line-cap': 'round'
-                            },
-                            paint: {
-                                'line-color': '#a2a2a2',
-                                'line-width': 4
-                            }
-                        });
+                window.data = {
+                    page: 'boats.show',
+                    mapboxAccessToken: @json(config('mapbox.access_token')),
+                    positions: @json($boatPositions),
+                    strings: {
+                        title: @json(__('boats.show.positions_map_title')),
+                        current: @json(__('boats.show.positions_map_current')),
+                        latitude: @json(__('boats.show.positions_map_latitude')),
+                        longitude: @json(__('boats.show.positions_map_longitude')),
+                        time: @json(__('boats.show.positions_map_time')),
+                        edit: @json(__('boats.show.positions_map_edit')),
+                        delete: @json(__('boats.show.positions_map_delete')),
                     }
-
-                    new mapboxgl.Marker().setLngLat(lastPosition).addTo(map);
-                });
+                };
             </script>
+            <script src="/js/item_positions_map.js"></script>
         @else
             <p><i>@lang('boats.show.positions_empty')</i></p>
         @endif
@@ -156,13 +118,13 @@
                         <div class="control">
                             <input class="input @error('latitude') is-danger @enderror" type="text" id="latitude" name="latitude"
                                 placeholder="@lang('boats.show.positions_latitude_field')"
-                                value="{{ old('latitude', count($boatPositions) >= 1 ? $boatPositions[count($boatPositions) - 1]->latitude : '') }}" required>
+                                value="{{ old('latitude', $boatPositions->count() >= 1 ? $boatPositions[$boatPositions->count() - 1]->latitude : '') }}" required>
                         </div>
 
                         <div class="control">
                             <input class="input @error('longitude') is-danger @enderror" type="text" id="longitude" name="longitude"
                                 placeholder="@lang('boats.show.positions_longitude_field')"
-                                value="{{ old('longitude', count($boatPositions) >= 1 ? $boatPositions[count($boatPositions) - 1]->longitude : '') }}" required>
+                                value="{{ old('longitude', $boatPositions->count() >= 1 ? $boatPositions[$boatPositions->count() - 1]->longitude : '') }}" required>
                         </div>
 
                         <div class="control">

@@ -51,8 +51,8 @@
                                     <span class="tag is-pulled-right is-danger">@lang('admin/api_keys.index.level_no_auth')</span>
                                 @endif
                             </h2>
-                            <p>@lang('admin/api_keys.index.key') <code>{{ $apiKey->key }}</code></p>
-                            <p>@lang('admin/api_keys.index.requests') <strong>{{ $apiKey->requests }}</strong></p>
+                            <p>@lang('admin/api_keys.index.key'): <code>{{ $apiKey->key }}</code></p>
+                            <p>@lang('admin/api_keys.index.requests'): <strong>{{ $apiKey->requests }}</strong></p>
                         </div>
                     </div>
                 @endforeach

@@ -45,13 +45,13 @@
                             </h2>
 
                             @if ($competition->start != null)
-                                <p>@lang('admin/competitions.index.start') {{ $competition->start }}</p>
+                                <p>@lang('admin/competitions.index.start'): {{ $competition->start }}</p>
                             @else
                                 <p><i>@lang('admin/competitions.index.start_empty')</i></p>
                             @endif
 
                             @if ($competition->end != null)
-                                <p>@lang('admin/competitions.index.end') {{ $competition->end }}</p>
+                                <p>@lang('admin/competitions.index.end'): {{ $competition->end }}</p>
                             @else
                                 <p><i>@lang('admin/competitions.index.end_empty')</i></p>
                             @endif

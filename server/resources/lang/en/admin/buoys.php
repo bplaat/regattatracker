@@ -25,6 +25,15 @@ return [
     'show.delete' => 'Delete buoy',
 
     'show.positions' => 'Buoy Positions',
+
+    'show.positions_map_title' => 'Buoy positions',
+    'show.positions_map_current' => 'Current buoy position',
+    'show.positions_map_latitude' => 'Latitude',
+    'show.positions_map_longitude' => 'Longitude',
+    'show.positions_map_time' => 'Time',
+    'show.positions_map_edit' => 'Edit',
+    'show.positions_map_delete' => 'Delete',
+
     'show.positions_empty' => 'This buoy has no known positions',
     'show.positions_previous' => '&laquo; Previous day',
     'show.positions_today' => 'Today',
