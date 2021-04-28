@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminCompetitionsController;
+use App\Http\Controllers\PagesController;
 use App\Http\Controllers\AuthController;
 
 use App\Http\Controllers\BoatsController;
@@ -12,6 +12,8 @@ use App\Http\Controllers\SettingsController;
 
 use App\Http\Controllers\Admin\AdminUsersController;
 
+use App\Http\Controllers\Admin\AdminApiKeysController;
+
 use App\Http\Controllers\Admin\AdminBoatsController;
 use App\Http\Controllers\Admin\AdminBoatPositionsController;
 use App\Http\Controllers\Admin\AdminBoatBoatTypesController;
@@ -22,14 +24,14 @@ use App\Http\Controllers\Admin\AdminBoatTypesController;
 use App\Http\Controllers\Admin\AdminBuoysController;
 use App\Http\Controllers\Admin\AdminBuoyPositionsController;
 
-use App\Http\Controllers\Admin\AdminApiKeysController;
+use App\Http\Controllers\Admin\AdminCompetitionsController;
 
 use App\Models\User;
 
 use Illuminate\Support\Facades\Route;
 
 // Home page
-Route::view('/', 'home')->name('home');
+Route::get('/', [PagesController::class, 'home'])->name('home');
 
 // Offline page
 Route::view('/offline', 'offline')->name('offline');
@@ -99,6 +101,15 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/users/{user}', [AdminUsersController::class, 'show'])->name('admin.users.show');
     Route::post('/admin/users/{user}', [AdminUsersController::class, 'update'])->name('admin.users.update');
 
+    // Admin API key routes
+    Route::get('/admin/api_keys', [AdminApiKeysController::class, 'index'])->name('admin.api_keys.index');
+    Route::view('/admin/api_keys/create', 'admin.api_keys.create')->name('admin.api_keys.create');
+    Route::post('/admin/api_keys', [AdminApiKeysController::class, 'store'])->name('admin.api_keys.store');
+    Route::get('/admin/api_keys/{api_key}/edit', [AdminApiKeysController::class, 'edit'])->name('admin.api_keys.edit');
+    Route::get('/admin/api_keys/{api_key}/delete', [AdminApiKeysController::class, 'delete'])->name('admin.api_keys.delete');
+    Route::get('/admin/api_keys/{api_key}', [AdminApiKeysController::class, 'show'])->name('admin.api_keys.show');
+    Route::post('/admin/api_keys/{api_key}', [AdminApiKeysController::class, 'update'])->name('admin.api_keys.update');
+
     // Admin boat routes
     Route::get('/admin/boats', [AdminBoatsController::class, 'index'])->name('admin.boats.index');
     Route::get('/admin/boats/create', [AdminBoatsController::class, 'create'])->name('admin.boats.create');
@@ -148,15 +159,6 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/buoys/{buoy}/positions/{buoyPosition}/edit', [AdminBuoyPositionsController::class, 'edit'])->name('admin.buoys.positions.edit');
     Route::get('/admin/buoys/{buoy}/positions/{buoyPosition}/delete', [AdminBuoyPositionsController::class, 'delete'])->name('admin.buoys.positions.delete');
     Route::post('/admin/buoys/{buoy}/positions/{buoyPosition}', [AdminBuoyPositionsController::class, 'update'])->name('admin.buoys.positions.update');
-
-    // Admin API key routes
-    Route::get('/admin/api_keys', [AdminApiKeysController::class, 'index'])->name('admin.api_keys.index');
-    Route::view('/admin/api_keys/create', 'admin.api_keys.create')->name('admin.api_keys.create');
-    Route::post('/admin/api_keys', [AdminApiKeysController::class, 'store'])->name('admin.api_keys.store');
-    Route::get('/admin/api_keys/{api_key}/edit', [AdminApiKeysController::class, 'edit'])->name('admin.api_keys.edit');
-    Route::get('/admin/api_keys/{api_key}/delete', [AdminApiKeysController::class, 'delete'])->name('admin.api_keys.delete');
-    Route::get('/admin/api_keys/{api_key}', [AdminApiKeysController::class, 'show'])->name('admin.api_keys.show');
-    Route::post('/admin/api_keys/{api_key}', [AdminApiKeysController::class, 'update'])->name('admin.api_keys.update');
 
     // Admin competition routes
     Route::get('/admin/competitions', [AdminCompetitionsController::class, 'index'])->name('admin.competitions.index');

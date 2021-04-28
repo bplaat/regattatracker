@@ -55,91 +55,6 @@ function mapMouseLeave() {
 }
 
 function updateMapItems() {
-    if (positions.length > 1) {
-        // Positions line layer
-        const positionsLine = {
-            type: 'Feature',
-            geometry: {
-                type: 'LineString',
-                coordinates: positions.map(position =>
-                    [position.longitude, position.latitude]
-                )
-            }
-        };
-
-        if (map.getSource('positions_line') != undefined) {
-            map.getSource('positions_line').setData(positionsLine);
-        } else {
-            map.addSource('positions_line', { type: 'geojson', data: positionsLine });
-
-            map.addLayer({
-                id: 'positions_line',
-                source: 'positions_line',
-                type: 'line',
-                layout: {
-                    'line-join': 'round',
-                    'line-cap': 'round'
-                },
-                paint: {
-                    'line-color': '#a2a2a2',
-                    'line-width': 4
-                }
-            });
-
-            map.on('mouseenter', 'current_position_point', mapMouseEnter);
-            map.on('mouseleave', 'current_position_point', mapMouseLeave);
-        }
-
-        // Old positions points layer
-        const oldPositionPoints = {
-            type: 'FeatureCollection',
-            features: positions.slice(1).map(position => ({
-                type: 'Feature',
-                properties: {
-                    position: position
-                },
-                geometry: {
-                    type: 'Point',
-                    coordinates: [position.longitude, position.latitude]
-                }
-            }))
-        };
-
-        if (map.getSource('old_position_points') != undefined) {
-            map.getSource('old_position_points').setData(oldPositionPoints);
-        } else {
-            map.addSource('old_position_points', { type: 'geojson', data: oldPositionPoints });
-
-            map.addLayer({
-                id: 'old_position_points',
-                source: 'old_position_points',
-                type: 'circle',
-                paint: {
-                    'circle-color': '#a2a2a2',
-                    'circle-radius': 6
-                }
-            });
-
-            map.on('click', 'old_position_points', event => {
-                const position = JSON.parse(event.features[0].properties.position);
-
-                new mapboxgl.Popup()
-                    .setLngLat([position.longitude, position.latitude])
-                    .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + strings.title + ' #' + position.id + '</h3>' +
-                        '<div>' + strings.latitude + ': ' + position.latitude + '</div>' +
-                        '<div>' + strings.longitude + ': ' + position.longitude + '</div>' +
-                        '<div>' + strings.time + ': ' + new Date(position.created_at).toLocaleString('en-US') + '</div>' +
-                        '<div><a href="' + links.positionsPrefix + '/' + position.id + '/edit">' + strings.edit + '</a> ' +
-                            '<a href="' + links.positionsPrefix + '/' + position.id + '/delete">' + strings.delete + '</a></div>'
-                    )
-                    .addTo(map);
-            });
-
-            map.on('mouseenter', 'old_position_points', mapMouseEnter);
-            map.on('mouseleave', 'old_position_points', mapMouseLeave);
-        }
-    }
-
     // Current position layer
     const currentPositionPoint = {
         type: 'Feature',
@@ -184,6 +99,91 @@ function updateMapItems() {
                 )
                 .addTo(map);
         });
+    }
+
+    if (positions.length > 1) {
+        // Old positions points layer
+        const oldPositionPoints = {
+            type: 'FeatureCollection',
+            features: positions.slice(1).map(position => ({
+                type: 'Feature',
+                properties: {
+                    position: position
+                },
+                geometry: {
+                    type: 'Point',
+                    coordinates: [position.longitude, position.latitude]
+                }
+            }))
+        };
+
+        if (map.getSource('old_position_points') != undefined) {
+            map.getSource('old_position_points').setData(oldPositionPoints);
+        } else {
+            map.addSource('old_position_points', { type: 'geojson', data: oldPositionPoints });
+
+            map.addLayer({
+                id: 'old_position_points',
+                source: 'old_position_points',
+                type: 'circle',
+                paint: {
+                    'circle-color': '#a2a2a2',
+                    'circle-radius': 6
+                }
+            }, 'current_position_point');
+
+            map.on('click', 'old_position_points', event => {
+                const position = JSON.parse(event.features[0].properties.position);
+
+                new mapboxgl.Popup()
+                    .setLngLat([position.longitude, position.latitude])
+                    .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + strings.title + ' #' + position.id + '</h3>' +
+                        '<div>' + strings.latitude + ': ' + position.latitude + '</div>' +
+                        '<div>' + strings.longitude + ': ' + position.longitude + '</div>' +
+                        '<div>' + strings.time + ': ' + new Date(position.created_at).toLocaleString('en-US') + '</div>' +
+                        '<div><a href="' + links.positionsPrefix + '/' + position.id + '/edit">' + strings.edit + '</a> ' +
+                            '<a href="' + links.positionsPrefix + '/' + position.id + '/delete">' + strings.delete + '</a></div>'
+                    )
+                    .addTo(map);
+            });
+
+            map.on('mouseenter', 'old_position_points', mapMouseEnter);
+            map.on('mouseleave', 'old_position_points', mapMouseLeave);
+        }
+
+        // Positions line layer
+        const positionsLine = {
+            type: 'Feature',
+            geometry: {
+                type: 'LineString',
+                coordinates: positions.map(position =>
+                    [position.longitude, position.latitude]
+                )
+            }
+        };
+
+        if (map.getSource('positions_line') != undefined) {
+            map.getSource('positions_line').setData(positionsLine);
+        } else {
+            map.addSource('positions_line', { type: 'geojson', data: positionsLine });
+
+            map.addLayer({
+                id: 'positions_line',
+                source: 'positions_line',
+                type: 'line',
+                layout: {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                paint: {
+                    'line-color': '#a2a2a2',
+                    'line-width': 4
+                }
+            }, 'old_position_points');
+
+            map.on('mouseenter', 'current_position_point', mapMouseEnter);
+            map.on('mouseleave', 'current_position_point', mapMouseLeave);
+        }
     }
 }
 
