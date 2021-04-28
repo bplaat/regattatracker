@@ -27,7 +27,7 @@ class Boat extends Model
     // A boat has many positions
     public function positions()
     {
-        return $this->hasMany(BoatPosition::class);
+        return $this->hasMany(BoatPosition::class)->orderByDesc('created_at');
     }
 
     // Get boat positions by day
@@ -49,13 +49,12 @@ class Boat extends Model
 
         // Get all the positions of before this day to calculate latest position
         $oldPositions = $this->positions()
-            ->where('created_at', '<', date('Y-m-d', $day))
-            ->orderByDesc('created_at');
+            ->where('created_at', '<', date('Y-m-d', $day));
         if ($oldPositions->count() > 0) {
             // Add latest position first of today positions
             $oldPosition = $oldPositions->first();
             if ($time >= $oldPosition->created_at->getTimestamp()) {
-                $todayPositions->prepend($oldPosition);
+                $todayPositions->push($oldPosition);
             }
         }
 

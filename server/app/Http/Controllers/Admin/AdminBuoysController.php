@@ -69,11 +69,14 @@ class AdminBuoysController extends Controller
     // Admin buoys track route
     public function track(Buoy $buoy)
     {
-        // Active buoy position relationship
-        $buoy->positions;
+        // Get buoy positions of today
+        $buoyPositions = $buoy->positionsByDay(time());
 
         // Return admin buoy track view
-        return view('admin.buoys.track', ['buoy' => $buoy]);
+        return view('admin.buoys.track', [
+            'buoy' => $buoy,
+            'buoyPositions' => $buoyPositions
+        ]);
     }
 
     // Admin buoys edit route

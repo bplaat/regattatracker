@@ -9,8 +9,8 @@ return [
     'index.search_button' => 'Search',
     'index.level_require_auth' => 'REQUIRE AUTH',
     'index.level_no_auth' => 'NO AUTH',
-    'index.key' => 'Key:',
-    'index.requests' => 'Requests counter:',
+    'index.key' => 'Key',
+    'index.requests' => 'Requests counter',
     'index.empty' => 'There are no API keys found',
     'index.create' => 'Create new API key',
 
@@ -28,8 +28,8 @@ return [
     'show.title' => ':api_key.name - API keys - Admin',
     'show.level_require_auth' => 'REQUIRE AUTH',
     'show.level_no_auth' => 'NO AUTH',
-    'show.key' => 'Key:',
-    'show.requests' => 'Requests counter:',
+    'show.key' => 'Key',
+    'show.requests' => 'Requests counter',
     'show.edit' => 'Edit API key',
     'show.delete' => 'Delete API key',
 

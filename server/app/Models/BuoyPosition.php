@@ -10,6 +10,7 @@ class BuoyPosition extends Model
     protected $fillable = [
         'buoy_id',
         'latitude',
-        'longitude'
+        'longitude',
+        'created_at'
     ];
 }

@@ -10,6 +10,7 @@ class BoatPosition extends Model
     protected $fillable = [
         'boat_id',
         'latitude',
-        'longitude'
+        'longitude',
+        'created_at'
     ];
 }

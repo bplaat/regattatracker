@@ -59,60 +59,23 @@
             </div>
 
             <script>
-                mapboxgl.accessToken = @json(config('mapbox.access_token'));
-
-                const boatPositions = @json($boatPositions);
-
-                const lastPosition = {
-                    lng: boatPositions[boatPositions.length - 1].longitude,
-                    lat: boatPositions[boatPositions.length - 1].latitude
-                };
-
-                function isDarkModeEnabled() {
-                    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-                }
-
-                const map = new mapboxgl.Map({
-                    container: 'map-container',
-                    style: isDarkModeEnabled() ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10',
-                    center: lastPosition,
-                    zoom: 12,
-                    attributionControl: false
-                });
-
-                map.on('load', () => {
-                    if (boatPositions.length > 1) {
-                        map.addSource('route', {
-                            type: 'geojson',
-                            data: {
-                                type: 'Feature',
-                                geometry: {
-                                    type: 'LineString',
-                                    coordinates: boatPositions.map(boatPosition =>
-                                        [boatPosition.longitude, boatPosition.latitude]
-                                    )
-                                }
-                            }
-                        });
-
-                        map.addLayer({
-                            id: 'route',
-                            type: 'line',
-                            source: 'route',
-                            layout: {
-                                'line-join': 'round',
-                                'line-cap': 'round'
-                            },
-                            paint: {
-                                'line-color': '#a2a2a2',
-                                'line-width': 4
-                            }
-                        });
+                window.data = {
+                    type: 'boat',
+                    mapboxAccessToken: @json(config('mapbox.access_token')),
+                    positions: @json($boatPositions),
+                    link: @json(route('admin.boats.positions.store', $boat)),
+                    strings: {
+                        title: @json(__('admin/boats.show.positions_map_title')),
+                        current: @json(__('admin/boats.show.positions_map_current')),
+                        latitude: @json(__('admin/boats.show.positions_map_latitude')),
+                        longitude: @json(__('admin/boats.show.positions_map_longitude')),
+                        time: @json(__('admin/boats.show.positions_map_time')),
+                        edit: @json(__('admin/boats.show.positions_map_edit')),
+                        delete: @json(__('admin/boats.show.positions_map_delete')),
                     }
-
-                    new mapboxgl.Marker().setLngLat(lastPosition).addTo(map);
-                });
+                };
             </script>
+            <script src="/js/item_positions_map.js"></script>
         @else
             <p><i>@lang('admin/boats.show.positions_empty')</i></p>
         @endif
@@ -142,20 +105,20 @@
         </div>
 
         @if (date('Y-m-d', $time) == date('Y-m-d'))
-            <form method="POST" action="{{ route('admin.boats.positions.create', $boat) }}">
+            <form method="POST" action="{{ route('admin.boats.positions.store', $boat) }}">
                 @csrf
 
                 <div class="field has-addons">
                     <div class="control">
                         <input class="input @error('latitude') is-danger @enderror" type="text" id="latitude" name="latitude"
                             placeholder="@lang('admin/boats.show.positions_latitude_field')"
-                            value="{{ old('latitude', count($boatPositions) >= 1 ? $boatPositions[count($boatPositions) - 1]->latitude : '') }}" required>
+                            value="{{ old('latitude', count($boatPositions) > 0 ? $boatPositions[0]->latitude : '') }}" required>
                     </div>
 
                     <div class="control">
                         <input class="input @error('longitude') is-danger @enderror" type="text" id="longitude" name="longitude"
                             placeholder="@lang('admin/boats.show.positions_longitude_field')"
-                            value="{{ old('longitude', count($boatPositions) >= 1 ? $boatPositions[count($boatPositions) - 1]->longitude : '') }}" required>
+                            value="{{ old('longitude', count($boatPositions) > 0 ? $boatPositions[0]->longitude : '') }}" required>
                     </div>
 
                     <div class="control">
@@ -196,7 +159,7 @@
         @endif
 
         @if ($boatBoatTypes->count() != $boatTypes->count())
-            <form method="POST" action="{{ route('admin.boats.boat_types.create', $boat) }}">
+            <form method="POST" action="{{ route('admin.boats.boat_types.store', $boat) }}">
                 @csrf
 
                 <div class="field has-addons">
@@ -277,7 +240,7 @@
         @endif
 
         @if ($boatUsers->count() != $users->count())
-            <form method="POST" action="{{ route('admin.boats.users.create', $boat) }}">
+            <form method="POST" action="{{ route('admin.boats.users.store', $boat) }}">
                 @csrf
 
                 <div class="field has-addons">

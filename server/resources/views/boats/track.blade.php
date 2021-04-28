@@ -30,130 +30,41 @@
     </div>
 
     @if (config('app.debug'))
-        <pre id="output" class="box">Debug Ouput</pre>
+        <pre id="output" class="box">Debug Output</pre>
     @endif
 
     <script>
-        const DEBUG = @json(config('app.debug'));
-        const TRACKING_UPDATE_TIMEOUT = @json(config('tracker.update_timeout'));
-        const CSRF_TOKEN = @json(csrf_token());
-        const API_KEY = @json(App\Models\ApiKey::where('name', 'Website')->first()->key);
-        const API_TOKEN = @json(Auth::user()->apiToken());
-        mapboxgl.accessToken = @json(config('mapbox.access_token'));
+        window.data = {
+            type: 'boat',
+            debug: @json(config('app.debug')),
+            csrfToken: @json(csrf_token()),
+            apiKey: @json(App\Models\ApiKey::where('name', 'Website')->first()->key),
+            apiToken: @json(Auth::user()->apiToken()),
+            mapboxAccessToken: @json(config('mapbox.access_token')),
+            trackingUpdateTimeout: @json(config('tracker.update_timeout')),
+            item: @json($boat),
+            positions: @json($boatPositions),
+            links: {
+                apiPositionsStore: @json(route('api.boats.positions.store', $boat)),
+                positionsPrefix: @json(route('boats.positions.store', $boat))
+            },
+            strings: {
+                title: @json(__('boats.track.map_title')),
+                current: @json(__('boats.track.map_current')),
+                latitude: @json(__('boats.track.map_latitude')),
+                longitude: @json(__('boats.track.map_longitude')),
+                time: @json(__('boats.track.map_time')),
+                edit: @json(__('boats.track.map_edit')),
+                delete: @json(__('boats.track.map_delete')),
 
-        const logLines = [];
-        function log(message) {
-            if (DEBUG) {
-                logLines.push(message);
-                if (logLines.length > 20) {
-                    logLines.shift();
-                }
-                logLines.reverse();
-                output.textContent = logLines.join('\n');
-                logLines.reverse();
+                start_button: @json(__('boats.track.start_button')),
+                stop_button: @json(__('boats.track.stop_button')),
+                loading_text: @json(__('boats.track.loading_text')),
+                send_text_prefix: @json(__('boats.track.send_text_prefix')),
+                send_text_suffix: @json(__('boats.track.send_text_suffix')),
+                error: @json(__('boats.track.error'))
             }
-        }
-
-        const boat = @json($boat);
-
-        let oldPosition = {
-            lat: boat.positions[boat.positions.length - 1].latitude,
-            lng: boat.positions[boat.positions.length - 1].longitude
         };
-
-        function isDarkModeEnabled() {
-            return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        }
-
-        const map = new mapboxgl.Map({
-            container: 'map-container',
-            style: isDarkModeEnabled() ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10',
-            center: oldPosition,
-            zoom: 12,
-            attributionControl: false
-        });
-
-        const trackButton = document.getElementById('track-button');
-        const timeLabel = document.getElementById('time-label');
-        let isTracking = false;
-        let isFirstTime;
-        let geolocationWatch;
-        let sendUpdateInterval;
-        let nextUpdateTime;
-        let textUpdateInterval;
-
-        function sendCurrentPosition(currentPosition) {
-            nextUpdateTime = Date.now() + TRACKING_UPDATE_TIMEOUT;
-            log('Send position: ' + JSON.stringify(currentPosition));
-
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/api/boats/' + boat.id + '/positions', true);
-            xhr.setRequestHeader('X-CSRF-TOKEN', CSRF_TOKEN);
-            xhr.setRequestHeader('Authorization', 'Bearer ' + API_TOKEN);
-            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhr.send('api_key=' + API_KEY + '&' +
-                'latitude=' + currentPosition.lat.toFixed(8) + '&' +
-                'longitude=' + currentPosition.lng.toFixed(8));
-        }
-
-        function updateText() {
-            timeLabel.textContent = "@lang('boats.track.send_text_prefix') " +
-                ((nextUpdateTime - Date.now()) / 1000).toFixed(0) + " @lang('boats.track.send_text_suffix')";
-        }
-
-        map.on('load', () => {
-            const marker = new mapboxgl.Marker().setLngLat(oldPosition).addTo(map);
-
-            trackButton.addEventListener('click', event => {
-                if ('geolocation' in navigator) {
-                    if (!isTracking) {
-                        log('Start tracking');
-                        isTracking = true;
-                        isFirstTime = true;
-                        trackButton.textContent = "@lang('boats.track.stop_button')";
-                        timeLabel.style.display = 'inline-block';
-                        timeLabel.textContent = "@lang('boats.track.loading_text')";
-
-                        geolocationWatch = navigator.geolocation.watchPosition(event => {
-                            const currentPosition = { lat: event.coords.latitude, lng: event.coords.longitude };
-                            log('Current position: ' + JSON.stringify(currentPosition));
-                            marker.setLngLat(currentPosition);
-
-                            const mapCenter = map.getCenter();
-                            if (mapCenter.lat == oldPosition.lat && mapCenter.lng == oldPosition.lng) {
-                                map.jumpTo({ center: currentPosition, zoom: 14 });
-                            }
-
-                            if (isFirstTime) {
-                                isFirstTime = false;
-
-                                sendCurrentPosition(currentPosition);
-                                sendUpdateInterval = setInterval(() => {
-                                    sendCurrentPosition(currentPosition);
-                                }, TRACKING_UPDATE_TIMEOUT);
-
-                                updateText();
-                                textUpdateInterval = setInterval(updateText, 500);
-                            }
-
-                            oldPosition = currentPosition;
-                        }, error => {
-                            alert('Error: ' + error.message);
-                        });
-                    } else {
-                        log('Stop tracking');
-                        isTracking = false;
-                        trackButton.textContent = "@lang('boats.track.start_button')";
-                        timeLabel.style.display = 'none';
-
-                        navigator.geolocation.clearWatch(geolocationWatch);
-                        clearInterval(sendUpdateInterval);
-                        clearInterval(textUpdateInterval);
-                    }
-                } else {
-                    alert("@lang('boats.track.error')");
-                }
-            });
-        });
     </script>
+    <script src="/js/item_tracker_map.js"></script>
 @endsection

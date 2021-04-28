@@ -18,13 +18,13 @@
         <h2 class="subtitle is-5">@lang('admin/competitions.show.dates')</h2>
 
         @if ($competition->start != null)
-            <p>@lang('admin/competitions.show.start') {{ $competition->start }}</p>
+            <p>@lang('admin/competitions.show.start'): {{ $competition->start }}</p>
         @else
             <p><i>@lang('admin/competitions.show.start_empty')</i></p>
         @endif
 
         @if ($competition->end != null)
-            <p>@lang('admin/competitions.show.end') {{ $competition->end }}</p>
+            <p>@lang('admin/competitions.show.end'): {{ $competition->end }}</p>
         @else
             <p><i>@lang('admin/competitions.show.end_empty')</i></p>
         @endif

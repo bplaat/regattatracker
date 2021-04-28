@@ -25,6 +25,15 @@ return [
     'show.delete' => 'Delete buoy',
 
     'show.positions' => 'Buoy Positions',
+
+    'show.positions_map_title' => 'Buoy positions',
+    'show.positions_map_current' => 'Current buoy position',
+    'show.positions_map_latitude' => 'Latitude',
+    'show.positions_map_longitude' => 'Longitude',
+    'show.positions_map_time' => 'Time',
+    'show.positions_map_edit' => 'Edit',
+    'show.positions_map_delete' => 'Delete',
+
     'show.positions_empty' => 'This buoy has no known positions',
     'show.positions_previous' => '&laquo; Previous day',
     'show.positions_today' => 'Today',
@@ -36,12 +45,21 @@ return [
     // Admin buoys track page
     'track.title' => 'Track - :buoy.name - Buoys - Admin',
     'track.breadcrumb' => 'Track',
+
+    'track.map_title' => 'Buoy positions',
+    'track.map_current' => 'Current buoy position',
+    'track.map_latitude' => 'Latitude',
+    'track.map_longitude' => 'Longitude',
+    'track.map_time' => 'Time',
+    'track.map_edit' => 'Edit',
+    'track.map_delete' => 'Delete',
+
     'track.start_button' => 'Start tracking',
     'track.stop_button' => 'Stop tracking',
-    'track.error' => 'Your browser doesn\'t support geolocation tracking!',
     'track.loading_text' => 'Loading...',
     'track.send_text_prefix' => 'Sending in',
     'track.send_text_suffix' => 'seconds...',
+    'track.error' => 'Your browser doesn\'t support geolocation tracking!',
 
     // Admin buoys edit page
     'edit.title' => 'Edit - :buoy.name - Buoys - Admin',
@@ -49,5 +67,23 @@ return [
     'edit.header' => 'Edit buoy',
     'edit.name' => 'Name',
     'edit.description' => 'Description',
-    'edit.button' => 'Edit buoy'
+    'edit.button' => 'Edit buoy',
+
+    // ### Buoy positions pages ###
+
+    // Buoy positions index page
+    'positions.index.breadcrumb' => 'Positions',
+
+    // Buoy positions show page
+    'positions.show.breadcrumb' => 'Buoy Position',
+
+    // Buoy positions edit page
+    'positions.edit.title' => 'Edit - :buoy_position.name - Positions - :buoy.name - Buoys - Admin',
+    'positions.edit.breadcrumb' => 'Edit',
+    'positions.edit.header' => 'Edit buoy position',
+    'positions.edit.latitude' => 'Latitude',
+    'positions.edit.longitude' => 'Longitude',
+    'positions.edit.created_at_date' => 'Date',
+    'positions.edit.created_at_time' => 'Time',
+    'positions.edit.button' => 'Edit buoy position'
 ];

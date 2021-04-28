@@ -14,7 +14,7 @@ class Buoy extends Model
     // A buoy has many positions
     public function positions()
     {
-        return $this->hasMany(BuoyPosition::class);
+        return $this->hasMany(BuoyPosition::class)->orderByDesc('created_at');
     }
 
     // Get buoy positions by day
@@ -36,13 +36,12 @@ class Buoy extends Model
 
         // Get all the positions of before this day to calculate latest position
         $oldPositions = $this->positions()
-            ->where('created_at', '<', date('Y-m-d', $day))
-            ->orderByDesc('created_at');
+            ->where('created_at', '<', date('Y-m-d', $day));
         if ($oldPositions->count() > 0) {
             // Add latest position first of today positions
             $oldPosition = $oldPositions->first();
             if ($time >= $oldPosition->created_at->getTimestamp()) {
-                $todayPositions->prepend($oldPosition);
+                $todayPositions->push($oldPosition);
             }
         }
 
