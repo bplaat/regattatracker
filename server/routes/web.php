@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminEventController;
+use App\Http\Controllers\Admin\AdminFinishesController;
 use App\Http\Controllers\AuthController;
 
 use App\Http\Controllers\BoatsController;
@@ -154,6 +155,9 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/events/{event}/delete', [AdminEventController::class, 'delete'])->name('admin.events.delete');
     Route::get('/admin/events/{event}', [AdminEventController::class, 'show'])->name('admin.events.show');
     Route::post('/admin/events/{event}', [AdminEventController::class, 'update'])->name('admin.events.update');
+
+    // Admin finish routes
+    Route::post('/admin/events/{event}/finishes', [AdminFinishesController::class, 'store'])->name('admin.events.finishes.create');
 });
 
 // Guest routes

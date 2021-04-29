@@ -35,5 +35,58 @@
         </div>
     </div>
 
+    <div class="box content">
+        <h1 class="title is-spaced is-4">@lang('admin/events.show.finishes')</h1>
+
+
+    </div>
+
+    <div class="box content">
+        <h1 class="title is-spaced is-4">@lang('admin/events.show.finishes.create')</h1>
+        <form method="POST" action="{{ route('admin.events.finishes.create', $event) }}">
+            @csrf
+
+            <p>@lang('admin/events.show.finishes.create.point_a')</p>
+            <div class="field has-addons">
+                <div class="control">
+                    <input class="input @error('latitude_a') is-danger @enderror" type="text" id="latitude_a"
+                           name="latitude_a"
+                           placeholder="@lang('admin/events.show.finishes.create.latitude_a_field')"
+                           value="{{ old('latitude_a') }}" required>
+                </div>
+
+                <div class="control">
+                    <input class="input @error('longitude_a') is-danger @enderror" type="text" id="longitude_a"
+                           name="longitude_a"
+                           placeholder="@lang('admin/events.show.finishes.create.longitude_a_field')"
+                           value="{{ old('longitude_a') }}" required>
+                </div>
+            </div>
+            <p>@lang('admin/events.show.finishes.create.point_b')</p>
+            <div class="field has-addons">
+                <div class="control">
+                    <input class="input @error('latitude_b') is-danger @enderror" type="text" id="latitude_b"
+                           name="latitude_b"
+                           placeholder="@lang('admin/events.show.finishes.create.latitude_b_field')"
+                           value="{{ old('latitude_b') }}" required>
+                </div>
+
+                <div class="control">
+                    <input class="input @error('longitude_b') is-danger @enderror" type="text" id="longitude_b"
+                           name="longitude_b"
+                           placeholder="@lang('admin/events.show.finishes.create.longitude_b_field')"
+                           value="{{ old('longitude_b') }}" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <button class="button is-link"
+                            type="submit">@lang('admin/events.show.finishes.create.button')</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
 
 @endsection

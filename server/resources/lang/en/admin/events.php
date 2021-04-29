@@ -33,6 +33,16 @@ return [
     'show.edit' => 'Edit',
     'show.delete' => 'Delete',
 
+    'show.finishes' => 'Finishes',
+    'show.finishes.create' => 'Create a new finish',
+    'show.finishes.create.point_a' => 'Point A',
+    'show.finishes.create.point_b' => 'Point B',
+    'show.finishes.create.latitude_a_field' => 'Latitude A',
+    'show.finishes.create.latitude_b_field' => 'Latitude B',
+    'show.finishes.create.longitude_a_field' => 'Longitude A',
+    'show.finishes.create.longitude_b_field' => 'Longitude B',
+    'show.finishes.create.button' => 'Create finish',
+
     // Admin events edit page
     'edit.title' => 'Edit - :event.name - Events - Admin',
     'edit.breadcrumb' => 'Edit',

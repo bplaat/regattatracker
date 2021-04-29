@@ -24,7 +24,7 @@ class AdminFinishesController extends Controller
 
         // Create finish
         Finish::create([
-            'event' => $event->id,
+            'event_id' => $event->id,
             'latitude_a' => $fields['latitude_a'],
             'longitude_a' => $fields['longitude_a'],
             'latitude_b' => $fields['latitude_b'],
