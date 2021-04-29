@@ -32,16 +32,14 @@ class AdminEventController extends Controller
         $fields = $request->validate([
             'name' => 'required|min:2|max:255',
             'start_date' => 'nullable|date_format:Y-m-d',
-            'start_time' => 'nullable|date_format:H:i',
             'end_date' => 'nullable|date_format:Y-m-d',
-            'end_time' => 'nullable|date_format:H:i'
         ]);
 
         // Create Event
         $event = Event::create([
             'name' => $fields['name'],
-            'start' => $fields['start_date'] != null && $fields['start_time'] != null ? $fields['start_date'] . ' ' . $fields['start_time'] : null,
-            'end' => $fields['end_date'] != null && $fields['end_time'] != null ? $fields['end_date'] . ' ' . $fields['end_time'] : null
+            'start' => $fields['start_date'],
+            'end' => $fields['end_date']
         ]);
 
         // Go to the new event show page
@@ -63,16 +61,14 @@ class AdminEventController extends Controller
         $fields = $request->validate([
             'name' => 'required|min:2|max:255',
             'start_date' => 'nullable|date_format:Y-m-d',
-            'start_time' => 'nullable|date_format:H:i',
             'end_date' => 'nullable|date_format:Y-m-d',
-            'end_time' => 'nullable|date_format:H:i'
         ]);
 
         // Update event
         $event->update([
             'name' => $fields['name'],
-            'start' => $fields['start_date'] != null && $fields['start_time'] != null ? $fields['start_date'] . ' ' . $fields['start_time'] : null,
-            'end' => $fields['end_date'] != null && $fields['end_time'] != null ? $fields['end_date'] . ' ' . $fields['end_time'] : null
+            'start' => $fields['start_date'],
+            'end' => $fields['end_date']
         ]);
 
         // Go to the event show page
