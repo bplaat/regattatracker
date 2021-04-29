@@ -47,9 +47,9 @@
                     <p>@lang('admin/events.show.finishes.create.point_b'): {{$finish->latitude_b}},{{$finish->longitude_b}}</p>
                     <div class="buttons">
                         <a class="button is-link"
-                           href="{{ route('admin.finishes.edit', ['event' => $event, 'finish' => $finish]) }}">@lang('admin/events.show.finishes.edit')</a>
+                           href="{{ route('admin.events.finishes.edit', ['event' => $event, 'finish' => $finish]) }}">@lang('admin/events.show.finishes.edit')</a>
                         <a class="button is-danger"
-                           href="{{ route('admin.finishes.delete', ['event' => $event, 'finish' => $finish]) }}">@lang('admin/events.show.finishes.delete')</a>
+                           href="{{ route('admin.events.finishes.delete', ['event' => $event, 'finish' => $finish]) }}">@lang('admin/events.show.finishes.delete')</a>
                     </div>
                 </div>
             @endforeach

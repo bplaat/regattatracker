@@ -35,6 +35,11 @@ class AdminFinishesController extends Controller
         return redirect()->route('admin.events.show', $event);
     }
 
+    // Admin finish edit route
+    public function edit(Event $event, Finish $finish) {
+        return view('admin.events.finishes.edit', ['event' => $event, 'finish' => $finish]);
+    }
+
     // Admin finish update route
     public function update(Request $request, Event $event, Finish $finish)
     {
