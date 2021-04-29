@@ -26,8 +26,6 @@ use App\Http\Controllers\Admin\AdminBoatTypesController;
 use App\Http\Controllers\Admin\AdminBuoysController;
 use App\Http\Controllers\Admin\AdminBuoyPositionsController;
 
-use App\Http\Controllers\Admin\AdminCompetitionsController;
-
 use App\Models\User;
 
 use Illuminate\Support\Facades\Route;
