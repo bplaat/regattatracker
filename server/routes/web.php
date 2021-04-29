@@ -95,7 +95,7 @@ Route::middleware('admin')->group(function () {
 
     // Admin boat routes
     Route::get('/admin/boats', [AdminBoatsController::class, 'index'])->name('admin.boats.index');
-    Route::get('/admin/boats/create', [AdminBoatsController::class, 'store'])->name('admin.boats.create');
+    Route::get('/admin/boats/create', [AdminBoatsController::class, 'create'])->name('admin.boats.create');
     Route::post('/admin/boats', [AdminBoatsController::class, 'store'])->name('admin.boats.store');
     Route::get('/admin/boats/{boat}/track', [AdminBoatsController::class, 'track'])->name('admin.boats.track');
     Route::get('/admin/boats/{boat}/edit', [AdminBoatsController::class, 'edit'])->name('admin.boats.edit');
