@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Competition;
+use App\Models\Event;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CompetitionFactory extends Factory
+class EventFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Competition::class;
+    protected $model = Event::class;
 
     /**
      * Define the model's default state.

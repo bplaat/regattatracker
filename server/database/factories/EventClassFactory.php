@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Competition;
-use App\Models\CompetitionClass;
+use App\Models\Event;
+use App\Models\EventClass;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CompetitionClassFactory extends Factory
+class EventClassFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = CompetitionClass::class;
+    protected $model = EventClass::class;
 
     /**
      * Define the model's default state.
@@ -24,7 +24,7 @@ class CompetitionClassFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'competition_id' => $this->faker->randomElement(Competition::all()->pluck('id')->toArray())
+            'event_id' => $this->faker->randomElement(Event::all()->pluck('id')->toArray())
         ];
     }
 }

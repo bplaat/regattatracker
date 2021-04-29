@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\CompetitionClass;
+use App\Models\EventClass;
 use App\Models\Fleet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,7 +24,7 @@ class FleetFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'competition_class_id' => $this->faker->randomElement(CompetitionClass::all()->pluck('id')->toArray())
+            'event_class_id' => $this->faker->randomElement(EventClass::all()->pluck('id')->toArray())
         ];
     }
 }

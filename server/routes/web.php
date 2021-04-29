@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\Admin\AdminEventController;
+use App\Http\Controllers\Admin\AdminFinishesController;
 use App\Http\Controllers\AuthController;
 
 use App\Http\Controllers\BoatsController;
@@ -160,14 +162,17 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/buoys/{buoy}/positions/{buoyPosition}/delete', [AdminBuoyPositionsController::class, 'delete'])->name('admin.buoys.positions.delete');
     Route::post('/admin/buoys/{buoy}/positions/{buoyPosition}', [AdminBuoyPositionsController::class, 'update'])->name('admin.buoys.positions.update');
 
-    // Admin competition routes
-    Route::get('/admin/competitions', [AdminCompetitionsController::class, 'index'])->name('admin.competitions.index');
-    Route::view('/admin/competitions/create', 'admin.competitions.create')->name('admin.competitions.create');
-    Route::post('/admin/competitions', [AdminCompetitionsController::class, 'store'])->name('admin.competitions.store');
-    Route::get('/admin/competitions/{competition}/edit', [AdminCompetitionsController::class, 'edit'])->name('admin.competitions.edit');
-    Route::get('/admin/competitions/{competition}/delete', [AdminCompetitionsController::class, 'delete'])->name('admin.competitions.delete');
-    Route::get('/admin/competitions/{competition}', [AdminCompetitionsController::class, 'show'])->name('admin.competitions.show');
-    Route::post('/admin/competitions/{competition}', [AdminCompetitionsController::class, 'update'])->name('admin.competitions.update');
+    // Admin event routes
+    Route::get('/admin/events', [AdminEventController::class, 'index'])->name('admin.events.index');
+    Route::view('/admin/events/create', 'admin.events.create')->name('admin.events.create');
+    Route::post('/admin/events', [AdminEventController::class, 'store'])->name('admin.events.store');
+    Route::get('/admin/events/{event}/edit', [AdminEventController::class, 'edit'])->name('admin.events.edit');
+    Route::get('/admin/events/{event}/delete', [AdminEventController::class, 'delete'])->name('admin.events.delete');
+    Route::get('/admin/events/{event}', [AdminEventController::class, 'show'])->name('admin.events.show');
+    Route::post('/admin/events/{event}', [AdminEventController::class, 'update'])->name('admin.events.update');
+
+    // Admin finish routes
+    Route::post('/admin/events/{event}/finishes', [AdminFinishesController::class, 'store'])->name('admin.events.finishes.create');
 });
 
 // Guest routes

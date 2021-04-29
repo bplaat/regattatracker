@@ -11,6 +11,6 @@ class Fleet extends Model
 
     protected $fillable = [
         'name',
-        'competition_class_id'
+        'event_class_id'
     ];
 }
