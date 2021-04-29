@@ -22,7 +22,7 @@ class Event extends Model
 
     // An event belongs to many finishes.
     public function finishes() {
-        return $this->belongsToMany(Finish::class);
+        return Finish::all()->where('event_id', '=', $this->id);
     }
 
     // Search by a query.

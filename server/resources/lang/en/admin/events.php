@@ -34,6 +34,10 @@ return [
     'show.delete' => 'Delete',
 
     'show.finishes' => 'Finishes',
+    'show.finishes.finish' => 'Finish :finish.id',
+    'show.finishes.edit' => 'Edit',
+    'show.finishes.delete' => 'Delete',
+    'show.finishes.empty' => 'No finishes yet.',
     'show.finishes.create' => 'Create a new finish',
     'show.finishes.create.point_a' => 'Point A',
     'show.finishes.create.point_b' => 'Point B',

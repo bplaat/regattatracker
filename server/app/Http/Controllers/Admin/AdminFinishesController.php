@@ -59,8 +59,10 @@ class AdminFinishesController extends Controller
     }
 
     // Admin finish delete route
-    public function delete(Finish $finish)
+    public function delete(Event $event, Finish $finish)
     {
         $finish->delete();
+
+        return redirect()->route('admin.events.show', $event);
     }
 }

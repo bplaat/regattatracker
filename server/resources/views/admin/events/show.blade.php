@@ -30,13 +30,32 @@
         @endif
 
         <div class="buttons">
-            <a class="button is-link" href="{{ route('admin.events.edit', $event) }}">@lang('admin/events.show.edit')</a>
-            <a class="button is-danger" href="{{ route('admin.events.delete', $event) }}">@lang('admin/events.show.delete')</a>
+            <a class="button is-link"
+               href="{{ route('admin.events.edit', $event) }}">@lang('admin/events.show.edit')</a>
+            <a class="button is-danger"
+               href="{{ route('admin.events.delete', $event) }}">@lang('admin/events.show.delete')</a>
         </div>
     </div>
 
     <div class="box content">
         <h1 class="title is-spaced is-4">@lang('admin/events.show.finishes')</h1>
+        @if($event->finishes()->count() > 0)
+            @foreach($event->finishes() as $finish)
+                <div class="box content">
+                    <h1 class="title is-spaced is-4">@lang('admin/events.show.finishes.finish', ['finish.id' => $finish->id])</h1>
+                    <p>@lang('admin/events.show.finishes.create.point_a'): {{$finish->latitude_a}},{{$finish->longitude_a}}</p>
+                    <p>@lang('admin/events.show.finishes.create.point_b'): {{$finish->latitude_b}},{{$finish->longitude_b}}</p>
+                    <div class="buttons">
+                        <a class="button is-link"
+                           href="{{ route('admin.finishes.edit', ['event' => $event, 'finish' => $finish]) }}">@lang('admin/events.show.finishes.edit')</a>
+                        <a class="button is-danger"
+                           href="{{ route('admin.finishes.delete', ['event' => $event, 'finish' => $finish]) }}">@lang('admin/events.show.finishes.delete')</a>
+                    </div>
+                </div>
+            @endforeach
+        @elseif($event->finishes()->count() == 0)
+            @lang('admin/events.show.finishes.empty')
+        @endif
 
 
     </div>
