@@ -33,6 +33,10 @@ return [
     'show.edit' => 'Edit',
     'show.delete' => 'Delete',
 
+    'show.path' => 'Event path',
+    'show.path_add_button' => 'Add path point',
+    'show.path_save_button' => 'Save path',
+
     'show.finishes' => 'Finishes',
     'show.finishes.finish' => 'Finish :finish.id',
     'show.finishes.edit' => 'Edit',

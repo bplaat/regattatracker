@@ -56,6 +56,7 @@ class AdminEventController extends Controller
         return view('admin.events.edit', ['event' => $event]);
     }
 
+    // Admin events update route
     public function update(Request $request, Event $event) {
         // Validate input
         $fields = $request->validate([

@@ -2,6 +2,14 @@
 
 @section('title', __('admin/events.show.title', ['event.name' => $event->name]))
 
+@section('head')
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css"/>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+    @if (config('app.debug'))
+        <style>.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl{display:none!important}</style>
+    @endif
+@endsection
+
 @section('content')
     <div class="breadcrumb">
         <ul>
@@ -38,9 +46,35 @@
     </div>
 
     <div class="box content">
+        <h1 class="title is-spaced is-4">@lang('admin/events.show.path')</h1>
+
+        <div class="box" style="position: relative; padding-top: 45%; background-color: #191a1a; overflow: hidden;">
+            <div id="map-container" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+        </div>
+
+        <div class="buttons is-centered">
+            <button id="add-button" class="button is-link">@lang('admin/events.show.path_add_button')</button>
+            <button id="save-button" class="button is-success">@lang('admin/events.show.path_save_button')</button>
+        </div>
+
+        <script>
+            window.data = {
+                csrfToken: @json(csrf_token()),
+                apiKey: @json(App\Models\ApiKey::where('name', 'Website')->first()->key),
+                apiToken: @json(Auth::user()->apiToken()),
+                mapboxAccessToken: @json(config('mapbox.access_token')),
+                event: @json($event),
+                path: JSON.parse(@json($event->path)),
+                link: @json(route('api.events.update', $event))
+            };
+        </script>
+        <script src="/js/event_path_map.js"></script>
+    </div>
+
+    <div class="box content">
         <h1 class="title is-spaced is-4">@lang('admin/events.show.finishes')</h1>
-        @if($event->finishes()->count() > 0)
-            @foreach($event->finishes() as $finish)
+        @if ($event->finishes()->count() > 0)
+            @foreach ($event->finishes() as $finish)
                 <div class="box content">
                     <h1 class="title is-spaced is-4">@lang('admin/events.show.finishes.finish', ['finish.id' => $finish->id])</h1>
                     <p>@lang('admin/events.show.finishes.create.point_a'): {{$finish->latitude_a}},{{$finish->longitude_a}}</p>
@@ -53,11 +87,9 @@
                     </div>
                 </div>
             @endforeach
-        @elseif($event->finishes()->count() == 0)
+        @elseif ($event->finishes()->count() == 0)
             @lang('admin/events.show.finishes.empty')
         @endif
-
-
     </div>
 
     <div class="box content">
@@ -81,6 +113,7 @@
                            value="{{ old('longitude_a') }}" required>
                 </div>
             </div>
+
             <p>@lang('admin/events.show.finishes.create.point_b')</p>
             <div class="field has-addons">
                 <div class="control">
@@ -106,6 +139,4 @@
             </div>
         </form>
     </div>
-
-
 @endsection

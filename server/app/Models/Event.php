@@ -12,7 +12,8 @@ class Event extends Model
     protected $fillable = [
       'name',
       'start',
-      'end'
+      'end',
+      'path'
     ];
 
     // An event belongs to many classes.

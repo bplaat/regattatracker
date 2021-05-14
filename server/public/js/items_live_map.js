@@ -20,8 +20,8 @@ const bounds = allPositions.reduce(function (bounds, position) {
 const map = new mapboxgl.Map({
     container: 'map-container',
     style: isDarkModeEnabled() ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10',
-    attributionControl: false,
-    bounds: bounds
+    bounds: bounds,
+    attributionControl: false
 });
 map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
