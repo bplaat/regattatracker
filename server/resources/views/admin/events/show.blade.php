@@ -107,5 +107,9 @@
         </form>
     </div>
 
+    <div class="box content">
+        <h1 class="title is-spaced is-4">@lang('admin/events.show.classes')</h1>
+    </div>
+
 
 @endsection

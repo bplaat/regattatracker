@@ -47,6 +47,14 @@ return [
     'show.finishes.create.longitude_b_field' => 'Longitude B',
     'show.finishes.create.button' => 'Create finish',
 
+    'show.classes' => 'Events',
+    'show.classes.create' => 'Create new class',
+    'show.classes.edit' => 'Edit',
+    'show.classes.delete' => 'Delete',
+    'show.classes.empty' => 'No classes yet',
+
+    'show.classes.fleets' => 'Fleets',
+
     // Admin events edit page
     'edit.title' => 'Edit - :event.name - Events - Admin',
     'edit.breadcrumb' => 'Edit',
