@@ -17,7 +17,7 @@ class Event extends Model
 
     // An event belongs to many classes.
     public function classes() {
-        return $this->belongsToMany(EventClass::class);
+        return EventClass::all()->where('event_id', '=', $this->id);
     }
 
     // An event belongs to many finishes.

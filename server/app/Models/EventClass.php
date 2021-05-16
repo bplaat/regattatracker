@@ -13,4 +13,8 @@ class EventClass extends Model
         'name',
         'event_id'
     ];
+
+    public function fleets() {
+        return Fleet::all()->where('event_class_id', '=', $this->id);
+    }
 }
