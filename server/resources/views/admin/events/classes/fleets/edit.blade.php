@@ -25,7 +25,7 @@
             <input class="input @error('name') is-danger @enderror" type="text" id="name"
                    name="name"
                    placeholder="@lang('admin/fleets.edit.name')"
-                   value="{{old('name', $class->name)}}" required>
+                   value="{{old('name', $fleet->name)}}" required>
         </div>
 
         <div class="field">

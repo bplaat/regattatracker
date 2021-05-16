@@ -43,8 +43,10 @@
             @foreach($event->finishes() as $finish)
                 <div class="box content">
                     <h1 class="title is-spaced is-4">@lang('admin/events.show.finishes.finish', ['finish.id' => $finish->id])</h1>
-                    <p>@lang('admin/events.show.finishes.create.point_a'): {{$finish->latitude_a}},{{$finish->longitude_a}}</p>
-                    <p>@lang('admin/events.show.finishes.create.point_b'): {{$finish->latitude_b}},{{$finish->longitude_b}}</p>
+                    <p>@lang('admin/events.show.finishes.create.point_a'): {{$finish->latitude_a}}
+                        ,{{$finish->longitude_a}}</p>
+                    <p>@lang('admin/events.show.finishes.create.point_b'): {{$finish->latitude_b}}
+                        ,{{$finish->longitude_b}}</p>
                     <div class="buttons">
                         <a class="button is-link"
                            href="{{ route('admin.events.finishes.edit', ['event' => $event, 'finish' => $finish]) }}">@lang('admin/events.show.finishes.edit')</a>
@@ -109,24 +111,46 @@
 
     <div class="box content">
         <h1 class="title is-spaced is-4">@lang('admin/events.show.classes')</h1>
-        <a class="button is-link"
-           href="{{ route('admin.events.classes.create', ['event' => $event]) }}">@lang('admin/events.show.classes.create')</a>
         @if($event->classes()->count() == 0)
             <p>@lang('admin/events.show.classes.empty')</p>
         @else
             @foreach($event->classes() as $class)
                 <div class="box content">
                     <h1 class="title is-spaced is-4">{{$class->name}}</h1>
-
                     <div class="buttons">
                         <a class="button is-link"
                            href="{{ route('admin.events.classes.edit', ['event' => $event, 'class' => $class]) }}">@lang('admin/events.show.classes.edit')</a>
                         <a class="button is-danger"
                            href="{{ route('admin.events.classes.delete', ['event' => $event, 'class' => $class]) }}">@lang('admin/events.show.classes.delete')</a>
                     </div>
+
+                    @if($class->fleets()->count() == 0)
+                        <p>@lang('admin/events.show.classes.fleets.empty')</p>
+                        <a class="button is-link"
+                           href="{{ route('admin.events.classes.fleets.create', ['event' => $event, 'class' => $class]) }}">@lang('admin/events.show.classes.fleets.create')</a>
+                    @else
+                        <div class="box content">
+                            <h2 class="title is-spaced is-4">@lang('admin/events.show.classes.fleets')</h2>
+                            @foreach($class->fleets() as $fleet)
+                                <div class="box content">
+                                    <h3 class="title is-spaced is-4">{{$fleet->name}}</h3>
+                                    <div class="buttons">
+                                        <a class="button is-link"
+                                           href="{{ route('admin.events.classes.fleets.edit', ['event' => $event, 'class' => $class, 'fleet' => $fleet]) }}">@lang('admin/events.show.classes.fleets.edit')</a>
+                                        <a class="button is-danger"
+                                           href="{{ route('admin.events.classes.fleets.delete', ['event' => $event, 'class' => $class, 'fleet' => $fleet]) }}">@lang('admin/events.show.classes.fleets.delete')</a>
+                                    </div>
+                                </div>
+                            @endforeach
+                            <a class="button is-link"
+                               href="{{ route('admin.events.classes.fleets.create', ['event' => $event, 'class' => $class]) }}">@lang('admin/events.show.classes.fleets.create')</a>
+                        </div>
+                    @endif
                 </div>
             @endforeach
         @endif
+        <a class="button is-link"
+           href="{{ route('admin.events.classes.create', ['event' => $event]) }}">@lang('admin/events.show.classes.create')</a>
     </div>
 
 
