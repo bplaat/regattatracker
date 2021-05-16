@@ -17,7 +17,7 @@
         </ul>
     </div>
 
-    <h1 class="title">@lang('admin/finishes.edit.header')</h1>
+    <h1 class="title">@lang('admin/fleets.edit.header')</h1>
     <form method="POST" action="{{ route('admin.events.classes.fleets.update', [$event, $class, $fleet]) }}">
         @csrf
         <p>@lang('admin/fleets.edit.name')</p>
