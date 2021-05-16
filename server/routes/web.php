@@ -174,6 +174,9 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/events/{event}/finishes/{finish}/edit', [AdminFinishesController::class, 'edit'])->name('admin.events.finishes.edit');
     Route::post('/admin/events/{event}/finishes/{finish}', [AdminFinishesController::class, 'update'])->name('admin.events.finishes.update');
     Route::post('/admin/events/{event}/finishes', [AdminFinishesController::class, 'store'])->name('admin.events.finishes.create');
+
+    // Admin create routes
+    Route::get('/admin/events/{event}/classes', [AdminEventClassesController::class, 'create'])->name('admin.events.classes.create');
 });
 
 // Guest routes
