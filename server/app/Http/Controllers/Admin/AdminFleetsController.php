@@ -10,13 +10,18 @@ use Illuminate\Http\Request;
 
 class AdminFleetsController extends Controller
 {
+    // Admin fleet create route
+    public function create(Event $event, EventClass $eventClass) {
+        return view('admin.events.classes.fleets.create', ['event' => $event, 'class' => $eventClass]);
+    }
+
     // Admin fleet store route
     public function store(Request $request, Event $event, EventClass $eventClass) {
         $fields = $request->validate([
             'name' => 'required|min:2|max:255'
         ]);
 
-        Event::create([
+        Fleet::create([
             'name' => $fields['name'],
             'event_class_id' => $eventClass->id
         ]);

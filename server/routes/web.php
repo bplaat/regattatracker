@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminEventClassesController;
+use App\Http\Controllers\Admin\AdminFleetsController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\Admin\AdminEventController;
 use App\Http\Controllers\Admin\AdminFinishesController;
@@ -176,19 +177,19 @@ Route::middleware('admin')->group(function () {
     Route::post('/admin/events/{event}/finishes/{finish}', [AdminFinishesController::class, 'update'])->name('admin.events.finishes.update');
     Route::post('/admin/events/{event}/finishes', [AdminFinishesController::class, 'store'])->name('admin.events.finishes.create');
 
-    // Admin fleet routes
-    Route::get('/admin/events/{event}/classes/{class}/fleets/create', 'admin.events.classes.fleets.create')->name('admin.events.classes.fleets.create');
-    Route::get('/admin/events/{event}/classes/{class}/fleets/{fleet}/delete', [AdminEventClassesController::class, 'delete'])->name('admin.events.classes.fleets.delete');
-    Route::get('/admin/events/{event}/classes/{class}/fleets/{fleet}/edit', [AdminEventClassesController::class, 'edit'])->name('admin.events.classes.fleets.edit');
-    Route::post('/admin/events/{event}/classes/{class}/fleets/{fleet}', [AdminEventClassesController::class, 'update'])->name('admin.events.classes.fleets.update');
-    Route::post('/admin/events/{event}/classes/{class}/fleets', [AdminEventClassesController::class, 'store'])->name('admin.events.classes.fleets.store');
-
     // Admin event class routes
-    Route::get('/admin/events/{event}/classes/create', 'admin.events.classes.create')->name('admin.events.classes.create');
+    Route::get('/admin/events/{event}/classes/create', [AdminEventClassesController::class, 'create'])->name('admin.events.classes.create');
     Route::get('/admin/events/{event}/classes/{class}/delete', [AdminEventClassesController::class, 'delete'])->name('admin.events.classes.delete');
     Route::get('/admin/events/{event}/classes/{class}/edit', [AdminEventClassesController::class, 'edit'])->name('admin.events.classes.edit');
     Route::post('/admin/events/{event}/classes/{class}', [AdminEventClassesController::class, 'update'])->name('admin.events.classes.update');
     Route::post('/admin/events/{event}/classes', [AdminEventClassesController::class, 'store'])->name('admin.events.classes.store');
+
+    // Admin fleet routes
+    Route::get('/admin/events/{event}/classes/{class}/fleets/create', [AdminFleetsController::class, 'create'])->name('admin.events.classes.fleets.create');
+    Route::get('/admin/events/{event}/classes/{class}/fleets/{fleet}/delete', [AdminFleetsController::class, 'delete'])->name('admin.events.classes.fleets.delete');
+    Route::get('/admin/events/{event}/classes/{class}/fleets/{fleet}/edit', [AdminFleetsController::class, 'edit'])->name('admin.events.classes.fleets.edit');
+    Route::post('/admin/events/{event}/classes/{class}/fleets/{fleet}', [AdminFleetsController::class, 'update'])->name('admin.events.classes.fleets.update');
+    Route::post('/admin/events/{event}/classes/{class}/fleets', [AdminFleetsController::class, 'store'])->name('admin.events.classes.fleets.store');
 });
 
 // Guest routes

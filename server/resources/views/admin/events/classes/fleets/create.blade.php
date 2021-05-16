@@ -17,7 +17,7 @@
     </div>
 
     <h1 class="title">@lang('admin/fleets.create.header')</h1>
-    <form method="POST" action="{{ route('admin.events.classes.fleets.create', [$event]) }}">
+    <form method="POST" action="{{ route('admin.events.classes.fleets.store', [$event, $class]) }}">
         @csrf
         <p>@lang('admin/fleets.create.name')</p>
         <div class="control">
@@ -34,3 +34,4 @@
             </div>
         </div>
     </form>
+@endsection

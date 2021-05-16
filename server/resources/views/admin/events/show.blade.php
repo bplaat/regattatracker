@@ -109,6 +109,24 @@
 
     <div class="box content">
         <h1 class="title is-spaced is-4">@lang('admin/events.show.classes')</h1>
+        <a class="button is-link"
+           href="{{ route('admin.events.classes.create', ['event' => $event]) }}">@lang('admin/events.show.classes.create')</a>
+        @if($event->classes()->count() == 0)
+            <p>@lang('admin/events.show.classes.empty')</p>
+        @else
+            @foreach($event->classes() as $class)
+                <div class="box content">
+                    <h1 class="title is-spaced is-4">{{$class->name}}</h1>
+
+                    <div class="buttons">
+                        <a class="button is-link"
+                           href="{{ route('admin.events.classes.edit', ['event' => $event, 'class' => $class]) }}">@lang('admin/events.show.classes.edit')</a>
+                        <a class="button is-danger"
+                           href="{{ route('admin.events.classes.delete', ['event' => $event, 'class' => $class]) }}">@lang('admin/events.show.classes.delete')</a>
+                    </div>
+                </div>
+            @endforeach
+        @endif
     </div>
 
 

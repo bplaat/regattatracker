@@ -10,13 +10,13 @@
             <li><a href="{{ route('admin.events.index') }}">@lang('admin/events.index.breadcrumb')</a></li>
             <li><a href="{{ route('admin.events.show', $event) }}">{{ $event->name }}</a></li>
             <li class="is-active"><a
-                    href="{{ route('admin.events.classes.create', [$event, $class]) }}">@lang('admin/classes.create.breadcrumb')</a>
+                    href="{{ route('admin.events.classes.create', ['event' => $event]) }}">@lang('admin/classes.create.breadcrumb')</a>
             </li>
         </ul>
     </div>
 
     <h1 class="title">@lang('admin/classes.create.header')</h1>
-    <form method="POST" action="{{ route('admin.events.classes.create', [$event]) }}">
+    <form method="POST" action="{{ route('admin.events.classes.store', [$event]) }}">
         @csrf
         <p>@lang('admin/classes.create.name')</p>
         <div class="control">
@@ -33,3 +33,4 @@
             </div>
         </div>
     </form>
+@endsection
