@@ -54,6 +54,10 @@ return [
     'show.classes.empty' => 'No classes yet',
 
     'show.classes.fleets' => 'Fleets',
+    'show.classes.fleets.create' => 'Add new fleet',
+    'show.classes.fleets.edit' => 'Edit',
+    'show.classes.fleets.delete' => 'Delete',
+    'show.classes.fleets.empty' => 'No fleets yet',
 
     // Admin events edit page
     'edit.title' => 'Edit - :event.name - Events - Admin',
