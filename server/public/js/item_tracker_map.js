@@ -35,6 +35,10 @@ const map = new mapboxgl.Map({
     attributionControl: false
 });
 
+map.addControl(new mapboxgl.ScaleControl(), 'bottom-left');
+map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
+
 const trackButton = document.getElementById('track-button');
 const timeLabel = document.getElementById('time-label');
 let isTracking = false;

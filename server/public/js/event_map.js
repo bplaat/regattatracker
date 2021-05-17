@@ -121,7 +121,10 @@ const map = new mapboxgl.Map({
 });
 
 if (path.length > 0) {
-    const points = path.map(point => [point.lng, point.lat]);
+    const points = path.map(point => [point.lng, point.lat])
+        .concat(finishes.map(finish => [finish.longitude_a, finish.latitude_a]))
+        .concat(finishes.map(finish => [finish.longitude_b, finish.latitude_b]));
+
     const bounds = points.reduce(function (bounds, point) {
         return bounds.extend(point);
     }, new mapboxgl.LngLatBounds(points[0], points[0]));
@@ -184,6 +187,81 @@ function pointTouchStart(event) {
 }
 
 function updateMapItems() {
+    // Finish points layer
+    const finishPoints = {
+        type: 'FeatureCollection',
+        features: finishes.map(finish => ({
+            type: 'Feature',
+            properties: {
+                finish: finish
+            },
+            geometry: {
+                type: 'Point',
+                coordinates: [finish.longitude_a, finish.latitude_a]
+            }
+        })).concat(finishes.map(finish => ({
+            type: 'Feature',
+            properties: {
+                finish: finish
+            },
+            geometry: {
+                type: 'Point',
+                coordinates: [finish.longitude_b, finish.latitude_b]
+            }
+        })))
+    };
+
+    if (map.getSource('finish_points') != undefined) {
+        map.getSource('finish_points').setData(finishPoints);
+    } else {
+        map.addSource('finish_points', { type: 'geojson', data: finishPoints });
+
+        map.addLayer({
+            id: 'finish_points',
+            source: 'finish_points',
+            type: 'circle',
+            paint: {
+                'circle-color': '#ff0',
+                'circle-radius': 6
+            }
+        });
+    }
+
+    // Finish lines layer
+    const finishLines = {
+        type: 'FeatureCollection',
+        features: finishes.map(finish => ({
+            type: 'Feature',
+            geometry: {
+                type: 'LineString',
+                coordinates: [
+                    [finish.longitude_a, finish.latitude_a],
+                    [finish.longitude_b, finish.latitude_b]
+                ]
+            }
+        }))
+    };
+
+    if (map.getSource('finish_lines') != undefined) {
+        map.getSource('finish_lines').setData(finishLines);
+    } else {
+        map.addSource('finish_lines', { type: 'geojson', data: finishLines });
+
+        map.addLayer({
+            id: 'finish_lines',
+            source: 'finish_lines',
+            type: 'line',
+            layout: {
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            paint: {
+                'line-color': '#ff0',
+                'line-width': 4
+            }
+        }, 'finish_points');
+    }
+
     // Path points layer
     const pathSelectedPoint = {
         type: 'FeatureCollection',
@@ -214,7 +292,7 @@ function updateMapItems() {
                 'circle-stroke-width': 2,
                 'circle-stroke-color': 'rgb(49, 206, 255)'
             }
-        });
+        }, 'finish_lines');
 
         map.on('dblclick', 'path_selected_point', function (event) {
             event.preventDefault();

@@ -16,6 +16,11 @@ const map = new mapboxgl.Map({
     attributionControl: false
 });
 
+map.addControl(new mapboxgl.ScaleControl(), 'bottom-left');
+map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+map.addControl(new mapboxgl.GeolocateControl(), 'bottom-right');
+map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
+
 map.on('load', () => {
     // Add line and points when there are old positions
     if (positions.length > 1) {

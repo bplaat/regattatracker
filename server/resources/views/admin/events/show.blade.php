@@ -72,8 +72,8 @@
 
     <div class="box content">
         <h1 class="title is-spaced is-4">@lang('admin/events.show.finishes')</h1>
-        @if ($event->finishes()->count() > 0)
-            @foreach ($event->finishes() as $finish)
+        @if ($event->finishes->count() > 0)
+            @foreach ($event->finishes as $finish)
                 <div class="box content">
                     <h1 class="title is-spaced is-4">@lang('admin/events.show.finishes.finish', ['finish.id' => $finish->id])</h1>
                     <p>@lang('admin/events.show.finishes.create.point_a'): {{$finish->latitude_a}},{{$finish->longitude_a}}</p>
@@ -86,7 +86,7 @@
                     </div>
                 </div>
             @endforeach
-        @elseif ($event->finishes()->count() == 0)
+        @elseif ($event->finishes->count() == 0)
             @lang('admin/events.show.finishes.empty')
         @endif
     </div>

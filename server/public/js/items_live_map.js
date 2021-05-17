@@ -9,6 +9,14 @@ function isDarkModeEnabled() {
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
+const map = new mapboxgl.Map({
+    container: 'map-container',
+    style: isDarkModeEnabled() ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10',
+    center: [5.45, 52.3],
+    zoom: 6,
+    attributionControl: false
+});
+
 const allPositions = boats.map(boat => boat.positions[0])
     .concat(buoys.map(buoy => buoy.positions[0]))
     .map(position => [position.longitude, position.latitude ]);
@@ -16,14 +24,12 @@ const allPositions = boats.map(boat => boat.positions[0])
 const bounds = allPositions.reduce(function (bounds, position) {
     return bounds.extend(position);
 }, new mapboxgl.LngLatBounds(allPositions[0], allPositions[0]));
+map.fitBounds(bounds, { animate: false, padding: 50 });
 
-const map = new mapboxgl.Map({
-    container: 'map-container',
-    style: isDarkModeEnabled() ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10',
-    bounds: bounds,
-    attributionControl: false
-});
+map.addControl(new mapboxgl.ScaleControl(), 'bottom-left');
 map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+map.addControl(new mapboxgl.GeolocateControl(), 'bottom-right');
+map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 
 function mapMouseEnter(event) {
     map.getCanvas().style.cursor = 'pointer';
