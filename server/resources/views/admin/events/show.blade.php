@@ -5,9 +5,6 @@
 @section('head')
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css"/>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
-    @if (config('app.debug'))
-        <style>.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl{display:none!important}</style>
-    @endif
 @endsection
 
 @section('content')
@@ -46,15 +43,10 @@
     </div>
 
     <div class="box content">
-        <h1 class="title is-spaced is-4">@lang('admin/events.show.path')</h1>
+        <h1 class="title is-spaced is-4">@lang('admin/events.show.map')</h1>
 
-        <div class="box" style="position: relative; padding-top: 45%; background-color: #191a1a; overflow: hidden;">
+        <div class="box" style="position: relative; padding-top: 50%; background-color: #191a1a; overflow: hidden;">
             <div id="map-container" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
-        </div>
-
-        <div class="buttons is-centered">
-            <button id="add-button" class="button is-link">@lang('admin/events.show.path_add_button')</button>
-            <button id="save-button" class="button is-success">@lang('admin/events.show.path_save_button')</button>
         </div>
 
         <script>
@@ -64,11 +56,15 @@
                 apiToken: @json(Auth::user()->apiToken()),
                 mapboxAccessToken: @json(config('mapbox.access_token')),
                 event: @json($event),
-                path: JSON.parse(@json($event->path)),
-                link: @json(route('api.events.update', $event))
+                link: @json(route('api.events.update', $event)),
+                strings: {
+                    add_point: @json(__('admin/events.show.add_point_button')),
+                    add_finish: @json(__('admin/events.show.add_finish_button')),
+                    save: @json(__('admin/events.show.save_button'))
+                }
             };
         </script>
-        <script src="/js/event_path_map.js"></script>
+        <script src="/js/event_map.js"></script>
     </div>
 
     <div class="box content">

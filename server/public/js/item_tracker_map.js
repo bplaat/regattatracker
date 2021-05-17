@@ -99,6 +99,9 @@ function updateMapItems() {
                 )
                 .addTo(map);
         });
+
+        map.on('mouseenter', 'current_position_point', mapMouseEnter);
+        map.on('mouseleave', 'current_position_point', mapMouseLeave);
     }
 
     if (positions.length > 1) {
@@ -180,9 +183,6 @@ function updateMapItems() {
                     'line-width': 4
                 }
             }, 'old_position_points');
-
-            map.on('mouseenter', 'current_position_point', mapMouseEnter);
-            map.on('mouseleave', 'current_position_point', mapMouseLeave);
         }
     }
 }
