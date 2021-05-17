@@ -48,6 +48,10 @@ class AdminEventController extends Controller
 
     // Admin events show route
     public function show(Event $event) {
+        // Get all the events finishes
+        $event->finishes;
+
+        // Return the admin event show page
         return view('admin.events.show', ['event' => $event]);
     }
 

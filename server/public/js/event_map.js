@@ -7,9 +7,13 @@ const link = window.data.link;
 const strings = window.data.strings;
 
 let pointIdCounter = 1;
-const path = JSON.parse(event.path).map(point => ({ id: pointIdCounter++, lat: point[0], lng: point[1] }));
+let path = JSON.parse(event.path).map(point => ({ id: pointIdCounter++, lat: point[0], lng: point[1] }));
 let selectedPointId = undefined;
 let selectedPointPopup = undefined;
+
+const finishes = event.finishes;
+
+console.log(finishes);
 
 class EditorButtonsControl {
     onAdd(map) {
@@ -29,6 +33,12 @@ class EditorButtonsControl {
                 </svg>
             </button>
 
+            <button type="button" title="${strings.delete}">
+                <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                </svg>
+            </button>
+
             <button type="button" title="${strings.save}">
                 <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" />
@@ -37,7 +47,8 @@ class EditorButtonsControl {
         `;
         this._container.children[0].addEventListener('click', this.addPoint);
         this._container.children[1].addEventListener('click', this.addFinish);
-        this._container.children[2].addEventListener('click', this.save);
+        this._container.children[2].addEventListener('click', this.delete);
+        this._container.children[3].addEventListener('click', this.save);
         return this._container;
     }
 
@@ -56,7 +67,7 @@ class EditorButtonsControl {
                 const point = path[i];
                 if (point.id == selectedPointId) {
                     const newId = pointIdCounter++;
-                    path.splice(i + 1, 0, { id: newId, lat: point.lat - 0.0001, lng: point.lng });
+                    path.splice(i + 1, 0, { id: newId, lat: point.lat, lng: point.lng });
                     selectedPointId = newId;
                     break;
                 }
@@ -71,6 +82,17 @@ class EditorButtonsControl {
 
     addFinish() {
         alert('Todo!');
+    }
+
+    delete() {
+        if (selectedPointId != undefined) {
+            if (selectedPointPopup != undefined) {
+                selectedPointPopup.remove();
+            }
+            path = path.filter(point => point.id != selectedPointId);
+            selectedPointId = undefined;
+            updateMapItems();
+        }
     }
 
     save() {
