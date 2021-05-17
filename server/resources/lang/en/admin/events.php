@@ -37,6 +37,8 @@ return [
     'show.add_point_button' => 'Add point',
     'show.add_finish_button' => 'Add finish',
     'show.save_button' => 'Save',
+    'show.latitude' => 'Latitude',
+    'show.longitude' => 'Longitude',
 
     'show.finishes' => 'Finishes',
     'show.finishes.finish' => 'Finish :finish.id',

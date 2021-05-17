@@ -9,6 +9,7 @@ const strings = window.data.strings;
 let pointIdCounter = 1;
 const path = JSON.parse(event.path).map(point => ({ id: pointIdCounter++, lat: point[0], lng: point[1] }));
 let selectedPointId = undefined;
+let selectedPointPopup = undefined;
 
 class EditorButtonsControl {
     onAdd(map) {
@@ -193,6 +194,37 @@ function updateMapItems() {
             }
         });
 
+        map.on('dblclick', 'path_selected_point', function (event) {
+            event.preventDefault();
+
+            const point = path.find(point => point.id == selectedPointId);
+
+            selectedPointPopup = new mapboxgl.Popup()
+                .setLngLat([point.lng, point.lat])
+                .setHTML(`
+                    <label>${strings.latitude}:</label>
+                    <input value="${point.lat}">
+                    <label>${strings.longitude}:</label>
+                    <input value="${point.lng}">
+                `)
+                .on('close', () => {
+                    selectedPointPopup = undefined;
+                })
+                .addTo(map);
+
+            const content = selectedPointPopup.getElement().children[1];
+            content.children[1].addEventListener('change', event => {
+                const point = path.find(point => point.id == selectedPointId);
+                point.lat = parseFloat(event.target.value);
+                updateMapItems();
+            });
+            content.children[3].addEventListener('change', event => {
+                const point = path.find(point => point.id == selectedPointId);
+                point.lng = parseFloat(event.target.value);
+                updateMapItems();
+            });
+        });
+
         map.on('mouseenter', 'path_selected_point', pointMouseEnter);
         map.on('mouseleave', 'path_selected_point', pointMouseLeave);
         map.on('mousedown', 'path_selected_point', pointMouseDown);
@@ -262,6 +294,16 @@ function updateMapItems() {
                 'line-width': 4
             }
         }, 'path_points');
+    }
+
+    // Selected point popup
+    if (selectedPointPopup != undefined) {
+        const point = path.find(point => point.id == selectedPointId);
+        selectedPointPopup.setLngLat([point.lng, point.lat]);
+
+        const content = selectedPointPopup.getElement().children[1];
+        content.children[1].value = point.lat;
+        content.children[3].value = point.lng;
     }
 }
 
