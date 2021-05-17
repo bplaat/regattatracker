@@ -13,7 +13,7 @@ class ApiTest extends TestCase
     var $apiKey = '25977eb7e1be7986a17be02b7443eb15';
 
     /**
-     * A basic feature test example.
+     * A feature test for API authentication.
      *
      * @return void
      */
@@ -34,7 +34,7 @@ class ApiTest extends TestCase
 
 
     /**
-     * A basic feature test example.
+     * A feature test for retrieving all boats with the API.
      *
      * @return void
      */
@@ -57,7 +57,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * A feature test for retrieving a singular boats with the API.
      *
      * @return void
      */
@@ -80,7 +80,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * A feature test for retrieving the position of a boat with the API.
      *
      * @return void
      */
@@ -100,7 +100,7 @@ class ApiTest extends TestCase
 
 
     /**
-     * A basic feature test example.
+     * A feature test for retrieving all buoys with the API.
      *
      * @return void
      */
@@ -116,7 +116,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * A feature test for retrieving a singular buoy with the API.
      *
      * @return void
      */
@@ -132,7 +132,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * A feature test for retrieving the position of a buoy with the API.
      *
      * @return void
      */
