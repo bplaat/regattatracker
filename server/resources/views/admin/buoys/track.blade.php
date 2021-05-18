@@ -3,8 +3,8 @@
 @section('title', __('admin/buoys.track.title', ['buoy.name' => $buoy->name]))
 
 @section('head')
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" />
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+    <link rel="stylesheet" href="/css/mapbox-gl.css" />
+    <script src="/js/mapbox-gl.js"></script>
 @endsection
 
 @section('content')
