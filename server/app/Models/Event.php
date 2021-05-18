@@ -13,7 +13,12 @@ class Event extends Model
         'name',
         'start',
         'end',
+        'connected',
         'path'
+    ];
+
+    protected $casts = [
+        'connected' => 'boolean'
     ];
 
     // An event belongs to many classes.

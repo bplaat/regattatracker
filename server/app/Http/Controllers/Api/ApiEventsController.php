@@ -14,6 +14,7 @@ class ApiEventsController extends Controller
     {
         // Validate input
         $validation = Validator::make($request->all(), [
+            'connected' => 'required|boolean',
             'path' => 'required|json'
         ]);
         if ($validation->fails()) {
@@ -22,6 +23,7 @@ class ApiEventsController extends Controller
 
         // Create buoy position
         $event->update([
+            'connected' => request('connected'),
             'path' => request('path')
         ]);
 

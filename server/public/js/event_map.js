@@ -13,11 +13,10 @@ let selectedPointPopup = undefined;
 
 const finishes = event.finishes;
 
-console.log(finishes);
-
 class EditorButtonsControl {
     onAdd(map) {
         this._map = map;
+
         this._container = document.createElement('div');
         this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
         this._container.innerHTML = `
@@ -33,16 +32,36 @@ class EditorButtonsControl {
                 </svg>
             </button>
 
+            <button type="button"></button>
+
             <button type="button" title="${strings.save_button}">
                 <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" />
                 </svg>
             </button>
         `;
-        this._container.children[0].addEventListener('click', this.addPoint);
-        this._container.children[1].addEventListener('click', this.addFinish);
-        this._container.children[2].addEventListener('click', this.save);
+        this.updateItems();
+
+        this._container.children[0].addEventListener('click', this.addPoint.bind(this));
+        this._container.children[1].addEventListener('click', this.addFinish.bind(this));
+        this._container.children[2].addEventListener('click', this.toggleConnected.bind(this));
+        this._container.children[3].addEventListener('click', this.save.bind(this));
+
         return this._container;
+    }
+
+    updateItems() {
+        if (event.connected) {
+            this._container.children[2].title = strings.disconnect_button;
+            this._container.children[2].innerHTML = `<svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M10.59,13.41C11,13.8 11,14.44 10.59,14.83C10.2,15.22 9.56,15.22 9.17,14.83C7.22,12.88 7.22,9.71 9.17,7.76V7.76L12.71,4.22C14.66,2.27 17.83,2.27 19.78,4.22C21.73,6.17 21.73,9.34 19.78,11.29L18.29,12.78C18.3,11.96 18.17,11.14 17.89,10.36L18.36,9.88C19.54,8.71 19.54,6.81 18.36,5.64C17.19,4.46 15.29,4.46 14.12,5.64L10.59,9.17C9.41,10.34 9.41,12.24 10.59,13.41M13.41,9.17C13.8,8.78 14.44,8.78 14.83,9.17C16.78,11.12 16.78,14.29 14.83,16.24V16.24L11.29,19.78C9.34,21.73 6.17,21.73 4.22,19.78C2.27,17.83 2.27,14.66 4.22,12.71L5.71,11.22C5.7,12.04 5.83,12.86 6.11,13.65L5.64,14.12C4.46,15.29 4.46,17.19 5.64,18.36C6.81,19.54 8.71,19.54 9.88,18.36L13.41,14.83C14.59,13.66 14.59,11.76 13.41,10.59C13,10.2 13,9.56 13.41,9.17Z" />
+            </svg>`;
+        } else {
+            this._container.children[2].title = strings.connect_button;
+            this._container.children[2].innerHTML = `<svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M2,5.27L3.28,4L20,20.72L18.73,22L13.9,17.17L11.29,19.78C9.34,21.73 6.17,21.73 4.22,19.78C2.27,17.83 2.27,14.66 4.22,12.71L5.71,11.22C5.7,12.04 5.83,12.86 6.11,13.65L5.64,14.12C4.46,15.29 4.46,17.19 5.64,18.36C6.81,19.54 8.71,19.54 9.88,18.36L12.5,15.76L10.88,14.15C10.87,14.39 10.77,14.64 10.59,14.83C10.2,15.22 9.56,15.22 9.17,14.83C8.12,13.77 7.63,12.37 7.72,11L2,5.27M12.71,4.22C14.66,2.27 17.83,2.27 19.78,4.22C21.73,6.17 21.73,9.34 19.78,11.29L18.29,12.78C18.3,11.96 18.17,11.14 17.89,10.36L18.36,9.88C19.54,8.71 19.54,6.81 18.36,5.64C17.19,4.46 15.29,4.46 14.12,5.64L10.79,8.97L9.38,7.55L12.71,4.22M13.41,9.17C13.8,8.78 14.44,8.78 14.83,9.17C16.2,10.54 16.61,12.5 16.06,14.23L14.28,12.46C14.23,11.78 13.94,11.11 13.41,10.59C13,10.2 13,9.56 13.41,9.17Z" />
+            </svg>`;
+        }
     }
 
     onRemove() {
@@ -77,6 +96,12 @@ class EditorButtonsControl {
         alert('Todo!');
     }
 
+    toggleConnected() {
+        event.connected = !event.connected;
+        this.updateItems();
+        updateMapItems();
+    }
+
     save() {
         const xhr = new XMLHttpRequest();
         xhr.onload = () => {
@@ -86,7 +111,7 @@ class EditorButtonsControl {
         xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
         xhr.setRequestHeader('Authorization', 'Bearer ' + apiToken);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.send('api_key=' + apiKey + '&path=' + JSON.stringify(path.map(point => [point.lat, point.lng])));
+        xhr.send('api_key=' + apiKey + '&connected=' + (event.connected ? 1 : 0) + '&path=' + JSON.stringify(path.map(point => [point.lat, point.lng])));
     }
 }
 
@@ -363,7 +388,7 @@ function updateMapItems() {
         type: 'Feature',
         geometry: {
             type: 'LineString',
-            coordinates: path.map(point => [point.lng, point.lat])
+            coordinates: (event.connected ? path.concat([path[0]]) : path).map(point => [point.lng, point.lat])
         }
     };
 

@@ -60,6 +60,8 @@
                 strings: {
                     add_point_button: @json(__('admin/events.show.add_point_button')),
                     add_finish_button: @json(__('admin/events.show.add_finish_button')),
+                    connect_button: @json(__('admin/events.show.connect_button')),
+                    disconnect_button: @json(__('admin/events.show.disconnect_button')),
                     save_button: @json(__('admin/events.show.save_button')),
                     latitude: @json(__('admin/events.show.latitude')),
                     longitude: @json(__('admin/events.show.longitude')),
