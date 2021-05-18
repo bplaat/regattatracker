@@ -21,25 +21,19 @@ class EditorButtonsControl {
         this._container = document.createElement('div');
         this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
         this._container.innerHTML = `
-            <button type="button" title="${strings.add_point}">
+            <button type="button" title="${strings.add_point_button}">
                 <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M9,11.5A2.5,2.5 0 0,0 11.5,9A2.5,2.5 0 0,0 9,6.5A2.5,2.5 0 0,0 6.5,9A2.5,2.5 0 0,0 9,11.5M9,2C12.86,2 16,5.13 16,9C16,14.25 9,22 9,22C9,22 2,14.25 2,9A7,7 0 0,1 9,2M15,17H18V14H20V17H23V19H20V22H18V19H15V17Z" />
                 </svg>
             </button>
 
-            <button type="button" title="${strings.add_finish}">
+            <button type="button" title="${strings.add_finish_button}">
                 <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M17,14H19V17H22V19H19V22H17V19H14V17H17V14M12.4,5H18V12C15.78,12 13.84,13.21 12.8,15H11L10.6,13H5V20H3V3H12L12.4,5Z" />
                 </svg>
             </button>
 
-            <button type="button" title="${strings.delete}">
-                <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
-                </svg>
-            </button>
-
-            <button type="button" title="${strings.save}">
+            <button type="button" title="${strings.save_button}">
                 <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" />
                 </svg>
@@ -47,8 +41,7 @@ class EditorButtonsControl {
         `;
         this._container.children[0].addEventListener('click', this.addPoint);
         this._container.children[1].addEventListener('click', this.addFinish);
-        this._container.children[2].addEventListener('click', this.delete);
-        this._container.children[3].addEventListener('click', this.save);
+        this._container.children[2].addEventListener('click', this.save);
         return this._container;
     }
 
@@ -82,17 +75,6 @@ class EditorButtonsControl {
 
     addFinish() {
         alert('Todo!');
-    }
-
-    delete() {
-        if (selectedPointId != undefined) {
-            if (selectedPointPopup != undefined) {
-                selectedPointPopup.remove();
-            }
-            path = path.filter(point => point.id != selectedPointId);
-            selectedPointId = undefined;
-            updateMapItems();
-        }
     }
 
     save() {
@@ -294,18 +276,17 @@ function updateMapItems() {
             }
         }, 'finish_lines');
 
-        map.on('dblclick', 'path_selected_point', function (event) {
-            event.preventDefault();
-
+        map.on('contextmenu', 'path_selected_point', function (event) {
             const point = path.find(point => point.id == selectedPointId);
 
             selectedPointPopup = new mapboxgl.Popup()
                 .setLngLat([point.lng, point.lat])
                 .setHTML(`
                     <label>${strings.latitude}:</label>
-                    <input value="${point.lat}">
+                    <input value="${point.lat}" style="margin-bottom: 8px;">
                     <label>${strings.longitude}:</label>
-                    <input value="${point.lng}">
+                    <input value="${point.lng}" style="margin-bottom: 8px;">
+                    <button>${strings.delete_button}</button>
                 `)
                 .on('close', () => {
                     selectedPointPopup = undefined;
@@ -313,14 +294,24 @@ function updateMapItems() {
                 .addTo(map);
 
             const content = selectedPointPopup.getElement().children[1];
+
             content.children[1].addEventListener('change', event => {
                 const point = path.find(point => point.id == selectedPointId);
                 point.lat = parseFloat(event.target.value);
                 updateMapItems();
             });
+
             content.children[3].addEventListener('change', event => {
                 const point = path.find(point => point.id == selectedPointId);
                 point.lng = parseFloat(event.target.value);
+                updateMapItems();
+            });
+
+            content.children[4].addEventListener('click', event => {
+                selectedPointPopup.remove();
+
+                path = path.filter(point => point.id != selectedPointId);
+                selectedPointId = undefined;
                 updateMapItems();
             });
         });

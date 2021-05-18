@@ -58,12 +58,12 @@
                 event: @json($event),
                 link: @json(route('api.events.update', $event)),
                 strings: {
-                    add_point: @json(__('admin/events.show.add_point_button')),
-                    add_finish: @json(__('admin/events.show.add_finish_button')),
-                    delete: @json(__('admin/events.show.delete_button')),
-                    save: @json(__('admin/events.show.save_button')),
+                    add_point_button: @json(__('admin/events.show.add_point_button')),
+                    add_finish_button: @json(__('admin/events.show.add_finish_button')),
+                    save_button: @json(__('admin/events.show.save_button')),
                     latitude: @json(__('admin/events.show.latitude')),
                     longitude: @json(__('admin/events.show.longitude')),
+                    delete_button: @json(__('admin/events.show.delete_button'))
                 }
             };
         </script>
