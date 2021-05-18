@@ -9,7 +9,6 @@ use Tests\TestCase;
 
 class ApiTest extends TestCase
 {
-
     var $apiKey = '25977eb7e1be7986a17be02b7443eb15';
 
     /**
@@ -19,7 +18,6 @@ class ApiTest extends TestCase
      */
     public function test_auth()
     {
-
         $email = 'giel.gielens@example.com';
         $password = 'gielgielens';
 
@@ -30,9 +28,6 @@ class ApiTest extends TestCase
             ->assertJson(['token' => true]);
     }
 
-
-
-
     /**
      * A feature test for retrieving all boats with the API.
      *
@@ -40,7 +35,6 @@ class ApiTest extends TestCase
      */
     public function test_boats()
     {
-
         $response = $this->get("/api/boats?api_key={$this->apiKey}");
 
         $response
@@ -63,7 +57,6 @@ class ApiTest extends TestCase
      */
     public function test_boat()
     {
-
         $response = $this->get("/api/boats/1?api_key={$this->apiKey}");
 
         $response
@@ -94,10 +87,7 @@ class ApiTest extends TestCase
             ->assertJsonPath('data.0.boat_id',1)
             ->assertJsonPath('data.0.latitude','50.00000000')
             ->assertJsonPath('data.0.longitude','60.00000000');
-
-
     }
-
 
     /**
      * A feature test for retrieving all buoys with the API.
@@ -146,7 +136,5 @@ class ApiTest extends TestCase
             ->assertJsonPath('data.0.buoy_id',1)
             ->assertJsonPath('data.0.latitude','10.00000000')
             ->assertJsonPath('data.0.longitude','20.00000000');
-
-
     }
 }
