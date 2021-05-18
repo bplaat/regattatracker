@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\ApiBoatUsersController;
 use App\Http\Controllers\Api\ApiBuoysController;
 use App\Http\Controllers\Api\ApiBuoyPositionsController;
 
+use App\Http\Controllers\Api\ApiEventsController;
+
 use Illuminate\Support\Facades\Route;
 
 // API home route
@@ -43,6 +45,9 @@ Route::middleware('api_key')->group(function () {
     Route::get('buoys/{buoy}/positions/{buoyPosition}/delete', [ApiBuoyPositionsController::class, 'delete']);
     Route::get('buoys/{buoy}/positions/{buoyPosition}', [ApiBuoyPositionsController::class, 'show']);
     Route::post('buoys/{buoy}/positions/{buoyPosition}', [ApiBuoyPositionsController::class, 'update']);
+
+    // API events routes
+    Route::post('events/{event}', [ApiEventsController::class, 'update'])->name('api.events.update');
 
     // API auth routes
     Route::get('auth/logout', [ApiAuthController::class, 'logout']);

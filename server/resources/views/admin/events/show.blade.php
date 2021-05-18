@@ -2,6 +2,11 @@
 
 @section('title', __('admin/events.show.title', ['event.name' => $event->name]))
 
+@section('head')
+    <link rel="stylesheet" href="/css/mapbox-gl.css"/>
+    <script src="/js/mapbox-gl.js"></script>
+@endsection
+
 @section('content')
     <div class="breadcrumb">
         <ul>
@@ -38,9 +43,39 @@
     </div>
 
     <div class="box content">
+        <h1 class="title is-spaced is-4">@lang('admin/events.show.map')</h1>
+
+        <div class="box" style="position: relative; padding-top: 50%; background-color: #191a1a; overflow: hidden;">
+            <div id="map-container" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+        </div>
+
+        <script>
+            window.data = {
+                csrfToken: @json(csrf_token()),
+                apiKey: @json(App\Models\ApiKey::where('name', 'Website')->first()->key),
+                apiToken: @json(Auth::user()->apiToken()),
+                mapboxAccessToken: @json(config('mapbox.access_token')),
+                event: @json($event),
+                link: @json(route('api.events.update', $event)),
+                strings: {
+                    add_point_button: @json(__('admin/events.show.add_point_button')),
+                    add_finish_button: @json(__('admin/events.show.add_finish_button')),
+                    connect_button: @json(__('admin/events.show.connect_button')),
+                    disconnect_button: @json(__('admin/events.show.disconnect_button')),
+                    save_button: @json(__('admin/events.show.save_button')),
+                    latitude: @json(__('admin/events.show.latitude')),
+                    longitude: @json(__('admin/events.show.longitude')),
+                    delete_button: @json(__('admin/events.show.delete_button'))
+                }
+            };
+        </script>
+        <script src="/js/event_map.js"></script>
+    </div>
+
+    <div class="box content">
         <h1 class="title is-spaced is-4">@lang('admin/events.show.finishes')</h1>
-        @if($event->finishes()->count() > 0)
-            @foreach($event->finishes() as $finish)
+        @if ($event->finishes->count() > 0)
+            @foreach ($event->finishes as $finish)
                 <div class="box content">
                     <h1 class="title is-spaced is-4">@lang('admin/events.show.finishes.finish', ['finish.id' => $finish->id])</h1>
                     <p>@lang('admin/events.show.finishes.create.point_a'): {{$finish->latitude_a}},
@@ -55,11 +90,9 @@
                     </div>
                 </div>
             @endforeach
-        @elseif($event->finishes()->count() == 0)
+        @elseif ($event->finishes->count() == 0)
             @lang('admin/events.show.finishes.empty')
         @endif
-
-
     </div>
 
     <div class="box content">
@@ -83,6 +116,7 @@
                            value="{{ old('longitude_a') }}" required>
                 </div>
             </div>
+
             <p>@lang('admin/events.show.finishes.create.point_b')</p>
             <div class="field has-addons">
                 <div class="control">

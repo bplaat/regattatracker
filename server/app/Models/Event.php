@@ -10,19 +10,27 @@ class Event extends Model
     use HasFactory;
 
     protected $fillable = [
-      'name',
-      'start',
-      'end'
+        'name',
+        'start',
+        'end',
+        'connected',
+        'path'
+    ];
+
+    protected $casts = [
+        'connected' => 'boolean'
     ];
 
     // An event belongs to many classes.
-    public function classes() {
-        return EventClass::all()->where('event_id', '=', $this->id);
+    public function classes()
+    {
+        return $this->belongsToMany(EventClass::class);
     }
 
     // An event belongs to many finishes.
-    public function finishes() {
-        return Finish::all()->where('event_id', '=', $this->id);
+    public function finishes()
+    {
+        return $this->hasMany(Finish::class);
     }
 
     // Search by a query.

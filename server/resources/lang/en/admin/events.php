@@ -33,6 +33,16 @@ return [
     'show.edit' => 'Edit',
     'show.delete' => 'Delete',
 
+    'show.map' => 'Event map',
+    'show.add_point_button' => 'Add point',
+    'show.add_finish_button' => 'Add finish',
+    'show.connect_button' => 'Connect points path',
+    'show.disconnect_button' => 'Disconnect points path',
+    'show.save_button' => 'Save',
+    'show.latitude' => 'Latitude',
+    'show.longitude' => 'Longitude',
+    'show.delete_button' => 'Delete',
+
     'show.finishes' => 'Finishes',
     'show.finishes.finish' => 'Finish :finish.id',
     'show.finishes.edit' => 'Edit',
