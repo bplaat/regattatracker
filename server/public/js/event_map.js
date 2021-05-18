@@ -120,7 +120,7 @@ const map = new mapboxgl.Map({
     attributionControl: false
 });
 
-if (path.length > 0) {
+if (path.length > 0 || finishes.length > 0) {
     const points = path.map(point => [point.lng, point.lat])
         .concat(finishes.map(finish => [finish.longitude_a, finish.latitude_a]))
         .concat(finishes.map(finish => [finish.longitude_b, finish.latitude_b]));
