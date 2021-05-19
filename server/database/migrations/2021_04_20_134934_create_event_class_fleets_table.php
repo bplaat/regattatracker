@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFleetsTable extends Migration
+class CreateEventClassFleetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateFleetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('fleets', function (Blueprint $table) {
+        Schema::create('event_class_fleets', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->unsignedBigInteger('event_class_id');
+            $table->string('name');
             $table->timestamps();
 
             $table->foreign('event_class_id')
@@ -33,6 +33,6 @@ class CreateFleetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fleets');
+        Schema::dropIfExists('event_class_fleets');
     }
 }

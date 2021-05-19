@@ -30,7 +30,7 @@ class AdminEventController extends Controller
     {
         // Validate input
         $fields = $request->validate([
-            'name' => 'required|min:2|max:255',
+            'name' => 'required|min:2|max:48',
             'start_date' => 'nullable|date_format:Y-m-d',
             'end_date' => 'nullable|date_format:Y-m-d',
         ]);
@@ -49,10 +49,17 @@ class AdminEventController extends Controller
     // Admin events show route
     public function show(Event $event) {
         // Get all the events finishes
-        $event->finishes;
+        $eventFinishes = $event->finishes->paginate(config('pagination.web.limit'))->withQueryString();
+
+        // Get all the events classes
+        $eventClasses = $event->classes->paginate(config('pagination.web.limit'))->withQueryString();
 
         // Return the admin event show page
-        return view('admin.events.show', ['event' => $event]);
+        return view('admin.events.show', [
+            'event' => $event,
+            'eventFinishes' => $eventFinishes,
+            'eventClasses' => $eventClasses
+        ]);
     }
 
     // Admin events edit route
@@ -64,7 +71,7 @@ class AdminEventController extends Controller
     public function update(Request $request, Event $event) {
         // Validate input
         $fields = $request->validate([
-            'name' => 'required|min:2|max:255',
+            'name' => 'required|min:2|max:48',
             'start_date' => 'nullable|date_format:Y-m-d',
             'end_date' => 'nullable|date_format:Y-m-d',
         ]);

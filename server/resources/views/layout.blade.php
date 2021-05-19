@@ -51,14 +51,14 @@
 
                             @if (Auth::user()->role == App\Models\User::ROLE_ADMIN)
                                 <div class="navbar-item has-dropdown is-hoverable">
-                                    <a class="navbar-link is-arrowless" href="{{ route('admin.home') }}">@lang('layout.header.admin.home')</a>
+                                    <a class="navbar-link is-arrowless" href="{{ route('admin.home') }}">@lang('layout.header.admin_home')</a>
                                     <div class="navbar-dropdown">
-                                        <a class="navbar-item" href="{{ route('admin.users.index') }}">@lang('layout.header.admin.users')</a>
-                                        <a class="navbar-item" href="{{ route('admin.api_keys.index') }}">@lang('layout.header.admin.api_keys')</a>
-                                        <a class="navbar-item" href="{{ route('admin.boats.index') }}">@lang('layout.header.admin.boats')</a>
-                                        <a class="navbar-item" href="{{ route('admin.boat_types.index') }}">@lang('layout.header.admin.boat_types')</a>
-                                        <a class="navbar-item" href="{{ route('admin.buoys.index') }}">@lang('layout.header.admin.buoys')</a>
-                                        <a class="navbar-item" href="{{ route('admin.events.index') }}">@lang('layout.header.admin.events')</a>
+                                        <a class="navbar-item" href="{{ route('admin.users.index') }}">@lang('layout.header.admin_users')</a>
+                                        <a class="navbar-item" href="{{ route('admin.api_keys.index') }}">@lang('layout.header.admin_api_keys')</a>
+                                        <a class="navbar-item" href="{{ route('admin.boats.index') }}">@lang('layout.header.admin_boats')</a>
+                                        <a class="navbar-item" href="{{ route('admin.boat_types.index') }}">@lang('layout.header.admin_boat_types')</a>
+                                        <a class="navbar-item" href="{{ route('admin.buoys.index') }}">@lang('layout.header.admin_buoys')</a>
+                                        <a class="navbar-item" href="{{ route('admin.events.index') }}">@lang('layout.header.admin_events')</a>
                                     </div>
                                 </div>
                             @endif

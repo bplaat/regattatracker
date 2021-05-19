@@ -27,7 +27,7 @@
             </div>
 
             @error('name')
-            <p class="help is-danger">{{ $errors->first('name') }}</p>
+                <p class="help is-danger">{{ $errors->first('name') }}</p>
             @enderror
         </div>
 
@@ -42,7 +42,7 @@
                     </div>
 
                     @error('start_date')
-                    <p class="help is-danger">{{ $errors->first('start_date') }}</p>
+                        <p class="help is-danger">{{ $errors->first('start_date') }}</p>
                     @enderror
                 </div>
             </div>
@@ -56,7 +56,7 @@
                     </div>
 
                     @error('end_date')
-                    <p class="help is-danger">{{ $errors->first('end_date') }}</p>
+                        <p class="help is-danger">{{ $errors->first('end_date') }}</p>
                     @enderror
                 </div>
             </div>
@@ -64,7 +64,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" type="submit">@lang('admin/events.create.button')</button>
+                <button class="button is-link" type="submit">@lang('admin/events.create.create_button')</button>
             </div>
         </div>
     </form>

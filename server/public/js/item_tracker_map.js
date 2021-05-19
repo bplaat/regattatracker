@@ -93,13 +93,13 @@ function updateMapItems() {
 
             new mapboxgl.Popup()
                 .setLngLat([position.longitude, position.latitude])
-                .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + strings.title + ' #' + position.id + '</h3>' +
+                .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + strings.name.replace(':item_position.id', position.id) + '</h3>' +
                     '<div><b>' + strings.current + '</b></div>' +
                     '<div>' + strings.latitude + ': ' + position.latitude + '</div>' +
                     '<div>' + strings.longitude + ': ' + position.longitude + '</div>' +
                     '<div>' + strings.time + ': ' + new Date(position.created_at).toLocaleString('en-US') + '</div>' +
-                    '<div><a href="' + links.positionsPrefix + '/' + position.id + '/edit">' + strings.edit + '</a> ' +
-                        '<a href="' + links.positionsPrefix + '/' + position.id + '/delete">' + strings.delete + '</a></div>'
+                    '<div><a href="' + links.positionsPrefix + '/' + position.id + '/edit">' + strings.edit_button + '</a> ' +
+                        '<a href="' + links.positionsPrefix + '/' + position.id + '/delete">' + strings.delete_button + '</a></div>'
                 )
                 .addTo(map);
         });
@@ -144,12 +144,12 @@ function updateMapItems() {
 
                 new mapboxgl.Popup()
                     .setLngLat([position.longitude, position.latitude])
-                    .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + strings.title + ' #' + position.id + '</h3>' +
+                    .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + strings.name.replace(':item_position.id',  position.id) + '</h3>' +
                         '<div>' + strings.latitude + ': ' + position.latitude + '</div>' +
                         '<div>' + strings.longitude + ': ' + position.longitude + '</div>' +
                         '<div>' + strings.time + ': ' + new Date(position.created_at).toLocaleString('en-US') + '</div>' +
-                        '<div><a href="' + links.positionsPrefix + '/' + position.id + '/edit">' + strings.edit + '</a> ' +
-                            '<a href="' + links.positionsPrefix + '/' + position.id + '/delete">' + strings.delete + '</a></div>'
+                        '<div><a href="' + links.positionsPrefix + '/' + position.id + '/edit">' + strings.edit_button + '</a> ' +
+                            '<a href="' + links.positionsPrefix + '/' + position.id + '/delete">' + strings.delete_button + '</a></div>'
                     )
                     .addTo(map);
             });
@@ -216,8 +216,7 @@ function sendCurrentPosition(currentPosition) {
 }
 
 function updateText() {
-    timeLabel.textContent = strings.send_text_prefix + ' ' +
-        ((nextUpdateTime - Date.now()) / 1000).toFixed(0) + ' ' + strings.send_text_suffix;
+    timeLabel.textContent = strings.sending.replace(':seconds', ((nextUpdateTime - Date.now()) / 1000).toFixed(0));
 }
 
 map.on('load', () => {
@@ -233,7 +232,7 @@ map.on('load', () => {
                 isFirstTime = true;
                 trackButton.textContent = strings.stop_button;
                 timeLabel.style.display = 'inline-block';
-                timeLabel.textContent = strings.loading_text;
+                timeLabel.textContent = strings.loading;
 
                 geolocationWatch = navigator.geolocation.watchPosition(event => {
                     const currentPosition = { lat: event.coords.latitude, lng: event.coords.longitude };
@@ -271,7 +270,7 @@ map.on('load', () => {
                 clearInterval(textUpdateInterval);
             }
         } else {
-            alert(strings.error);
+            alert(strings.error_message);
         }
     });
 });

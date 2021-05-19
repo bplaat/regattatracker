@@ -73,6 +73,12 @@ class Boat extends Model
         return $this->belongsToMany(User::class)->withPivot('role')->withTimestamps();
     }
 
+    // A boat belongs to many event class fleets
+    public function eventClassFleets()
+    {
+        return $this->belongsToMany(EventClassFleet::class)->withTimestamps();
+    }
+
     // Search by a query
     public static function search($query)
     {

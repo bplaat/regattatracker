@@ -46,20 +46,19 @@
                 positionsPrefix: @json(route('boats.positions.store', $boat))
             },
             strings: {
-                title: @json(__('boats.track.map_title')),
+                name: @json(__('boats.track.map_name')),
                 current: @json(__('boats.track.map_current')),
                 latitude: @json(__('boats.track.map_latitude')),
                 longitude: @json(__('boats.track.map_longitude')),
                 time: @json(__('boats.track.map_time')),
-                edit: @json(__('boats.track.map_edit')),
-                delete: @json(__('boats.track.map_delete')),
+                edit_button: @json(__('boats.track.map_edit_button')),
+                delete_button: @json(__('boats.track.map_delete_button')),
 
                 start_button: @json(__('boats.track.start_button')),
                 stop_button: @json(__('boats.track.stop_button')),
-                loading_text: @json(__('boats.track.loading_text')),
-                send_text_prefix: @json(__('boats.track.send_text_prefix')),
-                send_text_suffix: @json(__('boats.track.send_text_suffix')),
-                error: @json(__('boats.track.error'))
+                loading: @json(__('boats.track.loading')),
+                sending: @json(__('boats.track.sending')),
+                error_message: @json(__('boats.track.error_message'))
             }
         };
     </script>

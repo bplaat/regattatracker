@@ -24,9 +24,9 @@
         @endif
 
         <div class="buttons">
-            <a class="button is-warning" href="{{ route('admin.buoys.track', $buoy) }}">@lang('admin/buoys.show.track')</a>
-            <a class="button is-link" href="{{ route('admin.buoys.edit', $buoy) }}">@lang('admin/buoys.show.edit')</a>
-            <a class="button is-danger" href="{{ route('admin.buoys.delete', $buoy) }}">@lang('admin/buoys.show.delete')</a>
+            <a class="button is-warning" href="{{ route('admin.buoys.track', $buoy) }}">@lang('admin/buoys.show.track_button')</a>
+            <a class="button is-link" href="{{ route('admin.buoys.edit', $buoy) }}">@lang('admin/buoys.show.edit_button')</a>
+            <a class="button is-danger" href="{{ route('admin.buoys.delete', $buoy) }}">@lang('admin/buoys.show.delete_button')</a>
         </div>
     </div>
 
@@ -46,13 +46,13 @@
                     positions: @json($buoyPositions),
                     link: @json(route('admin.buoys.positions.store', $buoy)),
                     strings: {
-                        title: @json(__('admin/buoys.show.positions_map_title')),
+                        name: @json(__('admin/buoys.show.positions_map_name')),
                         current: @json(__('admin/buoys.show.positions_map_current')),
                         latitude: @json(__('admin/buoys.show.positions_map_latitude')),
                         longitude: @json(__('admin/buoys.show.positions_map_longitude')),
                         time: @json(__('admin/buoys.show.positions_map_time')),
-                        edit: @json(__('admin/buoys.show.positions_map_edit')),
-                        delete: @json(__('admin/buoys.show.positions_map_delete')),
+                        edit_button: @json(__('admin/buoys.show.positions_map_edit_button')),
+                        delete_button: @json(__('admin/buoys.show.positions_map_delete_button')),
                     }
                 };
             </script>
@@ -65,21 +65,21 @@
             <div class="column">
                 @if ($buoy->positionsByDay($time - 24 * 60 * 60)->count() > 0)
                     <div class="buttons is-left">
-                        <a class="button" href="?day={{ date('Y-m-d', $time - 24 * 60 * 60) }}">@lang('admin/buoys.show.positions_previous')</a>
+                        <a class="button" href="?day={{ date('Y-m-d', $time - 24 * 60 * 60) }}">@lang('admin/buoys.show.positions_previous_button')</a>
                     </div>
                 @endif
             </div>
 
             <div class="column">
                 <div class="buttons is-centered">
-                    <a class="button is-disabled" href="?day={{ date('Y-m-d') }}">@lang('admin/buoys.show.positions_today')</a>
+                    <a class="button is-disabled" href="?day={{ date('Y-m-d') }}">@lang('admin/buoys.show.positions_today_button')</a>
                 </div>
             </div>
 
             <div class="column">
                 @if ($buoy->positionsByDay($time + 24 * 60 * 60)->count() > 0)
                     <div class="buttons is-right">
-                        <a class="button" href="?day={{ date('Y-m-d', $time + 24 * 60 * 60) }}">@lang('admin/buoys.show.positions_next')</a>
+                        <a class="button" href="?day={{ date('Y-m-d', $time + 24 * 60 * 60) }}">@lang('admin/buoys.show.positions_next_button')</a>
                     </div>
                 @endif
             </div>
@@ -92,13 +92,13 @@
                 <div class="field has-addons">
                     <div class="control">
                         <input class="input @error('latitude') is-danger @enderror" type="text" id="latitude" name="latitude"
-                            placeholder="@lang('admin/buoys.show.positions_latitude_field')"
+                            placeholder="@lang('admin/buoys.show.positions_latitude_placeholder')"
                             value="{{ old('latitude', count($buoyPositions) > 0 ? $buoyPositions[0]->latitude : '') }}" required>
                     </div>
 
                     <div class="control">
                         <input class="input @error('longitude') is-danger @enderror" type="text" id="longitude" name="longitude"
-                            placeholder="@lang('admin/buoys.show.positions_longitude_field')"
+                            placeholder="@lang('admin/buoys.show.positions_longitude_placeholder')"
                             value="{{ old('longitude', count($buoyPositions) > 0 ? $buoyPositions[0]->longitude : '') }}" required>
                     </div>
 

@@ -13,4 +13,9 @@ class BoatPosition extends Model
         'longitude',
         'created_at'
     ];
+
+    // A boat position belongs to an boat
+    public function boat() {
+        return $this->belongsTo(Boat::class);
+    }
 }

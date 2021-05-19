@@ -24,12 +24,12 @@
                 <span class="tag is-danger">@lang('admin/api_keys.show.level_no_auth')</span>
             @endif
         </p>
-        <p>@lang('admin/api_keys.show.key'): <code>{{ $apiKey->key }}</code></p>
-        <p>@lang('admin/api_keys.show.requests'): <strong>{{ $apiKey->requests }}</strong></p>
+        <p>@lang('admin/api_keys.show.key') <code>{{ $apiKey->key }}</code></p>
+        <p>@lang('admin/api_keys.show.requests') <strong>{{ $apiKey->requests }}</strong></p>
 
         <div class="buttons">
-            <a class="button is-link" href="{{ route('admin.api_keys.edit', $apiKey) }}">@lang('admin/api_keys.show.edit')</a>
-            <a class="button is-danger" href="{{ route('admin.api_keys.delete', $apiKey) }}">@lang('admin/api_keys.show.delete')</a>
+            <a class="button is-link" href="{{ route('admin.api_keys.edit', $apiKey) }}">@lang('admin/api_keys.show.edit_button')</a>
+            <a class="button is-danger" href="{{ route('admin.api_keys.delete', $apiKey) }}">@lang('admin/api_keys.show.delete_button')</a>
         </div>
     </div>
 @endsection

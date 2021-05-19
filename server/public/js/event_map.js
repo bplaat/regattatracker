@@ -13,6 +13,9 @@ let selectedPointPopup = undefined;
 
 const finishes = event.finishes;
 
+let finishesChanged = true;
+let pathChanged = true;
+
 class EditorButtonsControl {
     onAdd(map) {
         this._map = map;
@@ -89,12 +92,15 @@ class EditorButtonsControl {
             path.push({ id: pointIdCounter++, lat: center.lat, lng: center.lng });
         }
 
+        pathChanged = true;
         updateMapItems();
     }
 
     toggleConnected() {
         event.connected = !event.connected;
         this.updateItems();
+
+        pathChanged = true;
         updateMapItems();
     }
 
@@ -150,6 +156,8 @@ function pointOnMove(event) {
     const point = path.find(point => point.id == selectedPointId);
     point.lat = event.lngLat.lat;
     point.lng = event.lngLat.lng;
+
+    pathChanged = true;
     updateMapItems();
 }
 
@@ -167,6 +175,8 @@ function pointMouseDown(event) {
     event.preventDefault();
 
     selectedPointId = JSON.parse(map.queryRenderedFeatures(event.point)[0].properties.point).id;
+
+    pathChanged = true;
     updateMapItems();
 
     map.getCanvas().style.cursor = 'grab';
@@ -183,6 +193,8 @@ function pointTouchStart(event) {
     event.preventDefault();
 
     selectedPointId = JSON.parse(map.queryRenderedFeatures(event.point)[0].properties.point).id;
+
+    pathChanged = true;
     updateMapItems();
 
     map.on('touchmove', pointOnMove);
@@ -194,222 +206,238 @@ function pointTouchStart(event) {
 }
 
 function updateMapItems() {
-    // Finish points layer
-    const finishPoints = {
-        type: 'FeatureCollection',
-        features: finishes.map(finish => ({
-            type: 'Feature',
-            properties: {
-                finish: finish
-            },
-            geometry: {
-                type: 'Point',
-                coordinates: [finish.longitude_a, finish.latitude_a]
-            }
-        })).concat(finishes.map(finish => ({
-            type: 'Feature',
-            properties: {
-                finish: finish
-            },
-            geometry: {
-                type: 'Point',
-                coordinates: [finish.longitude_b, finish.latitude_b]
-            }
-        })))
-    };
+    // Finishes
+    if (finishesChanged) {
+        finishesChanged = false;
 
-    if (map.getSource('finish_points') != undefined) {
-        map.getSource('finish_points').setData(finishPoints);
-    } else {
-        map.addSource('finish_points', { type: 'geojson', data: finishPoints });
+        // Finish points layer
+        const finishPoints = {
+            type: 'FeatureCollection',
+            features: finishes.map(finish => ({
+                type: 'Feature',
+                properties: {
+                    finish: finish
+                },
+                geometry: {
+                    type: 'Point',
+                    coordinates: [finish.longitude_a, finish.latitude_a]
+                }
+            })).concat(finishes.map(finish => ({
+                type: 'Feature',
+                properties: {
+                    finish: finish
+                },
+                geometry: {
+                    type: 'Point',
+                    coordinates: [finish.longitude_b, finish.latitude_b]
+                }
+            })))
+        };
 
-        map.addLayer({
-            id: 'finish_points',
-            source: 'finish_points',
-            type: 'circle',
-            paint: {
-                'circle-color': '#ff0',
-                'circle-radius': 6
-            }
-        });
+        if (map.getSource('finish_points') != undefined) {
+            map.getSource('finish_points').setData(finishPoints);
+        } else {
+            map.addSource('finish_points', { type: 'geojson', data: finishPoints });
+
+            map.addLayer({
+                id: 'finish_points',
+                source: 'finish_points',
+                type: 'circle',
+                paint: {
+                    'circle-color': '#ff0',
+                    'circle-radius': 6
+                }
+            });
+        }
+
+        // Finish lines layer
+        const finishLines = {
+            type: 'FeatureCollection',
+            features: finishes.map(finish => ({
+                type: 'Feature',
+                geometry: {
+                    type: 'LineString',
+                    coordinates: [
+                        [finish.longitude_a, finish.latitude_a],
+                        [finish.longitude_b, finish.latitude_b]
+                    ]
+                }
+            }))
+        };
+
+        if (map.getSource('finish_lines') != undefined) {
+            map.getSource('finish_lines').setData(finishLines);
+        } else {
+            map.addSource('finish_lines', { type: 'geojson', data: finishLines });
+
+            map.addLayer({
+                id: 'finish_lines',
+                source: 'finish_lines',
+                type: 'line',
+                layout: {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                paint: {
+                    'line-color': '#ff0',
+                    'line-width': 4
+                }
+            }, 'finish_points');
+        }
     }
 
-    // Finish lines layer
-    const finishLines = {
-        type: 'FeatureCollection',
-        features: finishes.map(finish => ({
+    // Path
+    if (pathChanged) {
+        pathChanged = false;
+
+        // Path points layer
+        const pathSelectedPoint = {
+            type: 'FeatureCollection',
+            features: path.filter(point => point.id == selectedPointId).map(point => ({
+                type: 'Feature',
+                properties: {
+                    point: point
+                },
+                geometry: {
+                    type: 'Point',
+                    coordinates: [point.lng, point.lat]
+                }
+            }))
+        };
+
+        if (map.getSource('path_selected_point') != undefined) {
+            map.getSource('path_selected_point').setData(pathSelectedPoint);
+        } else {
+            map.addSource('path_selected_point', { type: 'geojson', data: pathSelectedPoint });
+
+            map.addLayer({
+                id: 'path_selected_point',
+                source: 'path_selected_point',
+                type: 'circle',
+                paint: {
+                    'circle-color': 'rgb(50, 148, 209)',
+                    'circle-radius': 10,
+                    'circle-stroke-width': 2,
+                    'circle-stroke-color': 'rgb(49, 206, 255)'
+                }
+            }, 'finish_lines');
+
+            map.on('contextmenu', 'path_selected_point', function (event) {
+                const point = path.find(point => point.id == selectedPointId);
+
+                selectedPointPopup = new mapboxgl.Popup()
+                    .setLngLat([point.lng, point.lat])
+                    .setHTML(`
+                        <label>${strings.latitude}:</label>
+                        <input value="${point.lat}" style="margin-bottom: 8px;">
+                        <label>${strings.longitude}:</label>
+                        <input value="${point.lng}" style="margin-bottom: 8px;">
+                        <button>${strings.delete_button}</button>
+                    `)
+                    .on('close', () => {
+                        selectedPointPopup = undefined;
+                    })
+                    .addTo(map);
+
+                const content = selectedPointPopup.getElement().children[1];
+
+                content.children[1].addEventListener('change', event => {
+                    const point = path.find(point => point.id == selectedPointId);
+                    point.lat = parseFloat(event.target.value);
+
+                    pathChanged = true;
+                    updateMapItems();
+                });
+
+                content.children[3].addEventListener('change', event => {
+                    const point = path.find(point => point.id == selectedPointId);
+                    point.lng = parseFloat(event.target.value);
+
+                    pathChanged = true;
+                    updateMapItems();
+                });
+
+                content.children[4].addEventListener('click', event => {
+                    selectedPointPopup.remove();
+
+                    path = path.filter(point => point.id != selectedPointId);
+                    selectedPointId = undefined;
+
+                    pathChanged = true;
+                    updateMapItems();
+                });
+            });
+
+            map.on('mouseenter', 'path_selected_point', pointMouseEnter);
+            map.on('mouseleave', 'path_selected_point', pointMouseLeave);
+            map.on('mousedown', 'path_selected_point', pointMouseDown);
+            map.on('touchstart', 'path_selected_point', pointTouchStart);
+        }
+
+        // Path points layer
+        const pathPoints = {
+            type: 'FeatureCollection',
+            features: path.filter(point => point.id != selectedPointId).map(point => ({
+                type: 'Feature',
+                properties: {
+                    point: point
+                },
+                geometry: {
+                    type: 'Point',
+                    coordinates: [point.lng, point.lat]
+                }
+            }))
+        };
+
+        if (map.getSource('path_points') != undefined) {
+            map.getSource('path_points').setData(pathPoints);
+        } else {
+            map.addSource('path_points', { type: 'geojson', data: pathPoints });
+
+            map.addLayer({
+                id: 'path_points',
+                source: 'path_points',
+                type: 'circle',
+                paint: {
+                    'circle-color': '#a2a2a2',
+                    'circle-radius': 6
+                }
+            }, 'path_selected_point');
+
+            map.on('mouseenter', 'path_points', pointMouseEnter);
+            map.on('mouseleave', 'path_points', pointMouseLeave);
+            map.on('mousedown', 'path_points', pointMouseDown);
+            map.on('touchstart', 'path_points', pointTouchStart);
+        }
+
+        // Path line layer
+        const pathLine = {
             type: 'Feature',
             geometry: {
                 type: 'LineString',
-                coordinates: [
-                    [finish.longitude_a, finish.latitude_a],
-                    [finish.longitude_b, finish.latitude_b]
-                ]
+                coordinates: path.length > 0 ? (event.connected ? path.concat([path[0]]) : path).map(point => [point.lng, point.lat]) : []
             }
-        }))
-    };
+        };
 
-    if (map.getSource('finish_lines') != undefined) {
-        map.getSource('finish_lines').setData(finishLines);
-    } else {
-        map.addSource('finish_lines', { type: 'geojson', data: finishLines });
+        if (map.getSource('path_line') != undefined) {
+            map.getSource('path_line').setData(pathLine);
+        } else {
+            map.addSource('path_line', { type: 'geojson', data: pathLine });
 
-        map.addLayer({
-            id: 'finish_lines',
-            source: 'finish_lines',
-            type: 'line',
-            layout: {
-                'line-join': 'round',
-                'line-cap': 'round'
-            },
-            paint: {
-                'line-color': '#ff0',
-                'line-width': 4
-            }
-        }, 'finish_points');
-    }
-
-    // Path points layer
-    const pathSelectedPoint = {
-        type: 'FeatureCollection',
-        features: path.filter(point => point.id == selectedPointId).map(point => ({
-            type: 'Feature',
-            properties: {
-                point: point
-            },
-            geometry: {
-                type: 'Point',
-                coordinates: [point.lng, point.lat]
-            }
-        }))
-    };
-
-    if (map.getSource('path_selected_point') != undefined) {
-        map.getSource('path_selected_point').setData(pathSelectedPoint);
-    } else {
-        map.addSource('path_selected_point', { type: 'geojson', data: pathSelectedPoint });
-
-        map.addLayer({
-            id: 'path_selected_point',
-            source: 'path_selected_point',
-            type: 'circle',
-            paint: {
-                'circle-color': 'rgb(50, 148, 209)',
-                'circle-radius': 10,
-                'circle-stroke-width': 2,
-                'circle-stroke-color': 'rgb(49, 206, 255)'
-            }
-        }, 'finish_lines');
-
-        map.on('contextmenu', 'path_selected_point', function (event) {
-            const point = path.find(point => point.id == selectedPointId);
-
-            selectedPointPopup = new mapboxgl.Popup()
-                .setLngLat([point.lng, point.lat])
-                .setHTML(`
-                    <label>${strings.latitude}:</label>
-                    <input value="${point.lat}" style="margin-bottom: 8px;">
-                    <label>${strings.longitude}:</label>
-                    <input value="${point.lng}" style="margin-bottom: 8px;">
-                    <button>${strings.delete_button}</button>
-                `)
-                .on('close', () => {
-                    selectedPointPopup = undefined;
-                })
-                .addTo(map);
-
-            const content = selectedPointPopup.getElement().children[1];
-
-            content.children[1].addEventListener('change', event => {
-                const point = path.find(point => point.id == selectedPointId);
-                point.lat = parseFloat(event.target.value);
-                updateMapItems();
-            });
-
-            content.children[3].addEventListener('change', event => {
-                const point = path.find(point => point.id == selectedPointId);
-                point.lng = parseFloat(event.target.value);
-                updateMapItems();
-            });
-
-            content.children[4].addEventListener('click', event => {
-                selectedPointPopup.remove();
-
-                path = path.filter(point => point.id != selectedPointId);
-                selectedPointId = undefined;
-                updateMapItems();
-            });
-        });
-
-        map.on('mouseenter', 'path_selected_point', pointMouseEnter);
-        map.on('mouseleave', 'path_selected_point', pointMouseLeave);
-        map.on('mousedown', 'path_selected_point', pointMouseDown);
-        map.on('touchstart', 'path_selected_point', pointTouchStart);
-    }
-
-    // Path points layer
-    const pathPoints = {
-        type: 'FeatureCollection',
-        features: path.filter(point => point.id != selectedPointId).map(point => ({
-            type: 'Feature',
-            properties: {
-                point: point
-            },
-            geometry: {
-                type: 'Point',
-                coordinates: [point.lng, point.lat]
-            }
-        }))
-    };
-
-    if (map.getSource('path_points') != undefined) {
-        map.getSource('path_points').setData(pathPoints);
-    } else {
-        map.addSource('path_points', { type: 'geojson', data: pathPoints });
-
-        map.addLayer({
-            id: 'path_points',
-            source: 'path_points',
-            type: 'circle',
-            paint: {
-                'circle-color': '#a2a2a2',
-                'circle-radius': 6
-            }
-        }, 'path_selected_point');
-
-        map.on('mouseenter', 'path_points', pointMouseEnter);
-        map.on('mouseleave', 'path_points', pointMouseLeave);
-        map.on('mousedown', 'path_points', pointMouseDown);
-        map.on('touchstart', 'path_points', pointTouchStart);
-    }
-
-    // Path line layer
-    const pathLine = {
-        type: 'Feature',
-        geometry: {
-            type: 'LineString',
-            coordinates: path.length > 0 ? (event.connected ? path.concat([path[0]]) : path).map(point => [point.lng, point.lat]) : []
+            map.addLayer({
+                id: 'path_line',
+                source: 'path_line',
+                type: 'line',
+                layout: {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                paint: {
+                    'line-color': '#a2a2a2',
+                    'line-width': 4
+                }
+            }, 'path_points');
         }
-    };
-
-    if (map.getSource('path_line') != undefined) {
-        map.getSource('path_line').setData(pathLine);
-    } else {
-        map.addSource('path_line', { type: 'geojson', data: pathLine });
-
-        map.addLayer({
-            id: 'path_line',
-            source: 'path_line',
-            type: 'line',
-            layout: {
-                'line-join': 'round',
-                'line-cap': 'round'
-            },
-            paint: {
-                'line-color': '#a2a2a2',
-                'line-width': 4
-            }
-        }, 'path_points');
     }
 
     // Selected point popup

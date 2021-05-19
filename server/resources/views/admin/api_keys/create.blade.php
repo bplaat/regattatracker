@@ -53,7 +53,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" type="submit">@lang('admin/api_keys.create.button')</button>
+                <button class="button is-link" type="submit">@lang('admin/api_keys.create.create_button')</button>
             </div>
         </div>
     </form>

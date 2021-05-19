@@ -3,17 +3,17 @@
 namespace Database\Factories;
 
 use App\Models\Event;
-use App\Models\EventClass;
+use App\Models\EventFinish;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class EventClassFactory extends Factory
+class EventFinishFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = EventClass::class;
+    protected $model = EventFinish::class;
 
     /**
      * Define the model's default state.
@@ -24,7 +24,10 @@ class EventClassFactory extends Factory
     {
         return [
             'event_id' => $this->faker->randomElement(Event::all()->pluck('id')->toArray()),
-            'name' => $this->faker->name
+            'latitude_a' => $this->faker->latitude,
+            'longitude_a' => $this->faker->longitude,
+            'latitude_b' => $this->faker->latitude,
+            'longitude_b' => $this->faker->longitude
         ];
     }
 }

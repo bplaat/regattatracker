@@ -21,16 +21,16 @@ class Event extends Model
         'connected' => 'boolean'
     ];
 
-    // An event belongs to many classes.
-    public function classes()
-    {
-        return $this->belongsToMany(EventClass::class);
-    }
-
-    // An event belongs to many finishes.
+    // An event has many finishes
     public function finishes()
     {
-        return $this->hasMany(Finish::class);
+        return $this->hasMany(EventFinish::class);
+    }
+
+    // An event has many classes
+    public function classes()
+    {
+        return $this->hasMany(EventClass::class);
     }
 
     // Search by a query.

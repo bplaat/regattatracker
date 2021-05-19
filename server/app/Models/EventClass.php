@@ -10,11 +10,17 @@ class EventClass extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'event_id'
+        'event_id',
+        'name'
     ];
 
+    // A event class belongs to an event.
+    public function event() {
+        return $this->belongsTo(Event::class);
+    }
+
+    // An event class has many fleets
     public function fleets() {
-        return Fleet::all()->where('event_class_id', '=', $this->id);
+        return $this->hasMany(EventClassFleet::class);
     }
 }

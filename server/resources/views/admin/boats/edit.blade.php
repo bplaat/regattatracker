@@ -132,7 +132,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" type="submit">@lang('admin/boats.edit.button')</button>
+                <button class="button is-link" type="submit">@lang('admin/boats.edit.edit_button')</button>
             </div>
         </div>
     </form>

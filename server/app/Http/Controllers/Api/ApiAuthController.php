@@ -28,7 +28,7 @@ class ApiAuthController extends Controller
         if (!$user || !Hash::check(request('password'), $user->password)) {
             return response(['errors' => [
                 'email' => [
-                    __('auth.login.error')
+                    __('auth.login.error_message')
                 ]
             ]], 400);
         }

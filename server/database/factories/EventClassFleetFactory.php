@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Participant;
-use App\Models\Fleet;
+use App\Models\EventClass;
+use App\Models\EventClassFleet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ParticipantFactory extends Factory
+class EventClassFleetFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Participant::class;
+    protected $model = EventClassFleet::class;
 
     /**
      * Define the model's default state.
@@ -23,8 +23,8 @@ class ParticipantFactory extends Factory
     public function definition()
     {
         return [
-            'fleet_id' => $this->faker->randomElement(Fleet::all()->pluck('id')->toArray()),
-            'boat_id' => $this->faker->randomElement(Boat::all()->pluck('id')->toArray())
+            'event_class_id' => $this->faker->randomElement(EventClass::all()->pluck('id')->toArray()),
+            'name' => $this->faker->name
         ];
     }
 }

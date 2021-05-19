@@ -23,7 +23,7 @@
     <form class="box" method="POST" action="{{ route('settings.change_details') }}">
         @csrf
 
-        <h2 class="title is-4">@lang('settings.change_details_title')</h2>
+        <h2 class="title is-4">@lang('settings.change_details')</h2>
 
         <div class="columns">
             <div class="column">
@@ -221,7 +221,7 @@
     <form class="box" method="POST" action="{{ route('settings.change_password') }}">
         @csrf
 
-        <h2 class="title is-4">@lang('settings.change_password_title')</h2>
+        <h2 class="title is-4">@lang('settings.change_password')</h2>
 
         <div class="field">
             <label class="label" for="current_password">@lang('settings.current_password')</label>
