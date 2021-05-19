@@ -21,7 +21,6 @@
         <h1 class="title is-spaced is-4">{{ $event->name }}</h1>
 
         <h2 class="subtitle is-5">@lang('admin/events.show.date_info')</h2>
-
         @if ($event->start != null)
             <p>@lang('admin/events.show.start') {{ $event->start }}</p>
         @else
@@ -33,6 +32,16 @@
         @else
             <p><i>@lang('admin/events.show.end_empty')</i></p>
         @endif
+
+        <h2 class="subtitle is-5">@lang('admin/events.show.path_info')</h2>
+        <p>
+            @lang('admin/events.show.connected')
+            @if ($event->connected == App\Models\Event::CONNECTED_TRUE)
+                @lang('admin/events.show.connected_true')
+            @else
+                @lang('admin/events.show.connected_false')
+            @endif
+        </p>
 
         <div class="buttons">
             <a class="button is-link" href="{{ route('admin.events.edit', $event) }}">@lang('admin/events.show.edit_button')</a>

@@ -9,16 +9,16 @@ class Event extends Model
 {
     use HasFactory;
 
+    // The connected things
+    const CONNECTED_FALSE = 0;
+    const CONNECTED_TRUE = 1;
+
     protected $fillable = [
         'name',
         'start',
         'end',
         'connected',
         'path'
-    ];
-
-    protected $casts = [
-        'connected' => 'boolean'
     ];
 
     // An event has many finishes

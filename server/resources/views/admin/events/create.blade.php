@@ -33,33 +33,54 @@
 
         <div class="columns">
             <div class="column">
-                <label class="label" for="start_date">@lang('admin/events.create.start')</label>
+                <label class="label" for="start">@lang('admin/events.create.start')</label>
                 <div class="field">
                     <div class="control">
-                        <input class="input @error('start_date') is-danger @enderror" type="date"
-                               id="start_date"
-                               name="start_date" value="{{ old('start_date') }}">
+                        <input class="input @error('start') is-danger @enderror" type="date"
+                               id="start" name="start" value="{{ old('start') }}">
                     </div>
 
-                    @error('start_date')
-                        <p class="help is-danger">{{ $errors->first('start_date') }}</p>
+                    @error('start')
+                        <p class="help is-danger">{{ $errors->first('start') }}</p>
                     @enderror
                 </div>
             </div>
 
             <div class="column">
-                <label class="label" for="end_date">@lang('admin/events.create.end')</label>
+                <label class="label" for="end">@lang('admin/events.create.end')</label>
                 <div class="field">
                     <div class="control">
-                        <input class="input @error('end_date') is-danger @enderror" type="date" id="end_date"
-                               name="end_date" value="{{ old('end_date') }}">
+                        <input class="input @error('end') is-danger @enderror" type="date" id="end"
+                               name="end" value="{{ old('end') }}">
                     </div>
 
-                    @error('end_date')
-                        <p class="help is-danger">{{ $errors->first('end_date') }}</p>
+                    @error('end')
+                        <p class="help is-danger">{{ $errors->first('end') }}</p>
                     @enderror
                 </div>
             </div>
+        </div>
+
+        <div class="field">
+            <label class="label" for="connected">@lang('admin/events.create.connected')</label>
+
+            <div class="control">
+                <div class="select is-fullwidth @error('connected') is-danger @enderror">
+                    <select id="connected" name="connected" required>
+                        <option value="{{ App\Models\Event::CONNECTED_TRUE }}" @if (App\Models\Event::CONNECTED_TRUE == old('connected', App\Models\Event::CONNECTED_TRUE)) selected @endif>
+                            @lang('admin/events.create.connected_true')
+                        </option>
+
+                        <option value="{{ App\Models\Event::CONNECTED_FALSE }}" @if (App\Models\Event::CONNECTED_FALSE == old('connected', App\Models\Event::CONNECTED_TRUE)) selected @endif>
+                            @lang('admin/events.create.connected_false')
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            @error('connected')
+                <p class="help is-danger">{{ $errors->first('connected') }}</p>
+            @enderror
         </div>
 
         <div class="field">

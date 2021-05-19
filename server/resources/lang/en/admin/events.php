@@ -11,6 +11,9 @@ return [
     'index.start_empty' => 'No start date',
     'index.end' => 'End date:',
     'index.end_empty' => 'No end date',
+    'index.connected' => 'Connected path:',
+    'index.connected_true' => 'true',
+    'index.connected_false' => 'false',
     'index.empty' => 'No events found',
     'index.create_button' => 'Create new event',
 
@@ -21,6 +24,9 @@ return [
     'create.name' => 'Name',
     'create.start' => 'Start date',
     'create.end' => 'End date',
+    'create.connected' => 'Connected path',
+    'create.connected_true' => 'True',
+    'create.connected_false' => 'False',
     'create.create_button' => 'Create new event',
 
     // Admin events show page
@@ -30,6 +36,10 @@ return [
     'show.start_empty' => 'No start date',
     'show.end' => 'End date:',
     'show.end_empty' => 'No end date',
+    'show.path_info' => 'Path information',
+    'show.connected' => 'Connected path:',
+    'show.connected_true' => 'true',
+    'show.connected_false' => 'false',
     'show.edit_button' => 'Edit',
     'show.delete_button' => 'Delete',
 
@@ -62,7 +72,7 @@ return [
     'show.classes_fleets_edit_button' => 'Edit',
     'show.classes_fleets_delete_button' => 'Delete',
     'show.classes_fleets_empty' => 'No fleets found',
-    'show.classes_fleets_create_button' => 'Add new fleet',
+    'show.classes_fleets_create_button' => 'Create new fleet',
 
     // Admin events edit page
     'edit.title' => 'Edit - :event.name - Events - Admin',

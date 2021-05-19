@@ -55,6 +55,15 @@
                             @else
                                 <p><i>@lang('admin/events.index.end_empty')</i></p>
                             @endif
+
+                            <p>
+                                @lang('admin/events.index.connected')
+                                @if ($event->connected == App\Models\Event::CONNECTED_TRUE)
+                                    @lang('admin/events.index.connected_true')
+                                @else
+                                    @lang('admin/events.index.connected_false')
+                                @endif
+                            </p>
                         </div>
                     </div>
                 @endforeach

@@ -31,15 +31,17 @@ class AdminEventController extends Controller
         // Validate input
         $fields = $request->validate([
             'name' => 'required|min:2|max:48',
-            'start_date' => 'nullable|date_format:Y-m-d',
-            'end_date' => 'nullable|date_format:Y-m-d',
+            'start' => 'nullable|date_format:Y-m-d',
+            'end' => 'nullable|date_format:Y-m-d',
+            'connected' => 'required|integer|digits_between:' . Event::CONNECTED_FALSE . ',' . Event::CONNECTED_TRUE
         ]);
 
         // Create Event
         $event = Event::create([
             'name' => $fields['name'],
-            'start' => $fields['start_date'],
-            'end' => $fields['end_date']
+            'start' => $fields['start'],
+            'end' => $fields['end'],
+            'connected' => $fields['connected']
         ]);
 
         // Go to the new event show page
@@ -72,16 +74,29 @@ class AdminEventController extends Controller
         // Validate input
         $fields = $request->validate([
             'name' => 'required|min:2|max:48',
-            'start_date' => 'nullable|date_format:Y-m-d',
-            'end_date' => 'nullable|date_format:Y-m-d',
+            'start' => 'nullable|date_format:Y-m-d',
+            'end' => 'nullable|date_format:Y-m-d',
+            'connected' => 'required|integer|digits_between:' . Event::CONNECTED_FALSE . ',' . Event::CONNECTED_TRUE
         ]);
 
         // Update event
         $event->update([
             'name' => $fields['name'],
-            'start' => $fields['start_date'],
-            'end' => $fields['end_date']
+            'start' => $fields['start'],
+            'end' => $fields['end'],
+            'connected' => $fields['connected']
         ]);
+
+        // Update event path when given
+        if (request('path') != '') {
+            $fields = $request->validate([
+                'path' => 'required|json',
+            ]);
+
+            $event->update([
+                'path' => $fields['path']
+            ]);
+        }
 
         // Go to the event show page
         return redirect()->route('admin.events.show', $event);
