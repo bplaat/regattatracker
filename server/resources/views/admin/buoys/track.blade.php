@@ -43,8 +43,9 @@
             item: @json($buoy),
             positions: @json($buoyPositions),
             links: {
-                apiPositionsStore: @json(route('api.buoys.positions.store', $buoy)),
-                positionsPrefix: @json(route('admin.buoys.positions.store', $buoy))
+                apiItemPositionsStore: @json(str_replace('{buoy'}, '{item'}, rawRoute('api.buoys.positions.store'))),
+                itemPositionsEdit: @json(rawRoute('admin.buoys.positions.edit')).replace('{buoy}', '{item}').replace('{buoyPosition}', '{itemPosition}'),
+                itemPositionsDelete: @json(rawRoute('admin.buoys.positions.delete')).replace('{buoy}', '{item}').replace('{buoyPosition}', '{itemPosition}')
             },
             strings: {
                 name: @json(__('admin/buoys.track.map_name')),

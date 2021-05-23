@@ -3,7 +3,7 @@ const apiKey = window.data.apiKey;
 const apiToken = window.data.apiToken;
 mapboxgl.accessToken = window.data.mapboxAccessToken;
 const event = window.data.event;
-const link = window.data.link;
+const links = window.data.links;
 const strings = window.data.strings;
 
 let pointIdCounter = 1;
@@ -84,6 +84,7 @@ class EditorButtonsControl {
             const center = map.getCenter();
             path.push({ id: pointIdCounter++, lat: center.lat, lng: center.lng });
         }
+        saveEventPath();
 
         pathChanged = true;
         updateMapItems();
@@ -117,8 +118,9 @@ class PathLengthControl {
 
     onUpdate() {
         if (path.length >= 2) {
-            const line = turf.lineString(path.map(point => [ point.lng, point.lat ]));
-            this._container.children[0].textContent = strings.path_length + ' ' + turf.length(line, { units: 'kilometers' }).toFixed(2) + ' km';
+            const line = turf.lineString((event.connected == 1 ? path.concat([path[0]]) : path).map(point => [ point.lng, point.lat ]));
+            const length = turf.length(line, { units: 'kilometers' });
+            this._container.children[0].textContent = strings.path_length + ' ' + (length >= 1 ? length.toFixed(2) + ' km' : (length * 1000).toFixed(0) + ' m');
         } else {
             this._container.children[0].textContent = strings.path_length_message;
         }
@@ -132,7 +134,7 @@ class PathLengthControl {
 
 function saveEventPath() {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', link, true);
+    xhr.open('POST', links.apiEventsUpdate.replace('{event}', event.id), true);
     xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
     xhr.setRequestHeader('Authorization', 'Bearer ' + apiToken);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -359,6 +361,7 @@ function updateMapItems() {
                     content.children[1].addEventListener('change', event => {
                         const point = path.find(point => point.id == selectedPointId);
                         point.lat = parseFloat(event.target.value);
+                        saveEventPath();
 
                         pathChanged = true;
                         updateMapItems();
@@ -367,6 +370,7 @@ function updateMapItems() {
                     content.children[3].addEventListener('change', event => {
                         const point = path.find(point => point.id == selectedPointId);
                         point.lng = parseFloat(event.target.value);
+                        saveEventPath();
 
                         pathChanged = true;
                         updateMapItems();
@@ -376,6 +380,7 @@ function updateMapItems() {
                         selectedPointPopup.remove();
 
                         path = path.filter(point => point.id != selectedPointId);
+                        saveEventPath();
                         selectedPointId = undefined;
 
                         pathChanged = true;

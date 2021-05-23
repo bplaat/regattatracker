@@ -1,7 +1,8 @@
 const type = window.data.type;
 mapboxgl.accessToken = window.data.mapboxAccessToken;
+const item = window.data.item;
 const positions = window.data.positions;
-const link = window.data.link;
+const links = window.data.links;
 const strings = window.data.strings;
 
 function isDarkModeEnabled() {
@@ -89,8 +90,8 @@ map.on('load', () => {
                     '<div>' + strings.latitude + ': ' + position.latitude + '</div>' +
                     '<div>' + strings.longitude + ': ' + position.longitude + '</div>' +
                     '<div>' + strings.time + ': ' + new Date(position.created_at).toLocaleString('en-US') + '</div>' +
-                    '<div><a href="' + link + '/' + position.id + '/edit">' + strings.edit_button + '</a> ' +
-                        '<a href="' + link + '/' + position.id + '/delete">' + strings.delete_button + '</a></div>'
+                    '<div><a href="' + links.itemPositionsEdit.replace('{item}', item.id).replace('{itemPosition}', position.id) + '">' + strings.edit_button + '</a> ' +
+                        '<a href="' + links.itemPositionsDelete.replace('{item}', item.id).replace('{itemPosition}', position.id) + '">' + strings.delete_button + '</a></div>'
                 )
                 .addTo(map);
         });
@@ -133,8 +134,8 @@ map.on('load', () => {
                 '<div>' + strings.latitude + ': ' + position.latitude + '</div>' +
                 '<div>' + strings.longitude + ': ' + position.longitude + '</div>' +
                 '<div>' + strings.time + ': ' + new Date(position.created_at).toLocaleString('en-US') + '</div>' +
-                '<div><a href="' + link + '/' + position.id + '/edit">' + strings.edit_button + '</a> ' +
-                    '<a href="' + link + '/' + position.id + '/delete">' + strings.delete_button + '</a></div>'
+                '<div><a href="' + links.itemPositionsEdit.replace('{item}', item.id).replace('{itemPosition}', position.id) + '">' + strings.edit_button + '</a> ' +
+                    '<a href="' + links.itemPositionsDelete.replace('{item}', item.id).replace('{itemPosition}', position.id) + '">' + strings.delete_button + '</a></div>'
             )
             .addTo(map);
     });

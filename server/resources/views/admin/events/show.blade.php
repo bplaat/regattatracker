@@ -64,7 +64,9 @@
                 apiToken: @json(Auth::user()->apiToken()),
                 mapboxAccessToken: @json(config('mapbox.access_token')),
                 event: @json($event),
-                link: @json(route('api.events.update', $event)),
+                links: {
+                    apiEventsUpdate: @json(rawRoute('api.events.update'))
+                },
                 strings: {
                     add_point_button: @json(__('admin/events.show.map_add_point_button')),
                     add_finish_button: @json(__('admin/events.show.map_add_finish_button')),

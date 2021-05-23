@@ -60,7 +60,10 @@ Route::middleware('api_key')->group(function () {
     Route::get('events/{event}/delete', [ApiEventsController::class, 'delete'])->name('api.events.delete');
 
     Route::get('events/{event}/finishes', [ApiEventFinishesController::class, 'index'])->name('api.events.finishes.index');
+    Route::post('events/{event}/finishes', [ApiEventFinishesController::class, 'store'])->name('api.events.finishes.store');
     Route::get('events/{event}/finishes/{eventFinish}', [ApiEventFinishesController::class, 'show'])->name('api.events.finishes.show');
+    Route::post('events/{event}/finishes/{eventFinish}', [ApiEventFinishesController::class, 'update'])->name('api.events.finishes.update');
+    Route::get('events/{event}/finishes/{eventFinish}/delete', [ApiEventFinishesController::class, 'delete'])->name('api.events.finishes.delete');
 
     Route::get('events/{event}/classes', [ApiEventClassesController::class, 'index'])->name('api.events.classes.index');
     Route::get('events/{event}/classes/{eventClass}', [ApiEventClassesController::class, 'show'])->name('api.events.classes.show');

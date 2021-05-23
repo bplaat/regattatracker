@@ -42,8 +42,9 @@
             item: @json($boat),
             positions: @json($boatPositions),
             links: {
-                apiPositionsStore: @json(route('api.boats.positions.store', $boat)),
-                positionsPrefix: @json(route('boats.positions.store', $boat))
+                apiItemPositionsStore: @json(str_replace('{boat'}, '{item'}, rawRoute('api.boats.positions.store'))),
+                itemPositionsEdit: @json(rawRoute('boats.positions.edit')).replace('{boat}', '{item}').replace('{boatPosition}', '{itemPosition}'),
+                itemPositionsDelete: @json(rawRoute('boats.positions.delete')).replace('{boat}', '{item}').replace('{boatPosition}', '{itemPosition}')
             },
             strings: {
                 name: @json(__('boats.track.map_name')),

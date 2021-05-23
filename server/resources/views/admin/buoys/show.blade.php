@@ -43,8 +43,12 @@
                 window.data = {
                     type: 'buoy',
                     mapboxAccessToken: @json(config('mapbox.access_token')),
+                    item: @json($buoy),
                     positions: @json($buoyPositions),
-                    link: @json(route('admin.buoys.positions.store', $buoy)),
+                    links: {
+                        itemPositionsEdit: @json(rawRoute('admin.buoys.positions.edit')).replace('{buoy}', '{item}').replace('{buoyPosition}', '{itemPosition}'),
+                        itemPositionsDelete: @json(rawRoute('admin.buoys.positions.delete')).replace('{buoy}', '{item}').replace('{buoyPosition}', '{itemPosition}')
+                    },
                     strings: {
                         name: @json(__('admin/buoys.show.positions_map_name')),
                         current: @json(__('admin/buoys.show.positions_map_current')),

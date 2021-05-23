@@ -98,8 +98,8 @@ function updateMapItems() {
                     '<div>' + strings.latitude + ': ' + position.latitude + '</div>' +
                     '<div>' + strings.longitude + ': ' + position.longitude + '</div>' +
                     '<div>' + strings.time + ': ' + new Date(position.created_at).toLocaleString('en-US') + '</div>' +
-                    '<div><a href="' + links.positionsPrefix + '/' + position.id + '/edit">' + strings.edit_button + '</a> ' +
-                        '<a href="' + links.positionsPrefix + '/' + position.id + '/delete">' + strings.delete_button + '</a></div>'
+                    '<div><a href="' + links.itemPositionsEdit.replace('{item}', item.id).replace('{itemPosition}', position.id) + '">' + strings.edit_button + '</a> ' +
+                        '<a href="' + links.itemPositionsDelete.replace('{item}', item.id).replace('{itemPosition}', position.id) + '">' + strings.delete_button + '</a></div>'
                 )
                 .addTo(map);
         });
@@ -148,8 +148,8 @@ function updateMapItems() {
                         '<div>' + strings.latitude + ': ' + position.latitude + '</div>' +
                         '<div>' + strings.longitude + ': ' + position.longitude + '</div>' +
                         '<div>' + strings.time + ': ' + new Date(position.created_at).toLocaleString('en-US') + '</div>' +
-                        '<div><a href="' + links.positionsPrefix + '/' + position.id + '/edit">' + strings.edit_button + '</a> ' +
-                            '<a href="' + links.positionsPrefix + '/' + position.id + '/delete">' + strings.delete_button + '</a></div>'
+                        '<div><a href="' + links.itemPositionsEdit.replace('{item}', item.id).replace('{itemPosition}', position.id) + '">' + strings.edit_button + '</a> ' +
+                            '<a href="' + links.itemPositionsDelete.replace('{item}', item.id).replace('{itemPosition}', position.id) + '">' + strings.delete_button + '</a></div>'
                     )
                     .addTo(map);
             });
@@ -206,7 +206,7 @@ function sendCurrentPosition(currentPosition) {
         // And update map items
         updateMapItems();
     };
-    xhr.open('POST', links.apiPositionsStore, true);
+    xhr.open('POST', links.apiItemPositionsStore.replace('{item}', item.id), true);
     xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
     xhr.setRequestHeader('Authorization', 'Bearer ' + apiToken);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');

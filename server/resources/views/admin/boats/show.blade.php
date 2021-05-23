@@ -59,8 +59,12 @@
                 window.data = {
                     type: 'boat',
                     mapboxAccessToken: @json(config('mapbox.access_token')),
+                    item: @json($boat),
                     positions: @json($boatPositions),
-                    link: @json(route('admin.boats.positions.store', $boat)),
+                    links: {
+                        itemPositionsEdit: @json(rawRoute('admin.boats.positions.edit')).replace('{boat}', '{item}').replace('{boatPosition}', '{itemPosition}'),
+                        itemPositionsDelete: @json(rawRoute('admin.boats.positions.delete')).replace('{boat}', '{item}').replace('{boatPosition}', '{itemPosition}')
+                    },
                     strings: {
                         name: @json(__('admin/boats.show.positions_map_name')),
                         current: @json(__('admin/boats.show.positions_map_current')),
