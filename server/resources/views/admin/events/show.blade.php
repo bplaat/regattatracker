@@ -3,8 +3,9 @@
 @section('title', __('admin/events.show.title', ['event.name' => $event->name]))
 
 @section('head')
-    <link rel="stylesheet" href="/css/mapbox-gl.css"/>
-    <script src="/js/mapbox-gl.js"></script>
+    <link rel="stylesheet" href="/css/mapbox-gl.min.css"/>
+    <script src="/js/mapbox-gl.min.js"></script>
+    <script src="/js/turf.min.js"></script>
 @endsection
 
 @section('content')
@@ -65,15 +66,17 @@
                 event: @json($event),
                 link: @json(route('api.events.update', $event)),
                 strings: {
-                    add_point_button: @json(__('admin/events.show.add_point_button')),
-                    add_finish_button: @json(__('admin/events.show.add_finish_button')),
-                    connect_button: @json(__('admin/events.show.connect_button')),
-                    disconnect_button: @json(__('admin/events.show.disconnect_button')),
-                    save_button: @json(__('admin/events.show.save_button')),
+                    add_point_button: @json(__('admin/events.show.map_add_point_button')),
+                    add_finish_button: @json(__('admin/events.show.map_add_finish_button')),
+                    connect_button: @json(__('admin/events.show.map_connect_button')),
+                    disconnect_button: @json(__('admin/events.show.map_disconnect_button')),
 
-                    latitude: @json(__('admin/events.show.latitude')),
-                    longitude: @json(__('admin/events.show.longitude')),
-                    delete_button: @json(__('admin/events.show.delete_button'))
+                    path_length: @json(__('admin/events.show.map_path_length')),
+                    path_length_message: @json(__('admin/events.show.map_path_length_message')),
+
+                    latitude: @json(__('admin/events.show.map_latitude')),
+                    longitude: @json(__('admin/events.show.map_longitude')),
+                    delete_button: @json(__('admin/events.show.map_delete_button'))
                 }
             };
         </script>

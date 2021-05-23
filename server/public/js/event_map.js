@@ -36,24 +36,17 @@ class EditorButtonsControl {
                     <path fill="currentColor" d="M17,14H19V17H22V19H19V22H17V19H14V17H17V14M12.4,5H18V12C15.78,12 13.84,13.21 12.8,15H11L10.6,13H5V20H3V3H12L12.4,5Z" />
                 </svg>
             </button>
-
-            <button type="button" title="${strings.save_button}">
-                <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" />
-                </svg>
-            </button>
         `;
-        this.updateItems();
+        this.onUpdate();
 
         this._container.children[0].addEventListener('click', this.addPoint.bind(this));
         this._container.children[1].addEventListener('click', this.toggleConnected.bind(this));
         this._container.children[2].addEventListener('click', this.addFinish.bind(this));
-        this._container.children[3].addEventListener('click', this.save.bind(this));
 
         return this._container;
     }
 
-    updateItems() {
+    onUpdate() {
         if (event.connected == 1) {
             this._container.children[1].title = strings.disconnect_button;
             this._container.children[1].innerHTML = `<svg style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -98,7 +91,7 @@ class EditorButtonsControl {
 
     toggleConnected() {
         event.connected = event.connected == 1 ? 0 : 1;
-        this.updateItems();
+        this.onUpdate();
 
         pathChanged = true;
         updateMapItems();
@@ -107,20 +100,45 @@ class EditorButtonsControl {
     addFinish() {
         alert('Todo!');
     }
+}
 
-    save() {
-        const xhr = new XMLHttpRequest();
-        xhr.onload = () => {
-            alert('Event map saved!');
-        };
-        xhr.open('POST', link, true);
-        xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-        xhr.setRequestHeader('Authorization', 'Bearer ' + apiToken);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.send('api_key=' + apiKey + '&name=' + event.name + '&start=' + (event.start != null ? event.start : '')  +
-            '&end=' + (event.end != null ? event.end : '') + '&connected=' + event.connected +
-            '&path=' + JSON.stringify(path.map(point => [point.lat, point.lng])));
+class PathLengthControl {
+    onAdd(map) {
+        this._map = map;
+
+        this._container = document.createElement('div');
+        this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+        this._container.style = 'padding: 4px 8px;';
+        this._container.innerHTML = `<p></p>`;
+        this.onUpdate();
+
+        return this._container;
     }
+
+    onUpdate() {
+        if (path.length >= 2) {
+            const line = turf.lineString(path.map(point => [ point.lng, point.lat ]));
+            this._container.children[0].textContent = strings.path_length + ' ' + turf.length(line, { units: 'kilometers' }).toFixed(2) + ' km';
+        } else {
+            this._container.children[0].textContent = strings.path_length_message;
+        }
+    }
+
+    onRemove() {
+        this._map = undefined;
+        this._container.parentNode.removeChild(this._container);
+    }
+}
+
+function saveEventPath() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', link, true);
+    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+    xhr.setRequestHeader('Authorization', 'Bearer ' + apiToken);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.send('api_key=' + apiKey + '&name=' + event.name + '&start=' + (event.start != null ? event.start : '')  +
+        '&end=' + (event.end != null ? event.end : '') + '&connected=' + event.connected +
+        '&path=' + JSON.stringify(path.map(point => [point.lat, point.lng])));
 }
 
 function isDarkModeEnabled() {
@@ -147,10 +165,22 @@ if (path.length > 0 || finishes.length > 0) {
 }
 
 map.addControl(new EditorButtonsControl(), 'top-left');
+const pathLengthControl = new PathLengthControl();
+map.addControl(pathLengthControl, 'top-right');
 map.addControl(new mapboxgl.ScaleControl(), 'bottom-left');
 map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 map.addControl(new mapboxgl.GeolocateControl(), 'bottom-right');
 map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
+
+function pointMouseEnter(event) {
+    map.getCanvas().style.cursor = 'move';
+    map.getCanvas().title = event.lngLat.lat + ', ' + event.lngLat.lng;
+}
+
+function pointMouseLeave(event) {
+    map.getCanvas().style.cursor = '';
+    map.getCanvas().title = '';
+}
 
 function pointOnMove(event) {
     map.getCanvas().style.cursor = 'grabbing';
@@ -163,48 +193,29 @@ function pointOnMove(event) {
     updateMapItems();
 }
 
-function pointMouseEnter(event) {
-    map.getCanvas().style.cursor = 'move';
-    map.getCanvas().title = event.lngLat.lat + ', ' + event.lngLat.lng;
-}
-
-function pointMouseLeave(event) {
-    map.getCanvas().style.cursor = '';
-    map.getCanvas().title = '';
-}
-
+let pointMouseDownFired = false;
 function pointMouseDown(event) {
     event.preventDefault();
+    if (event.originalEvent.button == 0 && !pointMouseDownFired) {
+        pointMouseDownFired = true;
 
-    selectedPointId = JSON.parse(map.queryRenderedFeatures(event.point)[0].properties.point).id;
+        selectedPointId = JSON.parse(map.queryRenderedFeatures(event.point)[0].properties.point).id;
 
-    pathChanged = true;
-    updateMapItems();
+        pathChanged = true;
+        updateMapItems();
 
-    map.getCanvas().style.cursor = 'grab';
-    map.on('mousemove', pointOnMove);
+        map.getCanvas().style.cursor = 'grab';
+        map.on('mousemove', pointOnMove);
 
-    map.once('mouseup', () => {
-        map.getCanvas().style.cursor = '';
-        map.off('mousemove', pointOnMove)
-    });
-}
+        map.once('mouseup', () => {
+            pointMouseDownFired = false;
 
-function pointTouchStart(event) {
-    if (event.points.length != 1) return;
-    event.preventDefault();
+            map.getCanvas().style.cursor = '';
+            map.off('mousemove', pointOnMove);
 
-    selectedPointId = JSON.parse(map.queryRenderedFeatures(event.point)[0].properties.point).id;
-
-    pathChanged = true;
-    updateMapItems();
-
-    map.on('touchmove', pointOnMove);
-
-    map.once('touchend', () => {
-        map.getCanvas().style.cursor = '';
-        map.off('touchmove', pointOnMove);
-    });
+            saveEventPath();
+        });
+    }
 }
 
 function updateMapItems() {
@@ -325,55 +336,57 @@ function updateMapItems() {
             }, 'finish_lines');
 
             map.on('contextmenu', 'path_selected_point', function (event) {
-                const point = path.find(point => point.id == selectedPointId);
-
-                selectedPointPopup = new mapboxgl.Popup()
-                    .setLngLat([point.lng, point.lat])
-                    .setHTML(`
-                        <label>${strings.latitude}:</label>
-                        <input value="${point.lat}" style="margin-bottom: 8px;">
-                        <label>${strings.longitude}:</label>
-                        <input value="${point.lng}" style="margin-bottom: 8px;">
-                        <button>${strings.delete_button}</button>
-                    `)
-                    .on('close', () => {
-                        selectedPointPopup = undefined;
-                    })
-                    .addTo(map);
-
-                const content = selectedPointPopup.getElement().children[1];
-
-                content.children[1].addEventListener('change', event => {
+                event.preventDefault();
+                if (selectedPointPopup == undefined) {
                     const point = path.find(point => point.id == selectedPointId);
-                    point.lat = parseFloat(event.target.value);
 
-                    pathChanged = true;
-                    updateMapItems();
-                });
+                    selectedPointPopup = new mapboxgl.Popup()
+                        .setLngLat([point.lng, point.lat])
+                        .setHTML(`
+                            <label>${strings.latitude}:</label>
+                            <input value="${point.lat}" style="margin-bottom: 8px;">
+                            <label>${strings.longitude}:</label>
+                            <input value="${point.lng}" style="margin-bottom: 8px;">
+                            <button>${strings.delete_button}</button>
+                        `)
+                        .on('close', () => {
+                            selectedPointPopup = undefined;
+                        })
+                        .addTo(map);
 
-                content.children[3].addEventListener('change', event => {
-                    const point = path.find(point => point.id == selectedPointId);
-                    point.lng = parseFloat(event.target.value);
+                    const content = selectedPointPopup.getElement().children[1];
 
-                    pathChanged = true;
-                    updateMapItems();
-                });
+                    content.children[1].addEventListener('change', event => {
+                        const point = path.find(point => point.id == selectedPointId);
+                        point.lat = parseFloat(event.target.value);
 
-                content.children[4].addEventListener('click', event => {
-                    selectedPointPopup.remove();
+                        pathChanged = true;
+                        updateMapItems();
+                    });
 
-                    path = path.filter(point => point.id != selectedPointId);
-                    selectedPointId = undefined;
+                    content.children[3].addEventListener('change', event => {
+                        const point = path.find(point => point.id == selectedPointId);
+                        point.lng = parseFloat(event.target.value);
 
-                    pathChanged = true;
-                    updateMapItems();
-                });
+                        pathChanged = true;
+                        updateMapItems();
+                    });
+
+                    content.children[4].addEventListener('click', event => {
+                        selectedPointPopup.remove();
+
+                        path = path.filter(point => point.id != selectedPointId);
+                        selectedPointId = undefined;
+
+                        pathChanged = true;
+                        updateMapItems();
+                    });
+                }
             });
 
             map.on('mouseenter', 'path_selected_point', pointMouseEnter);
             map.on('mouseleave', 'path_selected_point', pointMouseLeave);
             map.on('mousedown', 'path_selected_point', pointMouseDown);
-            map.on('touchstart', 'path_selected_point', pointTouchStart);
         }
 
         // Path points layer
@@ -409,7 +422,6 @@ function updateMapItems() {
             map.on('mouseenter', 'path_points', pointMouseEnter);
             map.on('mouseleave', 'path_points', pointMouseLeave);
             map.on('mousedown', 'path_points', pointMouseDown);
-            map.on('touchstart', 'path_points', pointTouchStart);
         }
 
         // Path line layer
@@ -441,6 +453,9 @@ function updateMapItems() {
                 }
             }, 'path_points');
         }
+
+        // Update path length control
+        pathLengthControl.onUpdate();
     }
 
     // Selected point popup
