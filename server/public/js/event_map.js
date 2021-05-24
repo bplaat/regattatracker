@@ -6,12 +6,21 @@ const event = window.data.event;
 const links = window.data.links;
 const strings = window.data.strings;
 
+let finishes = event.finishes.map(finish => {
+    finish.latitude_a = parseFloat(finish.latitude_a);
+    finish.longitude_a = parseFloat(finish.longitude_a);
+    finish.latitude_b = parseFloat(finish.latitude_b);
+    finish.longitude_b = parseFloat(finish.longitude_b);
+    return finish;
+});
+let selectedFinish = undefined;
+let selectedFinishSide = undefined;
+let selectedFinishPopup = undefined;
+
 let pointIdCounter = 1;
 let path = JSON.parse(event.path).map(point => ({ id: pointIdCounter++, lat: point[0], lng: point[1] }));
-let selectedPointId = undefined;
+let selectedPoint = undefined;
 let selectedPointPopup = undefined;
-
-const finishes = event.finishes;
 
 let finishesChanged = true;
 let pathChanged = true;
@@ -66,17 +75,16 @@ class EditorButtonsControl {
     }
 
     addPoint() {
-        if (path.length > 0 && selectedPointId == undefined) {
-            selectedPointId = path[path.length - 1].id;
+        if (path.length > 0 && selectedPoint == undefined) {
+            selectedPoint = path[path.length - 1];
         }
 
-        if (selectedPointId != undefined) {
+        if (selectedPoint != undefined) {
             for (let i = 0; i < path.length; i++) {
                 const point = path[i];
-                if (point.id == selectedPointId) {
-                    const newId = pointIdCounter++;
-                    path.splice(i + 1, 0, { id: newId, lat: point.lat, lng: point.lng });
-                    selectedPointId = newId;
+                if (point.id == selectedPoint.id) {
+                    selectedPoint = { id: pointIdCounter++, lat: point.lat, lng: point.lng };
+                    path.splice(i + 1, 0, selectedPoint);
                     break;
                 }
             }
@@ -84,7 +92,7 @@ class EditorButtonsControl {
             const center = map.getCenter();
             path.push({ id: pointIdCounter++, lat: center.lat, lng: center.lng });
         }
-        saveEventPath();
+        updateEvent();
 
         pathChanged = true;
         updateMapItems();
@@ -99,7 +107,13 @@ class EditorButtonsControl {
     }
 
     addFinish() {
-        alert('Todo!');
+        const center = map.getCenter();
+        storeEventFinish({
+            latitude_a: center.lat,
+            longitude_a: center.lng,
+            latitude_b: center.lat,
+            longitude_b: center.lng
+        });
     }
 }
 
@@ -132,7 +146,7 @@ class PathLengthControl {
     }
 }
 
-function saveEventPath() {
+function updateEvent() {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', links.apiEventsUpdate.replace('{event}', event.id), true);
     xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
@@ -141,6 +155,55 @@ function saveEventPath() {
     xhr.send('api_key=' + apiKey + '&name=' + event.name + '&start=' + (event.start != null ? event.start : '')  +
         '&end=' + (event.end != null ? event.end : '') + '&connected=' + event.connected +
         '&path=' + JSON.stringify(path.map(point => [point.lat, point.lng])));
+}
+
+function storeEventFinish(finish) {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        const finish = JSON.parse(xhr.responseText);
+        finish.latitude_a = parseFloat(finish.latitude_a);
+        finish.longitude_a = parseFloat(finish.longitude_a);
+        finish.latitude_b = parseFloat(finish.latitude_b);
+        finish.longitude_b = parseFloat(finish.longitude_b);
+        finishes.push(finish);
+
+        finishesChanged = true;
+        updateMapItems();
+    };
+    xhr.open('POST', links.apiEventFinishesStore.replace('{event}', event.id), true);
+    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+    xhr.setRequestHeader('Authorization', 'Bearer ' + apiToken);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.send('api_key=' + apiKey + '&latitude_a=' +  finish.latitude_a.toFixed(8) + '&longitude_a=' +  finish.longitude_a.toFixed(8) +
+        '&latitude_b=' + finish.latitude_b.toFixed(8) + '&longitude_b=' +  finish.longitude_b.toFixed(8));
+}
+
+function updateEventFinish(finishId) {
+    const finish = finishes.find(finish => finish.id == finishId);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', links.apiEventFinishesUpdate.replace('{event}', event.id).replace('{eventFinish}', finish.id), true);
+    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+    xhr.setRequestHeader('Authorization', 'Bearer ' + apiToken);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.send('api_key=' + apiKey + '&latitude_a=' + finish.latitude_a.toFixed(8) + '&longitude_a=' + finish.longitude_a.toFixed(8) +
+        '&latitude_b=' + finish.latitude_b.toFixed(8) + '&longitude_b=' + finish.longitude_b.toFixed(8));
+}
+
+function deleteEventFinish(finishId) {
+    const finish = finishes.find(finish => finish.id == finishId);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', links.apiEventFinishesDelete.replace('{event}', event.id).replace('{eventFinish}', finish.id) + '?api_key=' + apiKey, true);
+    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+    xhr.setRequestHeader('Authorization', 'Bearer ' + apiToken);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.send();
+
+    finishes = finishes.filter(finish => finish.id != finishId);
+
+    finishesChanged = true;
+    updateMapItems();
 }
 
 function isDarkModeEnabled() {
@@ -174,6 +237,7 @@ map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 map.addControl(new mapboxgl.GeolocateControl(), 'bottom-right');
 map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 
+// General point mouse hover
 function pointMouseEnter(event) {
     map.getCanvas().style.cursor = 'move';
     map.getCanvas().title = event.lngLat.lat + ', ' + event.lngLat.lng;
@@ -184,12 +248,56 @@ function pointMouseLeave(event) {
     map.getCanvas().title = '';
 }
 
+// Finish point dragging
+function finishOnMove(event) {
+    map.getCanvas().style.cursor = 'grabbing';
+
+    if (selectedFinishSide == 'a') {
+        selectedFinish.latitude_a = event.lngLat.lat;
+        selectedFinish.longitude_a = event.lngLat.lng;
+    }
+    if (selectedFinishSide == 'b') {
+        selectedFinish.latitude_b = event.lngLat.lat;
+        selectedFinish.longitude_b = event.lngLat.lng;
+    }
+
+    finishesChanged = true;
+    updateMapItems();
+}
+
+let finishMouseDownFired = false;
+function finishMouseDown(event) {
+    event.preventDefault();
+    if (event.originalEvent.button == 0 && !finishMouseDownFired) {
+        finishMouseDownFired = true;
+
+        const pointProperties = map.queryRenderedFeatures(event.point)[0].properties;
+        selectedFinish = finishes.find(finish => finish.id == pointProperties.finishId);
+        selectedFinishSide = pointProperties.side;
+
+        finishesChanged = true;
+        updateMapItems();
+
+        map.getCanvas().style.cursor = 'grab';
+        map.on('mousemove', finishOnMove);
+
+        map.once('mouseup', () => {
+            finishMouseDownFired = false;
+
+            map.getCanvas().style.cursor = '';
+            map.off('mousemove', finishOnMove);
+
+            updateEventFinish(selectedFinish.id);
+        });
+    }
+}
+
+// Path point dragging
 function pointOnMove(event) {
     map.getCanvas().style.cursor = 'grabbing';
 
-    const point = path.find(point => point.id == selectedPointId);
-    point.lat = event.lngLat.lat;
-    point.lng = event.lngLat.lng;
+    selectedPoint.lat = event.lngLat.lat;
+    selectedPoint.lng = event.lngLat.lng;
 
     pathChanged = true;
     updateMapItems();
@@ -201,7 +309,8 @@ function pointMouseDown(event) {
     if (event.originalEvent.button == 0 && !pointMouseDownFired) {
         pointMouseDownFired = true;
 
-        selectedPointId = JSON.parse(map.queryRenderedFeatures(event.point)[0].properties.point).id;
+        const pointProperties = map.queryRenderedFeatures(event.point)[0].properties;
+        selectedPoint = path.find(point => point.id == pointProperties.pointId);
 
         pathChanged = true;
         updateMapItems();
@@ -215,7 +324,7 @@ function pointMouseDown(event) {
             map.getCanvas().style.cursor = '';
             map.off('mousemove', pointOnMove);
 
-            saveEventPath();
+            updateEvent();
         });
     }
 }
@@ -225,22 +334,133 @@ function updateMapItems() {
     if (finishesChanged) {
         finishesChanged = false;
 
-        // Finish points layer
-        const finishPoints = {
+        // Selected finish points layer
+        const finishSelectedPoint = {
             type: 'FeatureCollection',
-            features: finishes.map(finish => ({
+            features: finishes.filter(finish => finish.id == selectedFinish?.id && selectedFinishSide == 'a').map(finish => ({
                 type: 'Feature',
                 properties: {
-                    finish: finish
+                    finishId: finish.id,
+                    side: 'a'
                 },
                 geometry: {
                     type: 'Point',
                     coordinates: [finish.longitude_a, finish.latitude_a]
                 }
-            })).concat(finishes.map(finish => ({
+            })).concat(finishes.filter(finish => finish.id == selectedFinish?.id && selectedFinishSide == 'b').map(finish => ({
                 type: 'Feature',
                 properties: {
-                    finish: finish
+                    finishId: finish.id,
+                    side: 'b'
+                },
+                geometry: {
+                    type: 'Point',
+                    coordinates: [finish.longitude_b, finish.latitude_b]
+                }
+            })))
+        };
+
+        if (map.getSource('finish_selected_points') != undefined) {
+            map.getSource('finish_selected_points').setData(finishSelectedPoint);
+        } else {
+            map.addSource('finish_selected_points', { type: 'geojson', data: finishSelectedPoint });
+
+            map.addLayer({
+                id: 'finish_selected_points',
+                source: 'finish_selected_points',
+                type: 'circle',
+                paint: {
+                    'circle-color': 'rgb(246, 140, 30)',
+                    'circle-radius': 10,
+                    'circle-stroke-width': 2,
+                    'circle-stroke-color': 'rgb(245, 198, 147)'
+                }
+            });
+
+            map.on('contextmenu', 'finish_selected_points', function (event) {
+                event.preventDefault();
+                if (selectedFinishPopup == undefined) {
+                    selectedFinishPopup = new mapboxgl.Popup()
+                        .setLngLat(selectedFinishSide == 'a' ?
+                            [selectedFinish.longitude_a, selectedFinish.latitude_a] :
+                            [selectedFinish.longitude_b, selectedFinish.latitude_b]
+                        )
+                        .setHTML(`
+                            <label>${strings.latitude}:</label>
+                            <input value="${selectedFinishSide == 'a' ? selectedFinish.latitude_a : selectedFinish.latitude_b}" style="margin-bottom: 8px;">
+                            <label>${strings.longitude}:</label>
+                            <input value="${selectedFinishSide == 'a' ? selectedFinish.longitude_a : selectedFinish.longitude_b}" style="margin-bottom: 8px;">
+                            <button>${strings.delete_button}</button>
+                        `)
+                        .on('close', () => {
+                            selectedFinishPopup = undefined;
+                        })
+                        .addTo(map);
+
+                    const content = selectedFinishPopup.getElement().children[1];
+
+                    content.children[1].addEventListener('change', event => {
+                        if (selectedFinishSide == 'a') {
+                            selectedFinish.latitude_a = parseFloat(event.target.value);
+                        }
+                        if (selectedFinishSide == 'b') {
+                            selectedFinish.latitude_b = parseFloat(event.target.value);
+                        }
+                        updateEventFinish(selectedFinish.id);
+
+                        finishesChanged = true;
+                        updateMapItems();
+                    });
+
+                    content.children[3].addEventListener('change', event => {
+                        if (selectedFinishSide == 'a') {
+                            selectedFinish.longitude_a = parseFloat(event.target.value);
+                        }
+                        if (selectedFinishSide == 'b') {
+                            selectedFinish.longitude_b = parseFloat(event.target.value);
+                        }
+                        updateEventFinish(selectedFinish.id);
+
+                        finishesChanged = true;
+                        updateMapItems();
+                    });
+
+                    content.children[4].addEventListener('click', event => {
+                        selectedFinishPopup.remove();
+                        selectedFinishPopup = undefined;
+
+                        deleteEventFinish(selectedFinish.id);
+                        selectedFinish = undefined;
+
+                        finishesChanged = true;
+                        updateMapItems();
+                    });
+                }
+            });
+
+            map.on('mouseenter', 'finish_selected_points', pointMouseEnter);
+            map.on('mouseleave', 'finish_selected_points', pointMouseLeave);
+            map.on('mousedown', 'finish_selected_points', finishMouseDown);
+        }
+
+        // Finish points layer
+        const finishPoints = {
+            type: 'FeatureCollection',
+            features: finishes.filter(finish => !(finish.id == selectedFinish?.id && selectedFinishSide == 'a')).map(finish => ({
+                type: 'Feature',
+                properties: {
+                    finishId: finish.id,
+                    side: 'a'
+                },
+                geometry: {
+                    type: 'Point',
+                    coordinates: [finish.longitude_a, finish.latitude_a]
+                }
+            })).concat(finishes.filter(finish => !(finish.id == selectedFinish?.id && selectedFinishSide == 'b')).map(finish => ({
+                type: 'Feature',
+                properties: {
+                    finishId: finish.id,
+                    side: 'b'
                 },
                 geometry: {
                     type: 'Point',
@@ -262,7 +482,11 @@ function updateMapItems() {
                     'circle-color': '#ff0',
                     'circle-radius': 6
                 }
-            });
+            }, 'finish_selected_points');
+
+            map.on('mouseenter', 'finish_points', pointMouseEnter);
+            map.on('mouseleave', 'finish_points', pointMouseLeave);
+            map.on('mousedown', 'finish_points', finishMouseDown);
         }
 
         // Finish lines layer
@@ -305,13 +529,13 @@ function updateMapItems() {
     if (pathChanged) {
         pathChanged = false;
 
-        // Path points layer
+        // Selected path points layer
         const pathSelectedPoint = {
             type: 'FeatureCollection',
-            features: path.filter(point => point.id == selectedPointId).map(point => ({
+            features: path.filter(point => point.id == selectedPoint?.id).map(point => ({
                 type: 'Feature',
                 properties: {
-                    point: point
+                    pointId: point.id
                 },
                 geometry: {
                     type: 'Point',
@@ -340,15 +564,13 @@ function updateMapItems() {
             map.on('contextmenu', 'path_selected_point', function (event) {
                 event.preventDefault();
                 if (selectedPointPopup == undefined) {
-                    const point = path.find(point => point.id == selectedPointId);
-
                     selectedPointPopup = new mapboxgl.Popup()
-                        .setLngLat([point.lng, point.lat])
+                        .setLngLat([selectedPoint.lng, selectedPoint.lat])
                         .setHTML(`
                             <label>${strings.latitude}:</label>
-                            <input value="${point.lat}" style="margin-bottom: 8px;">
+                            <input value="${selectedPoint.lat}" style="margin-bottom: 8px;">
                             <label>${strings.longitude}:</label>
-                            <input value="${point.lng}" style="margin-bottom: 8px;">
+                            <input value="${selectedPoint.lng}" style="margin-bottom: 8px;">
                             <button>${strings.delete_button}</button>
                         `)
                         .on('close', () => {
@@ -359,18 +581,16 @@ function updateMapItems() {
                     const content = selectedPointPopup.getElement().children[1];
 
                     content.children[1].addEventListener('change', event => {
-                        const point = path.find(point => point.id == selectedPointId);
-                        point.lat = parseFloat(event.target.value);
-                        saveEventPath();
+                        selectedPoint.lat = parseFloat(event.target.value);
+                        updateEvent();
 
                         pathChanged = true;
                         updateMapItems();
                     });
 
                     content.children[3].addEventListener('change', event => {
-                        const point = path.find(point => point.id == selectedPointId);
-                        point.lng = parseFloat(event.target.value);
-                        saveEventPath();
+                        selectedPoint.lng = parseFloat(event.target.value);
+                        updateEvent();
 
                         pathChanged = true;
                         updateMapItems();
@@ -378,10 +598,11 @@ function updateMapItems() {
 
                     content.children[4].addEventListener('click', event => {
                         selectedPointPopup.remove();
+                        selectedPointPopup = undefined;
 
-                        path = path.filter(point => point.id != selectedPointId);
-                        saveEventPath();
-                        selectedPointId = undefined;
+                        path = path.filter(point => point.id != selectedPoint?.id);
+                        updateEvent();
+                        selectedPoint = undefined;
 
                         pathChanged = true;
                         updateMapItems();
@@ -397,10 +618,10 @@ function updateMapItems() {
         // Path points layer
         const pathPoints = {
             type: 'FeatureCollection',
-            features: path.filter(point => point.id != selectedPointId).map(point => ({
+            features: path.filter(point => point.id != selectedPoint?.id).map(point => ({
                 type: 'Feature',
                 properties: {
-                    point: point
+                    pointId: point.id
                 },
                 geometry: {
                     type: 'Point',
@@ -463,14 +684,24 @@ function updateMapItems() {
         pathLengthControl.onUpdate();
     }
 
+    // Selected finish popup
+    if (selectedFinishPopup != undefined) {
+        selectedFinishPopup.setLngLat(selectedFinishSide == 'a' ?
+            [selectedFinish.longitude_a, selectedFinish.latitude_a] :
+            [selectedFinish.longitude_b, selectedFinish.latitude_b]);
+
+        const content = selectedFinishPopup.getElement().children[1];
+        content.children[1].value = selectedFinishSide == 'a' ? selectedFinish.latitude_a : selectedFinish.latitude_b;
+        content.children[3].value = selectedFinishSide == 'a' ? selectedFinish.longitude_a : selectedFinish.longitude_b;
+    }
+
     // Selected point popup
     if (selectedPointPopup != undefined) {
-        const point = path.find(point => point.id == selectedPointId);
-        selectedPointPopup.setLngLat([point.lng, point.lat]);
+        selectedPointPopup.setLngLat([selectedPoint.lng, selectedPoint.lat]);
 
         const content = selectedPointPopup.getElement().children[1];
-        content.children[1].value = point.lat;
-        content.children[3].value = point.lng;
+        content.children[1].value = selectedPoint.lat;
+        content.children[3].value = selectedPoint.lng;
     }
 }
 
