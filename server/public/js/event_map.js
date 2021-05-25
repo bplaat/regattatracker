@@ -147,20 +147,33 @@ class PathLengthControl {
 }
 
 function updateEvent() {
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', links.apiEventsUpdate.replace('{event}', event.id), true);
-    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-    xhr.setRequestHeader('Authorization', 'Bearer ' + apiToken);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.send('api_key=' + apiKey + '&name=' + event.name + '&start=' + (event.start != null ? event.start : '')  +
-        '&end=' + (event.end != null ? event.end : '') + '&connected=' + event.connected +
-        '&path=' + JSON.stringify(path.map(point => [point.lat, point.lng])));
+    fetch(links.apiEventsUpdate.replace('{event}', event.id), {
+        method: 'post',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'Authorization': 'Bearer ' + apiToken,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'api_key=' + apiKey + '&name=' + event.name + '&start=' + (event.start != null ? event.start : '')  +
+            '&end=' + (event.end != null ? event.end : '') + '&connected=' + event.connected +
+            '&path=' + JSON.stringify(path.map(point => [point.lat, point.lng]))
+    });
 }
 
 function storeEventFinish(finish) {
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-        const finish = JSON.parse(xhr.responseText);
+    fetch(links.apiEventFinishesStore.replace('{event}', event.id), {
+        method: 'post',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'Authorization': 'Bearer ' + apiToken,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'api_key=' + apiKey + '&latitude_a=' +  finish.latitude_a.toFixed(8) + '&longitude_a=' +  finish.longitude_a.toFixed(8) +
+            '&latitude_b=' + finish.latitude_b.toFixed(8) + '&longitude_b=' +  finish.longitude_b.toFixed(8)
+    })
+    .then(response => response.json())
+    .then(data => {
+        const finish = data;
         finish.latitude_a = parseFloat(finish.latitude_a);
         finish.longitude_a = parseFloat(finish.longitude_a);
         finish.latitude_b = parseFloat(finish.latitude_b);
@@ -169,36 +182,34 @@ function storeEventFinish(finish) {
 
         finishesChanged = true;
         updateMapItems();
-    };
-    xhr.open('POST', links.apiEventFinishesStore.replace('{event}', event.id), true);
-    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-    xhr.setRequestHeader('Authorization', 'Bearer ' + apiToken);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.send('api_key=' + apiKey + '&latitude_a=' +  finish.latitude_a.toFixed(8) + '&longitude_a=' +  finish.longitude_a.toFixed(8) +
-        '&latitude_b=' + finish.latitude_b.toFixed(8) + '&longitude_b=' +  finish.longitude_b.toFixed(8));
+    });
 }
 
 function updateEventFinish(finishId) {
     const finish = finishes.find(finish => finish.id == finishId);
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', links.apiEventFinishesUpdate.replace('{event}', event.id).replace('{eventFinish}', finish.id), true);
-    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-    xhr.setRequestHeader('Authorization', 'Bearer ' + apiToken);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.send('api_key=' + apiKey + '&latitude_a=' + finish.latitude_a.toFixed(8) + '&longitude_a=' + finish.longitude_a.toFixed(8) +
-        '&latitude_b=' + finish.latitude_b.toFixed(8) + '&longitude_b=' + finish.longitude_b.toFixed(8));
+    fetch(links.apiEventFinishesUpdate.replace('{event}', event.id).replace('{eventFinish}', finish.id), {
+        method: 'post',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'Authorization': 'Bearer ' + apiToken,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'api_key=' + apiKey + '&latitude_a=' + finish.latitude_a.toFixed(8) + '&longitude_a=' + finish.longitude_a.toFixed(8) +
+            '&latitude_b=' + finish.latitude_b.toFixed(8) + '&longitude_b=' + finish.longitude_b.toFixed(8)
+    });
 }
 
 function deleteEventFinish(finishId) {
     const finish = finishes.find(finish => finish.id == finishId);
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', links.apiEventFinishesDelete.replace('{event}', event.id).replace('{eventFinish}', finish.id) + '?api_key=' + apiKey, true);
-    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-    xhr.setRequestHeader('Authorization', 'Bearer ' + apiToken);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.send();
+    fetch(links.apiEventFinishesDelete.replace('{event}', event.id).replace('{eventFinish}', finish.id) + '?api_key=' + apiKey, {
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'Authorization': 'Bearer ' + apiToken,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    });
 
     finishes = finishes.filter(finish => finish.id != finishId);
 

@@ -196,23 +196,27 @@ function sendCurrentPosition(currentPosition) {
 
     log('Send position: ' + JSON.stringify(currentPosition));
 
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
+    fetch(links.apiItemPositionsStore.replace('{item}', item.id), {
+        method: 'post',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'Authorization': 'Bearer ' + apiToken,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'api_key=' + apiKey + '&' +
+            'latitude=' + currentPosition.lat.toFixed(8) + '&' +
+            'longitude=' + currentPosition.lng.toFixed(8)
+    })
+    .then(response => response.json())
+    .then(data => {
         // Add new position to positions
-        const position = JSON.parse(xhr.responseText);
+        const position = data;
         positions.unshift(position);
         log('Position received: ' + JSON.stringify(position));
 
         // And update map items
         updateMapItems();
-    };
-    xhr.open('POST', links.apiItemPositionsStore.replace('{item}', item.id), true);
-    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-    xhr.setRequestHeader('Authorization', 'Bearer ' + apiToken);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.send('api_key=' + apiKey + '&' +
-        'latitude=' + currentPosition.lat.toFixed(8) + '&' +
-        'longitude=' + currentPosition.lng.toFixed(8));
+    });
 }
 
 function updateText() {
