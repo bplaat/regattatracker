@@ -27,6 +27,7 @@
                 websocketsReconnectTimeout: @json(config('websockets.reconnect_timeout')),
                 websocketsUrl: 'ws://' + @json(config('websockets.host')) + ':' + @json(config('websockets.port')) + '/',
                 mapboxAccessToken: @json(config('mapbox.access_token')),
+                openweatherApiKey: @json(config('openweather.api_key')),
                 boats: @json($boats),
                 buoys: @json($buoys),
                 strings: {

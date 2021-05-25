@@ -1,6 +1,7 @@
 const websocketsReconnectTimeout = window.data.websocketsReconnectTimeout;
 const websocketsUrl = window.data.websocketsUrl;
 mapboxgl.accessToken = window.data.mapboxAccessToken;
+const openweatherApiKey = window.data.openweatherApiKey;
 const boats = window.data.boats;
 const buoys = window.data.buoys;
 const strings = window.data.strings;
@@ -10,6 +11,29 @@ let buoysChanged = true;
 
 function isDarkModeEnabled() {
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
+class WindInfoControl {
+    onAdd(map) {
+        this._map = map;
+
+        this._container = document.createElement('div');
+        this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+        this._container.style = 'padding: 4px 8px;';
+        this._container.innerHTML = `<p></p>`;
+        this.onUpdate();
+
+        return this._container;
+    }
+
+    onUpdate() {
+            this._container.children[0].textContent = 'Wind info';
+    }
+
+    onRemove() {
+        this._map = undefined;
+        this._container.parentNode.removeChild(this._container);
+    }
 }
 
 const map = new mapboxgl.Map({
@@ -33,6 +57,20 @@ map.addControl(new mapboxgl.ScaleControl(), 'bottom-left');
 map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 map.addControl(new mapboxgl.GeolocateControl(), 'bottom-right');
 map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
+map.addControl(new WindInfoControl(), 'top-right');
+
+const center = map.getCenter();
+
+fetch("http://api.openweathermap.org/data/2.5/weather?q=Dordrecht&appid=" + openweatherApiKey)
+  .then(response => {
+    return response.json();
+  })
+  .then(weatherInfo => {
+    console.log(weatherInfo);
+  })
+  .catch(error => {
+    console.log("Error: " + error);
+  });
 
 function mapMouseEnter(event) {
     map.getCanvas().style.cursor = 'pointer';
