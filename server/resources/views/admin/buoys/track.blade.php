@@ -43,7 +43,7 @@
             item: @json($buoy),
             positions: @json($buoyPositions),
             links: {
-                apiItemPositionsStore: @json(str_replace('{buoy'}, '{item'}, rawRoute('api.buoys.positions.store'))),
+                apiItemPositionsStore: @json(rawRoute('api.buoys.positions.store')).replace('{buoy}', '{item}'),
                 itemPositionsEdit: @json(rawRoute('admin.buoys.positions.edit')).replace('{buoy}', '{item}').replace('{buoyPosition}', '{itemPosition}'),
                 itemPositionsDelete: @json(rawRoute('admin.buoys.positions.delete')).replace('{buoy}', '{item}').replace('{buoyPosition}', '{itemPosition}')
             },

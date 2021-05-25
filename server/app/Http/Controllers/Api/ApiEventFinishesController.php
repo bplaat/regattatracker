@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\EventFinish;
+use App\Rules\Latitude;
+use App\Rules\Longitude;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -33,10 +35,10 @@ class ApiEventFinishesController extends Controller
 
         // Create event finish
         $eventFinish = $event->finishes()->create([
-            'latitude_a' => $fields['latitude_a'],
-            'longitude_a' => $fields['longitude_a'],
-            'latitude_b' => $fields['latitude_b'],
-            'longitude_b' => $fields['longitude_b']
+            'latitude_a' => request('latitude_a'),
+            'longitude_a' => request('longitude_a'),
+            'latitude_b' => request('latitude_b'),
+            'longitude_b' => request('longitude_b')
         ]);
 
         return $eventFinish;
@@ -65,10 +67,10 @@ class ApiEventFinishesController extends Controller
 
         // Update event finish
         $eventFinish->update([
-            'latitude_a' => $fields['latitude_a'],
-            'longitude_a' => $fields['longitude_a'],
-            'latitude_b' => $fields['latitude_b'],
-            'longitude_b' => $fields['longitude_b']
+            'latitude_a' => request('latitude_a'),
+            'longitude_a' => request('longitude_a'),
+            'latitude_b' => request('latitude_b'),
+            'longitude_b' => request('longitude_b')
         ]);
 
         return $eventFinish;

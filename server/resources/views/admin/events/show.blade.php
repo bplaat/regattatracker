@@ -65,7 +65,10 @@
                 mapboxAccessToken: @json(config('mapbox.access_token')),
                 event: @json($event),
                 links: {
-                    apiEventsUpdate: @json(rawRoute('api.events.update'))
+                    apiEventsUpdate: @json(rawRoute('api.events.update')),
+                    apiEventFinishesStore: @json(rawRoute('api.events.finishes.store')),
+                    apiEventFinishesUpdate: @json(rawRoute('api.events.finishes.update')),
+                    apiEventFinishesDelete: @json(rawRoute('api.events.finishes.delete'))
                 },
                 strings: {
                     add_point_button: @json(__('admin/events.show.map_add_point_button')),
