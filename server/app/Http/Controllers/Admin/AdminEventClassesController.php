@@ -17,12 +17,14 @@ class AdminEventClassesController extends Controller
     // Admin event classes store route
     public function store(Request $request, Event $event) {
         $fields = $request->validate([
-            'name' => 'required|min:2|max:48'
+            'name' => 'required|min:2|max:48',
+            'flag' => 'size:1|regex:/[A-Z-]/'
         ]);
 
         EventClass::create([
             'event_id' => $event->id,
-            'name' => $fields['name']
+            'name' => $fields['name'],
+            'flag' => $fields['flag'] == "-" ? NULL : $fields['flag']
         ]);
 
         return redirect()->route('admin.events.show', ['event' => $event]);
@@ -36,11 +38,13 @@ class AdminEventClassesController extends Controller
     // Admin event classes update route
     public function update(Request $request, Event $event, EventClass $eventClass) {
         $fields = $request->validate([
-            'name' => 'required|min:2|max:48'
+            'name' => 'required|min:2|max:48',
+            'flag' => 'size:1|regex:/[A-Z-]/'
         ]);
 
         $eventClass->update([
-            'name' => $fields['name']
+            'name' => $fields['name'],
+            'flag' => $fields['flag'] == "-" ? NULL : $fields['flag']
         ]);
 
         return redirect()->route('admin.events.show', ['event' => $event]);
