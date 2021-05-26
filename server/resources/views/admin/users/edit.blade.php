@@ -214,7 +214,7 @@
                     @error('password')
                         <p class="help is-danger">{{ $errors->first('password') }}</p>
                     @else
-                        <p class="help">@lang('admin/users.edit.password_help')</p>
+                        <p class="help">@lang('admin/users.edit.password_message')</p>
                     @enderror
                 </div>
             </div>
@@ -250,7 +250,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" type="submit">@lang('admin/users.edit.button')</button>
+                <button class="button is-link" type="submit">@lang('admin/users.edit.edit_button')</button>
             </div>
         </div>
     </form>

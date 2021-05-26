@@ -1,7 +1,8 @@
 const type = window.data.type;
 mapboxgl.accessToken = window.data.mapboxAccessToken;
+const item = window.data.item;
 const positions = window.data.positions;
-const link = window.data.link;
+const links = window.data.links;
 const strings = window.data.strings;
 
 function isDarkModeEnabled() {
@@ -15,6 +16,11 @@ const map = new mapboxgl.Map({
     zoom: 12,
     attributionControl: false
 });
+
+map.addControl(new mapboxgl.ScaleControl(), 'bottom-left');
+map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+map.addControl(new mapboxgl.GeolocateControl(), 'bottom-right');
+map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 
 map.on('load', () => {
     // Add line and points when there are old positions
@@ -80,12 +86,12 @@ map.on('load', () => {
 
             new mapboxgl.Popup()
                 .setLngLat([position.longitude, position.latitude])
-                .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + strings.title + ' #' + position.id + '</h3>' +
+                .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + strings.name.replace(':item_position.id', position.id) + '</h3>' +
                     '<div>' + strings.latitude + ': ' + position.latitude + '</div>' +
                     '<div>' + strings.longitude + ': ' + position.longitude + '</div>' +
                     '<div>' + strings.time + ': ' + new Date(position.created_at).toLocaleString('en-US') + '</div>' +
-                    '<div><a href="' + link + '/' + position.id + '/edit">' + strings.edit + '</a> ' +
-                        '<a href="' + link + '/' + position.id + '/delete">' + strings.delete + '</a></div>'
+                    '<div><a href="' + links.itemPositionsEdit.replace('{item}', item.id).replace('{itemPosition}', position.id) + '">' + strings.edit_button + '</a> ' +
+                        '<a href="' + links.itemPositionsDelete.replace('{item}', item.id).replace('{itemPosition}', position.id) + '">' + strings.delete_button + '</a></div>'
                 )
                 .addTo(map);
         });
@@ -123,13 +129,13 @@ map.on('load', () => {
 
         new mapboxgl.Popup()
             .setLngLat([position.longitude, position.latitude])
-            .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + strings.title + ' #' + position.id + '</h3>' +
+            .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + strings.name.replace(':item_position.id', position.id) + '</h3>' +
                 '<div><b>' + strings.current + '</b></div>' +
                 '<div>' + strings.latitude + ': ' + position.latitude + '</div>' +
                 '<div>' + strings.longitude + ': ' + position.longitude + '</div>' +
                 '<div>' + strings.time + ': ' + new Date(position.created_at).toLocaleString('en-US') + '</div>' +
-                '<div><a href="' + link + '/' + position.id + '/edit">' + strings.edit + '</a> ' +
-                    '<a href="' + link + '/' + position.id + '/delete">' + strings.delete + '</a></div>'
+                '<div><a href="' + links.itemPositionsEdit.replace('{item}', item.id).replace('{itemPosition}', position.id) + '">' + strings.edit_button + '</a> ' +
+                    '<a href="' + links.itemPositionsDelete.replace('{item}', item.id).replace('{itemPosition}', position.id) + '">' + strings.delete_button + '</a></div>'
             )
             .addTo(map);
     });

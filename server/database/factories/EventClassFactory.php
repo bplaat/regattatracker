@@ -23,8 +23,8 @@ class EventClassFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'event_id' => $this->faker->randomElement(Event::all()->pluck('id')->toArray())
+            'event_id' => $this->faker->randomElement(Event::all()->pluck('id')->toArray()),
+            'name' => $this->faker->name
         ];
     }
 }

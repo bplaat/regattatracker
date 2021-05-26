@@ -3,11 +3,8 @@
 @section('title', __('home.title'))
 
 @section('head')
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" />
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
-    @if (config('app.debug'))
-        <style>.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl{display:none!important}</style>
-    @endif
+    <link rel="stylesheet" href="/css/mapbox-gl.min.css" />
+    <script src="/js/mapbox-gl.min.js"></script>
 @endsection
 
 @section('content')
@@ -30,6 +27,7 @@
                 websocketsReconnectTimeout: @json(config('websockets.reconnect_timeout')),
                 websocketsUrl: 'ws://' + @json(config('websockets.host')) + ':' + @json(config('websockets.port')) + '/',
                 mapboxAccessToken: @json(config('mapbox.access_token')),
+                openweatherApiKey: @json(config('openweather.api_key')),
                 boats: @json($boats),
                 buoys: @json($buoys),
                 strings: {

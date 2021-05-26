@@ -17,14 +17,14 @@
         <div class="columns">
             <div class="column">
                 <div class="buttons">
-                    <a class="button is-link" href="{{ route('admin.users.create') }}">@lang('admin/users.index.create')</a>
+                    <a class="button is-link" href="{{ route('admin.users.create') }}">@lang('admin/users.index.create_button')</a>
                 </div>
             </div>
 
             <form class="column" method="GET">
                 <div class="field has-addons">
                     <div class="control" style="width: 100%;">
-                        <input class="input" type="text" id="q" name="q" placeholder="@lang('admin/users.index.search_field')" value="{{ request('q') }}">
+                        <input class="input" type="text" id="q" name="q" placeholder="@lang('admin/users.index.query_placeholder')" value="{{ request('q') }}">
                     </div>
                     <div class="control">
                         <button class="button is-link" type="submit">@lang('admin/users.index.search_button')</button>

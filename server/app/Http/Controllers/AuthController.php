@@ -31,7 +31,7 @@ class AuthController extends Controller
 
         // When not successfull go back with error
         return redirect()->route('auth.login')->withInput()
-            ->with('error', __('auth.login.error'));
+            ->with('error', __('auth.login.error_message'));
     }
 
     // Register route

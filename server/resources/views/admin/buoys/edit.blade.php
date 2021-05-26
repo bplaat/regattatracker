@@ -44,7 +44,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" type="submit">@lang('admin/buoys.edit.button')</button>
+                <button class="button is-link" type="submit">@lang('admin/buoys.edit.edit_button')</button>
             </div>
         </div>
     </form>

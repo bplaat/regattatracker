@@ -22,9 +22,13 @@ The brand new RegattaTracker deluxe tracking system
     ```
     php artisan key:generate
     ```
-- Register a [MapBox](https://www.mapbox.com/) account to get an MapBox access token, insert your token add the end of the `.env` file
+- Register a [MapBox](https://www.mapbox.com/) account to get a MapBox access token, insert your token at the end of the `.env` file
     ```
     MAPBOX_ACCESS_TOKEN={ INSERT YOUR ACCESS TOKEN HERE }
+    ```
+- Register for an [OpenWeather](https://openweathermap.org/) account to get an OpenWeather access token, insert your token at the end of the `.env` file
+    ```
+    OPENWEATHER_API_KEY={ INSERT YOUR ACCESS TOKEN HERE }
     ```
 - Add following lines to `C:/xampp/apache/conf/extra/httpd-vhosts.conf` file
     ```
@@ -40,7 +44,7 @@ The brand new RegattaTracker deluxe tracking system
         Redirect permanent / http://regattatracker.local/
     </VirtualHost>
     ```
-- Add following lines to `C:/Windows/System32/drivers/etc/hosts` file **with administrator rights**
+- Add the following lines to `C:/Windows/System32/drivers/etc/hosts` file **with administrator rights**
     ```
     # RegattaTracker local domains
     127.0.0.1 regattatracker.local
@@ -102,9 +106,13 @@ TODO
     ```
     php artisan key:generate
     ```
-- Register a [MapBox](https://www.mapbox.com/) account to get an MapBox access token, insert your token add the end of the `.env` file
+- Register a [MapBox](https://www.mapbox.com/) account to get a MapBox access token, insert your token at the end of the `.env` file
     ```
     MAPBOX_ACCESS_TOKEN={ INSERT YOUR ACCESS TOKEN HERE }
+    ```
+- Register for an [OpenWeather](https://openweathermap.org/) account to get an OpenWeather access token, insert your token at the end of the `.env` file
+    ```
+    OPENWEATHER_API_KEY={ INSERT YOUR ACCESS TOKEN HERE }
     ```
 - Create the file `/etc/apache2/sites-available/regattatracker.conf` **as root**
     ```

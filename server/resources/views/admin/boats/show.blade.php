@@ -3,11 +3,8 @@
 @section('title', __('admin/boats.show.title', ['boat.name' => $boat->name]))
 
 @section('head')
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css"/>
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
-    @if (config('app.debug'))
-        <style>.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl{display:none!important}</style>
-    @endif
+    <link rel="stylesheet" href="/css/mapbox-gl.min.css"/>
+    <script src="/js/mapbox-gl.min.js"></script>
 @endsection
 
 @section('content')
@@ -30,22 +27,22 @@
         @endif
 
         <h2 class="subtitle is-5">@lang('boats.show.boat_info')</h2>
-        <p>@lang('boats.show.mmsi'): {{ $boat->mmsi }}</p>
-        <p>@lang('boats.show.length'): {{ round($boat->length, 2) }} m</p>
-        <p>@lang('boats.show.breadth'): {{ round($boat->breadth, 2) }} m</p>
-        <p>@lang('boats.show.weight'): {{ round($boat->weight, 2) }} kg</p>
+        <p>@lang('boats.show.mmsi') {{ $boat->mmsi }}</p>
+        <p>@lang('boats.show.length') {{ round($boat->length, 2) }} m</p>
+        <p>@lang('boats.show.breadth') {{ round($boat->breadth, 2) }} m</p>
+        <p>@lang('boats.show.weight') {{ round($boat->weight, 2) }} kg</p>
 
         <h2 class="subtitle is-5">@lang('boats.show.sail_info')</h2>
-        <p>@lang('boats.show.sail_number'): {{ $boat->sail_number }}</p>
-        <p>@lang('boats.show.sail_area'): {{ round($boat->sail_area, 2) }} m<sup>2</sup></p>
+        <p>@lang('boats.show.sail_number') {{ $boat->sail_number }}</p>
+        <p>@lang('boats.show.sail_area') {{ round($boat->sail_area, 2) }} m<sup>2</sup></p>
 
         <h2 class="subtitle is-5">@lang('boats.show.klipperrace_info')</h2>
-        <p>@lang('boats.show.klipperrace_rating'): {{ round($boat->klipperraceRating, 2) }}</p>
+        <p>@lang('boats.show.klipperrace_rating') {{ round($boat->klipperraceRating, 2) }}</p>
 
         <div class="buttons">
-            <a class="button is-warning" href="{{ route('admin.boats.track', $boat) }}">@lang('admin/boats.show.track')</a>
-            <a class="button is-link" href="{{ route('admin.boats.edit', $boat) }}">@lang('admin/boats.show.edit')</a>
-            <a class="button is-danger" href="{{ route('admin.boats.delete', $boat) }}">@lang('admin/boats.show.delete')</a>
+            <a class="button is-warning" href="{{ route('admin.boats.track', $boat) }}">@lang('admin/boats.show.track_button')</a>
+            <a class="button is-link" href="{{ route('admin.boats.edit', $boat) }}">@lang('admin/boats.show.edit_button')</a>
+            <a class="button is-danger" href="{{ route('admin.boats.delete', $boat) }}">@lang('admin/boats.show.delete_button')</a>
         </div>
     </div>
 
@@ -62,16 +59,20 @@
                 window.data = {
                     type: 'boat',
                     mapboxAccessToken: @json(config('mapbox.access_token')),
+                    item: @json($boat),
                     positions: @json($boatPositions),
-                    link: @json(route('admin.boats.positions.store', $boat)),
+                    links: {
+                        itemPositionsEdit: @json(rawRoute('admin.boats.positions.edit')).replace('{boat}', '{item}').replace('{boatPosition}', '{itemPosition}'),
+                        itemPositionsDelete: @json(rawRoute('admin.boats.positions.delete')).replace('{boat}', '{item}').replace('{boatPosition}', '{itemPosition}')
+                    },
                     strings: {
-                        title: @json(__('admin/boats.show.positions_map_title')),
+                        name: @json(__('admin/boats.show.positions_map_name')),
                         current: @json(__('admin/boats.show.positions_map_current')),
                         latitude: @json(__('admin/boats.show.positions_map_latitude')),
                         longitude: @json(__('admin/boats.show.positions_map_longitude')),
                         time: @json(__('admin/boats.show.positions_map_time')),
-                        edit: @json(__('admin/boats.show.positions_map_edit')),
-                        delete: @json(__('admin/boats.show.positions_map_delete')),
+                        edit_button: @json(__('admin/boats.show.positions_map_edit_button')),
+                        delete_button: @json(__('admin/boats.show.positions_map_delete_button')),
                     }
                 };
             </script>
@@ -84,21 +85,21 @@
             <div class="column">
                 @if ($boat->positionsByDay($time - 24 * 60 * 60)->count() > 0)
                     <div class="buttons is-left">
-                        <a class="button" href="?day={{ date('Y-m-d', $time - 24 * 60 * 60) }}">@lang('admin/boats.show.positions_previous')</a>
+                        <a class="button" href="?day={{ date('Y-m-d', $time - 24 * 60 * 60) }}">@lang('admin/boats.show.positions_previous_button')</a>
                     </div>
                 @endif
             </div>
 
             <div class="column">
                 <div class="buttons is-centered">
-                    <a class="button is-disabled" href="?day={{ date('Y-m-d') }}">@lang('admin/boats.show.positions_today')</a>
+                    <a class="button is-disabled" href="?day={{ date('Y-m-d') }}">@lang('admin/boats.show.positions_today_button')</a>
                 </div>
             </div>
 
             <div class="column">
                 @if ($boat->positionsByDay($time + 24 * 60 * 60)->count() > 0)
                     <div class="buttons is-right">
-                        <a class="button" href="?day={{ date('Y-m-d', $time + 24 * 60 * 60) }}">@lang('admin/boats.show.positions_next')</a>
+                        <a class="button" href="?day={{ date('Y-m-d', $time + 24 * 60 * 60) }}">@lang('admin/boats.show.positions_next_button')</a>
                     </div>
                 @endif
             </div>
@@ -111,13 +112,13 @@
                 <div class="field has-addons">
                     <div class="control">
                         <input class="input @error('latitude') is-danger @enderror" type="text" id="latitude" name="latitude"
-                            placeholder="@lang('admin/boats.show.positions_latitude_field')"
+                            placeholder="@lang('admin/boats.show.positions_latitude_placeholder')"
                             value="{{ old('latitude', count($boatPositions) > 0 ? $boatPositions[0]->latitude : '') }}" required>
                     </div>
 
                     <div class="control">
                         <input class="input @error('longitude') is-danger @enderror" type="text" id="longitude" name="longitude"
-                            placeholder="@lang('admin/boats.show.positions_longitude_field')"
+                            placeholder="@lang('admin/boats.show.positions_longitude_placeholder')"
                             value="{{ old('longitude', count($boatPositions) > 0 ? $boatPositions[0]->longitude : '') }}" required>
                     </div>
 
@@ -167,7 +168,7 @@
                         <div class="select @error('boat_type_id') is-danger @enderror">
                             <select id="boat_type_id" name="boat_type_id" required>
                                 <option selected disabled>
-                                    @lang('admin/boats.show.boat_types_field')
+                                    @lang('admin/boats.show.boat_types_placeholder')
                                 </option>
 
                                 @foreach ($boatTypes as $boatType)
@@ -248,7 +249,7 @@
                         <div class="select @error('user_id') is-danger @enderror">
                             <select id="user_id" name="user_id" required>
                                 <option selected disabled>
-                                    @lang('admin/boats.show.users_field')
+                                    @lang('admin/boats.show.users_placeholder')
                                 </option>
 
                                 @foreach ($users as $user)
@@ -267,12 +268,12 @@
                             <select id="role" name="role" required>
                                 <option value="{{ App\Models\BoatUser::ROLE_CREW }}"
                                     @if (App\Models\BoatUser::ROLE_CREW == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
-                                    @lang('admin/boats.show.users_role_field_crew')
+                                    @lang('admin/boats.show.users_role_crew_placeholder')
                                 </option>
 
                                 <option value="{{ App\Models\BoatUser::ROLE_CAPTAIN }}"
                                     @if (App\Models\BoatUser::ROLE_CAPTAIN == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
-                                    @lang('admin/boats.show.users_role_field_captain')
+                                    @lang('admin/boats.show.users_role_captain_placeholder')
                                 </option>
                             </select>
                         </div>

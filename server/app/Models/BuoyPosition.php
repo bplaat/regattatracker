@@ -13,4 +13,9 @@ class BuoyPosition extends Model
         'longitude',
         'created_at'
     ];
+
+    // A buoy position belongs to an buoy
+    public function buoy() {
+        return $this->belongsTo(Buoy::class);
+    }
 }

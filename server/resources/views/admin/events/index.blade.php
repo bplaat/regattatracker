@@ -17,14 +17,14 @@
         <div class="columns">
             <div class="column">
                 <div class="buttons">
-                    <a class="button is-link" href="{{ route('admin.events.create') }}">@lang('admin/events.index.create')</a>
+                    <a class="button is-link" href="{{ route('admin.events.create') }}">@lang('admin/events.index.create_button')</a>
                 </div>
             </div>
 
             <form class="column" method="GET">
                 <div class="field has-addons">
                     <div class="control" style="width: 100%;">
-                        <input class="input" type="text" id="q" name="q" placeholder="@lang('admin/events.index.search_field')" value="{{ request('q') }}">
+                        <input class="input" type="text" id="q" name="q" placeholder="@lang('admin/events.index.query_placeholder')" value="{{ request('q') }}">
                     </div>
                     <div class="control">
                         <button class="button is-link" type="submit">@lang('admin/events.index.search_button')</button>
@@ -55,6 +55,15 @@
                             @else
                                 <p><i>@lang('admin/events.index.end_empty')</i></p>
                             @endif
+
+                            <p>
+                                @lang('admin/events.index.connected')
+                                @if ($event->connected == App\Models\Event::CONNECTED_TRUE)
+                                    @lang('admin/events.index.connected_true')
+                                @else
+                                    @lang('admin/events.index.connected_false')
+                                @endif
+                            </p>
                         </div>
                     </div>
                 @endforeach

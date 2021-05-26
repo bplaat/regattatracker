@@ -19,13 +19,13 @@
         @endif
 
         <div class="buttons">
-            <a class="button is-link" href="{{ route('admin.boat_types.edit', $boatType) }}">@lang('admin/boat_types.show.edit')</a>
-            <a class="button is-danger" href="{{ route('admin.boat_types.delete', $boatType) }}">@lang('admin/boat_types.show.delete')</a>
+            <a class="button is-link" href="{{ route('admin.boat_types.edit', $boatType) }}">@lang('admin/boat_types.show.edit_button')</a>
+            <a class="button is-danger" href="{{ route('admin.boat_types.delete', $boatType) }}">@lang('admin/boat_types.show.delete_button')</a>
         </div>
     </div>
 
     <div class="box content">
-        <h2 class="title is-4">@lang('admin/boat_types.show.boats_title')</h2>
+        <h2 class="title is-4">@lang('admin/boat_types.show.boats')</h2>
 
         @if ($boats->count() > 0)
             {{ $boats->links() }}

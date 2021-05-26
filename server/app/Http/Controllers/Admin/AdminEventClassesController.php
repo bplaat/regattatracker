@@ -9,46 +9,46 @@ use Illuminate\Http\Request;
 
 class AdminEventClassesController extends Controller
 {
-    // Admin event class create route
+    // Admin event classes create route
     public function create(Event $event) {
         return view('admin.events.classes.create', ['event' => $event]);
     }
 
-    // Admin event class store route
+    // Admin event classes store route
     public function store(Request $request, Event $event) {
         $fields = $request->validate([
-            'name' => 'required|min:2|max:255'
+            'name' => 'required|min:2|max:48'
         ]);
 
         EventClass::create([
-           'name' => $fields['name'],
-           'event_id' => $event->id
+            'event_id' => $event->id,
+            'name' => $fields['name']
         ]);
 
         return redirect()->route('admin.events.show', ['event' => $event]);
     }
 
-    // Admin event class update route
-    public function update(Request $request, Event $event, EventClass $class) {
+    // Admin event classes edit route
+    public function edit(Event $event, EventClass $eventClass) {
+        return view('admin.events.classes.edit', ['event' => $event, 'eventClass' => $eventClass]);
+    }
+
+    // Admin event classes update route
+    public function update(Request $request, Event $event, EventClass $eventClass) {
         $fields = $request->validate([
-            'name' => 'required|min:2|max:255'
+            'name' => 'required|min:2|max:48'
         ]);
 
-        $class->update([
-           'name' => $fields['name']
+        $eventClass->update([
+            'name' => $fields['name']
         ]);
 
         return redirect()->route('admin.events.show', ['event' => $event]);
     }
 
-    // Admin event class edit route
-    public function edit(Event $event, EventClass $class) {
-        return view('admin.events.classes.edit', ['event' => $event, 'class' => $class]);
-    }
-
-    // Admin event class delete route
-    public function delete(Event $event, EventClass $class) {
-        $class->delete();
+    // Admin event classes delete route
+    public function delete(Event $event, EventClass $eventClass) {
+        $eventClass->delete();
 
         return redirect()->route('admin.events.show', ['event' => $event]);
     }

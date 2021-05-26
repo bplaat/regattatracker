@@ -151,7 +151,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" type="submit">@lang('admin/boats.create.button')</button>
+                <button class="button is-link" type="submit">@lang('admin/boats.create.create_button')</button>
             </div>
         </div>
     </form>

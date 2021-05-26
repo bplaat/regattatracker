@@ -40,7 +40,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" type="submit">@lang('auth.login.button')</button>
+                <button class="button is-link" type="submit">@lang('auth.login.login_button')</button>
             </div>
         </div>
     </form>

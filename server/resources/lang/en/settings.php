@@ -6,7 +6,7 @@ return [
     'breadcrumb' => 'Settings',
 
     // Change details part
-    'change_details_title' => 'Change details',
+    'change_details' => 'Change details',
     'firstname' => 'First name',
     'insertion' => 'Insertion',
     'lastname' => 'Last name',
@@ -25,7 +25,7 @@ return [
     'change_details_message' => 'Your details have changed',
 
     // Change password part
-    'change_password_title' => 'Change password',
+    'change_password' => 'Change password',
     'current_password' => 'Current password',
     'password' => 'New password',
     'password_confirmation' => 'Confirm new password',

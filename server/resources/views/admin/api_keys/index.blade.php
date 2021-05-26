@@ -17,14 +17,14 @@
         <div class="columns">
             <div class="column">
                 <div class="buttons">
-                    <a class="button is-link" href="{{ route('admin.api_keys.create') }}">@lang('admin/api_keys.index.create')</a>
+                    <a class="button is-link" href="{{ route('admin.api_keys.create') }}">@lang('admin/api_keys.index.create_button')</a>
                 </div>
             </div>
 
             <form class="column" method="GET">
                 <div class="field has-addons">
                     <div class="control" style="width: 100%;">
-                        <input class="input" type="text" id="q" name="q" placeholder="@lang('admin/api_keys.index.search_field')" value="{{ request('q') }}">
+                        <input class="input" type="text" id="q" name="q" placeholder="@lang('admin/api_keys.index.query_placeholder')" value="{{ request('q') }}">
                     </div>
                     <div class="control">
                         <button class="button is-link" type="submit">@lang('admin/api_keys.index.search_button')</button>
@@ -51,8 +51,8 @@
                                     <span class="tag is-pulled-right is-danger">@lang('admin/api_keys.index.level_no_auth')</span>
                                 @endif
                             </h2>
-                            <p>@lang('admin/api_keys.index.key'): <code>{{ $apiKey->key }}</code></p>
-                            <p>@lang('admin/api_keys.index.requests'): <strong>{{ $apiKey->requests }}</strong></p>
+                            <p>@lang('admin/api_keys.index.key') <code>{{ $apiKey->key }}</code></p>
+                            <p>@lang('admin/api_keys.index.requests') <strong>{{ $apiKey->requests }}</strong></p>
                         </div>
                     </div>
                 @endforeach

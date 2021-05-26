@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFinishesTable extends Migration
+class CreateEventFinishesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFinishesTable extends Migration
      */
     public function up()
     {
-        Schema::create('finishes', function (Blueprint $table) {
+        Schema::create('event_finishes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('event_id');
             $table->decimal('latitude_a', 10, 8);
@@ -37,6 +37,6 @@ class CreateFinishesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('finishes');
+        Schema::dropIfExists('event_finishes');
     }
 }

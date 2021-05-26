@@ -9,20 +9,28 @@ class Event extends Model
 {
     use HasFactory;
 
+    // The connected things
+    const CONNECTED_FALSE = 0;
+    const CONNECTED_TRUE = 1;
+
     protected $fillable = [
-      'name',
-      'start',
-      'end'
+        'name',
+        'start',
+        'end',
+        'connected',
+        'path'
     ];
 
-    // An event belongs to many classes.
-    public function classes() {
-        return EventClass::all()->where('event_id', '=', $this->id);
+    // An event has many finishes
+    public function finishes()
+    {
+        return $this->hasMany(EventFinish::class);
     }
 
-    // An event belongs to many finishes.
-    public function finishes() {
-        return Finish::all()->where('event_id', '=', $this->id);
+    // An event has many classes
+    public function classes()
+    {
+        return $this->hasMany(EventClass::class);
     }
 
     // Search by a query.

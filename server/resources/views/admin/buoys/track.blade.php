@@ -3,11 +3,8 @@
 @section('title', __('admin/buoys.track.title', ['buoy.name' => $buoy->name]))
 
 @section('head')
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" />
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
-    @if (config('app.debug'))
-        <style>.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl{display:none!important}</style>
-    @endif
+    <link rel="stylesheet" href="/css/mapbox-gl.min.css" />
+    <script src="/js/mapbox-gl.min.js"></script>
 @endsection
 
 @section('content')
@@ -46,24 +43,24 @@
             item: @json($buoy),
             positions: @json($buoyPositions),
             links: {
-                apiPositionsStore: @json(route('api.buoys.positions.store', $buoy)),
-                positionsPrefix: @json(route('admin.buoys.positions.store', $buoy))
+                apiItemPositionsStore: @json(rawRoute('api.buoys.positions.store')).replace('{buoy}', '{item}'),
+                itemPositionsEdit: @json(rawRoute('admin.buoys.positions.edit')).replace('{buoy}', '{item}').replace('{buoyPosition}', '{itemPosition}'),
+                itemPositionsDelete: @json(rawRoute('admin.buoys.positions.delete')).replace('{buoy}', '{item}').replace('{buoyPosition}', '{itemPosition}')
             },
             strings: {
-                title: @json(__('admin/buoys.track.map_title')),
+                name: @json(__('admin/buoys.track.map_name')),
                 current: @json(__('admin/buoys.track.map_current')),
                 latitude: @json(__('admin/buoys.track.map_latitude')),
                 longitude: @json(__('admin/buoys.track.map_longitude')),
                 time: @json(__('admin/buoys.track.map_time')),
-                edit: @json(__('admin/buoys.track.map_edit')),
-                delete: @json(__('admin/buoys.track.map_delete')),
+                edit_button: @json(__('admin/buoys.track.map_edit_button')),
+                delete_button: @json(__('admin/buoys.track.map_delete_button')),
 
                 start_button: @json(__('admin/buoys.track.start_button')),
                 stop_button: @json(__('admin/buoys.track.stop_button')),
-                loading_text: @json(__('admin/buoys.track.loading_text')),
-                send_text_prefix: @json(__('admin/buoys.track.send_text_prefix')),
-                send_text_suffix: @json(__('admin/buoys.track.send_text_suffix')),
-                error: @json(__('admin/buoys.track.error'))
+                loading: @json(__('admin/buoys.track.loading')),
+                sending: @json(__('admin/buoys.track.sending')),
+                error_message: @json(__('admin/buoys.track.error_message'))
             }
         };
     </script>

@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Finish extends Model
+class EventFinish extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'event_id',
         'latitude_a',
@@ -14,8 +17,8 @@ class Finish extends Model
         'longitude_b'
     ];
 
-    // A finish has an event.
+    // A event finish belongs to an event
     public function event() {
-        return Event::all()->where('id', '=', $this->event_id)->first();
+        return $this->belongsTo(Event::class);
     }
 }

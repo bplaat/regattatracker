@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', __('admin/boats.positions.edit.title', ['boat.name' => $boat->name, 'boat_position.name' => __('admin/boats.positions.show.breadcrumb') . ' #' . $boatPosition->id]))
+@section('title', __('admin/boats.positions.edit.title', ['boat.name' => $boat->name, 'boat_position.id' => $boatPosition->id]))
 
 @section('content')
     <div class="breadcrumb">
@@ -10,7 +10,7 @@
             <li><a href="{{ route('admin.boats.index') }}">@lang('admin/boats.index.breadcrumb')</a></li>
             <li><a href="{{ route('admin.boats.show', $boat) }}">{{ $boat->name }}</a></li>
             <li><a href="#">@lang('admin/boats.positions.index.breadcrumb')</a></li>
-            <li><a href="#">@lang('admin/boats.positions.show.breadcrumb') #{{ $boatPosition->id }}</a></li>
+            <li><a href="#">@lang('admin/boats.positions.show.breadcrumb', ['boat_position.id' => $boatPosition->id])</a></li>
             <li class="is-active"><a href="{{ route('admin.boats.positions.edit', [$boat, $boatPosition]) }}">@lang('admin/boats.positions.edit.breadcrumb')</a></li>
         </ul>
     </div>
@@ -82,7 +82,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" type="submit">@lang('admin/boats.positions.edit.button')</button>
+                <button class="button is-link" type="submit">@lang('admin/boats.positions.edit.edit_button')</button>
             </div>
         </div>
     </form>

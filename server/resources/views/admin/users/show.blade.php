@@ -27,22 +27,22 @@
 
         <h2 class="subtitle is-5">@lang('admin/users.show.personal_info')</h2>
         @if ($user->gender == App\Models\User::GENDER_MALE)
-            <p>@lang('admin/users.show.gender'): @lang('admin/users.show.gender_male')</p>
+            <p>@lang('admin/users.show.gender') @lang('admin/users.show.gender_male')</p>
         @endif
         @if ($user->gender == App\Models\User::GENDER_FEMALE)
-            <p>@lang('admin/users.show.gender'): @lang('admin/users.show.gender_female')</p>
+            <p>@lang('admin/users.show.gender') @lang('admin/users.show.gender_female')</p>
         @endif
         @if ($user->gender == App\Models\User::GENDER_OTHER)
-            <p>@lang('admin/users.show.gender'): @lang('admin/users.show.gender_other')</p>
+            <p>@lang('admin/users.show.gender') @lang('admin/users.show.gender_other')</p>
         @endif
-        <p>@lang('admin/users.show.birthday'): {{ $user->birthday }}</p>
+        <p>@lang('admin/users.show.birthday') {{ $user->birthday }}</p>
 
         <h2 class="subtitle is-5">@lang('admin/users.show.contact_info')</h2>
-        <p>@lang('admin/users.show.email'): <a href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
+        <p>@lang('admin/users.show.email') <a href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
         @if ($user->phone != null)
-            <p>@lang('admin/users.show.phone'): <a href="tel:{{ $user->phone }}">{{ $user->phone }}</a></p>
+            <p>@lang('admin/users.show.phone') <a href="tel:{{ $user->phone }}">{{ $user->phone }}</a></p>
         @else
-            <p>@lang('admin/users.show.phone'): ?</p>
+            <p>@lang('admin/users.show.phone') ?</p>
         @endif
 
         <h2 class="subtitle is-5">@lang('admin/users.show.address_info')</h2>
@@ -51,16 +51,16 @@
 
         <div class="buttons">
             @if ($user->id != Auth::id())
-                <a class="button is-black" href="{{ route('admin.users.hijack', $user) }}">@lang('admin/users.show.hijack')</a>
+                <a class="button is-black" href="{{ route('admin.users.hijack', $user) }}">@lang('admin/users.show.hijack_button')</a>
             @endif
-            <a class="button is-link" href="{{ route('admin.users.edit', $user) }}">@lang('admin/users.show.edit')</a>
-            <a class="button is-danger" href="{{ route('admin.users.delete', $user) }}">@lang('admin/users.show.delete')</a>
+            <a class="button is-link" href="{{ route('admin.users.edit', $user) }}">@lang('admin/users.show.edit_button')</a>
+            <a class="button is-danger" href="{{ route('admin.users.delete', $user) }}">@lang('admin/users.show.delete_button')</a>
         </div>
     </div>
 
     <!-- User boats -->
     <div class="box content">
-        <h2 class="title is-4">@lang('admin/users.show.boats_title')</h2>
+        <h2 class="title is-4">@lang('admin/users.show.boats')</h2>
 
         @if ($boats->count() > 0)
             {{ $boats->links() }}

@@ -7,8 +7,8 @@ return [
     'login.header' => 'Login',
     'login.email' => 'Email address',
     'login.password' => 'Password',
-    'login.button' => 'Login',
-    'login.error' => 'Incorrect email or password',
+    'login.login_button' => 'Login',
+    'login.error_message' => 'Incorrect email or password',
 
     // Auth register page
     'register.title' => 'Register',
@@ -30,5 +30,5 @@ return [
     'register.country' => 'Country',
     'register.password' => 'Password',
     'register.password_confirmation' => 'Confirm password',
-    'register.button' => 'Register'
+    'register.register_button' => 'Register'
 ];

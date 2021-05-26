@@ -35,6 +35,10 @@ const map = new mapboxgl.Map({
     attributionControl: false
 });
 
+map.addControl(new mapboxgl.ScaleControl(), 'bottom-left');
+map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
+
 const trackButton = document.getElementById('track-button');
 const timeLabel = document.getElementById('time-label');
 let isTracking = false;
@@ -89,16 +93,19 @@ function updateMapItems() {
 
             new mapboxgl.Popup()
                 .setLngLat([position.longitude, position.latitude])
-                .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + strings.title + ' #' + position.id + '</h3>' +
+                .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + strings.name.replace(':item_position.id', position.id) + '</h3>' +
                     '<div><b>' + strings.current + '</b></div>' +
                     '<div>' + strings.latitude + ': ' + position.latitude + '</div>' +
                     '<div>' + strings.longitude + ': ' + position.longitude + '</div>' +
                     '<div>' + strings.time + ': ' + new Date(position.created_at).toLocaleString('en-US') + '</div>' +
-                    '<div><a href="' + links.positionsPrefix + '/' + position.id + '/edit">' + strings.edit + '</a> ' +
-                        '<a href="' + links.positionsPrefix + '/' + position.id + '/delete">' + strings.delete + '</a></div>'
+                    '<div><a href="' + links.itemPositionsEdit.replace('{item}', item.id).replace('{itemPosition}', position.id) + '">' + strings.edit_button + '</a> ' +
+                        '<a href="' + links.itemPositionsDelete.replace('{item}', item.id).replace('{itemPosition}', position.id) + '">' + strings.delete_button + '</a></div>'
                 )
                 .addTo(map);
         });
+
+        map.on('mouseenter', 'current_position_point', mapMouseEnter);
+        map.on('mouseleave', 'current_position_point', mapMouseLeave);
     }
 
     if (positions.length > 1) {
@@ -137,12 +144,12 @@ function updateMapItems() {
 
                 new mapboxgl.Popup()
                     .setLngLat([position.longitude, position.latitude])
-                    .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + strings.title + ' #' + position.id + '</h3>' +
+                    .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + strings.name.replace(':item_position.id',  position.id) + '</h3>' +
                         '<div>' + strings.latitude + ': ' + position.latitude + '</div>' +
                         '<div>' + strings.longitude + ': ' + position.longitude + '</div>' +
                         '<div>' + strings.time + ': ' + new Date(position.created_at).toLocaleString('en-US') + '</div>' +
-                        '<div><a href="' + links.positionsPrefix + '/' + position.id + '/edit">' + strings.edit + '</a> ' +
-                            '<a href="' + links.positionsPrefix + '/' + position.id + '/delete">' + strings.delete + '</a></div>'
+                        '<div><a href="' + links.itemPositionsEdit.replace('{item}', item.id).replace('{itemPosition}', position.id) + '">' + strings.edit_button + '</a> ' +
+                            '<a href="' + links.itemPositionsDelete.replace('{item}', item.id).replace('{itemPosition}', position.id) + '">' + strings.delete_button + '</a></div>'
                     )
                     .addTo(map);
             });
@@ -180,9 +187,6 @@ function updateMapItems() {
                     'line-width': 4
                 }
             }, 'old_position_points');
-
-            map.on('mouseenter', 'current_position_point', mapMouseEnter);
-            map.on('mouseleave', 'current_position_point', mapMouseLeave);
         }
     }
 }
@@ -192,28 +196,31 @@ function sendCurrentPosition(currentPosition) {
 
     log('Send position: ' + JSON.stringify(currentPosition));
 
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
+    fetch(links.apiItemPositionsStore.replace('{item}', item.id), {
+        method: 'post',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'Authorization': 'Bearer ' + apiToken,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'api_key=' + apiKey + '&' +
+            'latitude=' + currentPosition.lat.toFixed(8) + '&' +
+            'longitude=' + currentPosition.lng.toFixed(8)
+    })
+    .then(response => response.json())
+    .then(data => {
         // Add new position to positions
-        const position = JSON.parse(xhr.responseText);
+        const position = data;
         positions.unshift(position);
         log('Position received: ' + JSON.stringify(position));
 
         // And update map items
         updateMapItems();
-    };
-    xhr.open('POST', links.apiPositionsStore, true);
-    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-    xhr.setRequestHeader('Authorization', 'Bearer ' + apiToken);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.send('api_key=' + apiKey + '&' +
-        'latitude=' + currentPosition.lat.toFixed(8) + '&' +
-        'longitude=' + currentPosition.lng.toFixed(8));
+    });
 }
 
 function updateText() {
-    timeLabel.textContent = strings.send_text_prefix + ' ' +
-        ((nextUpdateTime - Date.now()) / 1000).toFixed(0) + ' ' + strings.send_text_suffix;
+    timeLabel.textContent = strings.sending.replace(':seconds', ((nextUpdateTime - Date.now()) / 1000).toFixed(0));
 }
 
 map.on('load', () => {
@@ -229,7 +236,7 @@ map.on('load', () => {
                 isFirstTime = true;
                 trackButton.textContent = strings.stop_button;
                 timeLabel.style.display = 'inline-block';
-                timeLabel.textContent = strings.loading_text;
+                timeLabel.textContent = strings.loading;
 
                 geolocationWatch = navigator.geolocation.watchPosition(event => {
                     const currentPosition = { lat: event.coords.latitude, lng: event.coords.longitude };
@@ -267,7 +274,7 @@ map.on('load', () => {
                 clearInterval(textUpdateInterval);
             }
         } else {
-            alert(strings.error);
+            alert(strings.error_message);
         }
     });
 });

@@ -44,7 +44,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" type="submit">@lang('admin/boat_types.edit.button')</button>
+                <button class="button is-link" type="submit">@lang('admin/boat_types.edit.edit_button')</button>
             </div>
         </div>
     </form>

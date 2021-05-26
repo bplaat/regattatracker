@@ -15,8 +15,8 @@ class CreateEventClassesTable extends Migration
     {
         Schema::create('event_classes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->unsignedBigInteger('event_id');
+            $table->string('name');
             $table->timestamps();
 
             $table->foreign('event_id')
