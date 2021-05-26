@@ -20,15 +20,33 @@
         @csrf
 
         <div class="field">
+            <label class="label" for="flag">@lang('admin/events.classes.create.flag')</label>
+
+            <div class="control">
+                <div class="select">
+                    <select id="flag" name="flag">
+                        <option {{'None' == old('flag', 'None') ? 'selected' : '' }} value="-">@lang('admin/events.classes.create.flag.none')</option>
+                        {{$letter = 'A'}}
+                        @for ($i=0; $i < 26; $i++)
+                            <option
+                                {{ $letter == old('flag', 'None') ? 'selected' : '' }} value="{{ $letter }}">{{ $letter }}</option>
+                            {{$letter++}}
+                        @endfor
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
             <label class="label" for="name">@lang('admin/events.classes.create.name')</label>
 
             <div class="control">
                 <input class="input @error('name') is-danger @enderror" type="text" id="name"
-                    name="name" value="{{ old('name') }}" required>
+                       name="name" value="{{ old('name') }}" required>
             </div>
 
             @error('name')
-                <p class="help is-danger">{{ $errors->first('name') }}</p>
+            <p class="help is-danger">{{ $errors->first('name') }}</p>
             @enderror
         </div>
 

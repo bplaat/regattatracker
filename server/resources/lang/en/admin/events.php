@@ -121,6 +121,8 @@ return [
     'classes.create.title' => 'Create - Classes - :event.name - Events - Admin',
     'classes.create.breadcrumb' => 'Create',
     'classes.create.header' => 'Create class',
+    'classes.create.flag' => 'Flag',
+    'classes.create.flag.none' => 'None',
     'classes.create.name' => 'Name',
     'classes.create.create_button' => 'Create class',
 
@@ -128,6 +130,8 @@ return [
     'classes.edit.title' => 'Edit - :event_class.name - Classes - :event.name - Events - Admin',
     'classes.edit.breadcrumb' => 'Edit',
     'classes.edit.header' => 'Edit class',
+    'classes.edit.flag' => 'Flag',
+    'classes.edit.flag.none' => 'None',
     'classes.edit.name' => 'Name',
     'classes.edit.edit_button' => 'Edit class',
 

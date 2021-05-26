@@ -15,13 +15,31 @@
         </ul>
     </div>
 
-    <h1 class="title">@lang('admin/events.classes.create.header')</h1>
+    <h1 class="title">@lang('admin/events.classes.edit.header')</h1>
 
     <form method="POST" action="{{ route('admin.events.classes.update', [$event, $eventClass]) }}">
         @csrf
 
         <div class="field">
-            <label class="label" for="name">@lang('admin/events.classes.create.name')</label>
+            <label class="label" for="flag">@lang('admin/events.classes.edit.flag')</label>
+
+            <div class="control">
+                <div class="select">
+                    <select id="flag" name="flag">
+                        <option {{'None' == old('flag', $eventClass->flag) ? 'selected' : '' }} value="-">@lang('admin/events.classes.edit.flag.none')</option>
+                        {{$letter = 'A'}}
+                        @for ($i=0; $i < 26; $i++)
+                            <option
+                                {{ $letter == old('flag', $eventClass->flag) ? 'selected' : '' }} value="{{ $letter }}">{{ $letter }}</option>
+                            {{$letter++}}
+                        @endfor
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label" for="name">@lang('admin/events.classes.edit.name')</label>
 
             <div class="control">
                 <input class="input @error('name') is-danger @enderror" type="text" id="name"
@@ -35,7 +53,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" type="submit">@lang('admin/events.classes.create.create_button')</button>
+                <button class="button is-link" type="submit">@lang('admin/events.classes.edit.edit_button')</button>
             </div>
         </div>
     </form>
