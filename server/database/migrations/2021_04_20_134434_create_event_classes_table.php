@@ -17,6 +17,7 @@ class CreateEventClassesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('event_id');
             $table->string('name');
+            $table->char('flag')->nullable();
             $table->timestamps();
 
             $table->foreign('event_id')

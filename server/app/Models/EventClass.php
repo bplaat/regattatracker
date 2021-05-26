@@ -11,7 +11,8 @@ class EventClass extends Model
 
     protected $fillable = [
         'event_id',
-        'name'
+        'name',
+        'flag',
     ];
 
     // A event class belongs to an event.
