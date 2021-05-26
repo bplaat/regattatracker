@@ -47,7 +47,7 @@ return [
     'show.finishes.create.longitude_b_field' => 'Longitude B',
     'show.finishes.create.button' => 'Create finish',
 
-    'show.classes' => 'Events',
+    'show.classes' => 'Classes',
     'show.classes.create' => 'Create new class',
     'show.classes.edit' => 'Edit',
     'show.classes.delete' => 'Delete',
