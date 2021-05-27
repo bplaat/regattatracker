@@ -65,7 +65,8 @@ class TestSeeder extends Seeder
         ApiKey::create([
             'name' => 'ApiTests',
             'key' => '25977eb7e1be7986a17be02b7443eb15',
-            'level' => ApiKey::LEVEL_NO_AUTH
+            'level' => ApiKey::LEVEL_NO_AUTH,
+            'requests' => 0
         ]);
     }
 }

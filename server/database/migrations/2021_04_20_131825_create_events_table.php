@@ -19,7 +19,7 @@ class CreateEventsTable extends Migration
             $table->date('start')->nullable();
             $table->date('end')->nullable();
             $table->unsignedTinyInteger('connected');
-            $table->text('path')->default('[]');
+            $table->text('path');
             $table->timestamps();
         });
     }

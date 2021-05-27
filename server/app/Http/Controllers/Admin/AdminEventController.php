@@ -41,7 +41,8 @@ class AdminEventController extends Controller
             'name' => $fields['name'],
             'start' => $fields['start'],
             'end' => $fields['end'],
-            'connected' => $fields['connected']
+            'connected' => $fields['connected'],
+            'path' => '[]'
         ]);
 
         // Go to the new event show page

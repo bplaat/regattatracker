@@ -45,7 +45,8 @@ class ApiEventsController extends Controller
             'name' => request('name'),
             'start' => request('start'),
             'end' => request('end'),
-            'connected' => request('connected')
+            'connected' => request('connected'),
+            'path' => '[]'
         ]);
 
         return $event;
