@@ -133,8 +133,11 @@
             @foreach ($eventClasses as $eventClass)
                 <div class="box content">
                     @if ($eventClass->flag != NULL)
-                        <img src="/images/flags/{{$eventClass->flag}}.svg" alt="{{$eventClass->flag}}" style="height: 50px">
+                        <div class="box" style="display: inline-block; background-color: #ccc; margin-bottom: 0;">
+                            <img src="/images/flags/{{ $eventClass->flag }}.svg" alt="{{ $eventClass->flag }} flag" style="height: 100px">
+                        </div>
                     @endif
+
                     <h1 class="title is-spaced is-4">{{ $eventClass->name }}</h1>
 
                     <div class="buttons">

@@ -22,19 +22,37 @@
         <div class="field">
             <label class="label" for="flag">@lang('admin/events.classes.create.flag')</label>
 
+            <div id="flag-container" class="box" style="display: none; background-color: #ccc;">
+                <img id="flag-image" style="height: 100px">
+            </div>
+
             <div class="control">
-                <div class="select">
+                <div class="select is-fullwidth">
                     <select id="flag" name="flag">
-                        <option {{'None' == old('flag', 'None') ? 'selected' : '' }} value="-">@lang('admin/events.classes.create.flag.none')</option>
+                        <option value="-" {{ '-' == old('flag', '-') ? 'selected' : '' }}>@lang('admin/events.classes.create.flag.none')</option>
                         {{$letter = 'A'}}
                         @for ($i=0; $i < 26; $i++)
-                            <option
-                                {{ $letter == old('flag', 'None') ? 'selected' : '' }} value="{{ $letter }}">{{ $letter }}</option>
+                            <option value="{{ $letter }}" {{ $letter == old('flag', '-') ? 'selected' : '' }}>{{ $letter }}</option>
                             {{$letter++}}
                         @endfor
                     </select>
                 </div>
             </div>
+
+            <script>
+            const flagContainer = document.getElementById("flag-container");
+            const flagImage = document.getElementById("flag-image");
+            const flagInput = document.getElementById("flag");
+            flagInput.addEventListener('change', () => {
+                if (flagInput.value != '-') {
+                    flagContainer.style.display = 'inline-block';
+                    flagImage.src = '/images/flags/' + flagInput.value + '.svg';
+                    flagImage.alt = flagInput.value + ' flag';
+                } else {
+                    flagContainer.style.display = 'none';
+                }
+            });
+            </script>
         </div>
 
         <div class="field">

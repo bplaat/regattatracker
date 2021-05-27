@@ -23,19 +23,37 @@
         <div class="field">
             <label class="label" for="flag">@lang('admin/events.classes.edit.flag')</label>
 
+            <div id="flag-container" class="box" style="display: {{ $eventClass->flag != NULL ? 'inline-block' : 'none' }}; background-color: #ccc;">
+                <img id="flag-image" @if ($eventClass->flag != NULL) src="/images/flags/{{ $eventClass->flag }}.svg" alt="{{ $eventClass->flag }} flag" @endif style="height: 100px">
+            </div>
+
             <div class="control">
-                <div class="select">
+                <div class="select is-fullwidth">
                     <select id="flag" name="flag">
-                        <option {{'None' == old('flag', $eventClass->flag) ? 'selected' : '' }} value="-">@lang('admin/events.classes.edit.flag.none')</option>
+                        <option value="-" {{ '-' == old('flag', $eventClass->flag) ? 'selected' : '' }}>@lang('admin/events.classes.edit.flag.none')</option>
                         {{$letter = 'A'}}
                         @for ($i=0; $i < 26; $i++)
-                            <option
-                                {{ $letter == old('flag', $eventClass->flag) ? 'selected' : '' }} value="{{ $letter }}">{{ $letter }}</option>
+                            <option value="{{ $letter }}" {{ $letter == old('flag', $eventClass->flag) ? 'selected' : '' }}>{{ $letter }}</option>
                             {{$letter++}}
                         @endfor
                     </select>
                 </div>
             </div>
+
+            <script>
+            const flagContainer = document.getElementById("flag-container");
+            const flagImage = document.getElementById("flag-image");
+            const flagInput = document.getElementById("flag");
+            flagInput.addEventListener('change', () => {
+                if (flagInput.value != '-') {
+                    flagContainer.style.display = 'inline-block';
+                    flagImage.src = '/images/flags/' + flagInput.value + '.svg';
+                    flagImage.alt = flagInput.value + ' flag';
+                } else {
+                    flagContainer.style.display = 'none';
+                }
+            });
+            </script>
         </div>
 
         <div class="field">
