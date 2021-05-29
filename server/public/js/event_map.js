@@ -154,8 +154,8 @@ function updateEvent() {
             'Authorization': 'Bearer ' + apiToken,
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: 'api_key=' + apiKey + '&name=' + event.name + '&start=' + (event.start != null ? event.start : '')  +
-            '&end=' + (event.end != null ? event.end : '') + '&connected=' + event.connected +
+        body: 'api_key=' + apiKey + '&name=' + event.name + '&start=' + (event.start != null ? event.start.split('T')[0] : '')  +
+            '&end=' + (event.end != null ? event.end.split('T')[0] : '') + '&connected=' + event.connected +
             '&path=' + JSON.stringify(path.map(point => [point.lat, point.lng]))
     });
 }
