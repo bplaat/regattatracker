@@ -46,7 +46,7 @@ class ApiTest extends TestCase
             ->assertJsonPath('data.0.length','123.00')
             ->assertJsonPath('data.0.breadth','456.00')
             ->assertJsonPath('data.0.weight','654.000')
-            ->assertJsonPath('data.0.sail_number',123456)
+            ->assertJsonPath('data.0.sail_number','123456')
             ->assertJsonPath('data.0.sail_area','321.00');
     }
 
@@ -68,7 +68,7 @@ class ApiTest extends TestCase
             ->assertJsonPath('length','123.00')
             ->assertJsonPath('breadth','456.00')
             ->assertJsonPath('weight','654.000')
-            ->assertJsonPath('sail_number',123456)
+            ->assertJsonPath('sail_number','123456')
             ->assertJsonPath('sail_area','321.00');
     }
 

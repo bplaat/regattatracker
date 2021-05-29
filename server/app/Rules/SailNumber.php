@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class Longitude implements Rule
+class SailNumber implements Rule
 {
     /**
      * Create a new rule instance.
@@ -25,7 +25,7 @@ class Longitude implements Rule
      */
     public function passes($attribute, $value)
     {
-        return preg_match("/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))(\.(\d{1,8}))?)|180(\.0+)?)$/", $value);
+        return !preg_match('/[^A-Za-z0-9]/i', $value) && strlen($value) <= 32;
     }
 
     /**
@@ -35,6 +35,6 @@ class Longitude implements Rule
      */
     public function message()
     {
-        return __('validation.longitude');
+        return __('validation.sail_number');
     }
 }

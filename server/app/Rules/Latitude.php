@@ -35,6 +35,6 @@ class Latitude implements Rule
      */
     public function message()
     {
-        return 'Incorrect latitude. Max 8 decimals after the decimal point.';
+        return __('validation.latitude');
     }
 }

@@ -7,6 +7,7 @@ use App\Models\Boat;
 use App\Models\BoatType;
 use App\Models\BoatUser;
 use App\Models\User;
+use App\Rules\SailNumber;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -51,7 +52,7 @@ class AdminBoatsController extends Controller
             'length' => 'required|numeric|min:1|max:1000',
             'breadth' => 'required|numeric|min:1|max:1000',
             'weight' => 'required|numeric|min:1|max:100000000',
-            'sail_number' => 'required|integer|min:1|max:100000000',
+            'sail_number' => ['required', new SailNumber],
             'sail_area' => 'required|numeric|min:1|max:10000'
         ]);
 
@@ -149,7 +150,7 @@ class AdminBoatsController extends Controller
             'length' => 'required|numeric|min:1|max:1000',
             'breadth' => 'required|numeric|min:1|max:1000',
             'weight' => 'required|numeric|min:1|max:100000000',
-            'sail_number' => 'required|integer|min:1|max:100000000',
+            'sail_number' => ['required', new SailNumber],
             'sail_area' => 'required|numeric|min:0.1|max:10000'
         ]);
 

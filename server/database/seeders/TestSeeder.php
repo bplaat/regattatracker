@@ -43,7 +43,7 @@ class TestSeeder extends Seeder
             'length' => 123,
             'breadth' => 456,
             'weight' => 654,
-            'sail_number' => 123456,
+            'sail_number' => '123456',
             'sail_area' => 321
         ]);
         $boat->positions()->create([
