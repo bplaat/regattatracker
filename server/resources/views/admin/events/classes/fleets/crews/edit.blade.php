@@ -13,21 +13,23 @@
             <li><a href="#">{{ $eventClass->name }}</a></li>
             <li><a href="#">@lang('admin/events.classes.fleets.index.breadcrumb')</a></li>
             <li><a href="#">{{ $eventClassFleet->name }}</a></li>
-            <li class="is-active"><a href="{{ route('admin.events.classes.fleets.edit', [$event, $eventClass, $eventClassFleet]) }}">@lang('admin/events.classes.fleets.edit.breadcrumb')</a></li>
+            <li><a href="#">@lang('admin/events.classes.fleets.crews.index.breadcrumb')</a></li>
+            <li><a href="#">{{ $eventClassFleetCrew->name }}</a></li>
+            <li class="is-active"><a href="{{ route('admin.events.classes.fleets.crews.edit', [$event, $eventClass, $eventClassFleet, $eventClassFleetCrew]) }}">@lang('admin/events.classes.fleets.crews.edit.breadcrumb')</a></li>
         </ul>
     </div>
 
-    <h1 class="title">@lang('admin/events.classes.fleets.edit.header')</h1>
+    <h1 class="title">@lang('admin/events.classes.fleets.crews.edit.header')</h1>
 
-    <form method="POST" action="{{ route('admin.events.classes.fleets.update', [$event, $eventClass, $eventClassFleet]) }}">
+    <form method="POST" action="{{ route('admin.events.classes.fleets.crews.update', [$event, $eventClass, $eventClassFleet, $eventClassFleetCrew]) }}">
         @csrf
 
         <div class="field">
-            <label class="label" for="name">@lang('admin/events.classes.fleets.edit.name')</label>
+            <label class="label" for="name">@lang('admin/events.classes.fleets.crews.edit.name')</label>
 
             <div class="control">
                 <input class="input @error('name') is-danger @enderror" type="text" id="name"
-                    name="name" value="{{ old('name', $eventClassFleet->name) }}" required>
+                    name="name" value="{{ old('name', $eventClassFleetCrew->name) }}" required>
             </div>
 
             @error('name')
@@ -37,7 +39,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" type="submit">@lang('admin/events.classes.fleets.edit.edit_button')</button>
+                <button class="button is-link" type="submit">@lang('admin/events.classes.fleets.crews.edit.edit_button')</button>
             </div>
         </div>
     </form>

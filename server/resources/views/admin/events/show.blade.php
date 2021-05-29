@@ -160,6 +160,18 @@
                                             @lang('admin/events.show.classes_fleets_delete_button')
                                         </a>
                                     </div>
+
+
+                                    <!-- Event class fleet crews -->
+
+
+
+                                    <div class="buttons">
+                                        <a class="button is-link" href="{{ route('admin.events.classes.fleets.crews.show', ['event' => $event, 'eventClass' => $eventClass, 'eventClassFleet' => $eventClassFleet]) }}">
+                                            @lang('admin/events.show.classes_fleets_crews_show_button')
+                                        </a>
+                                    </div>
+
                                 </div>
                             @endforeach
 
