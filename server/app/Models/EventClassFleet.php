@@ -24,4 +24,9 @@ class EventClassFleet extends Model
     {
         return $this->belongsToMany(Boat::class)->withTimestamps();
     }
+
+    // A fleet class has many crew member
+    public function crews() {
+        return $this->hasMany(EventClassFleetCrew::class);
+    }
 }

@@ -75,6 +75,13 @@ return [
     'show.classes_fleets_empty' => 'No fleets found',
     'show.classes_fleets_create_button' => 'Create new fleet',
 
+    'show.classes_fleets_crews' => 'Crew',
+    'show.classes_fleets_crews_edit_button' => 'Edit',
+    'show.classes_fleets_crews_delete_button' => 'Delete',
+    'show.classes_fleets_crews_show_button' => 'Show Crew',
+    'show.classes_fleets_crews_empty' => 'No crews found',
+    'show.classes_fleets_crews_create_button' => 'Add new crew member',
+
     // Admin events edit page
     'edit.title' => 'Edit - :event.name - Events - Admin',
     'edit.breadcrumb' => 'Edit',
@@ -152,5 +159,31 @@ return [
     'classes.fleets.edit.breadcrumb' => 'Edit',
     'classes.fleets.edit.header' => 'Edit fleet',
     'classes.fleets.edit.name' => 'Name',
-    'classes.fleets.edit.edit_button' => 'Edit fleet'
+    'classes.fleets.edit.edit_button' => 'Edit fleet',
+
+    //### Event class fleet crews pages ###
+    // Event class fleet crews index page
+    'classes.fleets.crews.index.breadcrumb' => 'Crews',
+
+    // Event class fleet crews create page
+    'classes.fleets.crews.create.title' => 'Create - Crews - :event_class_fleet.name - Fleets - :event_class.name - Classes - :event.name - Events - Admin',
+    'classes.fleets.crews.create.breadcrumb' => 'Create',
+    'classes.fleets.crews.create.header' => 'Create Crew',
+    'classes.fleets.crews.create.name' => 'Name',
+    'classes.fleets.crews.create.create_button' => 'Create Crew',
+
+    //Event class fleet crews show page
+    'classes.fleets.crews.show.title' => 'Show - Crews - :event_class_fleet.name - Fleets - :event_class.name - Classes - :event.name - Events - Admin',
+    'classes.fleets.crews.show.breadcrumb' => 'Show',
+    'classes.fleets.crews.show.header' => 'Show Crew',
+    'classes.fleets.crews.show.name' => 'Name',
+    'classes.fleets.crews.show.show_button' => 'Show Crew',
+
+    // Event class fleets edit page
+    'classes.fleets.crews.edit.title' => 'Edit - :event_class_crew.name - Crews - :event_class_fleet.name - Fleets - :event_class.name - Classes - :event.name - Events - Admin',
+    'classes.fleets.crews.edit.breadcrumb' => 'Edit',
+    'classes.fleets.crews.edit.header' => 'Edit crew member',
+    'classes.fleets.crews.edit.name' => 'Name',
+    'classes.fleets.crews.edit.edit_button' => 'Edit crew member'
+
 ];
