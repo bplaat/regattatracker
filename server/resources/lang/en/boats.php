@@ -37,7 +37,7 @@ return [
     'show.sail_info' => 'Sail information',
     'show.sail_number' => 'Sail number:',
     'show.sail_area' => 'Sail area:',
-    'show.klipperrace_info' => 'Klipperrace information',
+    'show.handicap_info' => 'Handicap information',
     'show.klipperrace_rating' => 'Klipperrace rating:',
     'show.track_button' => 'Track boat',
     'show.edit_button' => 'Edit boat',

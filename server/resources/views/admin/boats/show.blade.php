@@ -36,7 +36,7 @@
         <p>@lang('boats.show.sail_number') {{ $boat->sail_number }}</p>
         <p>@lang('boats.show.sail_area') {{ round($boat->sail_area, 2) }} m<sup>2</sup></p>
 
-        <h2 class="subtitle is-5">@lang('boats.show.klipperrace_info')</h2>
+        <h2 class="subtitle is-5">@lang('boats.show.handicap_info')</h2>
         <p>@lang('boats.show.klipperrace_rating') {{ round($boat->klipperraceRating, 2) }}</p>
 
         <div class="buttons">
@@ -159,7 +159,7 @@
             <p><i>@lang('admin/boats.show.boat_types_empty')</i></p>
         @endif
 
-        @if ($boatBoatTypes->count() != $boatTypes->count())
+        @if ($boat->boatTypes->count() != $boatTypes->count())
             <form method="POST" action="{{ route('admin.boats.boat_types.store', $boat) }}">
                 @csrf
 
@@ -172,7 +172,7 @@
                                 </option>
 
                                 @foreach ($boatTypes as $boatType)
-                                    @if (!$boatBoatTypes->pluck('name')->contains($boatType->name))
+                                    @if (!$boatBoatTypes->pluck('id')->contains($boatType->id))
                                         <option value="{{ $boatType->id }}" @if ($boatType->id == old('boat_type_id')) selected @endif>
                                             {{ $boatType->name }}
                                         </option>
@@ -240,7 +240,7 @@
             <p><i>@lang('admin/boats.show.users_empty')</i></p>
         @endif
 
-        @if ($boatUsers->count() != $users->count())
+        @if ($boat->users->count() != $users->count())
             <form method="POST" action="{{ route('admin.boats.users.store', $boat) }}">
                 @csrf
 

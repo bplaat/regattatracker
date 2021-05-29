@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Pivots\EventClassFleetBoatPivot;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -76,7 +77,9 @@ class Boat extends Model
     // A boat belongs to many event class fleets
     public function eventClassFleets()
     {
-        return $this->belongsToMany(EventClassFleet::class)->withTimestamps();
+        return $this->belongsToMany(EventClassFleet::class, 'event_class_fleet_boat')
+            ->withPivot('started_at', 'finished_at')->withTimestamps()
+            ->using(EventClassFleetBoatPivot::class);
     }
 
     // Search by a query

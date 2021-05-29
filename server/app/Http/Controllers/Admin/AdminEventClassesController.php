@@ -27,7 +27,7 @@ class AdminEventClassesController extends Controller
             'flag' => $fields['flag'] == "-" ? NULL : $fields['flag']
         ]);
 
-        return redirect()->route('admin.events.show', ['event' => $event]);
+        return redirect()->route('admin.events.show', $event);
     }
 
     // Admin event classes edit route
@@ -47,13 +47,13 @@ class AdminEventClassesController extends Controller
             'flag' => $fields['flag'] == "-" ? NULL : $fields['flag']
         ]);
 
-        return redirect()->route('admin.events.show', ['event' => $event]);
+        return redirect()->route('admin.events.show', $event);
     }
 
     // Admin event classes delete route
     public function delete(Event $event, EventClass $eventClass) {
         $eventClass->delete();
 
-        return redirect()->route('admin.events.show', ['event' => $event]);
+        return redirect()->route('admin.events.show', $event);
     }
 }

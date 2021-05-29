@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEventClassFleetCrewsTable extends Migration
+class CreateEventClassFleetBoatTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,24 @@ class CreateEventClassFleetCrewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('event_class_fleet_crews', function (Blueprint $table) {
+        Schema::create('event_class_fleet_boat', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('event_class_fleet_id');
-            $table->string('name');
+            $table->unsignedBigInteger('boat_id');
+            $table->timestamp('started_at')->nullable();
+            $table->timestamp('finished_at')->nullable();
             $table->timestamps();
+
+            $table->unique(['event_class_fleet_id', 'boat_id']);
 
             $table->foreign('event_class_fleet_id')
                 ->references('id')
                 ->on('event_class_fleets')
+                ->onDelete('cascade');
+
+            $table->foreign('boat_id')
+                ->references('id')
+                ->on('boats')
                 ->onDelete('cascade');
         });
     }
@@ -33,6 +42,6 @@ class CreateEventClassFleetCrewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event_class_fleet_crews');
+        Schema::dropIfExists('event_class_fleet_boat');
     }
 }

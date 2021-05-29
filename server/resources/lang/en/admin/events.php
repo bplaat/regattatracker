@@ -70,17 +70,11 @@ return [
     'show.classes_create_button' => 'Create new class',
 
     'show.classes_fleets' => 'Fleets',
+    'show.classes_fleets_boats_button' => 'Show boats',
     'show.classes_fleets_edit_button' => 'Edit',
     'show.classes_fleets_delete_button' => 'Delete',
     'show.classes_fleets_empty' => 'No fleets found',
     'show.classes_fleets_create_button' => 'Create new fleet',
-
-    'show.classes_fleets_crews' => 'Crew',
-    'show.classes_fleets_crews_edit_button' => 'Edit',
-    'show.classes_fleets_crews_delete_button' => 'Delete',
-    'show.classes_fleets_crews_show_button' => 'Show Crew',
-    'show.classes_fleets_crews_empty' => 'No crews found',
-    'show.classes_fleets_crews_create_button' => 'Add new crew member',
 
     // Admin events edit page
     'edit.title' => 'Edit - :event.name - Events - Admin',
@@ -161,29 +155,32 @@ return [
     'classes.fleets.edit.name' => 'Name',
     'classes.fleets.edit.edit_button' => 'Edit fleet',
 
-    //### Event class fleet crews pages ###
-    // Event class fleet crews index page
-    'classes.fleets.crews.index.breadcrumb' => 'Crews',
+    // ### Event class fleet boats pages ###
 
-    // Event class fleet crews create page
-    'classes.fleets.crews.create.title' => 'Create - Crews - :event_class_fleet.name - Fleets - :event_class.name - Classes - :event.name - Events - Admin',
-    'classes.fleets.crews.create.breadcrumb' => 'Create',
-    'classes.fleets.crews.create.header' => 'Create Crew',
-    'classes.fleets.crews.create.name' => 'Name',
-    'classes.fleets.crews.create.create_button' => 'Create Crew',
+    // Event class fleet boats index page
+    'classes.fleets.boats.index.title' => 'Boats - :event_class_fleet.name - Fleets - :event_class.name - Classes - :event.name - Events - Admin',
+    'classes.fleets.boats.index.breadcrumb' => 'Boats',
+    'classes.fleets.boats.index.header' => 'All boats in this fleet',
+    'classes.fleets.boats.index.query_placeholder' => 'Search for boats...',
+    'classes.fleets.boats.index.search_button' => 'Search',
+    'classes.fleets.boats.index.empty' => 'No boats found in this fleet',
 
-    //Event class fleet crews show page
-    'classes.fleets.crews.show.title' => 'Show - Crews - :event_class_fleet.name - Fleets - :event_class.name - Classes - :event.name - Events - Admin',
-    'classes.fleets.crews.show.breadcrumb' => 'Show',
-    'classes.fleets.crews.show.header' => 'Show Crew',
-    'classes.fleets.crews.show.name' => 'Name',
-    'classes.fleets.crews.show.show_button' => 'Show Crew',
+    'classes.fleets.boats.index.boat_started_at' => 'Start time:',
+    'classes.fleets.boats.index.boat_started_at_empty' => 'No start time',
+    'classes.fleets.boats.index.boat_finished_at' => 'Finish time:',
+    'classes.fleets.boats.index.boat_finished_at_empty' => 'No finish time',
+    'classes.fleets.boats.index.boat_edit_button' => 'Edit details',
+    'classes.fleets.boats.index.boat_delete_button' => 'Remove boot',
+    'classes.fleets.boats.index.boat_placeholder' => 'Select a boat...',
+    'classes.fleets.boats.index.boat_add_button' => 'Add boat',
 
-    // Event class fleets edit page
-    'classes.fleets.crews.edit.title' => 'Edit - :event_class_crew.name - Crews - :event_class_fleet.name - Fleets - :event_class.name - Classes - :event.name - Events - Admin',
-    'classes.fleets.crews.edit.breadcrumb' => 'Edit',
-    'classes.fleets.crews.edit.header' => 'Edit crew member',
-    'classes.fleets.crews.edit.name' => 'Name',
-    'classes.fleets.crews.edit.edit_button' => 'Edit crew member'
-
+    // Event class fleet boats edit page
+    'classes.fleets.boats.edit.title' => 'Edit - :boat.name - Boats - :event_class_fleet.name - Fleets - :event_class.name - Classes - :event.name - Events - Admin',
+    'classes.fleets.boats.edit.breadcrumb' => 'Edit',
+    'classes.fleets.boats.edit.header' => 'Edit boat details',
+    'classes.fleets.boats.edit.started_at_date' => 'Start date',
+    'classes.fleets.boats.edit.started_at_time' => 'Start time',
+    'classes.fleets.boats.edit.finished_at_date' => 'Finish date',
+    'classes.fleets.boats.edit.finished_at_time' => 'Finish time',
+    'classes.fleets.boats.edit.edit_button' => 'Edit boat details'
 ];

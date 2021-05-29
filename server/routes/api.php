@@ -71,6 +71,9 @@ Route::middleware('api_key')->group(function () {
     Route::get('events/{event}/classes/{eventClass}/fleets', [ApiEventClassFleetsController::class, 'index'])->name('api.events.classes.fleets.index');
     Route::get('events/{event}/classes/{eventClass}/fleets/{eventClassFleet}', [ApiEventClassFleetsController::class, 'show'])->name('api.events.classes.fleets.show');
 
+    Route::get('events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats', [ApiEventClassFleetBoatsController::class, 'index'])->name('api.events.classes.fleets.boats.index');
+    Route::get('events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats/{boat}', [ApiEventClassFleetBoatsController::class, 'show'])->name('api.events.classes.fleets.boats.show');
+
     // API auth routes
     Route::get('auth/logout', [ApiAuthController::class, 'logout'])->name('api.auth.logout');
 });

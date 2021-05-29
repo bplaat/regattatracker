@@ -19,6 +19,9 @@ class ApiEventClassFleetsController extends Controller
     // Api event class fleets show route
     public function show(Event $event, EventClass $eventClass, EventClassFleet $eventClassFleet)
     {
+        // Activate relations (this is ugly I know)
+        $eventClass->boats;
+
         // Return the event class fleet
         return $eventClassFleet;
     }

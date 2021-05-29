@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Pivots\EventClassFleetBoatPivot;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,11 +23,8 @@ class EventClassFleet extends Model
     // A event class fleet belongs to many boats
     public function boats()
     {
-        return $this->belongsToMany(Boat::class)->withTimestamps();
-    }
-
-    // A fleet class has many crew member
-    public function crews() {
-        return $this->hasMany(EventClassFleetCrew::class);
+        return $this->belongsToMany(Boat::class, 'event_class_fleet_boat')
+            ->withPivot('started_at', 'finished_at')->withTimestamps()
+            ->using(EventClassFleetBoatPivot::class);
     }
 }

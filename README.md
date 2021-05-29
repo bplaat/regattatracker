@@ -24,9 +24,9 @@ Events
     has many EventFinishes
     has many EventClasses
         has many EventClassFleets
-            belongs to many Boats (BoatEventClassFleet)
-                belongs to many Users (BoatEventClassFleetUser) (Temporary crew members)
-                has many BoatEventClassFleetGuests (Temporary crew members)
+            belongs to many Boats (EventClassFleetBoat)
+                belongs to many Users (EventClassFleetBoatUser) (Temporary crew members)
+                has many EventClassFleetBoatGuests (Temporary crew members)
 ```
 
 ## Test Environment Installation

@@ -29,7 +29,7 @@ class AdminEventClassFleetsController extends Controller
             'name' => $fields['name']
         ]);
 
-        return redirect()->route('admin.events.show', ['event' => $event]);
+        return redirect()->route('admin.events.show', $event);
     }
 
     // Admin event class fleets edit route
@@ -51,13 +51,13 @@ class AdminEventClassFleetsController extends Controller
             'name' => $fields['name']
         ]);
 
-        return redirect()->route('admin.events.show', ['event' => $event]);
+        return redirect()->route('admin.events.show', $event);
     }
 
     // Admin event class fleets delete route
     public function delete(Event $event, EventClass $eventClass, EventClassFleet $eventClassFleet) {
         $eventClassFleet->delete();
 
-        return redirect()->route('admin.events.show', ['event' => $event]);
+        return redirect()->route('admin.events.show', $event);
     }
 }
