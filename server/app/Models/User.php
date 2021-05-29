@@ -45,7 +45,8 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'birthday' => 'datetime',
+        'email_verified_at' => 'datetime'
     ];
 
     // A boat belongs to many boats

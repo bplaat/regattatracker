@@ -23,13 +23,13 @@
 
         <h2 class="subtitle is-5">@lang('admin/events.show.date_info')</h2>
         @if ($event->start != null)
-            <p>@lang('admin/events.show.start') {{ $event->start }}</p>
+            <p>@lang('admin/events.show.start') {{ $event->start->format('Y-m-d') }}</p>
         @else
             <p><i>@lang('admin/events.show.start_empty')</i></p>
         @endif
 
         @if ($event->end != null)
-            <p>@lang('admin/events.show.end') {{ $event->end }}</p>
+            <p>@lang('admin/events.show.end') {{ $event->format('Y-m-d') }}</p>
         @else
             <p><i>@lang('admin/events.show.end_empty')</i></p>
         @endif

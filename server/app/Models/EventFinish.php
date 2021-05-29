@@ -18,7 +18,8 @@ class EventFinish extends Model
     ];
 
     // A event finish belongs to an event
-    public function event() {
+    public function event()
+    {
         return $this->belongsTo(Event::class);
     }
 }

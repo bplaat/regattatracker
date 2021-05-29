@@ -56,7 +56,7 @@
                     <label class="label" for="created_at_date">@lang('admin/buoys.positions.edit.created_at_date')</label>
 
                     <div class="control">
-                        <input class="input @error('created_at_date') is-danger @enderror" type="date" id="created_at_date" name="created_at_date" value="{{ old('created_at_date', date('Y-m-d', strtotime($buoyPosition->created_at))) }}" required>
+                        <input class="input @error('created_at_date') is-danger @enderror" type="date" id="created_at_date" name="created_at_date" value="{{ old('created_at_date', $buoyPosition->created_at->format('Y-m-d')) }}" required>
                     </div>
 
                     @error('created_at_date')
@@ -70,7 +70,7 @@
                     <label class="label" for="created_at_time">@lang('admin/buoys.positions.edit.created_at_time')</label>
 
                     <div class="control">
-                        <input class="input @error('created_at_time') is-danger @enderror" type="time" step="1" id="created_at_time" name="created_at_time" value="{{ old('created_at_time', date('H:i:s', strtotime($buoyPosition->created_at))) }}" required>
+                        <input class="input @error('created_at_time') is-danger @enderror" type="time" step="1" id="created_at_time" name="created_at_time" value="{{ old('created_at_time', $buoyPosition->created_at->format('H:i:s')) }}" required>
                     </div>
 
                     @error('created_at_time')

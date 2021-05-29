@@ -50,7 +50,8 @@ class AdminEventController extends Controller
     }
 
     // Admin events show route
-    public function show(Event $event) {
+    public function show(Event $event)
+    {
         // Get all the events finishes
         $eventFinishes = $event->finishes->paginate(config('pagination.web.limit'))->withQueryString();
 
@@ -66,12 +67,14 @@ class AdminEventController extends Controller
     }
 
     // Admin events edit route
-    public function edit(Event $event) {
+    public function edit(Event $event)
+    {
         return view('admin.events.edit', ['event' => $event]);
     }
 
     // Admin events update route
-    public function update(Request $request, Event $event) {
+    public function update(Request $request, Event $event)
+    {
         // Validate input
         $fields = $request->validate([
             'name' => 'required|min:2|max:48',
@@ -104,7 +107,8 @@ class AdminEventController extends Controller
     }
 
     // Admin events delete route
-    public function delete(Event $event) {
+    public function delete(Event $event)
+    {
         // Delete event
         $event->delete();
 

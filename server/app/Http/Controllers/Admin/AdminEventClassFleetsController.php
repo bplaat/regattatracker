@@ -11,7 +11,8 @@ use Illuminate\Http\Request;
 class AdminEventClassFleetsController extends Controller
 {
     // Admin event class fleets create route
-    public function create(Event $event, EventClass $eventClass) {
+    public function create(Event $event, EventClass $eventClass)
+    {
         return view('admin.events.classes.fleets.create', [
             'event' => $event,
             'eventClass' => $eventClass
@@ -19,7 +20,8 @@ class AdminEventClassFleetsController extends Controller
     }
 
     // Admin event class fleets store route
-    public function store(Request $request, Event $event, EventClass $eventClass) {
+    public function store(Request $request, Event $event, EventClass $eventClass)
+    {
         $fields = $request->validate([
             'name' => 'required|max:48'
         ]);
@@ -33,7 +35,8 @@ class AdminEventClassFleetsController extends Controller
     }
 
     // Admin event class fleets edit route
-    public function edit(Event $event, EventClass $eventClass, EventClassFleet $eventClassFleet) {
+    public function edit(Event $event, EventClass $eventClass, EventClassFleet $eventClassFleet)
+    {
         return view('admin.events.classes.fleets.edit', [
             'event' => $event,
             'eventClass' => $eventClass,
@@ -42,7 +45,8 @@ class AdminEventClassFleetsController extends Controller
     }
 
     // Admin event class fleets update route
-    public function update(Request $request, Event $event, EventClass $eventClass, EventClassFleet $eventClassFleet) {
+    public function update(Request $request, Event $event, EventClass $eventClass, EventClassFleet $eventClassFleet)
+    {
         $fields = $request->validate([
             'name' => 'required|max:48'
         ]);
@@ -55,7 +59,8 @@ class AdminEventClassFleetsController extends Controller
     }
 
     // Admin event class fleets delete route
-    public function delete(Event $event, EventClass $eventClass, EventClassFleet $eventClassFleet) {
+    public function delete(Event $event, EventClass $eventClass, EventClassFleet $eventClassFleet)
+    {
         $eventClassFleet->delete();
 
         return redirect()->route('admin.events.show', $event);

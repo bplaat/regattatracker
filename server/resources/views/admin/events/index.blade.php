@@ -45,13 +45,13 @@
                             </h2>
 
                             @if ($event->start != null)
-                                <p>@lang('admin/events.index.start') {{ $event->start }}</p>
+                                <p>@lang('admin/events.index.start') {{ $event->start->format('Y-m-d') }}</p>
                             @else
                                 <p><i>@lang('admin/events.index.start_empty')</i></p>
                             @endif
 
                             @if ($event->end != null)
-                                <p>@lang('admin/events.index.end') {{ $event->end }}</p>
+                                <p>@lang('admin/events.index.end') {{ $event->end->format('Y-m-d') }}</p>
                             @else
                                 <p><i>@lang('admin/events.index.end_empty')</i></p>
                             @endif

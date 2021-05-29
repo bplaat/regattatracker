@@ -24,7 +24,7 @@ class TestSeeder extends Seeder
             'insertion' => 'van',
             'lastname' => 'Gielens',
             'gender' => 1,
-            'birthday' => date('Y-m-d', 1978-02-20),
+            'birthday' => '1978-02-20',
             'email' => 'giel.gielens@example.com',
             'phone' => '+1-352-989-1711',
             'address' => '6986 Kendrick Inlet',

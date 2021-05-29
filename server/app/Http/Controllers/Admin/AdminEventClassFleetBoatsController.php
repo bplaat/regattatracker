@@ -13,7 +13,8 @@ use Illuminate\Http\Request;
 class AdminEventClassFleetBoatsController extends Controller
 {
     // Admin event class fleet boats create route
-    public function index(Event $event, EventClass $eventClass, EventClassFleet $eventClassFleet) {
+    public function index(Event $event, EventClass $eventClass, EventClassFleet $eventClassFleet)
+    {
         // When a query is given search by query
         $query = request('q');
         if ($query != null) {
@@ -37,7 +38,8 @@ class AdminEventClassFleetBoatsController extends Controller
     }
 
     // Admin event class fleet boats store route
-    public function store(Request $request, Event $event, EventClass $eventClass, EventClassFleet $eventClassFleet) {
+    public function store(Request $request, Event $event, EventClass $eventClass, EventClassFleet $eventClassFleet)
+    {
         $fields = $request->validate([
             'boat_id' => 'required|exists:boats,id'
         ]);
@@ -62,7 +64,8 @@ class AdminEventClassFleetBoatsController extends Controller
     }
 
     // Admin event class fleet boats update route
-    public function update(Request $request, Event $event, EventClass $eventClass, EventClassFleet $eventClassFleet, Boat $boat) {
+    public function update(Request $request, Event $event, EventClass $eventClass, EventClassFleet $eventClassFleet, Boat $boat)
+    {
         $fields = $request->validate([
             'started_at_date' => 'nullable|date_format:Y-m-d',
             'started_at_time' => 'nullable|date_format:H:i:s',
@@ -94,7 +97,8 @@ class AdminEventClassFleetBoatsController extends Controller
     }
 
     // Admin event class fleet boats delete route
-    public function delete(Event $event, EventClass $eventClass, EventClassFleet $eventClassFleet, Boat $boat) {
+    public function delete(Event $event, EventClass $eventClass, EventClassFleet $eventClassFleet, Boat $boat)
+    {
         $eventClassFleet->boats()->detach($boat);
 
         return redirect()->route('admin.events.classes.fleets.boats.index', [$event, $eventClass, $eventClassFleet]);

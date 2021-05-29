@@ -17,7 +17,8 @@ class ApiKey extends Model
     ];
 
     // Generate a random key
-    public static function generateKey() {
+    public static function generateKey()
+    {
         return md5('api_key@' . microtime(true)); // Secure???
     }
 

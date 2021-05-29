@@ -103,7 +103,7 @@
                     <label class="label" for="birthday">@lang('settings.birthday')</label>
 
                     <div class="control">
-                        <input class="input @error('birthday') is-danger @enderror" type="date" id="birthday" name="birthday" value="{{ old('birthday', Auth::user()->birthday) }}" required>
+                        <input class="input @error('birthday') is-danger @enderror" type="date" id="birthday" name="birthday" value="{{ old('birthday', Auth::user()->birthday->format('Y-m-d')) }}" required>
                     </div>
 
                     @error('birthday')

@@ -12,7 +12,8 @@ use Illuminate\Http\Request;
 class AdminEventFinishesController extends Controller
 {
     // Admin event finishes create route
-    public function create(Event $event) {
+    public function create(Event $event)
+    {
         return view('admin.events.finishes.create', ['event' => $event]);
     }
 
@@ -40,7 +41,8 @@ class AdminEventFinishesController extends Controller
     }
 
     // Admin event finishes edit route
-    public function edit(Event $event, EventFinish $eventFinish) {
+    public function edit(Event $event, EventFinish $eventFinish)
+    {
         return view('admin.events.finishes.edit', [
             'event' => $event,
             'eventFinish' => $eventFinish

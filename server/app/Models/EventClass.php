@@ -16,12 +16,14 @@ class EventClass extends Model
     ];
 
     // A event class belongs to an event.
-    public function event() {
+    public function event()
+    {
         return $this->belongsTo(Event::class);
     }
 
     // An event class has many fleets
-    public function fleets() {
+    public function fleets()
+    {
         return $this->hasMany(EventClassFleet::class);
     }
 }

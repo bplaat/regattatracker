@@ -96,7 +96,7 @@
                     <label class="label" for="birthday">@lang('admin/users.edit.birthday')</label>
 
                     <div class="control">
-                        <input class="input @error('birthday') is-danger @enderror" type="date" id="birthday" name="birthday" value="{{ old('birthday', $user->birthday) }}" required>
+                        <input class="input @error('birthday') is-danger @enderror" type="date" id="birthday" name="birthday" value="{{ old('birthday', $user->birthday->format('Y-m-d')) }}" required>
                     </div>
 
                     @error('birthday')

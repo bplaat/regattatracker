@@ -15,7 +15,8 @@ class BuoyPosition extends Model
     ];
 
     // A buoy position belongs to an buoy
-    public function buoy() {
+    public function buoy()
+    {
         return $this->belongsTo(Buoy::class);
     }
 }

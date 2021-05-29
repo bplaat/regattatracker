@@ -38,7 +38,7 @@
                 <div class="field">
                     <div class="control">
                         <input class="input @error('start') is-danger @enderror" type="date" id="start"
-                               name="start" value="{{ old('start', $event->start) }}">
+                               name="start" value="{{ old('start', $event->start != null ? $event->start->format('Y-m-d') : '') }}">
                     </div>
 
                     @error('start')
@@ -52,7 +52,7 @@
                 <div class="field">
                     <div class="control">
                         <input class="input @error('end') is-danger @enderror" type="date" id="end"
-                               name="end" value="{{ old('end', $event->end) }}">
+                               name="end" value="{{ old('end', $event->end != null ? $event->end->format('Y-m-d') : '') }}">
                     </div>
 
                     @error('end')

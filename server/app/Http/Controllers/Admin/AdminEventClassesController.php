@@ -10,12 +10,14 @@ use Illuminate\Http\Request;
 class AdminEventClassesController extends Controller
 {
     // Admin event classes create route
-    public function create(Event $event) {
+    public function create(Event $event)
+    {
         return view('admin.events.classes.create', ['event' => $event]);
     }
 
     // Admin event classes store route
-    public function store(Request $request, Event $event) {
+    public function store(Request $request, Event $event)
+    {
         $fields = $request->validate([
             'name' => 'required|min:2|max:48',
             'flag' => 'size:1|regex:/[A-Z-]/'
@@ -31,12 +33,14 @@ class AdminEventClassesController extends Controller
     }
 
     // Admin event classes edit route
-    public function edit(Event $event, EventClass $eventClass) {
+    public function edit(Event $event, EventClass $eventClass)
+    {
         return view('admin.events.classes.edit', ['event' => $event, 'eventClass' => $eventClass]);
     }
 
     // Admin event classes update route
-    public function update(Request $request, Event $event, EventClass $eventClass) {
+    public function update(Request $request, Event $event, EventClass $eventClass)
+    {
         $fields = $request->validate([
             'name' => 'required|min:2|max:48',
             'flag' => 'size:1|regex:/[A-Z-]/'
@@ -51,7 +55,8 @@ class AdminEventClassesController extends Controller
     }
 
     // Admin event classes delete route
-    public function delete(Event $event, EventClass $eventClass) {
+    public function delete(Event $event, EventClass $eventClass)
+    {
         $eventClass->delete();
 
         return redirect()->route('admin.events.show', $event);

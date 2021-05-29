@@ -16,7 +16,8 @@ class EventClassFleet extends Model
     ];
 
     // A event class fleet belongs to an event class
-    public function class() {
+    public function class()
+    {
         return $this->belongsTo(EventClass::class);
     }
 

@@ -15,7 +15,8 @@ class BoatPosition extends Model
     ];
 
     // A boat position belongs to an boat
-    public function boat() {
+    public function boat()
+    {
         return $this->belongsTo(Boat::class);
     }
 }

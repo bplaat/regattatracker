@@ -21,6 +21,11 @@ class Event extends Model
         'path'
     ];
 
+    protected $casts = [
+        'start' => 'datetime',
+        'end' => 'datetime'
+    ];
+
     // An event has many finishes
     public function finishes()
     {
@@ -34,7 +39,8 @@ class Event extends Model
     }
 
     // Search by a query.
-    public function search($query) {
+    public function search($query)
+    {
         return Event::all()->where('name', 'LIKE', '%' . $query . '%')
             ->orWhere('start', 'LIKE', '%' . $query . '%')
             ->orWhere('end', 'LIKE', '%' . $query . '%');

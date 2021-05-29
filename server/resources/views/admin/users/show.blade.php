@@ -35,7 +35,7 @@
         @if ($user->gender == App\Models\User::GENDER_OTHER)
             <p>@lang('admin/users.show.gender') @lang('admin/users.show.gender_other')</p>
         @endif
-        <p>@lang('admin/users.show.birthday') {{ $user->birthday }}</p>
+        <p>@lang('admin/users.show.birthday') {{ $user->birthday->format('Y-m-d') }}</p>
 
         <h2 class="subtitle is-5">@lang('admin/users.show.contact_info')</h2>
         <p>@lang('admin/users.show.email') <a href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
