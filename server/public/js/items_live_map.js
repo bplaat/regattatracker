@@ -13,29 +13,6 @@ function isDarkModeEnabled() {
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
-class WindInfoControl {
-    onAdd(map) {
-        this._map = map;
-
-        this._container = document.createElement('div');
-        this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
-        this._container.style = 'padding: 4px 8px;';
-        this._container.innerHTML = `<p></p>`;
-        this.onUpdate();
-
-        return this._container;
-    }
-
-    onUpdate() {
-            this._container.children[0].textContent = 'Wind info';
-    }
-
-    onRemove() {
-        this._map = undefined;
-        this._container.parentNode.removeChild(this._container);
-    }
-}
-
 const map = new mapboxgl.Map({
     container: 'map-container',
     style: isDarkModeEnabled() ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10',
@@ -53,24 +30,63 @@ const bounds = allPositions.reduce(function (bounds, position) {
 }, new mapboxgl.LngLatBounds(allPositions[0], allPositions[0]));
 map.fitBounds(bounds, { animate: false, padding: 50 });
 
+const center = map.getCenter();
+
+async function getWeatherInfo() {
+    let response = await fetch("https://api.openweathermap.org/data/2.5/weather?lat=" + center.lat + "&lon=" + center.lng + "&units=metric" + "&appid=" + openweatherApiKey);
+    let weatherInfo = await response.json();
+
+    let windDeg = JSON.stringify(weatherInfo.wind.deg);
+    let windSpeed = JSON.stringify(weatherInfo.wind.speed);
+    let windGust = JSON.stringify(weatherInfo.wind.gust);
+    
+    //setInterval(getWeatherInfo(), 10 * 60 * 1000); // 10 minutes in ms
+
+    return [windDeg, windSpeed, windGust];
+}
+
+async function logWeatherInfo() {
+    getWeatherInfo()
+        .then(weatherInfo => console.log(weatherInfo));
+    }
+
+
+let weatherInfo = getWeatherInfo();
+logWeatherInfo();
+
+const windDeg = weatherInfo[0],
+      windSpeed = weatherInfo[1],
+      windGust = weatherInfo[2]
+
+class WindInfoControl {
+    onAdd(map) {
+        this._map = map;
+
+        this._container = document.createElement('div');
+        this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+        this._container.style = 'padding: 4px 8px;';
+        this._container.innerHTML = `<p></p>`;
+        this.onUpdate();
+
+        return this._container;
+    }
+
+    onUpdate() {
+        console.log(weatherInfo); // No data received yet, how to continue?
+        this._container.children[0].textContent = "Wind speed: " + windSpeed + " m/s";
+    }
+
+    onRemove() {
+        this._map = undefined;
+        this._container.parentNode.removeChild(this._container);
+    }
+}
+
 map.addControl(new mapboxgl.ScaleControl(), 'bottom-left');
 map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 map.addControl(new mapboxgl.GeolocateControl(), 'bottom-right');
 map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
 map.addControl(new WindInfoControl(), 'top-right');
-
-const center = map.getCenter();
-
-fetch("http://api.openweathermap.org/data/2.5/weather?q=Dordrecht&appid=" + openweatherApiKey)
-  .then(response => {
-    return response.json();
-  })
-  .then(weatherInfo => {
-    console.log(weatherInfo);
-  })
-  .catch(error => {
-    console.log("Error: " + error);
-  });
 
 function mapMouseEnter(event) {
     map.getCanvas().style.cursor = 'pointer';
