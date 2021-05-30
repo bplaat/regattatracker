@@ -30,55 +30,68 @@ const bounds = allPositions.reduce(function (bounds, position) {
 }, new mapboxgl.LngLatBounds(allPositions[0], allPositions[0]));
 map.fitBounds(bounds, { animate: false, padding: 50 });
 
-const center = map.getCenter();
-
-async function getWeatherInfo() {
-    let response = await fetch("https://api.openweathermap.org/data/2.5/weather?lat=" + center.lat + "&lon=" + center.lng + "&units=metric" + "&appid=" + openweatherApiKey);
-    let weatherInfo = await response.json();
-
-    let windDeg = JSON.stringify(weatherInfo.wind.deg);
-    let windSpeed = JSON.stringify(weatherInfo.wind.speed);
-    let windGust = JSON.stringify(weatherInfo.wind.gust);
-    
-    //setInterval(getWeatherInfo(), 10 * 60 * 1000); // 10 minutes in ms
-
-    return [windDeg, windSpeed, windGust];
-}
-
-async function logWeatherInfo() {
-    getWeatherInfo()
-        .then(weatherInfo => console.log(weatherInfo));
-    }
-
-
-let weatherInfo = getWeatherInfo();
-logWeatherInfo();
-
-const windDeg = weatherInfo[0],
-      windSpeed = weatherInfo[1],
-      windGust = weatherInfo[2]
-
 class WindInfoControl {
     onAdd(map) {
         this._map = map;
 
+        this.unit = localStorage.wind_unit || 'm/s';
+
         this._container = document.createElement('div');
         this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
-        this._container.style = 'padding: 4px 8px;';
-        this._container.innerHTML = `<p></p>`;
+        this._container.style = 'padding: 4px 8px 8px; cursor: pointer; user-select: none;';
+        this._container.title = strings.wind_message;
+        this._container.innerHTML = `
+            <svg viewBox="0 0 24 24" style="display: block; margin: 0 auto 4px; width: 48px; height: 48px; transition: transform 0.2s ease-in-out">
+                <path fill="currentColor" d="M13,18H11V10L7.5,13.5L6.08,12.08L12,6.16L17.92,12.08L16.5,13.5L13,10V18M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4Z" />
+            </svg>
+            <p style="font-weight: bold;"></p>
+        `;
         this.onUpdate();
+
+        this._container.addEventListener('click', () => {
+            if (this.unit == 'm/s') {
+                this.unit = 'km/h';
+            } else {
+                this.unit = 'm/s';
+            }
+            localStorage.wind_unit = this.unit;
+            this.onUpdate();
+        });
+
+        this.getWeatherInfo();
+        setInterval(this.getWeatherInfo.bind(this), 10 * 60 * 1000);
 
         return this._container;
     }
 
     onUpdate() {
-        console.log(weatherInfo); // No data received yet, how to continue?
-        this._container.children[0].textContent = "Wind speed: " + windSpeed + " m/s";
+        if (this.windDeg != undefined && this.windSpeed != undefined) {
+            this._container.children[0].style.transform = 'rotate(' + this.windDeg + 'deg)';
+
+            if (this.unit == 'm/s') {
+                this._container.children[1].textContent = this.windSpeed.toFixed(2) + ' m/s';
+            } else {
+                this._container.children[1].textContent = (this.windSpeed * 3.6).toFixed(2) + ' km/h';
+            }
+        } else {
+            this._container.children[1].textContent = strings.wind_loading;
+        }
     }
 
     onRemove() {
         this._map = undefined;
         this._container.parentNode.removeChild(this._container);
+    }
+
+    getWeatherInfo() {
+        const center = map.getCenter();
+        fetch('https://api.openweathermap.org/data/2.5/weather?lat=' + center.lat + '&lon=' + center.lng + '&units=metric&appid=' + openweatherApiKey)
+        .then(response => response.json())
+        .then(data => {
+            this.windDeg = data.wind.deg;
+            this.windSpeed = data.wind.speed;
+            this.onUpdate();
+        });
     }
 }
 

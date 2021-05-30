@@ -31,6 +31,8 @@
                 boats: @json($boats),
                 buoys: @json($buoys),
                 strings: {
+                    wind_message: @json(__('home.map_wind_message')),
+                    wind_loading: @json(__('home.map_wind_loading')),
                     latitude: @json(__('home.map_latitude')),
                     longitude: @json(__('home.map_longitude')),
                     time: @json(__('home.map_time'))
