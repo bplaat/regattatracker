@@ -51,6 +51,8 @@ class WindInfoControl {
         this._container.addEventListener('click', () => {
             if (this.unit == 'm/s') {
                 this.unit = 'km/h';
+            } else if (this.unit == 'km/h') {
+                this.unit = 'nm/h';
             } else {
                 this.unit = 'm/s';
             }
@@ -67,11 +69,14 @@ class WindInfoControl {
     onUpdate() {
         if (this.windDeg != undefined && this.windSpeed != undefined) {
             this._container.children[0].style.transform = 'rotate(' + this.windDeg + 'deg)';
-
             if (this.unit == 'm/s') {
                 this._container.children[1].textContent = this.windSpeed.toFixed(2) + ' m/s';
-            } else {
+            }
+            if (this.unit == 'km/h') {
                 this._container.children[1].textContent = (this.windSpeed * 3.6).toFixed(2) + ' km/h';
+            }
+            if (this.unit == 'nm/h') {
+                this._container.children[1].textContent = (this.windSpeed * 1.9438444924406).toFixed(2) + ' nm/h';
             }
         } else {
             this._container.children[1].textContent = strings.wind_loading;
