@@ -83,12 +83,12 @@ class BoatsController extends Controller
             ->paginate(config('pagination.web.limit'))->withQueryString();
         $boatTypes = BoatType::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
 
-        $boatUsers = $boat->users->sortBy(User::sortByName(), SORT_NATURAL | SORT_FLAG_CASE)
+        $boatUsers = $boat->users->sortBy('sortName', SORT_NATURAL | SORT_FLAG_CASE)
             ->sortByDesc('pivot.role')->paginate(config('pagination.web.limit'))->withQueryString();
         $boatCaptains = $boatUsers->filter(function ($user) {
             return $user->pivot->role == BoatUser::ROLE_CAPTAIN;
         });
-        $users = User::all()->sortBy(User::sortByName(), SORT_NATURAL | SORT_FLAG_CASE);
+        $users = User::all()->sortBy('sortName', SORT_NATURAL | SORT_FLAG_CASE);
 
         // Return boat show view
         return view('boats.show', [

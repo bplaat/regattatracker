@@ -57,6 +57,9 @@
                             @endif
 
                             <div class="buttons">
+                                <a class="button is-light is-small" href="{{ route('admin.events.classes.fleets.boats.users.index', [$event, $eventClass, $eventClassFleet, $eventClassFleetBoat]) }}">
+                                    @lang('admin/events.classes.fleets.boats.index.boat_users_button')
+                                </a>
                                 <a class="button is-link is-light is-small" href="{{ route('admin.events.classes.fleets.boats.edit', [$event, $eventClass, $eventClassFleet, $eventClassFleetBoat]) }}">
                                     @lang('admin/events.classes.fleets.boats.index.boat_edit_button')
                                 </a>

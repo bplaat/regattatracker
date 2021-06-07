@@ -14,6 +14,7 @@
             <li><a href="#">@lang('admin/events.classes.fleets.index.breadcrumb')</a></li>
             <li><a href="#">{{ $eventClassFleet->name }}</a></li>
             <li><a href="{{ route('admin.events.classes.fleets.boats.index', [$event, $eventClass, $eventClassFleet]) }}">@lang('admin/events.classes.fleets.boats.index.breadcrumb')</a></li>
+            <li><a href="{{ route('admin.boats.show', $boat) }}">{{ $boat->name }}</a></li>
             <li class="is-active"><a href="{{ route('admin.events.classes.fleets.boats.edit', [$event, $eventClass, $eventClassFleet, $boat]) }}">@lang('admin/events.classes.fleets.boats.edit.breadcrumb')</a></li>
         </ul>
     </div>
