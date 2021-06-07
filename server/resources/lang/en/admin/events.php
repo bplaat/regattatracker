@@ -169,6 +169,7 @@ return [
     'classes.fleets.boats.index.boat_started_at_empty' => 'No start time',
     'classes.fleets.boats.index.boat_finished_at' => 'Finish time:',
     'classes.fleets.boats.index.boat_finished_at_empty' => 'No finish time',
+    'classes.fleets.boats.index.boat_users_button' => 'Temporary users',
     'classes.fleets.boats.index.boat_edit_button' => 'Edit details',
     'classes.fleets.boats.index.boat_delete_button' => 'Remove boot',
     'classes.fleets.boats.index.boat_placeholder' => 'Select a boat...',
@@ -182,5 +183,18 @@ return [
     'classes.fleets.boats.edit.started_at_time' => 'Start time',
     'classes.fleets.boats.edit.finished_at_date' => 'Finish date',
     'classes.fleets.boats.edit.finished_at_time' => 'Finish time',
-    'classes.fleets.boats.edit.edit_button' => 'Edit boat details'
+    'classes.fleets.boats.edit.edit_button' => 'Edit boat details',
+
+    // ### Event class fleet boat users pages ###
+    'classes.fleets.boats.users.index.title' => 'Users - :boat.name - Boats - :event_class_fleet.name - Fleets - :event_class.name - Classes - :event.name - Events - Admin',
+    'classes.fleets.boats.users.index.breadcrumb' => 'Users',
+    'classes.fleets.boats.users.index.header' => 'All temporary users of this boat',
+    'classes.fleets.boats.users.index.query_placeholder' => 'Search for users...',
+    'classes.fleets.boats.users.index.search_button' => 'Search',
+    'classes.fleets.boats.users.index.empty' => 'No users found of this boat',
+
+    'classes.fleets.boats.users.index.user_header' => 'Temporary users:',
+    'classes.fleets.boats.users.index.user_delete_button' => 'Remove user',
+    'classes.fleets.boats.users.index.user_placeholder' => 'Select a user...',
+    'classes.fleets.boats.users.index.user_add_button' => 'Add user'
 ];

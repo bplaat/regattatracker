@@ -19,4 +19,16 @@ class EventClassFleetBoat extends Model
         'started_at' => 'datetime',
         'finished_at' => 'datetime'
     ];
+
+    // A event class fleet boat belongs to many users
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
+
+    // A event class fleet boat has many guests
+    public function guests()
+    {
+        return $this->hasMany(EventClassFleetBoatGuest::class);
+    }
 }

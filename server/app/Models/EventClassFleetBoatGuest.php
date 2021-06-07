@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EventClassFleetBoatGuests extends Model
+class EventClassFleetBoatGuest extends Model
 {
     protected $fillable = [
         'event_class_fleet_boat_id',
@@ -24,4 +24,10 @@ class EventClassFleetBoatGuests extends Model
     protected $casts = [
         'birthday' => 'datetime'
     ];
+
+    // A event class fleet boat guest belongs to a event class fleet boat
+    public function eventClassFleetBoat()
+    {
+        return $this->belongsTo(EventClassFleetBoat::class);
+    }
 }

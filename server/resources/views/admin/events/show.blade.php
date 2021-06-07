@@ -103,10 +103,10 @@
                     <p>@lang('admin/events.show.finishes_point_a') {{ $eventFinish->latitude_a }}, {{ $eventFinish->longitude_a }}</p>
                     <p>@lang('admin/events.show.finishes_point_b') {{ $eventFinish->latitude_b }}, {{ $eventFinish->longitude_b }}</p>
                     <div class="buttons">
-                        <a class="button is-link" href="{{ route('admin.events.finishes.edit', [$event, $eventFinish]) }}">
+                        <a class="button is-link is-light is-small" href="{{ route('admin.events.finishes.edit', [$event, $eventFinish]) }}">
                             @lang('admin/events.show.finishes_edit_button')
                         </a>
-                        <a class="button is-danger" href="{{ route('admin.events.finishes.delete', [$event, $eventFinish]) }}">
+                        <a class="button is-danger is-light is-small" href="{{ route('admin.events.finishes.delete', [$event, $eventFinish]) }}">
                             @lang('admin/events.show.finishes_delete_button')
                         </a>
                     </div>
@@ -141,10 +141,10 @@
                     <h1 class="title is-spaced is-4">{{ $eventClass->name }}</h1>
 
                     <div class="buttons">
-                        <a class="button is-link" href="{{ route('admin.events.classes.edit', [$event, $eventClass]) }}">
+                        <a class="button is-link is-light is-small" href="{{ route('admin.events.classes.edit', [$event, $eventClass]) }}">
                             @lang('admin/events.show.classes_edit_button')
                         </a>
-                        <a class="button is-danger" href="{{ route('admin.events.classes.delete', [$event, $eventClass]) }}">
+                        <a class="button is-danger is-light is-small" href="{{ route('admin.events.classes.delete', [$event, $eventClass]) }}">
                             @lang('admin/events.show.classes_delete_button')
                         </a>
                     </div>
@@ -159,13 +159,13 @@
                                     <h3 class="title is-spaced is-4">{{ $eventClassFleet->name }}</h3>
 
                                     <div class="buttons">
-                                        <a class="button" href="{{ route('admin.events.classes.fleets.boats.index', [$event, $eventClass, $eventClassFleet]) }}">
+                                        <a class="button is-light is-small" href="{{ route('admin.events.classes.fleets.boats.index', [$event, $eventClass, $eventClassFleet]) }}">
                                             @lang('admin/events.show.classes_fleets_boats_button')
                                         </a>
-                                        <a class="button is-link" href="{{ route('admin.events.classes.fleets.edit', [$event, $eventClass, $eventClassFleet]) }}">
+                                        <a class="button is-link is-light is-small" href="{{ route('admin.events.classes.fleets.edit', [$event, $eventClass, $eventClassFleet]) }}">
                                             @lang('admin/events.show.classes_fleets_edit_button')
                                         </a>
-                                        <a class="button is-danger" href="{{ route('admin.events.classes.fleets.delete', [$event, $eventClass, $eventClassFleet]) }}">
+                                        <a class="button is-danger is-light is-small" href="{{ route('admin.events.classes.fleets.delete', [$event, $eventClass, $eventClassFleet]) }}">
                                             @lang('admin/events.show.classes_fleets_delete_button')
                                         </a>
                                     </div>

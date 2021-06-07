@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -49,10 +50,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime'
     ];
 
-    // A boat belongs to many boats
+    // A user belongs to many boats
     public function boats()
     {
         return $this->belongsToMany(Boat::class)->withPivot('role')->withTimestamps();
+    }
+
+    // A user belongs to many event class fleet boats
+    public function eventClassFleetBoat()
+    {
+        return $this->belongsToMany(EventClassFleetBoat::class)->withTimestamps();
     }
 
     // Get user full name (firstname insertion lastname)
@@ -84,6 +91,17 @@ class User extends Authenticatable
             ->orWhere('insertion', 'LIKE', '%' . $query . '%')
             ->orWhere('lastname', 'LIKE', '%' . $query . '%')
             ->orWhere('email', 'LIKE', '%' . $query . '%');
+    }
+
+    // Search collection by a query
+    public static function searchCollection($collection, $query)
+    {
+        return $collection->filter(function ($boat) use ($query) {
+            return Str::contains(strtolower($boat->firstname), strtolower($query)) ||
+                Str::contains(strtolower($boat->insertion), strtolower($query)) ||
+                Str::contains(strtolower($boat->lastname), strtolower($query)) ||
+                Str::contains(strtolower($boat->email), strtolower($query));
+        });
     }
 
     // Get the current used api token from session storage or create a new one
