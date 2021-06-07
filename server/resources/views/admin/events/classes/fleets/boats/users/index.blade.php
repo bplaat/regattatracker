@@ -37,60 +37,97 @@
             </form>
         </div>
 
-        <h2 class="subtitle">@lang('admin/events.classes.fleets.boats.users.index.user_header')</h2>
+        <div class="box content">
+            <h2 class="title is-4">@lang('admin/events.classes.fleets.boats.users.index.user_header')</h2>
 
-        @if ($boatUsers->count() > 0)
-            {{ $boatUsers->links() }}
+            @if ($boatUsers->count() > 0)
+                {{ $boatUsers->links() }}
 
-            <div class="columns is-multiline">
-                @foreach ($boatUsers as $user)
-                    <div class="column is-one-third">
-                        <div class="box content" style="height: 100%">
-                            <h3 class="title is-4"><a href="{{ route('admin.users.show', $user) }}">{{ $user->name }}</a></h3>
+                <div class="columns is-multiline">
+                    @foreach ($boatUsers as $user)
+                        <div class="column is-one-third">
+                            <div class="box content" style="height: 100%">
+                                <h3 class="title is-4"><a href="{{ route('admin.users.show', $user) }}">{{ $user->name }}</a></h3>
 
-                            <div class="buttons">
-                                <a class="button is-danger is-light is-small" href="{{ route('admin.events.classes.fleets.boats.users.delete', [$event, $eventClass, $eventClassFleet, $boat, $user]) }}">
-                                    @lang('admin/events.classes.fleets.boats.users.index.user_delete_button')
-                                </a>
+                                <div class="buttons">
+                                    <a class="button is-danger is-light is-small" href="{{ route('admin.events.classes.fleets.boats.users.delete', [$event, $eventClass, $eventClassFleet, $boat, $user]) }}">
+                                        @lang('admin/events.classes.fleets.boats.users.index.user_delete_button')
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
 
-            {{ $boatUsers->links() }}
-        @else
-            <p><i>@lang('admin/events.classes.fleets.boats.users.index.empty')</i></p>
-        @endif
+                {{ $boatUsers->links() }}
+            @else
+                <p><i>@lang('admin/events.classes.fleets.boats.users.index.user_empty')</i></p>
+            @endif
 
-        @if ($eventClassFleetBoat->users->count() != $users->count())
-            <form method="POST" action="{{ route('admin.events.classes.fleets.boats.users.store', [$event, $eventClass, $eventClassFleet, $boat]) }}">
-                @csrf
+            @if ($eventClassFleetBoat->users->count() != $users->count())
+                <form method="POST" action="{{ route('admin.events.classes.fleets.boats.users.store', [$event, $eventClass, $eventClassFleet, $boat]) }}">
+                    @csrf
 
-                <div class="field has-addons">
-                    <div class="control">
-                        <div class="select @error('user_id') is-danger @enderror">
-                            <select id="user_id" name="user_id" required>
-                                <option selected disabled>
-                                    @lang('admin/events.classes.fleets.boats.users.index.user_placeholder')
-                                </option>
+                    <div class="field has-addons">
+                        <div class="control">
+                            <div class="select @error('user_id') is-danger @enderror">
+                                <select id="user_id" name="user_id" required>
+                                    <option selected disabled>
+                                        @lang('admin/events.classes.fleets.boats.users.index.user_placeholder')
+                                    </option>
 
-                                @foreach ($users as $user)
-                                    @if (!$boatUsers->pluck('id')->contains($user->id))
-                                        <option value="{{ $user->id }}" @if ($user->id == old('user_id')) selected @endif>
-                                            {{ $user->name }}
-                                        </option>
-                                    @endif
-                                @endforeach
-                            </select>
+                                    @foreach ($users as $user)
+                                        @if (!$boatUsers->pluck('id')->contains($user->id))
+                                            <option value="{{ $user->id }}" @if ($user->id == old('user_id')) selected @endif>
+                                                {{ $user->name }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control">
+                            <button class="button is-link" type="submit">@lang('admin/events.classes.fleets.boats.users.index.user_add_button')</button>
                         </div>
                     </div>
+                </form>
+            @endif
+        </div>
 
-                    <div class="control">
-                        <button class="button is-link" type="submit">@lang('admin/events.classes.fleets.boats.users.index.user_add_button')</button>
-                    </div>
+        <div class="box content">
+            <h2 class="title is-4">@lang('admin/events.classes.fleets.boats.users.index.guest_header')</h2>
+
+            @if ($boatGuests->count() > 0)
+                {{ $boatGuests->links() }}
+
+                <div class="columns is-multiline">
+                    @foreach ($boatGuests as $guest)
+                        <div class="column is-one-third">
+                            <div class="box content" style="height: 100%">
+                                <h3 class="title is-4">{{ $guest->name }}</h3>
+
+                                <div class="buttons">
+                                    <a class="button is-info is-light is-small" href="{{ route('admin.events.classes.fleets.boats.guests.edit', [$event, $eventClass, $eventClassFleet, $boat, $guest]) }}">
+                                        @lang('admin/events.classes.fleets.boats.users.index.guest_edit_button')
+                                    </a>
+                                    <a class="button is-danger is-light is-small" href="{{ route('admin.events.classes.fleets.boats.guests.delete', [$event, $eventClass, $eventClassFleet, $boat, $guest]) }}">
+                                        @lang('admin/events.classes.fleets.boats.users.index.guest_delete_button')
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-            </form>
-        @endif
+
+                {{ $boatGuests->links() }}
+            @else
+                <p><i>@lang('admin/events.classes.fleets.boats.users.index.guest_empty')</i></p>
+            @endif
+
+            <div class="buttons">
+                <a class="button is-link" href="{{ route('admin.events.classes.fleets.boats.guests.create', [$event, $eventClass, $eventClassFleet, $boat]) }}">@lang('admin/events.classes.fleets.boats.users.index.guest_create_button')</a>
+            </div>
+        </div>
     </div>
 @endsection

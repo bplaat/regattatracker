@@ -22,13 +22,16 @@ class AdminEventClassFleetBoatUsersController extends Controller
         $query = request('q');
         if ($query != null) {
             $boatUsers = User::searchCollection($eventClassFleetBoat->users, $query);
+            $boatGuests = EventClassFleetBoatGuest::searchCollection($eventClassFleetBoat->guests, $query);
         } else {
             $boatUsers = $eventClassFleetBoat->users;
+            $boatGuests = $eventClassFleetBoat->guests;
         }
-        $boatUsers = $boatUsers->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
+        $boatUsers = $boatUsers->sortBy('sortName', SORT_NATURAL | SORT_FLAG_CASE)
             ->paginate(config('pagination.web.limit'))->withQueryString();
-
-        $users = User::all()->sortBy(User::sortByName(), SORT_NATURAL | SORT_FLAG_CASE);
+        $users = User::all()->sortBy('sortName', SORT_NATURAL | SORT_FLAG_CASE);
+        $boatGuests = $boatGuests->sortBy('sortName', SORT_NATURAL | SORT_FLAG_CASE)
+            ->paginate(config('pagination.web.limit'))->withQueryString();
 
         return view('admin.events.classes.fleets.boats.users.index', [
             'event' => $event,
@@ -37,7 +40,8 @@ class AdminEventClassFleetBoatUsersController extends Controller
             'boat' => $boat,
             'eventClassFleetBoat' => $eventClassFleetBoat,
             'boatUsers' => $boatUsers,
-            'users' => $users
+            'users' => $users,
+            'boatGuests' => $boatGuests
         ]);
     }
 

@@ -50,18 +50,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime'
     ];
 
-    // A user belongs to many boats
-    public function boats()
-    {
-        return $this->belongsToMany(Boat::class)->withPivot('role')->withTimestamps();
-    }
-
-    // A user belongs to many event class fleet boats
-    public function eventClassFleetBoat()
-    {
-        return $this->belongsToMany(EventClassFleetBoat::class)->withTimestamps();
-    }
-
     // Get user full name (firstname insertion lastname)
     public function getNameAttribute()
     {
@@ -72,16 +60,26 @@ class User extends Authenticatable
         }
     }
 
-    // Return a sort function to sort user by sort name (lastname, insertion firstname)
-    public static function sortByName()
+    // Get user sort name (lastname, insertion firstname)
+    public function getSortNameAttribute()
     {
-        return function ($user, $key) {
-            if ($user->insertion != null) {
-                return $user->lastname . ', ' . $user->insertion . ' ' . $user->firstname;
-            } else {
-                return $user->lastname . ' ' . $user->firstname;
-            }
-        };
+        if ($this->insertion != null) {
+            return $this->lastname . ', ' . $this->insertion . ' ' . $this->firstname;
+        } else {
+            return $this->lastname . ' ' . $this->firstname;
+        }
+    }
+
+    // A user belongs to many boats
+    public function boats()
+    {
+        return $this->belongsToMany(Boat::class)->withPivot('role')->withTimestamps();
+    }
+
+    // A user belongs to many event class fleet boats
+    public function eventClassFleetBoat()
+    {
+        return $this->belongsToMany(EventClassFleetBoat::class)->withTimestamps();
     }
 
     // Search by a query
@@ -96,11 +94,11 @@ class User extends Authenticatable
     // Search collection by a query
     public static function searchCollection($collection, $query)
     {
-        return $collection->filter(function ($boat) use ($query) {
-            return Str::contains(strtolower($boat->firstname), strtolower($query)) ||
-                Str::contains(strtolower($boat->insertion), strtolower($query)) ||
-                Str::contains(strtolower($boat->lastname), strtolower($query)) ||
-                Str::contains(strtolower($boat->email), strtolower($query));
+        return $collection->filter(function ($user) use ($query) {
+            return Str::contains(strtolower($user->firstname), strtolower($query)) ||
+                Str::contains(strtolower($user->insertion), strtolower($query)) ||
+                Str::contains(strtolower($user->lastname), strtolower($query)) ||
+                Str::contains(strtolower($user->email), strtolower($query));
         });
     }
 

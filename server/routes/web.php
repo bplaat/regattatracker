@@ -210,6 +210,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats/{boat}/users/{user}/delete', [AdminEventClassFleetBoatUsersController::class, 'delete'])->name('admin.events.classes.fleets.boats.users.delete');
 
     // Admin event class fleet boat guest routes
+    Route::get('/admin/events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats/{boat}/guests/create', [AdminEventClassFleetBoatGuestsController::class, 'create'])->name('admin.events.classes.fleets.boats.guests.create');
     Route::post('/admin/events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats/{boat}/guests', [AdminEventClassFleetBoatGuestsController::class, 'store'])->name('admin.events.classes.fleets.boats.guests.store');
     Route::get('/admin/events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats/{boat}/guests/{eventClassFleetBoatGuest}/edit', [AdminEventClassFleetBoatGuestsController::class, 'edit'])->name('admin.events.classes.fleets.boats.guests.edit');
     Route::post('/admin/events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats/{boat}/guests/{eventClassFleetBoatGuest}', [AdminEventClassFleetBoatGuestsController::class, 'update'])->name('admin.events.classes.fleets.boats.guests.update');

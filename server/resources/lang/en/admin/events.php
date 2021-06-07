@@ -186,15 +186,68 @@ return [
     'classes.fleets.boats.edit.edit_button' => 'Edit boat details',
 
     // ### Event class fleet boat users pages ###
+
+    // Event class fleet boat user index page
     'classes.fleets.boats.users.index.title' => 'Users - :boat.name - Boats - :event_class_fleet.name - Fleets - :event_class.name - Classes - :event.name - Events - Admin',
     'classes.fleets.boats.users.index.breadcrumb' => 'Users',
     'classes.fleets.boats.users.index.header' => 'All temporary users of this boat',
     'classes.fleets.boats.users.index.query_placeholder' => 'Search for users...',
     'classes.fleets.boats.users.index.search_button' => 'Search',
-    'classes.fleets.boats.users.index.empty' => 'No users found of this boat',
 
-    'classes.fleets.boats.users.index.user_header' => 'Temporary users:',
+    'classes.fleets.boats.users.index.user_header' => 'Temporary users',
     'classes.fleets.boats.users.index.user_delete_button' => 'Remove user',
     'classes.fleets.boats.users.index.user_placeholder' => 'Select a user...',
-    'classes.fleets.boats.users.index.user_add_button' => 'Add user'
+    'classes.fleets.boats.users.index.user_add_button' => 'Add user',
+    'classes.fleets.boats.users.index.user_empty' => 'No temporary users found of this boat',
+
+    'classes.fleets.boats.users.index.guest_header' => 'Temporary guests',
+    'classes.fleets.boats.users.index.guest_edit_button' => 'Edit guest',
+    'classes.fleets.boats.users.index.guest_delete_button' => 'Delete guest',
+    'classes.fleets.boats.users.index.guest_create_button' => 'Create guest',
+    'classes.fleets.boats.users.index.guest_empty' => 'No temporary guests found of this boat',
+
+    // ### Event class fleet boat guests pages ###
+
+    // Event class fleet boat guest index page
+    'classes.fleets.boats.guests.index.breadcrumb' => 'Guests',
+
+    // Event class fleet boat guest create page
+    'classes.fleets.boats.guests.create.title' => 'Create - Guests - :boat.name - Boats - :event_class_fleet.name - Fleets - :event_class.name - Classes - :event.name - Events - Admin',
+    'classes.fleets.boats.guests.create.breadcrumb' => 'Create',
+    'classes.fleets.boats.guests.create.header' => 'Create new guest',
+    'classes.fleets.boats.guests.create.firstname' => 'First name',
+    'classes.fleets.boats.guests.create.insertion' => 'Insertion',
+    'classes.fleets.boats.guests.create.lastname' => 'Last name',
+    'classes.fleets.boats.guests.create.gender' => 'Gender',
+    'classes.fleets.boats.guests.create.gender_male' => 'Male',
+    'classes.fleets.boats.guests.create.gender_female' => 'Female',
+    'classes.fleets.boats.guests.create.gender_other' => 'Other',
+    'classes.fleets.boats.guests.create.birthday' => 'Birthday',
+    'classes.fleets.boats.guests.create.email' => 'Email address',
+    'classes.fleets.boats.guests.create.phone' => 'Phone',
+    'classes.fleets.boats.guests.create.address' => 'Address (street with house number)',
+    'classes.fleets.boats.guests.create.postcode' => 'Postcode',
+    'classes.fleets.boats.guests.create.city' => 'City',
+    'classes.fleets.boats.guests.create.country' => 'Country',
+    'classes.fleets.boats.guests.create.create_button' => 'Create new guest',
+
+    // Event class fleet boat guest edit page
+    'classes.fleets.boats.guests.edit.title' => 'Edit - :event_class_fleet_boat_guest.name - Guests - :boat.name - Boats - :event_class_fleet.name - Fleets - :event_class.name - Classes - :event.name - Events - Admin',
+    'classes.fleets.boats.guests.edit.breadcrumb' => 'Edit',
+    'classes.fleets.boats.guests.edit.header' => 'Edit guest',
+    'classes.fleets.boats.guests.edit.firstname' => 'First name',
+    'classes.fleets.boats.guests.edit.insertion' => 'Insertion',
+    'classes.fleets.boats.guests.edit.lastname' => 'Last name',
+    'classes.fleets.boats.guests.edit.gender' => 'Gender',
+    'classes.fleets.boats.guests.edit.gender_male' => 'Male',
+    'classes.fleets.boats.guests.edit.gender_female' => 'Female',
+    'classes.fleets.boats.guests.edit.gender_other' => 'Other',
+    'classes.fleets.boats.guests.edit.birthday' => 'Birthday',
+    'classes.fleets.boats.guests.edit.email' => 'Email address',
+    'classes.fleets.boats.guests.edit.phone' => 'Phone',
+    'classes.fleets.boats.guests.edit.address' => 'Address (street with house number)',
+    'classes.fleets.boats.guests.edit.postcode' => 'Postcode',
+    'classes.fleets.boats.guests.edit.city' => 'City',
+    'classes.fleets.boats.guests.edit.country' => 'Country',
+    'classes.fleets.boats.guests.edit.create_button' => 'Edit guest'
 ];
