@@ -38,8 +38,7 @@ class AdminApiKeysController extends Controller
         $apiKey = ApiKey::create([
             'name' => $fields['name'],
             'key' => ApiKey::generateKey(),
-            'level' => $fields['level'],
-            'requests' => 0
+            'level' => $fields['level']
         ]);
 
         // Go to the new admin API key page

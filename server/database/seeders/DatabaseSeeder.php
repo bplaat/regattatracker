@@ -22,8 +22,7 @@ class DatabaseSeeder extends Seeder
         ApiKey::create([
             'name' => 'Website',
             'key' => ApiKey::generateKey(),
-            'level' => ApiKey::LEVEL_REQUIRE_AUTH,
-            'requests' => 0
+            'level' => ApiKey::LEVEL_REQUIRE_AUTH
         ]);
     }
 }

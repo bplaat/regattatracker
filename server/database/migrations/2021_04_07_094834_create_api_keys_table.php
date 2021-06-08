@@ -18,7 +18,7 @@ class CreateApiKeysTable extends Migration
             $table->string('name');
             $table->string('key');
             $table->unsignedTinyInteger('level');
-            $table->unsignedBigInteger('requests')->default(0); // Fix weird bug in MariaDB 10.1
+            $table->unsignedBigInteger('requests')->default(0); // Fix weird bug in MariaDB
             $table->timestamps();
         });
     }
