@@ -29,7 +29,7 @@
         @endif
 
         @if ($event->end != null)
-            <p>@lang('admin/events.show.end') {{ $event->format('Y-m-d') }}</p>
+            <p>@lang('admin/events.show.end') {{ $event->end->format('Y-m-d') }}</p>
         @else
             <p><i>@lang('admin/events.show.end_empty')</i></p>
         @endif
