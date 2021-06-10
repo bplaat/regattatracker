@@ -286,4 +286,53 @@
             </form>
         @endif
     </div>
+
+    <!-- Boat guests -->
+    <div class="box content">
+        <h2 class="title is-4">@lang('boats.show.guests')</h2>
+
+        @if ($boatGuests->count() > 0)
+            {{ $boatGuests->links() }}
+
+            <div class="columns is-multiline">
+                @foreach ($boatGuests as $guest)
+                    <div class="column is-one-third">
+                        <div class="box content" style="height: 100%">
+                            <h3 class="title is-4">
+                                {{ $guest->name }}
+
+                                <span class="tag is-pulled-right is-success">@lang('boats.show.guests_role_crew')</span>
+                            </h3>
+
+                            @canany(['update_boat_user', 'delete_boat_user'], $boat)
+                                <div class="buttons">
+                                    @can('update_boat_user', $boat)
+                                        <a class="button is-info is-light is-small" href="{{ route('admin.boats.guests.edit', [$boat, $guest]) }}">
+                                            @lang('boats.show.guest_edit_button')
+                                        </a>
+                                    @endcan
+                                    @can('delete_boat_user', $boat)
+                                        <a class="button is-danger is-light is-small" href="{{ route('admin.boats.guests.delete', [$boat, $guest]) }}">
+                                            @lang('boats.show.guests_remove_button')
+                                        </a>
+                                    @endcan
+                                </div>
+                            @endcanany
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            {{ $boatGuests->links() }}
+        @else
+            <p><i>@lang('boats.show.guests_empty')</i></p>
+        @endif
+
+        @can('create_boat_user', $boat)
+
+            <div class="buttons">
+                <a class="button is-link" href="{{ route('admin.boats.guests.create', [$boat]) }}">@lang('boats.show.guests_create_button')</a>
+            </div>
+        @endcan
+    </div>
 @endsection
