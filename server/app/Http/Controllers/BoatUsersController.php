@@ -36,7 +36,7 @@ class BoatUsersController extends Controller
             'role' => 'required|integer|digits_between:' . BoatUser::ROLE_CREW . ',' . BoatUser::ROLE_CAPTAIN
         ]);
 
-        // Check if user is not the last capatain
+        // Check if user is not the last captain
         if ($fields['role'] == BoatUser::ROLE_CREW) {
             $boatUser = $boat->users->firstWhere('id', $user->id);
             $boatCaptains = $boat->users->filter(function ($user) {
@@ -59,7 +59,7 @@ class BoatUsersController extends Controller
     // Boat user delete route
     public function delete(Request $request, Boat $boat, User $user)
     {
-        // Check if user is not the last capatain
+        // Check if user is not the last captain
         $boatUser = $boat->users->firstWhere('id', $user->id);
         $boatCaptains = $boat->users->filter(function ($user) {
             return $user->pivot->role == BoatUser::ROLE_CAPTAIN;
