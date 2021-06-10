@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminBoatGuestController;
+use App\Http\Controllers\BoatGuestController;
 use App\Http\Controllers\PagesController;
 
 use App\Http\Controllers\AuthController;
@@ -84,6 +86,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/boats/{boat}/users/{user}/delete', [BoatUsersController::class, 'delete'])->name('boats.users.delete')
         ->middleware('can:delete_boat_user,boat');
 
+    //Boat guest routes
+    Route::get('/boats/{boat}/guests/create', [BoatGuestController::class, 'create'])->name('boats.guests.create');
+    Route::post('/boats/{boat}/guests', [BoatGuestController::class, 'store'])->name('boats.guests.store');
+    Route::get('/boats/{boat}/guests/{boatGuest}/edit', [BoatGuestController::class, 'edit'])->name('boats.guests.edit');
+    Route::post('/boats/{boat}/guests/{boatGuest}', [BoatGuestController::class, 'update'])->name('boats.guests.update');
+    Route::get('/boats/{boat}/guests/{boatGuest}/delete', [BoatGuestController::class, 'delete'])->name('boats.guests.delete');
+
+
     // Settings routes
     Route::view('/settings', 'settings')->name('settings');
     Route::post('/settings/change_details', [SettingsController::class, 'changeDetails'])->name('settings.change_details');
@@ -141,6 +151,13 @@ Route::middleware('admin')->group(function () {
     Route::post('/admin/boats/{boat}/users', [AdminBoatUsersController::class, 'store'])->name('admin.boats.users.store');
     Route::get('/admin/boats/{boat}/users/{user}/update', [AdminBoatUsersController::class, 'update'])->name('admin.boats.users.update');
     Route::get('/admin/boats/{boat}/users/{user}/delete', [AdminBoatUsersController::class, 'delete'])->name('admin.boats.users.delete');
+
+    //Admin Boat guest routes
+    Route::get('/admin/boats/{boat}/guests/create', [AdminBoatGuestController::class, 'create'])->name('admin.boats.guests.create');
+    Route::post('/admin/boats/{boat}/guests', [AdminBoatGuestController::class, 'store'])->name('admin.boats.guests.store');
+    Route::get('/admin/boats/{boat}/guests/{boatGuest}/edit', [AdminBoatGuestController::class, 'edit'])->name('admin.boats.guests.edit');
+    Route::post('/admin/boats/{boat}/guests/{boatGuest}', [AdminBoatGuestController::class, 'update'])->name('admin.boats.guests.update');
+    Route::get('/admin/boats/{boat}/guests/{boatGuest}/delete', [AdminBoatGuestController::class, 'delete'])->name('admin.boats.guests.delete');
 
     // Admin boat type routes
     Route::get('/admin/boat_types', [AdminBoatTypesController::class, 'index'])->name('admin.boat_types.index');
