@@ -90,6 +90,9 @@ class BoatsController extends Controller
         });
         $users = User::all()->sortBy('sortName', SORT_NATURAL | SORT_FLAG_CASE);
 
+        $boatGuests = $boat->guests->sortBy('sortName', SORT_NATURAL | SORT_FLAG_CASE)
+            ->paginate(config('pagination.web.limit'))->withQueryString();
+
         // Return boat show view
         return view('boats.show', [
             'boat' => $boat,
@@ -102,7 +105,8 @@ class BoatsController extends Controller
 
             'boatUsers' => $boatUsers,
             'boatCaptains' => $boatCaptains,
-            'users' => $users
+            'users' => $users,
+            'boatGuests' => $boatGuests
         ]);
     }
 

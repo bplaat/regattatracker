@@ -195,12 +195,14 @@ return [
     'classes.fleets.boats.users.index.search_button' => 'Search',
 
     'classes.fleets.boats.users.index.user_header' => 'Temporary users',
+    'classes.fleets.boats.users.index.user_role_crew' => 'CREW',
     'classes.fleets.boats.users.index.user_delete_button' => 'Remove user',
     'classes.fleets.boats.users.index.user_placeholder' => 'Select a user...',
     'classes.fleets.boats.users.index.user_add_button' => 'Add user',
     'classes.fleets.boats.users.index.user_empty' => 'No temporary users found of this boat',
 
     'classes.fleets.boats.users.index.guest_header' => 'Temporary guests',
+    'classes.fleets.boats.users.index.guest_role_crew' => 'CREW',
     'classes.fleets.boats.users.index.guest_edit_button' => 'Edit guest',
     'classes.fleets.boats.users.index.guest_delete_button' => 'Delete guest',
     'classes.fleets.boats.users.index.guest_create_button' => 'Create guest',

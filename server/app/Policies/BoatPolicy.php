@@ -77,4 +77,20 @@ class BoatPolicy
     {
         return $this->update($user, $boat);
     }
+
+    // Boat Guest connection
+    public function create_boat_guest(User $user, Boat $boat)
+    {
+        return $this->update($user, $boat);
+    }
+
+    public function update_boat_guest(User $user, Boat $boat)
+    {
+        return $this->update($user, $boat);
+    }
+
+    public function delete_boat_guest(User $user, Boat $boat)
+    {
+        return $this->update($user, $boat);
+    }
 }

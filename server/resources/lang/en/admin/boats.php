@@ -78,6 +78,13 @@ return [
     'show.users_role_captain_placeholder' => 'As captain',
     'show.users_add_button' => 'Add user',
 
+    'show.guests' => 'Boat Guests',
+    'show.guests_role_crew' => 'CREW',
+    'show.guest_edit_button' => 'edit guest',
+    'show.guests_remove_button' => 'Remove guest',
+    'show.guests_empty' => 'This boat has no guests',
+    'show.guests_add_button' => 'Add guest',
+
     // Admin boats track page
     'track.title' => 'Track - :boat.name - Boats - Admin',
     'track.breadcrumb' => 'Track',
@@ -127,5 +134,47 @@ return [
     'positions.edit.longitude' => 'Longitude',
     'positions.edit.created_at_date' => 'Date',
     'positions.edit.created_at_time' => 'Time',
-    'positions.edit.edit_button' => 'Edit boat position'
+    'positions.edit.edit_button' => 'Edit boat position',
+
+    // ### Boat guests pages ###
+
+    // Boat guest create page
+    'guests.create.title' => 'Create - Guests - :boat.name - Boats',
+    'guests.create.breadcrumb' => 'Create',
+    'guests.create.header' => 'Create new guest',
+    'guests.create.firstname' => 'First name',
+    'guests.create.insertion' => 'Insertion',
+    'guests.create.lastname' => 'Last name',
+    'guests.create.gender' => 'Gender',
+    'guests.create.gender_male' => 'Male',
+    'guests.create.gender_female' => 'Female',
+    'guests.create.gender_other' => 'Other',
+    'guests.create.birthday' => 'Birthday',
+    'guests.create.email' => 'Email address',
+    'guests.create.phone' => 'Phone',
+    'guests.create.address' => 'Address (street with house number)',
+    'guests.create.postcode' => 'Postcode',
+    'guests.create.city' => 'City',
+    'guests.create.country' => 'Country',
+    'guests.create.create_button' => 'Create new guest',
+
+    // Boat guest edit page
+    'guests.edit.title' => 'Edit - boat_guest.name - Guests - :boat.name - Boats',
+    'guests.edit.breadcrumb' => 'Edit',
+    'guests.edit.header' => 'Edit guest',
+    'guests.edit.firstname' => 'First name',
+    'guests.edit.insertion' => 'Insertion',
+    'guests.edit.lastname' => 'Last name',
+    'guests.edit.gender' => 'Gender',
+    'guests.edit.gender_male' => 'Male',
+    'guests.edit.gender_female' => 'Female',
+    'guests.edit.gender_other' => 'Other',
+    'guests.edit.birthday' => 'Birthday',
+    'guests.edit.email' => 'Email address',
+    'guests.edit.phone' => 'Phone',
+    'guests.edit.address' => 'Address (street with house number)',
+    'guests.edit.postcode' => 'Postcode',
+    'guests.edit.city' => 'City',
+    'guests.edit.country' => 'Country',
+    'guests.edit.create_button' => 'Edit guest'
 ];
