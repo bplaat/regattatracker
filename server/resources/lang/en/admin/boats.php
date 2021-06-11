@@ -136,6 +136,8 @@ return [
     'positions.edit.created_at_time' => 'Time',
     'positions.edit.edit_button' => 'Edit boat position',
 
+    // ### Boat guests pages ###
+
     // Boat guest create page
     'guests.create.title' => 'Create - Guests - :boat.name - Boats',
     'guests.create.breadcrumb' => 'Create',
@@ -146,7 +148,14 @@ return [
     'guests.create.gender' => 'Gender',
     'guests.create.gender_male' => 'Male',
     'guests.create.gender_female' => 'Female',
+    'guests.create.gender_other' => 'Other',
+    'guests.create.birthday' => 'Birthday',
+    'guests.create.email' => 'Email address',
     'guests.create.phone' => 'Phone',
+    'guests.create.address' => 'Address (street with house number)',
+    'guests.create.postcode' => 'Postcode',
+    'guests.create.city' => 'City',
+    'guests.create.country' => 'Country',
     'guests.create.create_button' => 'Create new guest',
 
     // Boat guest edit page
@@ -160,6 +169,12 @@ return [
     'guests.edit.gender_male' => 'Male',
     'guests.edit.gender_female' => 'Female',
     'guests.edit.gender_other' => 'Other',
+    'guests.edit.birthday' => 'Birthday',
+    'guests.edit.email' => 'Email address',
     'guests.edit.phone' => 'Phone',
+    'guests.edit.address' => 'Address (street with house number)',
+    'guests.edit.postcode' => 'Postcode',
+    'guests.edit.city' => 'City',
+    'guests.edit.country' => 'Country',
     'guests.edit.create_button' => 'Edit guest'
 ];

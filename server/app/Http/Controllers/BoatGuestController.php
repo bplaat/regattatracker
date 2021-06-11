@@ -12,12 +12,10 @@ class BoatGuestController extends Controller
     // boat guest create route
     public function create(Boat $boat)
     {
-
         return view('boats.guests.create', [
             'boat' => $boat,
         ]);
     }
-
 
     public function store(Request $request, Boat $boat)
     {
@@ -26,8 +24,14 @@ class BoatGuestController extends Controller
             'firstname' => 'required|min:2|max:48',
             'insertion' => 'nullable|max:16',
             'lastname' => 'required|min:2|max:48',
-            'gender' => 'required|integer|digits_between:' . User::GENDER_MALE . ',' . User::GENDER_OTHER,
+            'gender' => 'nullable|integer|digits_between:' . User::GENDER_MALE . ',' . User::GENDER_OTHER,
+            'birthday' => 'nullable|date',
+            'email' => 'nullable|email|max:255',
             'phone' => 'nullable|max:255',
+            'address' => 'nullable|min:2|max:255',
+            'postcode' => 'nullable|min:2|max:255',
+            'city' => 'nullable|min:2|max:255',
+            'country' => 'nullable|min:2|max:255'
         ]);
 
         // Create guest
@@ -36,9 +40,14 @@ class BoatGuestController extends Controller
             'insertion' => $fields['insertion'],
             'lastname' => $fields['lastname'],
             'gender' => $fields['gender'],
+            'birthday' => $fields['birthday'],
+            'email' => $fields['email'],
             'phone' => $fields['phone'],
+            'address' => $fields['address'],
+            'postcode' => $fields['postcode'],
+            'city' => $fields['city'],
+            'country' => $fields['country']
         ]);
-
 
         // Go back to the boat page
         return redirect()->route('boats.show', $boat);
@@ -56,14 +65,19 @@ class BoatGuestController extends Controller
     // boat guest update route
     public function update(Request $request, Boat $boat, BoatGuest $boatGuest)
     {
-
         // Validate input
         $fields = $request->validate([
             'firstname' => 'required|min:2|max:48',
             'insertion' => 'nullable|max:16',
             'lastname' => 'required|min:2|max:48',
             'gender' => 'nullable|integer|digits_between:' . User::GENDER_MALE . ',' . User::GENDER_OTHER,
+            'birthday' => 'nullable|date',
+            'email' => 'nullable|email|max:255',
             'phone' => 'nullable|max:255',
+            'address' => 'nullable|min:2|max:255',
+            'postcode' => 'nullable|min:2|max:255',
+            'city' => 'nullable|min:2|max:255',
+            'country' => 'nullable|min:2|max:255'
         ]);
 
         // Update guest
@@ -72,7 +86,13 @@ class BoatGuestController extends Controller
             'insertion' => $fields['insertion'],
             'lastname' => $fields['lastname'],
             'gender' => $fields['gender'],
+            'birthday' => $fields['birthday'],
+            'email' => $fields['email'],
             'phone' => $fields['phone'],
+            'address' => $fields['address'],
+            'postcode' => $fields['postcode'],
+            'city' => $fields['city'],
+            'country' => $fields['country']
 
         ]);
 

@@ -2,20 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class BoatGuest extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'boat_id',
         'firstname',
         'insertion',
         'lastname',
         'gender',
-        'phone'
+        'birthday',
+        'email',
+        'phone',
+        'address',
+        'postcode',
+        'city',
+        'country'
     ];
 
     // Get user full name (firstname insertion lastname)
@@ -28,10 +31,9 @@ class BoatGuest extends Model
         }
     }
 
-    // A boat guest belongs to a  boat
-    public function Boat()
+    // A boat guest belongs to a boat
+    public function boat()
     {
         return $this->belongsTo(Boat::class);
     }
-
 }

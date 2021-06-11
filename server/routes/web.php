@@ -1,15 +1,14 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminBoatGuestController;
-use App\Http\Controllers\BoatGuestController;
 use App\Http\Controllers\PagesController;
 
 use App\Http\Controllers\AuthController;
 
 use App\Http\Controllers\BoatsController;
+use App\Http\Controllers\BoatPositionsController;
 use App\Http\Controllers\BoatBoatTypesController;
 use App\Http\Controllers\BoatUsersController;
-use App\Http\Controllers\BoatPositionsController;
+use App\Http\Controllers\BoatGuestController;
 
 use App\Http\Controllers\SettingsController;
 
@@ -21,6 +20,7 @@ use App\Http\Controllers\Admin\AdminBoatsController;
 use App\Http\Controllers\Admin\AdminBoatPositionsController;
 use App\Http\Controllers\Admin\AdminBoatBoatTypesController;
 use App\Http\Controllers\Admin\AdminBoatUsersController;
+use App\Http\Controllers\Admin\AdminBoatGuestController;
 
 use App\Http\Controllers\Admin\AdminBoatTypesController;
 
@@ -87,12 +87,16 @@ Route::middleware('auth')->group(function () {
         ->middleware('can:delete_boat_user,boat');
 
     //Boat guest routes
-    Route::get('/boats/{boat}/guests/create', [BoatGuestController::class, 'create'])->name('boats.guests.create');
-    Route::post('/boats/{boat}/guests', [BoatGuestController::class, 'store'])->name('boats.guests.store');
-    Route::get('/boats/{boat}/guests/{boatGuest}/edit', [BoatGuestController::class, 'edit'])->name('boats.guests.edit');
-    Route::post('/boats/{boat}/guests/{boatGuest}', [BoatGuestController::class, 'update'])->name('boats.guests.update');
-    Route::get('/boats/{boat}/guests/{boatGuest}/delete', [BoatGuestController::class, 'delete'])->name('boats.guests.delete');
-
+    Route::get('/boats/{boat}/guests/create', [BoatGuestController::class, 'create'])->name('boats.guests.create')
+        ->middleware('can:create_boat_guest,boat');
+    Route::post('/boats/{boat}/guests', [BoatGuestController::class, 'store'])->name('boats.guests.store')
+        ->middleware('can:create_boat_guest,boat');
+    Route::get('/boats/{boat}/guests/{boatGuest}/edit', [BoatGuestController::class, 'edit'])->name('boats.guests.edit')
+        ->middleware('can:update_boat_guest,boat');
+    Route::post('/boats/{boat}/guests/{boatGuest}', [BoatGuestController::class, 'update'])->name('boats.guests.update')
+        ->middleware('can:update_boat_guest,boat');
+    Route::get('/boats/{boat}/guests/{boatGuest}/delete', [BoatGuestController::class, 'delete'])->name('boats.guests.delete')
+        ->middleware('can:delete_boat_guest,boat');
 
     // Settings routes
     Route::view('/settings', 'settings')->name('settings');

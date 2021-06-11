@@ -15,14 +15,19 @@ class CreateBoatGuestsTable extends Migration
     {
         Schema::create('boat_guests', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('boat_id');
             $table->string('firstname');
             $table->string('insertion')->nullable();
             $table->string('lastname');
-            $table->unsignedTinyInteger('gender');
+            $table->unsignedTinyInteger('gender')->nullable();
+            $table->date('birthday')->nullable();
+            $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->unsignedBigInteger('boat_id');
+            $table->string('address')->nullable();
+            $table->string('postcode')->nullable();
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
             $table->timestamps();
-
 
             $table->foreign('boat_id')
                 ->references('id')
