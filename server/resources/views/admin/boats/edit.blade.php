@@ -15,7 +15,7 @@
 
     <h1 class="title">@lang('admin/boats.edit.header')</h1>
 
-    <form method="POST" action="{{ route('admin.boats.update', $boat) }}">
+    <form method="POST" enctype="multipart/form-data" action="{{ route('admin.boats.update', $boat) }}">
         @csrf
 
         <div class="field">
@@ -41,6 +41,26 @@
                 <p class="help is-danger">{{ $errors->first('description') }}</p>
             @enderror
         </div>
+
+        <div class="field">
+            <label class="label" for="image">@lang('boats.edit.image')</label>
+
+            <div class="control">
+                <input class="input @error('image') is-danger @enderror" type="file" accept=".jpg,.jpeg,.png" id="image" name="image">
+            </div>
+
+            @error('image')
+                <p class="help is-danger">{{ $errors->first('image') }}</p>
+            @else
+                <p class="help">@lang('boats.edit.image_message')</p>
+            @enderror
+        </div>
+
+        @if ($boat->image)
+            <div class="buttons">
+                <a class="button is-danger" href="{{ route('admin.boats.delete_image', $boat) }}">@lang('admin/boats.edit.delete_image_button')</a>
+            </div>
+        @endif
 
         <div class="columns">
             <div class="column">

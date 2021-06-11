@@ -26,6 +26,10 @@
             <p><i>@lang('admin/boats.show.description_empty')</i></p>
         @endif
 
+        @if ($boat->image)
+            <img src="/storage/boats/{{ $boat->id }}" alt="@lang('boats.show.image_alt', [ 'boat.name' => $boat->name ])">
+        @endif
+
         <h2 class="subtitle is-5">@lang('boats.show.boat_info')</h2>
         <p>@lang('boats.show.mmsi') {{ $boat->mmsi }}</p>
         <p>@lang('boats.show.length') {{ round($boat->length, 2) }} m</p>

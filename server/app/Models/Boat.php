@@ -11,12 +11,17 @@ class Boat extends Model
     protected $fillable = [
         'name',
         'description',
+        'image',
         'mmsi',
         'length',
         'breadth',
         'weight',
         'sail_number',
         'sail_area'
+    ];
+
+    protected $casts = [
+        'image' => 'boolean'
     ];
 
     // Get the Klipperrace rating of the boat

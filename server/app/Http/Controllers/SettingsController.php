@@ -76,8 +76,8 @@ class SettingsController extends Controller
     // Delete avatar route
     public function deleteAvatar()
     {
-        // Delete avatar file from storage
-        Storage::delete('public/avatars/' .Auth::user()->id);
+        // Delete user avatar file from storage
+        Storage::delete('public/avatars/' . Auth::user()->id);
 
         // Update user that he has no avatar
         Auth::user()->update([ 'avatar' => false ]);

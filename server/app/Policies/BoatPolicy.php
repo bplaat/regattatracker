@@ -30,6 +30,11 @@ class BoatPolicy
         return $boatUser->count() == 1 && $boatUser->first()->role == BoatUser::ROLE_CAPTAIN;
     }
 
+    public function delete_boat_image(User $user, Boat $boat)
+    {
+        return $this->update($user, $boat);
+    }
+
     public function delete(User $user, Boat $boat)
     {
         return $this->update($user, $boat);

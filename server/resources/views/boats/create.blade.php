@@ -13,7 +13,7 @@
 
     <h1 class="title">@lang('boats.create.header')</h1>
 
-    <form method="POST" action="{{ route('boats.store') }}">
+    <form method="POST" enctype="multipart/form-data" action="{{ route('boats.store') }}">
         @csrf
 
         <div class="field">
@@ -37,6 +37,20 @@
 
             @error('description')
                 <p class="help is-danger">{{ $errors->first('description') }}</p>
+            @enderror
+        </div>
+
+        <div class="field">
+            <label class="label" for="image">@lang('boats.create.image')</label>
+
+            <div class="control">
+                <input class="input @error('image') is-danger @enderror" type="file" accept=".jpg,.jpeg,.png" id="image" name="image">
+            </div>
+
+            @error('image')
+                <p class="help is-danger">{{ $errors->first('image') }}</p>
+            @else
+                <p class="help">@lang('boats.create.image_message')</p>
             @enderror
         </div>
 

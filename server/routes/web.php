@@ -59,6 +59,8 @@ Route::middleware('auth')->group(function () {
         ->middleware('can:update,boat');
     Route::post('/boats/{boat}', [BoatsController::class, 'update'])->name('boats.update')
         ->middleware('can:update,boat');
+    Route::get('/boats/{boat}/delete_image', [BoatsController::class, 'deleteImage'])->name('boats.delete_image')
+        ->middleware('can:delete_boat_image,boat');
     Route::get('/boats/{boat}/delete', [BoatsController::class, 'delete'])->name('boats.delete')
         ->middleware('can:delete,boat');
 
@@ -141,6 +143,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/boats/{boat}/track', [AdminBoatsController::class, 'track'])->name('admin.boats.track');
     Route::get('/admin/boats/{boat}/edit', [AdminBoatsController::class, 'edit'])->name('admin.boats.edit');
     Route::post('/admin/boats/{boat}', [AdminBoatsController::class, 'update'])->name('admin.boats.update');
+    Route::get('/admin/boats/{boat}/delete_image', [AdminBoatsController::class, 'deleteImage'])->name('admin.boats.delete_image');
     Route::get('/admin/boats/{boat}/delete', [AdminBoatsController::class, 'delete'])->name('admin.boats.delete');
 
     // Admin boat position routes

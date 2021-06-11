@@ -9,6 +9,7 @@ use App\Models\BoatUser;
 use App\Models\User;
 use App\Rules\SailNumber;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class AdminBoatsController extends Controller
@@ -67,6 +68,19 @@ class AdminBoatsController extends Controller
             'sail_number' => $fields['sail_number'],
             'sail_area' => $fields['sail_area']
         ]);
+
+        // Update boat image when not empty
+        if (request('image') != '') {
+            $fields = $request->validate([
+                'image' => 'required|image'
+            ]);
+
+            // Save file to boats folder
+            $request->file('image')->storeAs('public/boats', $boat->id);
+
+            // Update boat that he has an image
+            $boat->update([ 'image' => true ]);
+        }
 
         // Add user to boat as captain
         $boat->users()->attach($fields['user_id'], [
@@ -170,8 +184,34 @@ class AdminBoatsController extends Controller
             'sail_area' => $fields['sail_area']
         ]);
 
+        // Update boat image when not empty
+        if (request('image') != '') {
+            $fields = $request->validate([
+                'image' => 'required|image'
+            ]);
+
+            // Save file to boats folder
+            $request->file('image')->storeAs('public/boats', $boat->id);
+
+            // Update boat that he has an image
+            $boat->update([ 'image' => true ]);
+        }
+
         // Go to the admin boat page
         return redirect()->route('admin.boats.show', $boat);
+    }
+
+    // Admin boats delete image route
+    public function deleteImage(Boat $boat)
+    {
+        // Delete boat image file from storage
+        Storage::delete('public/boats/' . $boat->id);
+
+        // Update boat that he has no image
+        $boat->update([ 'image' => false ]);
+
+        // Go to the boats edit page
+        return redirect()->route('admin.boats.edit', $boat);
     }
 
     // Admin boats delete route

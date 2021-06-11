@@ -240,10 +240,10 @@
             <label class="label" for="avatar">@lang('settings.avatar')</label>
 
             <div class="control">
-                <input class="input" type="file" accept=".jpg,.jpeg,.png" id="avatar" name="avatar" required>
+                <input class="input @error('avatar') is-danger @enderror" type="file" accept=".jpg,.jpeg,.png" id="avatar" name="avatar" required>
 
-                @error('file')
-                    <p class="help is-danger">{{ $errors->first('file') }}</p>
+                @error('avatar')
+                    <p class="help is-danger">{{ $errors->first('avatar') }}</p>
                 @else
                     <p class="help">@lang('settings.avatar_message')</p>
                 @enderror

@@ -17,6 +17,8 @@ return [
     'create.user' => 'User',
     'create.name' => 'Name',
     'create.description' => 'Description',
+    'create.image' => 'Image',
+    'create.image_message' => 'You can upload jpg, or png images',
     'create.mmsi' => 'MMSI',
     'create.length' => 'Length overall (m)',
     'create.breadth' => 'Breadth overall (m)',
@@ -28,6 +30,7 @@ return [
     // Admin boats show page
     'show.title' => ':boat.name - Boats - Admin',
     'show.description_empty' => 'This boat has no description',
+    'show.image_alt' => ':boat.name\'s image',
     'show.boat_info' => 'Boat Information',
     'show.mmsi' => 'MMSI:',
     'show.length' => 'Length overall:',
@@ -110,6 +113,8 @@ return [
     'edit.user' => 'User',
     'edit.name' => 'Name',
     'edit.description' => 'Description',
+    'edit.image' => 'Image',
+    'edit.image_message' => 'You can upload jpg, or png images',
     'edit.mmsi' => 'MMSI',
     'edit.length' => 'Length overall (m)',
     'edit.breadth' => 'Breadth overall (m)',
@@ -117,6 +122,7 @@ return [
     'edit.sail_number' => 'Sail number',
     'edit.sail_area' => 'Sail area (m<sup>2</sup>)',
     'edit.edit_button' => 'Edit boat',
+    'edit.delete_image_button' => 'Delete boat image',
 
     // ### Boat positions pages ###
 
