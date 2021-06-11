@@ -47,7 +47,10 @@
                     @foreach ($boatUsers as $user)
                         <div class="column is-one-third">
                             <div class="box content" style="height: 100%">
-                                <h3 class="title is-4"><a href="{{ route('admin.users.show', $user) }}">{{ $user->name }}</a></h3>
+                                <h3 class="title is-4">
+                                    <a href="{{ route('admin.users.show', $user) }}">{{ $user->name }}</a>
+                                    <span class="tag is-pulled-right is-success">@lang('admin/events.classes.fleets.boats.users.index.user_role_crew')</span>
+                                </h3>
 
                                 <div class="buttons">
                                     <a class="button is-danger is-light is-small" href="{{ route('admin.events.classes.fleets.boats.users.delete', [$event, $eventClass, $eventClassFleet, $boat, $user]) }}">
@@ -105,7 +108,10 @@
                     @foreach ($boatGuests as $guest)
                         <div class="column is-one-third">
                             <div class="box content" style="height: 100%">
-                                <h3 class="title is-4">{{ $guest->name }}</h3>
+                                <h3 class="title is-4">
+                                    {{ $guest->name }}
+                                    <span class="tag is-pulled-right is-success">@lang('admin/events.classes.fleets.boats.users.index.guest_role_crew')</span>
+                                </h3>
 
                                 <div class="buttons">
                                     <a class="button is-info is-light is-small" href="{{ route('admin.events.classes.fleets.boats.guests.edit', [$event, $eventClass, $eventClassFleet, $boat, $guest]) }}">

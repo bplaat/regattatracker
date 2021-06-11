@@ -326,9 +326,7 @@
                         <div class="box content" style="height: 100%">
                             <h3 class="title is-4">
                                 {{ $guest->name }}
-
                                 <span class="tag is-pulled-right is-success">@lang('boats.show.guests_role_crew')</span>
-
                             </h3>
 
                             @canany(['update_boat_user', 'delete_boat_user'], $boat)

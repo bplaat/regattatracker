@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Models\EventClass;
 use App\Models\EventClassFleet;
 use App\Models\EventClassFleetBoat;
+use App\Models\EventClassFleetBoatGuest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
