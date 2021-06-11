@@ -66,7 +66,7 @@
 
                         <div class="navbar-end">
                             <div class="navbar-item" style="display: flex; align-items: center;">
-                                <img style="border-radius: 50%; margin-right: 10px;" src="https://www.gravatar.com/avatar/{{ md5(Auth::user()->email) }}?s=48&d=mp" alt="{{ Auth::user()->name }}'s avatar">
+                                <img style="width: 28px; height: 28px; border-radius: 50%; margin-right: 10px;" src="{{ Auth::user()->avatar ? '/storage/avatars/' . Auth::user()->id : '/images/avatars/mp.jpg' }}" alt="@lang('layout.header.avatar_alt', [ 'user.name' => Auth::user()->name ])">
                                 <span>{{ Auth::user()->name }}</span>
                             </div>
                             <div class="navbar-item">

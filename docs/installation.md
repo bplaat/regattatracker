@@ -24,6 +24,11 @@
     ```
     php artisan key:generate
     ```
+- Link the storage and public folder together
+
+    ```
+    php artisan storage:link
+    ```
 - Register a [MapBox](https://www.mapbox.com/) account to get a MapBox access token, insert your token at the end of the `.env` file
 
     ```
@@ -118,6 +123,11 @@ TODO
 
     ```
     php artisan key:generate
+    ```
+- Link the storage and public folder together
+
+    ```
+    php artisan storage:link
     ```
 - Register a [MapBox](https://www.mapbox.com/) account to get a MapBox access token, insert your token at the end of the `.env` file
 

@@ -64,6 +64,7 @@ return [
     'show.finishes_create_button' => 'Create a new finish',
 
     'show.classes' => 'Classes',
+    'show.classes.flag_alt' => ':flag.name flag',
     'show.classes_edit_button' => 'Edit',
     'show.classes_delete_button' => 'Delete',
     'show.classes_empty' => 'No classes found',
@@ -124,6 +125,7 @@ return [
     'classes.create.header' => 'Create class',
     'classes.create.flag' => 'Flag',
     'classes.create.flag.none' => 'None',
+    'classes.create.flag_alt' => ':flag.name flag',
     'classes.create.name' => 'Name',
     'classes.create.create_button' => 'Create class',
 
@@ -133,6 +135,7 @@ return [
     'classes.edit.header' => 'Edit class',
     'classes.edit.flag' => 'Flag',
     'classes.edit.flag.none' => 'None',
+    'classes.edit.flag_alt' => ':flag.name flag',
     'classes.edit.name' => 'Name',
     'classes.edit.edit_button' => 'Edit class',
 

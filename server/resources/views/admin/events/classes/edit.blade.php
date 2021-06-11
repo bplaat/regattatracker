@@ -24,7 +24,7 @@
             <label class="label" for="flag">@lang('admin/events.classes.edit.flag')</label>
 
             <div id="flag-container" class="box" style="display: {{ $eventClass->flag != NULL ? 'inline-block' : 'none' }}; background-color: #ccc;">
-                <img id="flag-image" @if ($eventClass->flag != NULL) src="/images/flags/{{ $eventClass->flag }}.svg" alt="{{ $eventClass->flag }} flag" @endif style="height: 100px">
+                <img id="flag-image" @if ($eventClass->flag != NULL) src="/images/flags/{{ $eventClass->flag }}.svg" alt="@lang('admin/events.classes.edit.flag_alt', [ 'flag.name' => $eventClass->flag ])" @endif style="height: 100px">
             </div>
 
             <div class="control">
@@ -41,6 +41,7 @@
             </div>
 
             <script>
+            const flagAltString = @json(__('admin/events.classes.edit.flag_alt'));
             const flagContainer = document.getElementById("flag-container");
             const flagImage = document.getElementById("flag-image");
             const flagInput = document.getElementById("flag");
@@ -48,7 +49,7 @@
                 if (flagInput.value != '-') {
                     flagContainer.style.display = 'inline-block';
                     flagImage.src = '/images/flags/' + flagInput.value + '.svg';
-                    flagImage.alt = flagInput.value + ' flag';
+                    flagImage.alt = flagAltString.replace(':flag.name', flagInput.value);
                 } else {
                     flagContainer.style.display = 'none';
                 }

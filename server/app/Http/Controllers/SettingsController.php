@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class SettingsController extends Controller
@@ -51,6 +52,39 @@ class SettingsController extends Controller
         // Go back with message
         return redirect()->route('settings')
             ->with('message', __('settings.change_details_message'));
+    }
+
+    // Change avatar route
+    public function changeAvatar(Request $request)
+    {
+        // Validate input
+        $fields = $request->validate([
+            'avatar' => 'required|image'
+        ]);
+
+        // Save file to avatars folder
+        $request->file('avatar')->storeAs('public/avatars', Auth::user()->id);
+
+        // Update user that he has an avatar
+        Auth::user()->update([ 'avatar' => true ]);
+
+        // Go back with message
+        return redirect()->route('settings')
+            ->with('message', __('settings.change_avatar_message'));
+    }
+
+    // Delete avatar route
+    public function deleteAvatar()
+    {
+        // Delete avatar file from storage
+        Storage::delete('public/avatars/' .Auth::user()->id);
+
+        // Update user that he has no avatar
+        Auth::user()->update([ 'avatar' => false ]);
+
+        // Go back with message
+        return redirect()->route('settings')
+            ->with('message', __('settings.delete_avatar_message'));
     }
 
     // Change password route

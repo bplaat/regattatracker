@@ -134,7 +134,7 @@
                 <div class="box content">
                     @if ($eventClass->flag != NULL)
                         <div class="box" style="display: inline-block; background-color: #ccc; margin-bottom: 0;">
-                            <img src="/images/flags/{{ $eventClass->flag }}.svg" alt="{{ $eventClass->flag }} flag" style="height: 100px">
+                            <img src="/images/flags/{{ $eventClass->flag }}.svg" alt="@lang('admin/events.show.classes.flag_alt', [ 'flag.name' => $eventClass->flag ])" style="height: 100px">
                         </div>
                     @endif
 

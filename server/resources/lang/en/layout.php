@@ -15,6 +15,7 @@ return [
     'header.admin_buoys' => 'Buoys',
     'header.admin_events' => 'Events',
 
+    'header.avatar_alt' => ':user.name\'s avatar',
     'header.settings' => 'Settings',
     'header.logout' => 'Logout',
 

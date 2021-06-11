@@ -216,6 +216,51 @@
         </div>
     </form>
 
+    <!-- Change avatar form -->
+    <form class="box" method="POST" enctype="multipart/form-data" action="{{ route('settings.change_avatar') }}">
+        @csrf
+
+        <h2 class="title is-4">@lang('settings.change_avatar')</h2>
+
+        @if (Auth::user()->avatar)
+            <div class="field">
+                <p>@lang('settings.has_avatar')</p>
+            </div>
+
+            <div class="box" style="display: inline-block; background-color: #ccc;">
+                <img src="/storage/avatars/{{ Auth::user()->id }}" alt="@lang('settings.avatar_alt', [ 'user.name' => Auth::user()->name ])">
+            </div>
+        @else
+            <div class="field">
+                <p><i>@lang('settings.no_avatar')</i></p>
+            </div>
+        @endif
+
+        <div class="field">
+            <label class="label" for="avatar">@lang('settings.avatar')</label>
+
+            <div class="control">
+                <input class="input" type="file" accept=".jpg,.jpeg,.png" id="avatar" name="avatar" required>
+
+                @error('file')
+                    <p class="help is-danger">{{ $errors->first('file') }}</p>
+                @else
+                    <p class="help">@lang('settings.avatar_message')</p>
+                @enderror
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-link" type="submit">@lang('settings.change_avatar_button')</button>
+                @if (Auth::user()->avatar)
+                    <a class="button is-danger" href="{{ route('settings.delete_avatar') }}">@lang('settings.delete_avatar_button')</a>
+                @endif
+            </div>
+        </div>
+    </form>
+
+
     <!-- Change password form -->
     <form class="box" method="POST" action="{{ route('settings.change_password') }}">
         @csrf
