@@ -10,6 +10,7 @@ const positions = window.data.positions;
 const links = window.data.links;
 const strings = window.data.strings;
 
+const outputElement = document.getElementById('output');
 const logLines = [];
 function log(message) {
     if (debug) {
@@ -17,7 +18,7 @@ function log(message) {
         if (logLines.length > 20) {
             logLines.pop();
         }
-        output.textContent = logLines.join('\n');
+        outputElement.textContent = logLines.join('\n');
     }
 }
 
@@ -35,6 +36,26 @@ const map = new mapboxgl.Map({
     attributionControl: false
 });
 
+class MessageControl {
+    constructor(text) {
+        this.text = text;
+    }
+
+    onAdd(map) {
+        this._map = map;
+        this._container = document.createElement('div');
+        this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+        this._container.style = 'padding: 4px 8px;';
+        this._container.textContent = this.text;
+        return this._container;
+    }
+
+    onRemove() {
+        this._map = undefined;
+        this._container.parentNode.removeChild(this._container);
+    }
+}
+
 map.addControl(new mapboxgl.ScaleControl(), 'bottom-left');
 map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
@@ -47,6 +68,7 @@ let geolocationWatch;
 let sendUpdateInterval;
 let nextUpdateTime;
 let textUpdateInterval;
+let messageControl = undefined;
 
 function mapMouseEnter(event) {
     map.getCanvas().style.cursor = 'pointer';
@@ -242,6 +264,11 @@ map.on('load', () => {
                     const currentPosition = { lat: event.coords.latitude, lng: event.coords.longitude };
                     log('Current position: ' + JSON.stringify(currentPosition));
 
+                    if (messageControl != undefined) {
+                        map.removeControl(messageControl);
+                        messageControl = undefined;
+                    }
+
                     const mapCenter = map.getCenter();
                     if (mapCenter.lat == oldPosition.lat && mapCenter.lng == oldPosition.lng) {
                         map.jumpTo({ center: currentPosition, zoom: 14 });
@@ -261,7 +288,8 @@ map.on('load', () => {
 
                     oldPosition = currentPosition;
                 }, error => {
-                    alert('Error: ' + error.message);
+                    messageControl = new MessageControl(strings.error_message)
+                    map.addControl(messageControl, 'top-left');
                 });
             } else {
                 log('Stop tracking');
@@ -274,7 +302,8 @@ map.on('load', () => {
                 clearInterval(textUpdateInterval);
             }
         } else {
-            alert(strings.error_message);
+            messageControl = new MessageControl(strings.error_message)
+            map.addControl(messageControl, 'top-left');
         }
     });
 });

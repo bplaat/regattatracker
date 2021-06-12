@@ -22,8 +22,13 @@
             <div id="map-container" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
         </div>
 
+        @if (config('app.debug'))
+            <pre id="output" class="box">Debug Output</pre>
+        @endif
+
         <script>
             window.data = {
+                debug: @json(config('app.debug')),
                 websocketsReconnectTimeout: @json(config('websockets.reconnect_timeout')),
                 websocketsUrl: 'ws://' + @json(config('websockets.host')) + ':' + @json(config('websockets.port')) + '/',
                 mapboxAccessToken: @json(config('mapbox.access_token')),
@@ -31,6 +36,7 @@
                 boats: @json($boats),
                 buoys: @json($buoys),
                 strings: {
+                    connection_message: @json(__('home.map_connection_message')),
                     wind_message: @json(__('home.map_wind_message')),
                     wind_loading: @json(__('home.map_wind_loading')),
                     latitude: @json(__('home.map_latitude')),

@@ -1,3 +1,4 @@
+const debug = window.data.debug;
 const websocketsReconnectTimeout = window.data.websocketsReconnectTimeout;
 const websocketsUrl = window.data.websocketsUrl;
 mapboxgl.accessToken = window.data.mapboxAccessToken;
@@ -5,6 +6,18 @@ const openweatherApiKey = window.data.openweatherApiKey;
 const boats = window.data.boats;
 const buoys = window.data.buoys;
 const strings = window.data.strings;
+
+const outputElement = document.getElementById('output');
+const logLines = [];
+function log(message) {
+    if (debug) {
+        logLines.unshift(message);
+        if (logLines.length > 20) {
+            logLines.pop();
+        }
+        outputElement.textContent = logLines.join('\n');
+    }
+}
 
 let boatsChanged = true;
 let buoysChanged = true;
@@ -29,6 +42,26 @@ const bounds = allPositions.reduce(function (bounds, position) {
     return bounds.extend(position);
 }, new mapboxgl.LngLatBounds(allPositions[0], allPositions[0]));
 map.fitBounds(bounds, { animate: false, padding: 50 });
+
+class MessageControl {
+    constructor(text) {
+        this.text = text;
+    }
+
+    onAdd(map) {
+        this._map = map;
+        this._container = document.createElement('div');
+        this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+        this._container.style = 'padding: 4px 8px;';
+        this._container.textContent = this.text;
+        return this._container;
+    }
+
+    onRemove() {
+        this._map = undefined;
+        this._container.parentNode.removeChild(this._container);
+    }
+}
 
 class WindInfoControl {
     onAdd(map) {
@@ -233,16 +266,22 @@ map.on('load', () => {
 
 // Connect to websocket server
 let isFirstWebSocketError = true;
+let messageControl = undefined;
 function connectToWebSocketServer() {
     const ws = new WebSocket(websocketsUrl);
 
     ws.onopen = () => {
-        console.log('WebSocket connected!');
+        log('WebSocket connected!');
+
+        if (messageControl != undefined) {
+            map.removeControl(messageControl);
+            messageControl = undefined;
+        }
     };
 
     ws.onmessage = event => {
         const data = JSON.parse(event.data);
-        console.log('Websocket message: ', data);
+        log('Websocket message: ' + event.data);
 
         // On new boat position
         if (data.type == 'new_boat_position') {
@@ -267,14 +306,15 @@ function connectToWebSocketServer() {
 
     // When the connection to the websocket server is lost try to reconnect after
     ws.onclose = () => {
-        console.log('WebSocket disconnected!');
+        log('WebSocket disconnected, try to reconnect in ' + (websocketsReconnectTimeout / 1000) + ' seconds!');
         setTimeout(connectToWebSocketServer, websocketsReconnectTimeout);
     };
 
     ws.onerror = event => {
         if (isFirstWebSocketError) {
             isFirstWebSocketError = false;
-            alert('Can\'t connect to the websocket server!');
+            messageControl = new MessageControl(strings.connection_message)
+            map.addControl(messageControl, 'top-left');
         }
     };
 }
