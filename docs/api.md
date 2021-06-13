@@ -49,8 +49,14 @@ GET /api/events/{event}/classes/{eventClass}/fleets/{eventClassFleet}
 
 GET /api/events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats
     : api.events.classes.fleets.boats.index
+POST /api/events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats
+    : api.events.classes.fleets.boats.store
 GET /api/events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats/{boat}
     : api.events.classes.fleets.boats.show
+POST /api/events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats/{boat}
+    : api.events.classes.fleets.boats.update
+GET /api/events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats/{boat}/delete
+    : api.events.classes.fleets.boats.delete
 
 GET /api/auth/logout : api.auth.logout
 
