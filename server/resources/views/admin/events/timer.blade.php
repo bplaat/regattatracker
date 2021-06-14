@@ -77,6 +77,7 @@
                     <th>@lang('admin/events.timer.sail_number')</th>
                     <th>@lang('admin/events.timer.started_at')</th>
                     <th>@lang('admin/events.timer.finished_at')</th>
+                    <th>@lang('admin/events.timer.actions')</th>
                 </tr>
             </thead>
             <tbody>
@@ -88,6 +89,7 @@
                         <td>{{ $boat->sail_number }}</td>
                         <td>{{ $boat->pivot->started_at != null ? $boat->pivot->started_at->format('Y-m-d H:i:s') : '-' }}</td>
                         <td>{{ $boat->pivot->finished_at != null ? $boat->pivot->finished_at->format('Y-m-d H:i:s') : '-' }}</td>
+                        <td><a href="{{ route('admin.events.classes.fleets.boats.edit', [$event, $boat->pivot->event_class_id, $boat->pivot->event_class_fleet_id, $boat]) }}">@lang('admin/events.timer.edit_button')</a>
                     </tr>
                 @endforeach
             </tbody>

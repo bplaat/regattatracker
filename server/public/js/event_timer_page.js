@@ -15,10 +15,7 @@ const timeLabel = document.getElementById('time_label');
 const timeInput = document.getElementById('time');
 
 function parseDateTime(dateTime) {
-    if (dateTime != '') {
-        return dateTime.replace('T', ' ').split('.')[0];
-    }
-    return '';
+    return dateTime.replace('T', ' ').split('.')[0];
 }
 
 timeForm.addEventListener('submit', event => {
@@ -40,19 +37,21 @@ timeForm.addEventListener('submit', event => {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 body: 'api_key=' + apiKey + '&' + timeType + '_date=' + dateValue + '&' + timeType + '_time=' + timeValue +
-                    (timeType == 'started_at' ? '&finished_at_date=' + parseDateTime(boat.pivot.finished_at).split(' ')[0] + '&finished_at_time=' + parseDateTime(boat.pivot.finished_at).split(' ')[1] :
-                    '&started_at_date=' + parseDateTime(boat.pivot.started_at).split(' ')[0] + '&started_at_time=' + parseDateTime(boat.pivot.started_at).split(' ')[1])
+                    (timeType == 'started_at' && boat.pivot.finished_at != null ? '&finished_at_date=' + parseDateTime(boat.pivot.finished_at).split(' ')[0] + '&finished_at_time=' + parseDateTime(boat.pivot.finished_at).split(' ')[1] : '') +
+                    (timeType == 'finished_at' && boat.pivot.started_at != null ? '&started_at_date=' + parseDateTime(boat.pivot.started_at).split(' ')[0] + '&started_at_time=' + parseDateTime(boat.pivot.started_at).split(' ')[1] : '')
             })
             .then(response => response.json())
             .then(data => {
-                if (timeType == 'started_at') {
-                    boat.pivot.started_at = data.pivot.started_at;
-                    document.getElementById('boat_row_' + boat.id).children[4].textContent = parseDateTime(data.pivot.started_at);
-                }
+                if (data.pivot != undefined) {
+                    if (timeType == 'started_at') {
+                        boat.pivot.started_at = data.pivot.started_at;
+                        document.getElementById('boat_row_' + boat.id).children[4].textContent = parseDateTime(data.pivot.started_at);
+                    }
 
-                if (timeType == 'finished_at') {
-                    boat.pivot.finished_at = data.pivot.finished_at;
-                    document.getElementById('boat_row_' + boat.id).children[5].textContent = parseDateTime(data.pivot.finished_at);
+                    if (timeType == 'finished_at') {
+                        boat.pivot.finished_at = data.pivot.finished_at;
+                        document.getElementById('boat_row_' + boat.id).children[5].textContent = parseDateTime(data.pivot.finished_at);
+                    }
                 }
             });
 

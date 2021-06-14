@@ -94,6 +94,8 @@ return [
     'timer.name' => 'Name',
     'timer.mmsi' => 'MMSI',
     'timer.sail_number' => 'Sail number',
+    'timer.actions' => 'Actions',
+    'timer.edit_button' => 'Edit',
 
     // Admin events edit page
     'edit.title' => 'Edit - :event.name - Events - Admin',
