@@ -66,6 +66,27 @@ class AdminEventController extends Controller
         ]);
     }
 
+    // Admin events timer route
+    public function timer(Event $event)
+    {
+        // Get all the event class fleet boats
+        $eventClassFleetBoats = [];
+        foreach ($event->classes as $eventClass) {
+            foreach ($eventClass->fleets as $eventClassFleet) {
+                foreach ($eventClassFleet->boats as $eventClassFleetBoat) {
+                    $eventClassFleetBoat->pivot->event_class_id = $eventClass->id;
+                    $eventClassFleetBoats[] = $eventClassFleetBoat;
+                }
+            }
+        }
+
+        // Return the admin event timer page
+        return view('admin.events.timer', [
+            'event' => $event,
+            'eventClassFleetBoats' => $eventClassFleetBoats
+        ]);
+    }
+
     // Admin events edit route
     public function edit(Event $event)
     {
@@ -115,5 +136,4 @@ class AdminEventController extends Controller
         // Go to the event index page
         return redirect()->route('admin.events.index');
     }
-
 }

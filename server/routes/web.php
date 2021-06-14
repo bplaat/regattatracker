@@ -198,6 +198,7 @@ Route::middleware('admin')->group(function () {
     Route::view('/admin/events/create', 'admin.events.create')->name('admin.events.create');
     Route::post('/admin/events', [AdminEventController::class, 'store'])->name('admin.events.store');
     Route::get('/admin/events/{event}', [AdminEventController::class, 'show'])->name('admin.events.show');
+    Route::get('/admin/events/{event}/timer', [AdminEventController::class, 'timer'])->name('admin.events.timer');
     Route::get('/admin/events/{event}/edit', [AdminEventController::class, 'edit'])->name('admin.events.edit');
     Route::post('/admin/events/{event}', [AdminEventController::class, 'update'])->name('admin.events.update');
     Route::get('/admin/events/{event}/delete', [AdminEventController::class, 'delete'])->name('admin.events.delete');

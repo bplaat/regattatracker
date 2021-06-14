@@ -45,6 +45,7 @@
         </p>
 
         <div class="buttons">
+            <a class="button is-warning" href="{{ route('admin.events.timer', $event) }}">@lang('admin/events.show.timer_button')</a>
             <a class="button is-link" href="{{ route('admin.events.edit', $event) }}">@lang('admin/events.show.edit_button')</a>
             <a class="button is-danger" href="{{ route('admin.events.delete', $event) }}">@lang('admin/events.show.delete_button')</a>
         </div>

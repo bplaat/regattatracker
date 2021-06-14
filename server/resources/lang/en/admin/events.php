@@ -40,6 +40,7 @@ return [
     'show.connected' => 'Connected path:',
     'show.connected_true' => 'true',
     'show.connected_false' => 'false',
+    'show.timer_button' => 'Time boats',
     'show.edit_button' => 'Edit',
     'show.delete_button' => 'Delete',
 
@@ -76,6 +77,23 @@ return [
     'show.classes_fleets_delete_button' => 'Delete',
     'show.classes_fleets_empty' => 'No fleets found',
     'show.classes_fleets_create_button' => 'Create new fleet',
+
+    // Admin events timer page
+    'timer.title' => 'Timer - :event.name - Events - Admin',
+    'timer.breadcrumb' => 'Timer',
+    'timer.header' => 'Time boats',
+    'timer.info_message' => 'Select which time you want to enter then enter boat id, MMSI or sail number and time then press enter and continue:',
+    'timer.time_type' => 'Time type',
+    'timer.boat_thing' => 'Boat id, MMSI or sail number',
+    'timer.boat_thing_message' => 'Check below for a list with all enrolled boats',
+    'timer.started_at' => 'Start time',
+    'timer.finished_at' => 'Finish time',
+    'timer.time_message' => 'Enter the time in the format of HHMMSS',
+    'timer.save_button' => 'Save time',
+    'timer.times_header' => 'Boat times',
+    'timer.name' => 'Name',
+    'timer.mmsi' => 'MMSI',
+    'timer.sail_number' => 'Sail number',
 
     // Admin events edit page
     'edit.title' => 'Edit - :event.name - Events - Admin',
