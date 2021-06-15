@@ -65,14 +65,59 @@ ANY /api/auth/register : api.auth.register
 ```
 
 ## Buoy position store
-You can send a POST message to `/api/buoys/{buoy_id}/positions` to update the position of that buoy, you will need to create an API Key in the Admin panel to send this HTTP request, here is a simple Python example:
+You can send a POST message to `/api/buoys/{buoy_id}/positions` to update the position of that buoy, you will need to create an API Key in the Admin panel to send this HTTP request, here is are some simple Python examples:
 ```python
+# Without account auth token
 import requests
-
 buoy_id = 1
-requests.post('https://test.regattatracker.nl/api/buoys/' + str(buoy_id) + '/positions', data = {
-    'api_key': 'b83f630c4765a12193806f57b148c385',
+req = requests.post('https://test.regattatracker.nl/api/buoys/' + str(buoy_id) + '/positions', data = {
+    'api_key': '7538dba4eecc68799e5c307f12251f76',
     'latitude': 52.0,
     'longitude': 4.7
 })
+print(req.text)
+```
+
+```python
+# With account auth token
+import requests
+buoy_id = 1
+req = requests.post('https://test.regattatracker.nl/api/buoys/' + str(buoy_id) + '/positions',
+    headers = { 'Authorization': 'Bearer 6|fmhbWnlndZ6BPhew8aLnUryh6tlFCr9RanCYAlZ5' },
+    data = {
+        'api_key': '7538dba4eecc68799e5c307f12251f76',
+        'latitude': 52.0,
+        'longitude': 4.725
+    }
+)
+print(req.text)
+```
+
+```python
+# Without requests library and without account auth token
+from urllib import request, parse
+buoy_id = 1
+data = parse.urlencode({
+    'api_key': '7538dba4eecc68799e5c307f12251f76',
+    'latitude': 52.0,
+    'longitude': 4.71
+}).encode()
+req = request.Request('https://test.regattatracker.nl/api/buoys/' + str(buoy_id) + '/positions', data = data)
+response = request.urlopen(req)
+print(response.read().decode())
+```
+
+```python
+# Without requests library and with account auth token
+from urllib import request, parse
+buoy_id = 1
+data = parse.urlencode({
+    'api_key': '7538dba4eecc68799e5c307f12251f76',
+    'latitude': 52.0,
+    'longitude': 4.71
+}).encode()
+req = request.Request('https://test.regattatracker.nl/api/buoys/' + str(buoy_id) + '/positions', data = data)
+req.add_header('Authorization', 'Bearer 6|fmhbWnlndZ6BPhew8aLnUryh6tlFCr9RanCYAlZ5')
+response = request.urlopen(req)
+print(response.read().decode())
 ```
