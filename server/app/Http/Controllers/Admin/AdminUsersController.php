@@ -76,6 +76,11 @@ class AdminUsersController extends Controller
             $avatar = User::generateAvatarName($request->file('avatar')->extension());
             $request->file('avatar')->storeAs('public/avatars', $avatar);
 
+            // Delete old user avatar
+            if ($user->avatar != null) {
+                Storage::delete('public/avatars/' . $user->avatar);
+            }
+
             // Update user that he has an avatar
             $user->update([ 'avatar' => $avatar ]);
         }
@@ -174,6 +179,11 @@ class AdminUsersController extends Controller
             // Save file to avatars folder
             $avatar = User::generateAvatarName($request->file('avatar')->extension());
             $request->file('avatar')->storeAs('public/avatars', $avatar);
+
+            // Delete old user avatar
+            if ($user->avatar != null) {
+                Storage::delete('public/avatars/' . $user->avatar);
+            }
 
             // Update user that he has an avatar
             $user->update([ 'avatar' => $avatar ]);

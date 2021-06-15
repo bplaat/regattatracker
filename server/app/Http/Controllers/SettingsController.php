@@ -66,6 +66,11 @@ class SettingsController extends Controller
         $avatar = User::generateAvatarName($request->file('avatar')->extension());
         $request->file('avatar')->storeAs('public/avatars', $avatar);
 
+        // Delete old user avatar
+        if (Auth::user()->avatar != null) {
+            Storage::delete('public/avatars/' . Auth::user()->avatar);
+        }
+
         // Update user that he has an avatar
         Auth::user()->update([ 'avatar' => $avatar ]);
 

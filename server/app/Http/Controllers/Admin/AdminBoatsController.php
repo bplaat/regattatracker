@@ -79,6 +79,11 @@ class AdminBoatsController extends Controller
             $image = Boat::generateImageName($request->file('image')->extension());
             $request->file('image')->storeAs('public/boats', $image);
 
+            // Delete old boat image
+            if ($boat->image != null) {
+                Storage::delete('public/boats/' . $boat->image);
+            }
+
             // Update boat that he has an image
             $boat->update([ 'image' => $image ]);
         }
@@ -194,6 +199,11 @@ class AdminBoatsController extends Controller
             // Save file to boats folder
             $image = Boat::generateImageName($request->file('image')->extension());
             $request->file('image')->storeAs('public/boats', $image);
+
+            // Delete old boat image
+            if ($boat->image != null) {
+                Storage::delete('public/boats/' . $boat->image);
+            }
 
             // Update boat that he has an image
             $boat->update([ 'image' => $image ]);
