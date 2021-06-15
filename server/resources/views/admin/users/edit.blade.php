@@ -15,7 +15,7 @@
 
     <h1 class="title">@lang('admin/users.edit.header')</h1>
 
-    <form method="POST" action="{{ route('admin.users.update', $user) }}">
+    <form method="POST" enctype="multipart/form-data" action="{{ route('admin.users.update', $user) }}">
         @csrf
 
         <div class="columns">
@@ -230,26 +230,49 @@
             </div>
         </div>
 
-        <div class="field">
-            <label class="label" for="role">@lang('admin/users.edit.role')</label>
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="avatar">@lang('admin/users.edit.avatar')</label>
 
-            <div class="control">
-                <div class="select is-fullwidth @error('role') is-danger @enderror">
-                    <select id="role" name="role" required>
-                        <option value="{{ App\Models\User::ROLE_NORMAL }}" @if (App\Models\User::ROLE_NORMAL == old('role', $user->role)) selected @endif>
-                            @lang('admin/users.edit.role_normal')
-                        </option>
+                    <div class="control">
+                        <input class="input @error('avatar') is-danger @enderror" type="file" accept=".jpg,.jpeg,.png" id="avatar" name="avatar">
+                    </div>
 
-                        <option value="{{ App\Models\User::ROLE_ADMIN }}" @if (App\Models\User::ROLE_ADMIN == old('role', $user->role)) selected @endif>
-                            @lang('admin/users.edit.role_admin')
-                        </option>
-                    </select>
+                    @error('avatar')
+                        <p class="help is-danger">{{ $errors->first('avatar') }}</p>
+                    @else
+                        <p class="help">@lang('admin/users.edit.avatar_message')</p>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="role">@lang('admin/users.edit.role')</label>
+
+                    <div class="control">
+                        <div class="select is-fullwidth @error('role') is-danger @enderror">
+                            <select id="role" name="role" required>
+                                <option value="{{ App\Models\User::ROLE_NORMAL }}" @if (App\Models\User::ROLE_NORMAL == old('role', $user->role)) selected @endif>
+                                    @lang('admin/users.edit.role_normal')
+                                </option>
+
+                                <option value="{{ App\Models\User::ROLE_ADMIN }}" @if (App\Models\User::ROLE_ADMIN == old('role', $user->role)) selected @endif>
+                                    @lang('admin/users.edit.role_admin')
+                                </option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="field">
-            <div class="control">
+            <div class="buttons">
+                @if ($user->avatar != null)
+                    <a class="button is-danger" href="{{ route('admin.users.delete_avatar', $user) }}">@lang('admin/users.edit.delete_avatar_button')</a>
+                @endif
                 <button class="button is-link" type="submit">@lang('admin/users.edit.edit_button')</button>
             </div>
         </div>

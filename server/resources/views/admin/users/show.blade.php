@@ -25,6 +25,13 @@
             @endif
         </h1>
 
+        @if ($user->avatar != null)
+            <h2 class="subtitle is-5">@lang('admin/users.show.avatar')</h2>
+            <div class="box" style="display: inline-block; background-color: #ccc;">
+                <img src="/storage/avatars/{{ $user->avatar }}" alt="@lang('settings.avatar_alt', [ 'user.name' => $user->name ])">
+            </div>
+        @endif
+
         <h2 class="subtitle is-5">@lang('admin/users.show.personal_info')</h2>
         @if ($user->gender == App\Models\User::GENDER_MALE)
             <p>@lang('admin/users.show.gender') @lang('admin/users.show.gender_male')</p>

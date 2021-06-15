@@ -260,7 +260,6 @@
         </div>
     </form>
 
-
     <!-- Change password form -->
     <form class="box" method="POST" action="{{ route('settings.change_password') }}">
         @csrf

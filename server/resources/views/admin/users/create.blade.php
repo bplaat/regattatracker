@@ -14,9 +14,8 @@
 
     <h1 class="title">@lang('admin/users.create.header')</h1>
 
-    <form method="POST" action="{{ route('admin.users.store') }}">
+    <form method="POST" enctype="multipart/form-data" action="{{ route('admin.users.store') }}">
         @csrf
-
 
         <div class="columns">
             <div class="column">
@@ -228,20 +227,40 @@
             </div>
         </div>
 
-        <div class="field">
-            <label class="label" for="role">@lang('admin/users.create.role')</label>
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="avatar">@lang('admin/users.create.avatar')</label>
 
-            <div class="control">
-                <div class="select is-fullwidth @error('role') is-danger @enderror">
-                    <select id="role" name="role" required>
-                        <option value="{{ App\Models\User::ROLE_NORMAL }}" @if (App\Models\User::ROLE_NORMAL == old('role', App\Models\User::ROLE_NORMAL)) selected @endif>
-                            @lang('admin/users.create.role_normal')
-                        </option>
+                    <div class="control">
+                        <input class="input @error('avatar') is-danger @enderror" type="file" accept=".jpg,.jpeg,.png" id="avatar" name="avatar">
+                    </div>
 
-                        <option value="{{ App\Models\User::ROLE_ADMIN }}" @if (App\Models\User::ROLE_ADMIN == old('role', App\Models\User::ROLE_NORMAL)) selected @endif>
-                            @lang('admin/users.create.role_admin')
-                        </option>
-                    </select>
+                    @error('avatar')
+                        <p class="help is-danger">{{ $errors->first('avatar') }}</p>
+                    @else
+                        <p class="help">@lang('admin/users.create.avatar_message')</p>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="role">@lang('admin/users.create.role')</label>
+
+                    <div class="control">
+                        <div class="select is-fullwidth @error('role') is-danger @enderror">
+                            <select id="role" name="role" required>
+                                <option value="{{ App\Models\User::ROLE_NORMAL }}" @if (App\Models\User::ROLE_NORMAL == old('role', App\Models\User::ROLE_NORMAL)) selected @endif>
+                                    @lang('admin/users.create.role_normal')
+                                </option>
+
+                                <option value="{{ App\Models\User::ROLE_ADMIN }}" @if (App\Models\User::ROLE_ADMIN == old('role', App\Models\User::ROLE_NORMAL)) selected @endif>
+                                    @lang('admin/users.create.role_admin')
+                                </option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -18,7 +18,6 @@
     <form method="POST" action="{{ route('boats.guests.update', [$boat, $boatGuest]) }}">
         @csrf
 
-
         <div class="columns">
             <div class="column">
                 <div class="field">

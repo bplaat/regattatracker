@@ -198,7 +198,7 @@ class BoatsController extends Controller
     public function deleteImage(Boat $boat)
     {
         // Delete boat image file from storage
-        Storage::delete('public/boats/' . $boat->id);
+        Storage::delete('public/boats/' . $boat->image);
 
         // Update boat that he has no image
         $boat->update([ 'image' => null ]);

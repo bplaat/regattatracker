@@ -65,7 +65,6 @@ class AdminBuoysController extends Controller
         ]);
     }
 
-
     // Admin buoys track route
     public function track(Buoy $buoy)
     {

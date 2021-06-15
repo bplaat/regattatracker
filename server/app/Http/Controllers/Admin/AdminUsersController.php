@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class AdminUsersController extends Controller
@@ -64,6 +65,20 @@ class AdminUsersController extends Controller
             'password' => Hash::make($fields['password']),
             'role' => $fields['role']
         ]);
+
+        // Update user avatar when not empty
+        if (request('avatar') != '') {
+            $fields = $request->validate([
+                'avatar' => 'required|image'
+            ]);
+
+            // Save file to avatars folder
+            $avatar = User::generateAvatarName($request->file('avatar')->extension());
+            $request->file('avatar')->storeAs('public/avatars', $avatar);
+
+            // Update user that he has an avatar
+            $user->update([ 'avatar' => $avatar ]);
+        }
 
         // Go to the new admin user page
         return redirect()->route('admin.users.show', $user);
@@ -150,8 +165,35 @@ class AdminUsersController extends Controller
             ]);
         }
 
+        // Update user avatar when not empty
+        if (request('avatar') != '') {
+            $fields = $request->validate([
+                'avatar' => 'required|image'
+            ]);
+
+            // Save file to avatars folder
+            $avatar = User::generateAvatarName($request->file('avatar')->extension());
+            $request->file('avatar')->storeAs('public/avatars', $avatar);
+
+            // Update user that he has an avatar
+            $user->update([ 'avatar' => $avatar ]);
+        }
+
         // Go to the admin user page
         return redirect()->route('admin.users.show', $user);
+    }
+
+    // Admin users delete avatar route
+    public function deleteAvatar(User $user)
+    {
+        // Delete user avatar file from storage
+        Storage::delete('public/avatars/' . $user->avatar);
+
+        // Update user that he has no avatar
+        $user->update([ 'avatar' => null ]);
+
+        // Go to the user edit page
+        return redirect()->route('admin.users.edit', $user);
     }
 
     // Admin users delete route

@@ -124,6 +124,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/users/{user}/hijack', [AdminUsersController::class, 'hijack'])->name('admin.users.hijack');
     Route::get('/admin/users/{user}/edit', [AdminUsersController::class, 'edit'])->name('admin.users.edit');
     Route::post('/admin/users/{user}', [AdminUsersController::class, 'update'])->name('admin.users.update');
+    Route::get('/admin/users/{user}/delete_avatar', [AdminUsersController::class, 'deleteAvatar'])->name('admin.users.delete_avatar');
     Route::get('/admin/users/{user}/delete', [AdminUsersController::class, 'delete'])->name('admin.users.delete');
 
     // Admin API key routes
