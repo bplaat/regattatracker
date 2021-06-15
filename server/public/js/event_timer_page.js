@@ -22,7 +22,7 @@ timeForm.addEventListener('submit', event => {
     event.preventDefault();
 
     const dateDate = new Date();
-    const dateValue = dateDate.getFullYear() + '-' + String(dateDate.getMonth()).padStart(2, '0') + '-' + String(dateDate.getDay()).padStart(2, '0');
+    const dateValue = dateDate.getFullYear() + '-' + String(dateDate.getMonth() + 1).padStart(2, '0') + '-' + String(dateDate.getDate()).padStart(2, '0');
 
     const timeValue = timeInput.value.slice(0, 2) + ':' + timeInput.value.slice(2, 4) + ':' + timeInput.value.slice(4, 6);
 
