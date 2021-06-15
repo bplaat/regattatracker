@@ -55,7 +55,7 @@
             @enderror
         </div>
 
-        @if ($boat->image)
+        @if ($boat->image != null)
             <div class="buttons">
                 <a class="button is-danger" href="{{ route('boats.delete_image', $boat) }}">@lang('boats.edit.delete_image_button')</a>
             </div>

@@ -20,9 +20,12 @@ class Boat extends Model
         'sail_area'
     ];
 
-    protected $casts = [
-        'image' => 'boolean'
-    ];
+    // Generate a random boat image name
+    public static function generateImageName($extension)
+    {
+        if ($extension == 'jpeg') $extension = 'jpg';
+        return md5('boat_image@' . microtime(true)) . '.' . $extension;
+    }
 
     // Get the Klipperrace rating of the boat
     public function getKlipperraceRatingAttribute()

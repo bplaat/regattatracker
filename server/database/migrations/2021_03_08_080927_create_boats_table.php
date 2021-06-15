@@ -17,7 +17,7 @@ class CreateBoatsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->boolean('image')->default(false);
+            $table->string('image')->nullable();
             $table->string('mmsi', 9)->unique();
             $table->unsignedDecimal('length', 8, 2);
             $table->unsignedDecimal('breadth', 8, 2);

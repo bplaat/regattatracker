@@ -66,10 +66,11 @@ class BoatsController extends Controller
             ]);
 
             // Save file to boats folder
-            $request->file('image')->storeAs('public/boats', $boat->id);
+            $image = Boat::generateImageName($request->file('image')->extension());
+            $request->file('image')->storeAs('public/boats', $image);
 
             // Update boat that he has an image
-            $boat->update([ 'image' => true ]);
+            $boat->update([ 'image' => $image ]);
         }
 
         // Add authed user to boat as captain
@@ -182,10 +183,11 @@ class BoatsController extends Controller
             ]);
 
             // Save file to boats folder
-            $request->file('image')->storeAs('public/boats', $boat->id);
+            $image = Boat::generateImageName($request->file('image')->extension());
+            $request->file('image')->storeAs('public/boats', $image);
 
             // Update boat that he has an image
-            $boat->update([ 'image' => true ]);
+            $boat->update([ 'image' => $image ]);
         }
 
         // Go to the boat page
@@ -199,7 +201,7 @@ class BoatsController extends Controller
         Storage::delete('public/boats/' . $boat->id);
 
         // Update boat that he has no image
-        $boat->update([ 'image' => false ]);
+        $boat->update([ 'image' => null ]);
 
         // Go to the boats edit page
         return redirect()->route('boats.edit', $boat);

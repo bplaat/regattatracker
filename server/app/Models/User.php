@@ -47,10 +47,16 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
-        'avatar' => 'boolean',
         'birthday' => 'datetime',
         'email_verified_at' => 'datetime'
     ];
+
+    // Generate a random avatar name
+    public static function generateAvatarName($extension)
+    {
+        if ($extension == 'jpeg') $extension = 'jpg';
+        return md5('user_avatar@' . microtime(true)) . '.' . $extension;
+    }
 
     // Get user full name (firstname insertion lastname)
     public function getNameAttribute()

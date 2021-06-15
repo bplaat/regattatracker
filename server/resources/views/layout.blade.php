@@ -66,7 +66,7 @@
 
                         <div class="navbar-end">
                             <div class="navbar-item" style="display: flex; align-items: center;">
-                                <img style="width: 28px; height: 28px; border-radius: 50%; margin-right: 10px;" src="{{ Auth::user()->avatar ? '/storage/avatars/' . Auth::user()->id : '/images/avatars/mp.jpg' }}" alt="@lang('layout.header.avatar_alt', [ 'user.name' => Auth::user()->name ])">
+                                <img style="width: 28px; height: 28px; border-radius: 50%; margin-right: 10px;" src="{{ Auth::user()->avatar != null ? '/storage/avatars/' . Auth::user()->avatar : '/images/avatars/mp.jpg' }}" alt="@lang('layout.header.avatar_alt', [ 'user.name' => Auth::user()->name ])">
                                 <span>{{ Auth::user()->name }}</span>
                             </div>
                             <div class="navbar-item">

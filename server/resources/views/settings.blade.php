@@ -222,13 +222,13 @@
 
         <h2 class="title is-4">@lang('settings.change_avatar')</h2>
 
-        @if (Auth::user()->avatar)
+        @if (Auth::user()->avatar != null)
             <div class="field">
                 <p>@lang('settings.has_avatar')</p>
             </div>
 
             <div class="box" style="display: inline-block; background-color: #ccc;">
-                <img src="/storage/avatars/{{ Auth::user()->id }}" alt="@lang('settings.avatar_alt', [ 'user.name' => Auth::user()->name ])">
+                <img src="/storage/avatars/{{ Auth::user()->avatar }}" alt="@lang('settings.avatar_alt', [ 'user.name' => Auth::user()->name ])">
             </div>
         @else
             <div class="field">
@@ -253,7 +253,7 @@
         <div class="field">
             <div class="control">
                 <button class="button is-link" type="submit">@lang('settings.change_avatar_button')</button>
-                @if (Auth::user()->avatar)
+                @if (Auth::user()->avatar != null)
                     <a class="button is-danger" href="{{ route('settings.delete_avatar') }}">@lang('settings.delete_avatar_button')</a>
                 @endif
             </div>

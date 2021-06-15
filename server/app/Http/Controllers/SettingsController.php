@@ -63,10 +63,11 @@ class SettingsController extends Controller
         ]);
 
         // Save file to avatars folder
-        $request->file('avatar')->storeAs('public/avatars', Auth::user()->id);
+        $avatar = User::generateAvatarName($request->file('avatar')->extension());
+        $request->file('avatar')->storeAs('public/avatars', $avatar);
 
         // Update user that he has an avatar
-        Auth::user()->update([ 'avatar' => true ]);
+        Auth::user()->update([ 'avatar' => $avatar ]);
 
         // Go back with message
         return redirect()->route('settings')
@@ -80,7 +81,7 @@ class SettingsController extends Controller
         Storage::delete('public/avatars/' . Auth::user()->id);
 
         // Update user that he has no avatar
-        Auth::user()->update([ 'avatar' => false ]);
+        Auth::user()->update([ 'avatar' => null ]);
 
         // Go back with message
         return redirect()->route('settings')
