@@ -22,6 +22,12 @@ function log(message) {
 let boatsChanged = true;
 let buoysChanged = true;
 
+let selectedBoat = undefined;
+let selectedBoatPopup = undefined;
+
+let selectedBuoy = undefined;
+let selectedBuoyPopup = undefined;
+
 function isDarkModeEnabled() {
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
@@ -159,7 +165,7 @@ function updateMapItems() {
             features: boats.filter(boat => boat.positions.length > 0).map(boat => ({
                 type: 'Feature',
                 properties: {
-                    boat: boat
+                    boatId: boat.id
                 },
                 geometry: {
                     type: 'Point',
@@ -186,22 +192,43 @@ function updateMapItems() {
             });
 
             map.on('click', 'boat_points', event => {
-                const boat = JSON.parse(event.features[0].properties.boat);
-                const position = boat.positions[0];
+                if (selectedBoatPopup != undefined) {
+                    selectedBoatPopup.remove();
+                }
+                if (selectedBuoyPopup != undefined) {
+                    selectedBuoyPopup.remove();
+                }
 
-                new mapboxgl.Popup()
-                    .setLngLat([position.longitude, position.latitude])
-                    .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + boat.name + '</h3>' +
-                        '<div>' + strings.latitude + ': ' + position.latitude + '</div>' +
-                        '<div>' + strings.longitude + ': ' + position.longitude + '</div>' +
-                        '<div>' + strings.time + ': ' + new Date(position.created_at).toLocaleString('en-US') + '</div>'
+                const pointProperties = event.features[0].properties;
+                selectedBoat = boats.find(boat => boat.id == pointProperties.boatId);
+
+                selectedBoatPopup = new mapboxgl.Popup()
+                    .setLngLat([selectedBoat.positions[0].longitude, selectedBoat.positions[0].latitude])
+                    .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + selectedBoat.name + '</h3>' +
+                        '<div>' + strings.latitude + ': ' + selectedBoat.positions[0].latitude + '</div>' +
+                        '<div>' + strings.longitude + ': ' + selectedBoat.positions[0].longitude + '</div>' +
+                        '<div>' + strings.time + ': ' + new Date(selectedBoat.positions[0].created_at).toLocaleString('en-US') + '</div>'
                     )
+                    .on('close', () => {
+                        selectedBoat = undefined;
+                        selectedBoatPopup = undefined;
+                    })
                     .addTo(map);
             });
 
             map.on('mouseenter', 'boat_points', mapMouseEnter);
             map.on('mouseleave', 'boat_points', mapMouseLeave);
         }
+    }
+
+    // Selected boat popup
+    if (selectedBoatPopup != undefined) {
+        selectedBoatPopup.setLngLat([selectedBoat.positions[0].longitude, selectedBoat.positions[0].latitude]);
+
+        const content = selectedBoatPopup.getElement().children[1];
+        content.children[1].textContent = strings.latitude + ': ' + selectedBoat.positions[0].latitude
+        content.children[2].textContent = strings.longitude + ': ' + selectedBoat.positions[0].longitude;
+        content.children[3].textContent = strings.time + ': ' + new Date(selectedBoat.positions[0].created_at).toLocaleString('en-US');
     }
 
     // Buoy points
@@ -213,7 +240,7 @@ function updateMapItems() {
             features: buoys.filter(buoy => buoy.positions.length > 0).map(buoy => ({
                 type: 'Feature',
                 properties: {
-                    buoy: buoy
+                    buoyId: buoy.id
                 },
                 geometry: {
                     type: 'Point',
@@ -240,22 +267,43 @@ function updateMapItems() {
             }, 'boat_points');
 
             map.on('click', 'buoy_points', event => {
-                const buoy = JSON.parse(event.features[0].properties.buoy);
-                const position = buoy.positions[0];
+                if (selectedBoatPopup != undefined) {
+                    selectedBoatPopup.remove();
+                }
+                if (selectedBuoyPopup != undefined) {
+                    selectedBuoyPopup.remove();
+                }
 
-                new mapboxgl.Popup()
-                    .setLngLat([position.longitude, position.latitude])
-                    .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + buoy.name + '</h3>' +
-                        '<div>' + strings.latitude + ': ' + position.latitude + '</div>' +
-                        '<div>' + strings.longitude + ': ' + position.longitude + '</div>' +
-                        '<div>' + strings.time + ': ' + new Date(position.created_at).toLocaleString('en-US') + '</div>'
+                const pointProperties = event.features[0].properties;
+                selectedBuoy = buoys.find(buoy => buoy.id == pointProperties.buoyId);
+
+                selectedBuoyPopup = new mapboxgl.Popup()
+                    .setLngLat([selectedBuoy.positions[0].longitude, selectedBuoy.positions[0].latitude])
+                    .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + selectedBuoy.name + '</h3>' +
+                        '<div>' + strings.latitude + ': ' + selectedBuoy.positions[0].latitude + '</div>' +
+                        '<div>' + strings.longitude + ': ' + selectedBuoy.positions[0].longitude + '</div>' +
+                        '<div>' + strings.time + ': ' + new Date(selectedBuoy.positions[0].created_at).toLocaleString('en-US') + '</div>'
                     )
+                    .on('close', () => {
+                        selectedBuoy = undefined;
+                        selectedBuoyPopup = undefined;
+                    })
                     .addTo(map);
             });
 
             map.on('mouseenter', 'buoy_points', mapMouseEnter);
             map.on('mouseleave', 'buoy_points', mapMouseLeave);
         }
+    }
+
+    // Selected buoy popup
+    if (selectedBuoyPopup != undefined) {
+        selectedBuoyPopup.setLngLat([selectedBuoy.positions[0].longitude, selectedBuoy.positions[0].latitude]);
+
+        const content = selectedBuoyPopup.getElement().children[1];
+        content.children[1].textContent = strings.latitude + ': ' + selectedBuoy.positions[0].latitude
+        content.children[2].textContent = strings.longitude + ': ' + selectedBuoy.positions[0].longitude;
+        content.children[3].textContent = strings.time + ': ' + new Date(selectedBuoy.positions[0].created_at).toLocaleString('en-US');
     }
 }
 
