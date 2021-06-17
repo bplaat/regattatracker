@@ -61,6 +61,7 @@ return [
     'show.boats' => 'Boats of this user',
     'show.boats_role_crew' => 'CREW',
     'show.boats_role_captain' => 'CAPTAIN',
+    'show.boats_role_owner' => 'OWNER',
     'show.boats_empty' => 'There are no boats found',
 
     // Admin users edit page

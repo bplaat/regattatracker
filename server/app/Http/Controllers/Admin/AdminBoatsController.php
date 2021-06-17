@@ -90,7 +90,7 @@ class AdminBoatsController extends Controller
 
         // Add user to boat as captain
         $boat->users()->attach($fields['user_id'], [
-            'role' => BoatUser::ROLE_CAPTAIN
+            'role' => BoatUser::ROLE_OWNER
         ]);
 
         // Go to the new admin boat page
@@ -115,8 +115,8 @@ class AdminBoatsController extends Controller
 
         $boatUsers = $boat->users->sortBy('sortName', SORT_NATURAL | SORT_FLAG_CASE)
             ->sortByDesc('pivot.role')->paginate(config('pagination.web.limit'))->withQueryString();
-        $boatCaptains = $boatUsers->filter(function ($user) {
-            return $user->pivot->role == BoatUser::ROLE_CAPTAIN;
+        $boatNotCrew = $boatUsers->filter(function ($user) {
+            return $user->pivot->role != BoatUser::ROLE_CREW;
         });
         $users = User::all()->sortBy('sortName', SORT_NATURAL | SORT_FLAG_CASE);
 
@@ -134,7 +134,7 @@ class AdminBoatsController extends Controller
             'boatTypes' => $boatTypes,
 
             'boatUsers' => $boatUsers,
-            'boatCaptains' => $boatCaptains,
+            'boatNotCrew' => $boatNotCrew,
             'users' => $users,
             'boatGuests' => $boatGuests
         ]);

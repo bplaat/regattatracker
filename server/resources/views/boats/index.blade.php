@@ -49,6 +49,10 @@
                                 @if ($boat->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
                                     <span class="tag is-pulled-right is-info">@lang('boats.index.role_captain')</span>
                                 @endif
+
+                                @if ($boat->pivot->role == App\Models\BoatUser::ROLE_OWNER)
+                                    <span class="tag is-pulled-right is-warning">@lang('boats.index.role_owner')</span>
+                                @endif
                             </h2>
 
                             @if ($boat->description != null)

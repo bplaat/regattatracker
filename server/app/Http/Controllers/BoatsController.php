@@ -78,9 +78,9 @@ class BoatsController extends Controller
             $boat->update([ 'image' => $image ]);
         }
 
-        // Add authed user to boat as captain
+        // Add authed user to boat as owner
         $boat->users()->attach(Auth::user(), [
-            'role' => BoatUser::ROLE_CAPTAIN
+            'role' => BoatUser::ROLE_OWNER
         ]);
 
         // Go to the new boat page
@@ -105,8 +105,8 @@ class BoatsController extends Controller
 
         $boatUsers = $boat->users->sortBy('sortName', SORT_NATURAL | SORT_FLAG_CASE)
             ->sortByDesc('pivot.role')->paginate(config('pagination.web.limit'))->withQueryString();
-        $boatCaptains = $boatUsers->filter(function ($user) {
-            return $user->pivot->role == BoatUser::ROLE_CAPTAIN;
+        $boatNotCrew = $boatUsers->filter(function ($user) {
+            return $user->pivot->role != BoatUser::ROLE_CREW;
         });
         $users = User::all()->sortBy('sortName', SORT_NATURAL | SORT_FLAG_CASE);
 
@@ -124,7 +124,7 @@ class BoatsController extends Controller
             'boatTypes' => $boatTypes,
 
             'boatUsers' => $boatUsers,
-            'boatCaptains' => $boatCaptains,
+            'boatNotCrew' => $boatNotCrew,
             'users' => $users,
             'boatGuests' => $boatGuests
         ]);

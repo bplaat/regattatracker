@@ -215,15 +215,32 @@
                                 @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
                                     <span class="tag is-pulled-right is-info">@lang('admin/boats.show.users_role_captain')</span>
                                 @endif
+
+                                @if ($user->pivot->role == App\Models\BoatUser::ROLE_OWNER)
+                                    <span class="tag is-pulled-right is-warning">@lang('admin/boats.show.users_role_owner')</span>
+                                @endif
                             </h3>
 
-                            @if ($user->pivot->role != App\Models\BoatUser::ROLE_CAPTAIN || $boatCaptains->count() > 1)
+                            @if ($user->pivot->role == App\Models\BoatUser::ROLE_CREW || $boatNotCrew->count() > 1)
                                 <div class="buttons">
-                                    @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
+                                    @if ($user->pivot->role == App\Models\BoatUser::ROLE_OWNER)
+                                        <a class="button is-info is-light is-small" href="{{ route('admin.boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">
+                                            @lang('admin/boats.show.users_make_captain_button')
+                                        </a>
+                                        <a class="button is-success is-light is-small" href="{{ route('admin.boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">
+                                            @lang('admin/boats.show.users_make_crew_button')
+                                        </a>
+                                    @elseif ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
+                                        <a class="button is-warning is-light is-small" href="{{ route('admin.boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_OWNER }}">
+                                            @lang('admin/boats.show.users_make_owner_button')
+                                        </a>
                                         <a class="button is-success is-light is-small" href="{{ route('admin.boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">
                                             @lang('admin/boats.show.users_make_crew_button')
                                         </a>
                                     @else
+                                        <a class="button is-warning is-light is-small" href="{{ route('admin.boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_OWNER }}">
+                                            @lang('admin/boats.show.users_make_owner_button')
+                                        </a>
                                         <a class="button is-info is-light is-small" href="{{ route('admin.boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">
                                             @lang('admin/boats.show.users_make_captain_button')
                                         </a>
@@ -278,6 +295,11 @@
                                 <option value="{{ App\Models\BoatUser::ROLE_CAPTAIN }}"
                                     @if (App\Models\BoatUser::ROLE_CAPTAIN == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
                                     @lang('admin/boats.show.users_role_captain_placeholder')
+                                </option>
+
+                                <option value="{{ App\Models\BoatUser::ROLE_OWNER }}"
+                                    @if (App\Models\BoatUser::ROLE_OWNER == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
+                                    @lang('admin/boats.show.users_role_owner_placeholder')
                                 </option>
                             </select>
                         </div>

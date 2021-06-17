@@ -16,7 +16,7 @@ class BoatUsersController extends Controller
         // Validate input
         $fields = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'role' => 'required|integer|digits_between:' . BoatUser::ROLE_CREW . ',' . BoatUser::ROLE_CAPTAIN
+            'role' => 'required|integer|digits_between:' . BoatUser::ROLE_CREW . ',' . BoatUser::ROLE_OWNER
         ]);
 
         // Create boat user connection
@@ -33,16 +33,16 @@ class BoatUsersController extends Controller
     {
         // Validate input
         $fields = $request->validate([
-            'role' => 'required|integer|digits_between:' . BoatUser::ROLE_CREW . ',' . BoatUser::ROLE_CAPTAIN
+            'role' => 'required|integer|digits_between:' . BoatUser::ROLE_CREW . ',' . BoatUser::ROLE_OWNER
         ]);
 
         // Check if user is not the last captain
         if ($fields['role'] == BoatUser::ROLE_CREW) {
             $boatUser = $boat->users->firstWhere('id', $user->id);
-            $boatCaptains = $boat->users->filter(function ($user) {
-                return $user->pivot->role == BoatUser::ROLE_CAPTAIN;
+            $boatNotCrew = $boat->users->filter(function ($user) {
+                return $user->pivot->role != BoatUser::ROLE_CREW;
             });
-            if ($boatUser->pivot->role == BoatUser::ROLE_CAPTAIN && $boatCaptains->count() <= 1) {
+            if ($boatUser->pivot->role != BoatUser::ROLE_CREW && $boatNotCrew->count() <= 1) {
                 return redirect()->route('boats.show', $boat);
             }
         }
@@ -61,10 +61,10 @@ class BoatUsersController extends Controller
     {
         // Check if user is not the last captain
         $boatUser = $boat->users->firstWhere('id', $user->id);
-        $boatCaptains = $boat->users->filter(function ($user) {
-            return $user->pivot->role == BoatUser::ROLE_CAPTAIN;
+        $boatNotCrew = $boat->users->filter(function ($user) {
+            return $user->pivot->role != BoatUser::ROLE_CREW;
         });
-        if ($boatUser->pivot->role == BoatUser::ROLE_CAPTAIN && $boatCaptains->count() <= 1) {
+        if ($boatUser->pivot->role != BoatUser::ROLE_CREW && $boatNotCrew->count() <= 1) {
             return redirect()->route('boats.show', $boat);
         }
 

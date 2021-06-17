@@ -21,13 +21,14 @@ class BoatPolicy
     // You need to be a captain to track and update the boat
     public function track(User $user, Boat $boat)
     {
-        return $this->update($user, $boat);
+        $boatUser = BoatUser::where('boat_id', $boat->id)->where('user_id', $user->id);
+        return $boatUser->count() == 1 && $boatUser->first()->role != BoatUser::ROLE_CREW;
     }
 
     public function update(User $user, Boat $boat)
     {
         $boatUser = BoatUser::where('boat_id', $boat->id)->where('user_id', $user->id);
-        return $boatUser->count() == 1 && $boatUser->first()->role == BoatUser::ROLE_CAPTAIN;
+        return $boatUser->count() == 1 && $boatUser->first()->role == BoatUser::ROLE_OWNER;
     }
 
     public function delete_boat_image(User $user, Boat $boat)
@@ -43,17 +44,17 @@ class BoatPolicy
     // Boat Position connection
     public function create_boat_position(User $user, Boat $boat)
     {
-        return $this->update($user, $boat);
+        return $this->track($user, $boat);
     }
 
     public function update_boat_position(User $user, Boat $boat)
     {
-        return $this->update($user, $boat);
+        return $this->track($user, $boat);
     }
 
     public function delete_boat_position(User $user, Boat $boat)
     {
-        return $this->update($user, $boat);
+        return $this->track($user, $boat);
     }
 
     // Boat Boat Type connection
@@ -70,32 +71,37 @@ class BoatPolicy
     // Boat User connection
     public function create_boat_user(User $user, Boat $boat)
     {
-        return $this->update($user, $boat);
+        return $this->track($user, $boat);
     }
 
     public function update_boat_user(User $user, Boat $boat)
+    {
+        return $this->track($user, $boat);
+    }
+
+    public function update_owner_boat_user(User $user, Boat $boat)
     {
         return $this->update($user, $boat);
     }
 
     public function delete_boat_user(User $user, Boat $boat)
     {
-        return $this->update($user, $boat);
+        return $this->track($user, $boat);
     }
 
     // Boat Guest connection
     public function create_boat_guest(User $user, Boat $boat)
     {
-        return $this->update($user, $boat);
+        return $this->track($user, $boat);
     }
 
     public function update_boat_guest(User $user, Boat $boat)
     {
-        return $this->update($user, $boat);
+        return $this->track($user, $boat);
     }
 
     public function delete_boat_guest(User $user, Boat $boat)
     {
-        return $this->update($user, $boat);
+        return $this->track($user, $boat);
     }
 }
