@@ -108,6 +108,9 @@ class BoatsController extends Controller
         $boatNotCrew = $boatUsers->filter(function ($user) {
             return $user->pivot->role != BoatUser::ROLE_CREW;
         });
+        $boatOwners = $boatUsers->filter(function ($user) {
+            return $user->pivot->role == BoatUser::ROLE_OWNER;
+        });
         $users = User::all()->sortBy('sortName', SORT_NATURAL | SORT_FLAG_CASE);
 
         $boatGuests = $boat->guests->sortBy('sortName', SORT_NATURAL | SORT_FLAG_CASE)
@@ -125,6 +128,7 @@ class BoatsController extends Controller
 
             'boatUsers' => $boatUsers,
             'boatNotCrew' => $boatNotCrew,
+            'boatOwners' => $boatOwners,
             'users' => $users,
             'boatGuests' => $boatGuests
         ]);

@@ -244,19 +244,21 @@
                                         @can('update_boat_user', $boat)
                                             @if ($user->pivot->role == App\Models\BoatUser::ROLE_OWNER)
                                                 @can('update_owner_boat_user', $boat)
-                                                    <a class="button is-info is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">
-                                                        @lang('boats.show.users_make_captain_button')
-                                                    </a>
-
-                                                    <a class="button is-success is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">
-                                                        @lang('boats.show.users_make_crew_button')
-                                                    </a>
-
-                                                    @can('delete_boat_user', $boat)
-                                                        <a class="button is-danger is-light is-small" href="{{ route('boats.users.delete', [$boat, $user]) }}">
-                                                            @lang('boats.show.users_remove_button')
+                                                    @if ($boatOwners->count() > 1)
+                                                        <a class="button is-info is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">
+                                                            @lang('boats.show.users_make_captain_button')
                                                         </a>
-                                                    @endcan
+
+                                                        <a class="button is-success is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">
+                                                            @lang('boats.show.users_make_crew_button')
+                                                        </a>
+
+                                                        @can('delete_boat_user', $boat)
+                                                            <a class="button is-danger is-light is-small" href="{{ route('boats.users.delete', [$boat, $user]) }}">
+                                                                @lang('boats.show.users_remove_button')
+                                                            </a>
+                                                        @endcan
+                                                    @endif
                                                 @endcan
                                             @elseif ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
                                                 @can('update_owner_boat_user', $boat)
