@@ -50,8 +50,9 @@ const bounds = allPositions.reduce(function (bounds, position) {
 map.fitBounds(bounds, { animate: false, padding: 50 });
 
 class MessageControl {
-    constructor(text) {
+    constructor(text, title) {
         this.text = text;
+        this.title = title;
     }
 
     onAdd(map) {
@@ -59,7 +60,8 @@ class MessageControl {
         this._container = document.createElement('div');
         this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
         this._container.style = 'padding: 4px 8px;';
-        this._container.textContent = this.text;
+        this._container.innerHTML = this.text;
+        this._container.title = this.title;
         return this._container;
     }
 
@@ -321,10 +323,12 @@ function connectToWebSocketServer() {
     ws.onopen = () => {
         log('WebSocket connected!');
 
-        if (messageControl != undefined) {
-            map.removeControl(messageControl);
-            messageControl = undefined;
-        }
+        if (messageControl != undefined) map.removeControl(messageControl);
+        messageControl = new MessageControl('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + strings.legend + '</h1>' +
+            '<div style="font-weight: bold;"><div style="display: inline-block; width: 16px; height: 16px; border-radius: 50%; background-color: rgb(246, 140, 30); border: 2px solid rgb(245, 198, 147); vertical-align: middle; margin-right: 2px;"></div> <span style="display: inline-block; transform: translateY(1px);">' + strings.legend_boat + '</span></div>' +
+            '<div style="font-weight: bold;"><div style="display: inline-block; width: 16px; height: 16px; border-radius: 50%; background-color: rgb(50, 148, 209); border: 2px solid rgb(49, 206, 255); vertical-align: middle; margin-right: 2px;"></div> <span style="display: inline-block; transform: translateY(1px);">' + strings.legend_buoy + '</span></div>'
+        , strings.legend);
+        map.addControl(messageControl, 'top-left');
     };
 
     ws.onmessage = event => {
@@ -361,7 +365,8 @@ function connectToWebSocketServer() {
     ws.onerror = event => {
         if (isFirstWebSocketError) {
             isFirstWebSocketError = false;
-            messageControl = new MessageControl(strings.connection_message)
+            if (messageControl != undefined) map.removeControl(messageControl);
+            messageControl = new MessageControl(strings.connection_message, strings.connection_error)
             map.addControl(messageControl, 'top-left');
         }
     };

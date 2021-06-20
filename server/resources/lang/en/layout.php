@@ -5,7 +5,7 @@ return [
     'description' => 'The brand new RegattaTracker deluxe tracking system',
 
     // Layout header
-    'header.boats' => 'Boats',
+    'header.boats' => 'My Boats',
 
     'header.admin_home' => 'Admin',
     'header.admin_users' => 'Users',

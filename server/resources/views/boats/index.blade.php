@@ -33,6 +33,8 @@
         </div>
 
         @if ($boats->count() > 0)
+            <p><i>@lang('boats.index.info_message')</i></p>
+
             {{ $boats->links() }}
 
             <div class="columns is-multiline">

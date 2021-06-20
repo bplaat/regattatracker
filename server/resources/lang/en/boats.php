@@ -2,24 +2,26 @@
 
 return [
     // Boats index page
-    'index.title' => 'Boats',
-    'index.breadcrumb' => 'Boats',
+    'index.title' => 'My Boats',
+    'index.breadcrumb' => 'My Boats',
     'index.header' => 'All your boats',
     'index.query_placeholder' => 'Search for boats...',
     'index.search_button' => 'Search',
     'index.role_crew' => 'CREW',
     'index.role_captain' => 'CAPTAIN',
     'index.role_owner' => 'OWNER',
-    'index.empty' => 'There are no boats found',
-    'index.create_button' => 'Create new boat',
+    'index.info_message' => 'Here is a list of all you registered boats, you can click on a boat to see more information about it:',
+    'index.empty' => 'There are no boats found yet, you can register a new boat when you click on the register new boat button',
+    'index.create_button' => 'Register new boat',
 
     // Boats create page
-    'create.title' => 'Create - Boats',
-    'create.breadcrumb' => 'Create',
-    'create.header' => 'Create new boat',
+    'create.title' => 'Register - My Boats',
+    'create.breadcrumb' => 'Register',
+    'create.header' => 'Register new boat',
+    'create.info_message' => 'Fill in all the information about the boat, so that we can save it in our system:',
     'create.name' => 'Name',
     'create.description' => 'Description',
-    'create.image' => 'Image',
+    'create.image' => 'Image (not required)',
     'create.image_message' => 'You can upload jpg, or png images',
     'create.mmsi' => 'MMSI',
     'create.length' => 'Length overall (m)',
@@ -27,10 +29,11 @@ return [
     'create.weight' => 'Weight (kg)',
     'create.sail_number' => 'Sail number',
     'create.sail_area' => 'Sail area (m<sup>2</sup>)',
-    'create.create_button' => 'Create new boat',
+    'create.more_info_message' => 'When you register the boat you can add more information about your boat type and your boat crew on the next page',
+    'create.create_button' => 'Register new boat',
 
     // Boats show page
-    'show.title' => ':boat.name - Boats',
+    'show.title' => ':boat.name - My Boats',
     'show.description_empty' => 'This boat has no description',
     'show.image_alt' => ':boat.name\'s image',
     'show.boat_info' => 'Boat Information',
@@ -48,6 +51,7 @@ return [
     'show.delete_button' => 'Delete boat',
 
     'show.positions' => 'Boat Positions',
+    'show.positions_info_message' => 'This is a map with the boat positions history, you can click on the buttons to view the path that the boat has traveled every day when it has uploaded it positions:',
 
     'show.positions_map_name' => 'Boat Position #:item_position.id',
     'show.positions_map_current' => 'Current boat position',
@@ -67,9 +71,13 @@ return [
 
     'show.boat_types' => 'Boat Types',
     'show.boat_types_remove_button' => 'Remove boat type',
-    'show.boat_types_empty' => 'This boat has no assigned boat types',
+    'show.boat_types_info_message' => 'This are your assigned boat types this are tags you can add to your boat to add yourself in a category:',
+    'show.boat_types_empty' => 'This boat has no assigned boat types yet you can add a boat type in the dropdown menu below',
     'show.boat_types_placeholder' => 'Select a boat type...',
     'show.boat_types_add_button' => 'Add boat type',
+
+    'show.crew' => 'Boat Crew',
+    'show.crew_info_message' => 'Here you can view and add members to you boat crew:',
 
     'show.users' => 'Boat Users',
     'show.users_role_crew' => 'CREW',
@@ -79,7 +87,8 @@ return [
     'show.users_make_captain_button' => 'Make captain',
     'show.users_make_owner_button' => 'Make owner',
     'show.users_remove_button' => 'Remove user',
-    'show.users_empty' => 'This boat has no assigned users',
+    'show.users_info_message' => 'Boat users are members of you boat that are linked to a RegattaTracker account with this account,<br> you can promotethem to be a captain or a onwer of the boat so they have also rights to edit this boat information:',
+    'show.users_empty' => 'This boat has no assigned users yet you can add them via the dropdown menu below',
     'show.users_placeholder' => 'Select a user...',
     'show.users_role_crew_placeholder' => 'As crew',
     'show.users_role_captain_placeholder' => 'As captain',
@@ -90,12 +99,13 @@ return [
     'show.guests_role_crew' => 'CREW',
     'show.guest_edit_button' => 'Edit guest',
     'show.guests_remove_button' => 'Remove guest',
-    'show.guests_empty' => 'This boat has no guests',
+    'show.guests_info_message' => 'Boat guests are crew members without a RegattaTracker account they can login to the RegattaTracker website and they can view and added this boat information:',
+    'show.guests_empty' => 'This boat has no guests you can register a guest with the register guest button below',
     'show.guests_add_button' => 'Add guest',
-    'show.guests_create_button' => 'Create guest',
+    'show.guests_create_button' => 'Register guest',
 
     // Boats track page
-    'track.title' => 'Track - :boat.name - Boats',
+    'track.title' => 'Track - :boat.name - My Boats',
     'track.breadcrumb' => 'Track',
 
     'track.map_name' => 'Boat Position #:item_position.id',
@@ -113,12 +123,13 @@ return [
     'track.error_message' => 'Your browser doesn\'t support geolocation tracking!',
 
     // Boats edit page
-    'edit.title' => 'Edit - :boat.name - Boats',
+    'edit.title' => 'Edit - :boat.name - My Boats',
     'edit.breadcrumb' => 'Edit',
     'edit.header' => 'Edit boat',
+    'edit.info_message' => 'Here you can edit some boat information just edit the fields you want to change:',
     'edit.name' => 'Name',
     'edit.description' => 'Description',
-    'edit.image' => 'Image',
+    'edit.image' => 'Image (not required)',
     'edit.image_message' => 'You can upload jpg, or png images',
     'edit.mmsi' => 'MMSI',
     'edit.length' => 'Length overall (m)',
@@ -138,7 +149,7 @@ return [
     'positions.show.breadcrumb' => 'Boat Position #:boat_position.id',
 
     // Boat positions edit page
-    'positions.edit.title' => 'Edit - Boat Position #:boat_position.id - Positions - :boat.name - Boats',
+    'positions.edit.title' => 'Edit - Boat Position #:boat_position.id - Positions - :boat.name - My Boats',
     'positions.edit.breadcrumb' => 'Edit',
     'positions.edit.header' => 'Edit boat position',
     'positions.edit.latitude' => 'Latitude',
@@ -150,9 +161,9 @@ return [
     // ### Boat guests pages ###
 
     // Boat guest create page
-    'guests.create.title' => 'Create - Guests - :boat.name - Boats',
-    'guests.create.breadcrumb' => 'Create',
-    'guests.create.header' => 'Create new guest',
+    'guests.create.title' => 'Register - Guests - :boat.name - My Boats',
+    'guests.create.breadcrumb' => 'Register',
+    'guests.create.header' => 'Register new guest',
     'guests.create.firstname' => 'First name',
     'guests.create.insertion' => 'Insertion',
     'guests.create.lastname' => 'Last name',
@@ -167,10 +178,10 @@ return [
     'guests.create.postcode' => 'Postcode',
     'guests.create.city' => 'City',
     'guests.create.country' => 'Country',
-    'guests.create.create_button' => 'Create new guest',
+    'guests.create.create_button' => 'Register new guest',
 
     // Boat guest edit page
-    'guests.edit.title' => 'Edit - boat_guest.name - Guests - :boat.name - Boats',
+    'guests.edit.title' => 'Edit - boat_guest.name - Guests - :boat.name - My Boats',
     'guests.edit.breadcrumb' => 'Edit',
     'guests.edit.header' => 'Edit guest',
     'guests.edit.firstname' => 'First name',
@@ -187,5 +198,5 @@ return [
     'guests.edit.postcode' => 'Postcode',
     'guests.edit.city' => 'City',
     'guests.edit.country' => 'Country',
-    'guests.edit.create_button' => 'Edit guest'
+    'guests.edit.edit_button' => 'Edit guest'
 ];

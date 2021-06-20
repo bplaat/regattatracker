@@ -14,8 +14,10 @@
 
     <h1 class="title">@lang('boats.edit.header')</h1>
 
-    <form method="POST" enctype="multipart/form-data" action="{{ route('boats.update', $boat) }}">
+    <form class="content" method="POST" enctype="multipart/form-data" action="{{ route('boats.update', $boat) }}">
         @csrf
+
+        <p><i>@lang('boats.edit.info_message')</i></p>
 
         <div class="field">
             <label class="label" for="name">@lang('boats.edit.name')</label>

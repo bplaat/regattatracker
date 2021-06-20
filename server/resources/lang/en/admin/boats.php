@@ -185,5 +185,5 @@ return [
     'guests.edit.postcode' => 'Postcode',
     'guests.edit.city' => 'City',
     'guests.edit.country' => 'Country',
-    'guests.edit.create_button' => 'Edit guest'
+    'guests.edit.edit_button' => 'Edit guest'
 ];

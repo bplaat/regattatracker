@@ -59,6 +59,7 @@
     <!-- Boat positions -->
     <div class="box content">
         <h2 class="tile is-4">@lang('boats.show.positions')</h2>
+        <p><i>@lang('boats.show.positions_info_message')</i></p>
 
         @if (count($boatPositions) > 0)
             <div class="box" style="position: relative; padding-top: 45%; background-color: #191a1a; overflow: hidden;">
@@ -147,6 +148,8 @@
         <h2 class="title is-4">@lang('boats.show.boat_types')</h2>
 
         @if ($boatBoatTypes->count() > 0)
+            <p><i>@lang('boats.show.boat_types_info_message')</i></p>
+
             {{ $boatBoatTypes->links() }}
 
             <div class="columns is-multiline">
@@ -211,202 +214,212 @@
         @endcan
     </div>
 
-    <!-- Boat users -->
+    <!-- Boat crew -->
     <div class="box content">
-        <h2 class="title is-4">@lang('boats.show.users')</h2>
+        <h2 class="title is-4">@lang('boats.show.crew')</h2>
+        <p><i>@lang('boats.show.crew_info_message')</i></p>
 
-        @if ($boatUsers->count() > 0)
-            {{ $boatUsers->links() }}
+        <!-- Boat users -->
+        <div class="box content">
+            <h2 class="title is-5">@lang('boats.show.users')</h2>
 
-            <div class="columns is-multiline">
-                @foreach ($boatUsers as $user)
-                    <div class="column is-one-third">
-                        <div class="box content" style="height: 100%">
-                            <h3 class="title is-4">
-                                {{ $user->name }}
+            @if ($boatUsers->count() > 0)
+                <p><i>@lang('boats.show.users_info_message')</i></p>
 
-                                @if ($user->pivot->role == App\Models\BoatUser::ROLE_CREW)
-                                    <span class="tag is-pulled-right is-success">@lang('boats.show.users_role_crew')</span>
-                                @endif
+                {{ $boatUsers->links() }}
 
-                                @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
-                                    <span class="tag is-pulled-right is-info">@lang('boats.show.users_role_captain')</span>
-                                @endif
+                <div class="columns is-multiline">
+                    @foreach ($boatUsers as $user)
+                        <div class="column is-one-third">
+                            <div class="box content" style="height: 100%">
+                                <h3 class="title is-4">
+                                    {{ $user->name }}
 
-                                @if ($user->pivot->role == App\Models\BoatUser::ROLE_OWNER)
-                                    <span class="tag is-pulled-right is-warning">@lang('boats.show.users_role_owner')</span>
-                                @endif
-                            </h3>
+                                    @if ($user->pivot->role == App\Models\BoatUser::ROLE_CREW)
+                                        <span class="tag is-pulled-right is-success">@lang('boats.show.users_role_crew')</span>
+                                    @endif
 
-                            @canany(['update_boat_user', 'delete_boat_user'], $boat)
-                                @if ($user->pivot->role == App\Models\BoatUser::ROLE_CREW || $boatNotCrew->count() > 1)
-                                    <div class="buttons">
-                                        @can('update_boat_user', $boat)
-                                            @if ($user->pivot->role == App\Models\BoatUser::ROLE_OWNER)
-                                                @can('update_owner_boat_user', $boat)
-                                                    @if ($boatOwners->count() > 1)
-                                                        <a class="button is-info is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">
-                                                            @lang('boats.show.users_make_captain_button')
-                                                        </a>
+                                    @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
+                                        <span class="tag is-pulled-right is-info">@lang('boats.show.users_role_captain')</span>
+                                    @endif
 
-                                                        <a class="button is-success is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">
-                                                            @lang('boats.show.users_make_crew_button')
-                                                        </a>
+                                    @if ($user->pivot->role == App\Models\BoatUser::ROLE_OWNER)
+                                        <span class="tag is-pulled-right is-warning">@lang('boats.show.users_role_owner')</span>
+                                    @endif
+                                </h3>
 
-                                                        @can('delete_boat_user', $boat)
-                                                            <a class="button is-danger is-light is-small" href="{{ route('boats.users.delete', [$boat, $user]) }}">
-                                                                @lang('boats.show.users_remove_button')
+                                @canany(['update_boat_user', 'delete_boat_user'], $boat)
+                                    @if ($user->pivot->role == App\Models\BoatUser::ROLE_CREW || $boatNotCrew->count() > 1)
+                                        <div class="buttons">
+                                            @can('update_boat_user', $boat)
+                                                @if ($user->pivot->role == App\Models\BoatUser::ROLE_OWNER)
+                                                    @can('update_owner_boat_user', $boat)
+                                                        @if ($boatOwners->count() > 1)
+                                                            <a class="button is-info is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">
+                                                                @lang('boats.show.users_make_captain_button')
                                                             </a>
-                                                        @endcan
-                                                    @endif
-                                                @endcan
-                                            @elseif ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
-                                                @can('update_owner_boat_user', $boat)
-                                                    <a class="button is-warning is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_OWNER }}">
-                                                        @lang('boats.show.users_make_owner_button')
+
+                                                            <a class="button is-success is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">
+                                                                @lang('boats.show.users_make_crew_button')
+                                                            </a>
+
+                                                            @can('delete_boat_user', $boat)
+                                                                <a class="button is-danger is-light is-small" href="{{ route('boats.users.delete', [$boat, $user]) }}">
+                                                                    @lang('boats.show.users_remove_button')
+                                                                </a>
+                                                            @endcan
+                                                        @endif
+                                                    @endcan
+                                                @elseif ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
+                                                    @can('update_owner_boat_user', $boat)
+                                                        <a class="button is-warning is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_OWNER }}">
+                                                            @lang('boats.show.users_make_owner_button')
+                                                        </a>
+                                                    @endcan
+
+                                                    <a class="button is-success is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">
+                                                        @lang('boats.show.users_make_crew_button')
                                                     </a>
-                                                @endcan
 
-                                                <a class="button is-success is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CREW }}">
-                                                    @lang('boats.show.users_make_crew_button')
-                                                </a>
+                                                    @can('delete_boat_user', $boat)
+                                                        <a class="button is-danger is-light is-small" href="{{ route('boats.users.delete', [$boat, $user]) }}">
+                                                            @lang('boats.show.users_remove_button')
+                                                        </a>
+                                                    @endcan
+                                                @else
+                                                    @can('update_owner_boat_user', $boat)
+                                                        <a class="button is-warning is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_OWNER }}">
+                                                            @lang('boats.show.users_make_owner_button')
+                                                        </a>
+                                                    @endcan
 
-                                                @can('delete_boat_user', $boat)
-                                                    <a class="button is-danger is-light is-small" href="{{ route('boats.users.delete', [$boat, $user]) }}">
-                                                        @lang('boats.show.users_remove_button')
+                                                    <a class="button is-info is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">
+                                                        @lang('boats.show.users_make_captain_button')
                                                     </a>
-                                                @endcan
-                                            @else
-                                                @can('update_owner_boat_user', $boat)
-                                                    <a class="button is-warning is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_OWNER }}">
-                                                        @lang('boats.show.users_make_owner_button')
-                                                    </a>
-                                                @endcan
 
-                                                <a class="button is-info is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">
-                                                    @lang('boats.show.users_make_captain_button')
-                                                </a>
-
-                                                @can('delete_boat_user', $boat)
-                                                    <a class="button is-danger is-light is-small" href="{{ route('boats.users.delete', [$boat, $user]) }}">
-                                                        @lang('boats.show.users_remove_button')
-                                                    </a>
-                                                @endcan
-                                            @endif
-                                        @endcan
-                                    </div>
-                                @endif
-                            @endcanany
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-
-            {{ $boatUsers->links() }}
-        @else
-            <p><i>@lang('boats.show.users_empty')</i></p>
-        @endif
-
-        @can('create_boat_user', $boat)
-            @if ($boat->users->count() != $users->count())
-                <form method="POST" action="{{ route('boats.users.store', $boat) }}">
-                    @csrf
-
-                    <div class="field has-addons">
-                        <div class="control">
-                            <div class="select @error('user_id') is-danger @enderror">
-                                <select id="user_id" name="user_id" required>
-                                    <option selected disabled>
-                                        @lang('boats.show.users_placeholder')
-                                    </option>
-
-                                    @foreach ($users as $user)
-                                        @if (!$boatUsers->pluck('id')->contains($user->id))
-                                            <option value="{{ $user->id }}"
-                                                    @if ($user->id == old('user_id')) selected @endif>
-                                                {{ $user->name }}
-                                            </option>
-                                        @endif
-                                    @endforeach
-                                </select>
+                                                    @can('delete_boat_user', $boat)
+                                                        <a class="button is-danger is-light is-small" href="{{ route('boats.users.delete', [$boat, $user]) }}">
+                                                            @lang('boats.show.users_remove_button')
+                                                        </a>
+                                                    @endcan
+                                                @endif
+                                            @endcan
+                                        </div>
+                                    @endif
+                                @endcanany
                             </div>
                         </div>
-
-                        <div class="control">
-                            <div class="select @error('role') is-danger @enderror">
-                                <select id="role" name="role" required>
-                                    <option value="{{ App\Models\BoatUser::ROLE_CREW }}"
-                                            @if (App\Models\BoatUser::ROLE_CREW == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
-                                        @lang('boats.show.users_role_crew_placeholder')
-                                    </option>
-
-                                    <option value="{{ App\Models\BoatUser::ROLE_CAPTAIN }}"
-                                            @if (App\Models\BoatUser::ROLE_CAPTAIN == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
-                                        @lang('boats.show.users_role_captain_placeholder')
-                                    </option>
-
-                                    <option value="{{ App\Models\BoatUser::ROLE_OWNER }}"
-                                            @if (App\Models\BoatUser::ROLE_OWNER == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
-                                        @lang('boats.show.users_role_owner_placeholder')
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="control">
-                            <button class="button is-link" type="submit">@lang('boats.show.users_add_button')</button>
-                        </div>
-                    </div>
-                </form>
-            @endif
-        @endcan
-    </div>
-
-    <!-- Boat guests -->
-    <div class="box content">
-        <h2 class="title is-4">@lang('boats.show.guests')</h2>
-
-        @if ($boatGuests->count() > 0)
-            {{ $boatGuests->links() }}
-
-            <div class="columns is-multiline">
-                @foreach ($boatGuests as $guest)
-                    <div class="column is-one-third">
-                        <div class="box content" style="height: 100%">
-                            <h3 class="title is-4">
-                                {{ $guest->name }}
-                                <span class="tag is-pulled-right is-success">@lang('boats.show.guests_role_crew')</span>
-                            </h3>
-
-                            @canany(['update_boat_user', 'delete_boat_user'], $boat)
-                                    <div class="buttons">
-                                        @can('update_boat_user', $boat)
-                                            <a class="button is-info is-light is-small" href="{{ route('boats.guests.edit', [$boat, $guest]) }}">
-                                                @lang('boats.show.guest_edit_button')
-                                            </a>
-                                        @endcan
-                                            @can('delete_boat_user', $boat)
-                                            <a class="button is-danger is-light is-small" href="{{ route('boats.guests.delete', [$boat, $guest]) }}">
-                                                @lang('boats.show.guests_remove_button')
-                                            </a>
-                                        @endcan
-                                    </div>
-                            @endcanany
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-
-            {{ $boatGuests->links() }}
-        @else
-            <p><i>@lang('boats.show.guests_empty')</i></p>
-        @endif
-
-        @can('create_boat_user', $boat)
-
-                <div class="buttons">
-                    <a class="button is-link" href="{{ route('boats.guests.create', [$boat]) }}">@lang('boats.show.guests_create_button')</a>
+                    @endforeach
                 </div>
-        @endcan
+
+                {{ $boatUsers->links() }}
+            @else
+                <p><i>@lang('boats.show.users_empty')</i></p>
+            @endif
+
+            @can('create_boat_user', $boat)
+                @if ($boat->users->count() != $users->count())
+                    <form method="POST" action="{{ route('boats.users.store', $boat) }}">
+                        @csrf
+
+                        <div class="field has-addons">
+                            <div class="control">
+                                <div class="select @error('user_id') is-danger @enderror">
+                                    <select id="user_id" name="user_id" required>
+                                        <option selected disabled>
+                                            @lang('boats.show.users_placeholder')
+                                        </option>
+
+                                        @foreach ($users as $user)
+                                            @if (!$boatUsers->pluck('id')->contains($user->id))
+                                                <option value="{{ $user->id }}"
+                                                        @if ($user->id == old('user_id')) selected @endif>
+                                                    {{ $user->name }}
+                                                </option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="control">
+                                <div class="select @error('role') is-danger @enderror">
+                                    <select id="role" name="role" required>
+                                        <option value="{{ App\Models\BoatUser::ROLE_CREW }}"
+                                                @if (App\Models\BoatUser::ROLE_CREW == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
+                                            @lang('boats.show.users_role_crew_placeholder')
+                                        </option>
+
+                                        <option value="{{ App\Models\BoatUser::ROLE_CAPTAIN }}"
+                                                @if (App\Models\BoatUser::ROLE_CAPTAIN == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
+                                            @lang('boats.show.users_role_captain_placeholder')
+                                        </option>
+
+                                        <option value="{{ App\Models\BoatUser::ROLE_OWNER }}"
+                                                @if (App\Models\BoatUser::ROLE_OWNER == old('role', App\Models\BoatUser::ROLE_CREW)) selected @endif>
+                                            @lang('boats.show.users_role_owner_placeholder')
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="control">
+                                <button class="button is-link" type="submit">@lang('boats.show.users_add_button')</button>
+                            </div>
+                        </div>
+                    </form>
+                @endif
+            @endcan
+        </div>
+
+        <!-- Boat guests -->
+        <div class="box content">
+            <h2 class="title is-5">@lang('boats.show.guests')</h2>
+
+            @if ($boatGuests->count() > 0)
+                <p><i>@lang('boats.show.guests_info_message')</i></p>
+
+                {{ $boatGuests->links() }}
+
+                <div class="columns is-multiline">
+                    @foreach ($boatGuests as $guest)
+                        <div class="column is-one-third">
+                            <div class="box content" style="height: 100%">
+                                <h3 class="title is-4">
+                                    {{ $guest->name }}
+                                    <span class="tag is-pulled-right is-success">@lang('boats.show.guests_role_crew')</span>
+                                </h3>
+
+                                @canany(['update_boat_user', 'delete_boat_user'], $boat)
+                                        <div class="buttons">
+                                            @can('update_boat_user', $boat)
+                                                <a class="button is-info is-light is-small" href="{{ route('boats.guests.edit', [$boat, $guest]) }}">
+                                                    @lang('boats.show.guest_edit_button')
+                                                </a>
+                                            @endcan
+                                                @can('delete_boat_user', $boat)
+                                                <a class="button is-danger is-light is-small" href="{{ route('boats.guests.delete', [$boat, $guest]) }}">
+                                                    @lang('boats.show.guests_remove_button')
+                                                </a>
+                                            @endcan
+                                        </div>
+                                @endcanany
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                {{ $boatGuests->links() }}
+            @else
+                <p><i>@lang('boats.show.guests_empty')</i></p>
+            @endif
+
+            @can('create_boat_user', $boat)
+
+                    <div class="buttons">
+                        <a class="button is-link" href="{{ route('boats.guests.create', [$boat]) }}">@lang('boats.show.guests_create_button')</a>
+                    </div>
+            @endcan
+        </div>
     </div>
 @endsection

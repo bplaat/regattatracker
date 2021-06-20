@@ -13,8 +13,10 @@
 
     <h1 class="title">@lang('boats.create.header')</h1>
 
-    <form method="POST" enctype="multipart/form-data" action="{{ route('boats.store') }}">
+    <form class="content" method="POST" enctype="multipart/form-data" action="{{ route('boats.store') }}">
         @csrf
+
+        <p><i>@lang('boats.create.info_message')</i></p>
 
         <div class="field">
             <label class="label" for="name">@lang('boats.create.name')</label>
@@ -141,6 +143,8 @@
                 </div>
             </div>
         </div>
+
+        <p><i>@lang('boats.create.more_info_message')</i></p>
 
         <div class="field">
             <div class="control">

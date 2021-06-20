@@ -204,7 +204,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" type="submit">@lang('boats.guests.edit.create_button')</button>
+                <button class="button is-link" type="submit">@lang('boats.guests.edit.edit_button')</button>
             </div>
         </div>
     </form>

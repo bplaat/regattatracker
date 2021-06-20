@@ -212,7 +212,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" type="submit">@lang('admin/events.classes.fleets.boats.guests.edit.create_button')</button>
+                <button class="button is-link" type="submit">@lang('admin/events.classes.fleets.boats.guests.edit.edit_button')</button>
             </div>
         </div>
     </form>

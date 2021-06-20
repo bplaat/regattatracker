@@ -274,5 +274,5 @@ return [
     'classes.fleets.boats.guests.edit.postcode' => 'Postcode',
     'classes.fleets.boats.guests.edit.city' => 'City',
     'classes.fleets.boats.guests.edit.country' => 'Country',
-    'classes.fleets.boats.guests.edit.create_button' => 'Edit guest'
+    'classes.fleets.boats.guests.edit.edit_button' => 'Edit guest'
 ];
