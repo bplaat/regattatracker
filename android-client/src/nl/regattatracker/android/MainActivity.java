@@ -17,8 +17,6 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import java.util.Map;
-import java.util.HashMap;
 
 public class MainActivity extends Activity {
     private WebView webviewPage;
@@ -46,7 +44,6 @@ public class MainActivity extends Activity {
         ((Button)findViewById(R.id.main_disconnected_hero_button)).setOnClickListener(refreshOnClick);
 
         // Webview handlers
-        Map<String, Boolean> urlAdCache = new HashMap<String, Boolean>();
         webviewPage.setWebViewClient(new WebViewClient() {
             @SuppressWarnings("deprecation")
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
