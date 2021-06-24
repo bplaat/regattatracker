@@ -1,12 +1,10 @@
 package nl.regattatracker.android;
 
 import android.app.Activity;
-import android.content.res.Configuration;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -37,12 +35,6 @@ public class MainActivity extends Activity {
 
         WebSettings webSettings = webviewPage.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        if (
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
-            (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-        ) {
-            webSettings.setForceDark(WebSettings.FORCE_DARK_ON);
-        }
 
         // Disconnected page
         disconnectedPage = (LinearLayout)findViewById(R.id.main_disconnected_page);
