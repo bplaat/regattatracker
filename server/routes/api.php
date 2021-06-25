@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\ApiAuthController;
 
+use App\Http\Controllers\Api\ApiAISController;
+
 use App\Http\Controllers\Api\ApiBoatsController;
 use App\Http\Controllers\Api\ApiBoatPositionsController;
 use App\Http\Controllers\Api\ApiBoatBoatTypesController;
@@ -14,7 +16,7 @@ use App\Http\Controllers\Api\ApiEventsController;
 use App\Http\Controllers\Api\ApiEventFinishesController;
 use App\Http\Controllers\Api\ApiEventClassesController;
 use App\Http\Controllers\Api\ApiEventClassFleetsController;
-use App\Http\Controllers\Api\ApiEventClassFleetBoatsController;
+use App\Http\Controllers\Api\ApiEventClassFleetBoatsController;															   
 
 use Illuminate\Support\Facades\Route;
 
@@ -73,13 +75,16 @@ Route::middleware('api_key')->group(function () {
     Route::get('events/{event}/classes/{eventClass}/fleets/{eventClassFleet}', [ApiEventClassFleetsController::class, 'show'])->name('api.events.classes.fleets.show');
 
     Route::get('events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats', [ApiEventClassFleetBoatsController::class, 'index'])->name('api.events.classes.fleets.boats.index');
-    Route::post('events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats', [ApiEventClassFleetBoatsController::class, 'store'])->name('api.events.classes.fleets.boats.store');
+	Route::post('events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats', [ApiEventClassFleetBoatsController::class, 'store'])->name('api.events.classes.fleets.boats.store');																																													  
     Route::get('events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats/{boat}', [ApiEventClassFleetBoatsController::class, 'show'])->name('api.events.classes.fleets.boats.show');
-    Route::post('events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats/{boat}', [ApiEventClassFleetBoatsController::class, 'update'])->name('api.events.classes.fleets.boats.update');
-    Route::get('events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats/{boat}/delete', [ApiEventClassFleetBoatsController::class, 'delete'])->name('api.events.classes.fleets.boats.delete');
+	Route::post('events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats/{boat}', [ApiEventClassFleetBoatsController::class, 'update'])->name('api.events.classes.fleets.boats.update');
+    Route::get('events/{event}/classes/{eventClass}/fleets/{eventClassFleet}/boats/{boat}/delete', [ApiEventClassFleetBoatsController::class, 'delete'])->name('api.events.classes.fleets.boats.delete');																																															   
 
     // API auth routes
     Route::get('auth/logout', [ApiAuthController::class, 'logout'])->name('api.auth.logout');
+
+    // API AIS Receiver routes
+    Route::post('ais', [ApiAISController::class, 'store'])->name('api.ais.store');
 });
 
 // Verify API key without auth token check
