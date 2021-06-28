@@ -1,10 +1,10 @@
 [&laquo; Back to the README.md](../README.md)
 
 # Models
-The RegattaTracker project has many different models, many of them are connected with each other.
+Het RegattaTracker-project kent veel verschillende modellen, waarvan vele met elkaar verbonden zijn.
 
-## Relationships
-If a model / database table name is plural it is a normal data table but if it is two singular names joined together then it is a link table:
+## Naamgeving & Relaties
+Als de naam van een model-/databasetabel meervoudig is, is het een normale gegevenstabel, maar als het twee enkelvoudige namen zijn die samengevoegd zijn, is het een linktabel:
 ```
 ApiKeys
 
@@ -30,3 +30,4 @@ Events
                 belongs to many Users (EventClassFleetBoatUser) (Temporary crew members)
                 has many EventClassFleetBoatGuests (Temporary crew members)
 ```
+*Zoals u kan zien heeft het event model aardig wat belongs to relaties.*

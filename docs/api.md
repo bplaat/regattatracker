@@ -1,10 +1,10 @@
 [&laquo; Back to the README.md](../README.md)
 
-# API Documentation
-The RettaTracker website has an REST API which you can use to read and alter information on the RegattaTracker website:
+# API Documentatie
+Did you mean: The Retta Tracker website has an REST API which you can use to read and alter information on the Regatta Tracker website
 
 ## Routes
-This is a list off al current API routes and there names:
+Hier is een lijst met alle API routes die op dit moment aanwezig zijn in het RegattaTracker project:
 ```
 GET /api : api.home
 
@@ -64,11 +64,16 @@ ANY /api/auth/login : api.auth.login
 ANY /api/auth/register : api.auth.register
 ```
 
+*Hier onder staan nog een aantal voorbeelden van hoe je verschillende routes in de REST API kan aanroepen via een simpel Python script:*
+
 ## Buoy position store
-You can send a POST message to `/api/buoys/{buoy_id}/positions` to update the position of that buoy, you will need to create an API Key in the Admin panel to send this HTTP request, here is are some simple Python examples:
+U kunt een POST-bericht naar `/api/buoys/{buoy_id}/positions` sturen om de positie van die boei bij te werken, u moet een API-sleutel aanmaken in het admin gedeelte om dit bericht te verzenden, hier zijn enkele eenvoudige Python-voorbeelden om het bericht te verzenden:
+
+
+**Met een account auth token:**
 ```python
-# Without account auth token
 import requests
+
 buoy_id = 1
 req = requests.post('https://test.regattatracker.nl/api/buoys/' + str(buoy_id) + '/positions', data = {
     'api_key': '7538dba4eecc68799e5c307f12251f76',
@@ -78,9 +83,10 @@ req = requests.post('https://test.regattatracker.nl/api/buoys/' + str(buoy_id) +
 print(req.text)
 ```
 
+**Zonder account auth token:**
 ```python
-# With account auth token
 import requests
+
 buoy_id = 1
 req = requests.post('https://test.regattatracker.nl/api/buoys/' + str(buoy_id) + '/positions',
     headers = { 'Authorization': 'Bearer 6|fmhbWnlndZ6BPhew8aLnUryh6tlFCr9RanCYAlZ5' },
@@ -93,29 +99,32 @@ req = requests.post('https://test.regattatracker.nl/api/buoys/' + str(buoy_id) +
 print(req.text)
 ```
 
+**Alleen met standaard bibliotheek functies en met account auth token:**
 ```python
-# Without requests library and without account auth token
 from urllib import request, parse
+
 buoy_id = 1
 data = parse.urlencode({
     'api_key': '7538dba4eecc68799e5c307f12251f76',
     'latitude': 52.0,
     'longitude': 4.71
 }).encode()
+
 req = request.Request('https://test.regattatracker.nl/api/buoys/' + str(buoy_id) + '/positions', data = data)
 response = request.urlopen(req)
 print(response.read().decode())
 ```
-
+**Alleen met standaard bibliotheek functies en zonder account auth token:**
 ```python
-# Without requests library and with account auth token
 from urllib import request, parse
+
 buoy_id = 1
 data = parse.urlencode({
     'api_key': '7538dba4eecc68799e5c307f12251f76',
     'latitude': 52.0,
     'longitude': 4.71
 }).encode()
+
 req = request.Request('https://test.regattatracker.nl/api/buoys/' + str(buoy_id) + '/positions', data = data)
 req.add_header('Authorization', 'Bearer 6|fmhbWnlndZ6BPhew8aLnUryh6tlFCr9RanCYAlZ5')
 response = request.urlopen(req)
