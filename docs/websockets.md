@@ -38,7 +38,7 @@ De singals komen dan in de `WebsocketsController.php` weer binnen en deze broadc
 public function onSignal(string $type, object $data): void
 {
     if ($type == 'new_boat_position') {
-        $boatPosition = BoatPosition::where('id', $data->boat_position_id)->first();
+        $boatPosition = BoatPosition::find($data->boat_position_id);
 
         $this->broadcast([
             'type' => 'new_boat_position',

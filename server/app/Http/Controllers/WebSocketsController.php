@@ -28,7 +28,7 @@ class WebSocketsController extends Controller implements MessageComponentInterfa
     {
         // On new boat position signal
         if ($type == 'new_boat_position') {
-            $boatPosition = BoatPosition::where('id', $data->boat_position_id)->first();
+            $boatPosition = BoatPosition::find($data->boat_position_id);
 
             $this->broadcast([
                 'type' => 'new_boat_position',
@@ -38,7 +38,7 @@ class WebSocketsController extends Controller implements MessageComponentInterfa
 
         // On new buoy position signal
         if ($type == 'new_buoy_position') {
-            $buoyPosition = BuoyPosition::where('id', $data->buoy_position_id)->first();
+            $buoyPosition = BuoyPosition::find($data->buoy_position_id);
 
             $this->broadcast([
                 'type' => 'new_buoy_position',
