@@ -235,9 +235,10 @@ function updateMapItems() {
         selectedBoatPopup.setLngLat([selectedBoat.positions[0].longitude, selectedBoat.positions[0].latitude]);
 
         const content = selectedBoatPopup.getElement().children[1];
-        content.children[1].textContent = strings.latitude + ': ' + selectedBoat.positions[0].latitude
-        content.children[2].textContent = strings.longitude + ': ' + selectedBoat.positions[0].longitude;
-        content.children[3].textContent = strings.time + ': ' + new Date(selectedBoat.positions[0].created_at).toLocaleString('en-US');
+        const start = selectedBoat.image != null ? 2 : 1;
+        content.children[start].textContent = strings.latitude + ': ' + selectedBoat.positions[0].latitude
+        content.children[start + 1].textContent = strings.longitude + ': ' + selectedBoat.positions[0].longitude;
+        content.children[start + 2].textContent = strings.time + ': ' + new Date(selectedBoat.positions[0].created_at).toLocaleString('en-US');
     }
 
     // Buoy points
@@ -317,9 +318,10 @@ function updateMapItems() {
         selectedBuoyPopup.setLngLat([selectedBuoy.positions[0].longitude, selectedBuoy.positions[0].latitude]);
 
         const content = selectedBuoyPopup.getElement().children[1];
-        content.children[1].textContent = strings.latitude + ': ' + selectedBuoy.positions[0].latitude
-        content.children[2].textContent = strings.longitude + ': ' + selectedBuoy.positions[0].longitude;
-        content.children[3].textContent = strings.time + ': ' + new Date(selectedBuoy.positions[0].created_at).toLocaleString('en-US');
+        const start = selectedBuoy.youtube_video != null ? 2 : 1;
+        content.children[start].textContent = strings.latitude + ': ' + selectedBuoy.positions[0].latitude
+        content.children[start + 1].textContent = strings.longitude + ': ' + selectedBuoy.positions[0].longitude;
+        content.children[start + 2].textContent = strings.time + ': ' + new Date(selectedBuoy.positions[0].created_at).toLocaleString('en-US');
     }
 }
 
