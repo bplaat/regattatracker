@@ -124,6 +124,7 @@ return [
     'latitude' => 'Incorrect latitude, max 8 decimals allowed.',
     'longitude' => 'Incorrect longitude, max 8 decimals allowed.',
     'sail_number' => 'Incorrect sail number, can only contain alpha numeric characters and can only be max 32 characters long.',
+    'youtube_video' => 'Incorrect YouTube video id.',
 
     /*
     |--------------------------------------------------------------------------

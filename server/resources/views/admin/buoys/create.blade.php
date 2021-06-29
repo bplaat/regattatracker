@@ -42,6 +42,18 @@
         </div>
 
         <div class="field">
+            <label class="label" for="youtube_video">@lang('admin/buoys.create.youtube_video')</label>
+
+            <div class="control">
+                <input class="input @error('youtube_video') is-danger @enderror" type="text" id="youtube_video" name="youtube_video" value="{{ old('youtube_video') }}" required>
+            </div>
+
+            @error('youtube_video')
+                <p class="help is-danger">{{ $errors->first('youtube_video') }}</p>
+            @enderror
+        </div>
+
+        <div class="field">
             <div class="control">
                 <button class="button is-link" type="submit">@lang('admin/buoys.create.create_button')</button>
             </div>

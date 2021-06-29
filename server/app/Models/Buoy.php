@@ -8,7 +8,8 @@ class Buoy extends Model
 {
     protected $fillable = [
         'name',
-        'description'
+        'description',
+        'youtube_video'
     ];
 
     // A buoy has many positions

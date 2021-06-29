@@ -23,6 +23,12 @@
             <p style="white-space: pre-wrap;">{{ $buoy->description }}</p>
         @endif
 
+        @if ($buoy->youtube_video != null)
+            <div class="box" style="position: relative; padding-top: 45%; background-color: #191a1a; overflow: hidden;">
+                <iframe src="https://www.youtube.com/embed/{{ $buoy->youtube_video }}?autoplay=1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen></iframe>
+            </div>
+        @endif
+
         <div class="buttons">
             <a class="button is-warning" href="{{ route('admin.buoys.track', $buoy) }}">@lang('admin/buoys.show.track_button')</a>
             <a class="button is-link" href="{{ route('admin.buoys.edit', $buoy) }}">@lang('admin/buoys.show.edit_button')</a>
@@ -36,7 +42,7 @@
 
         @if (count($buoyPositions) > 0)
             <div class="box" style="position: relative; padding-top: 45%; background-color: #191a1a; overflow: hidden;">
-                <div id="map-container" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+                <div id="map-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
             </div>
 
             <script>

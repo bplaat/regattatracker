@@ -16,6 +16,7 @@ return [
     'create.header' => 'Create new buoy',
     'create.name' => 'Name',
     'create.description' => 'Description',
+    'create.youtube_video' => 'YouTube video id',
     'create.create_button' => 'Create new buoy',
 
     // Admin buoys show page
@@ -66,6 +67,7 @@ return [
     'edit.header' => 'Edit buoy',
     'edit.name' => 'Name',
     'edit.description' => 'Description',
+    'edit.youtube_video' => 'YouTube video id',
     'edit.edit_button' => 'Edit buoy',
 
     // ### Buoy positions pages ###

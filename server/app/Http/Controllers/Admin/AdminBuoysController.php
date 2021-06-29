@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Buoy;
 use Illuminate\Http\Request;
+use App\Rules\YoutubeVideo;
 
 class AdminBuoysController extends Controller
 {
@@ -31,13 +32,15 @@ class AdminBuoysController extends Controller
         // Validate input
         $fields = $request->validate([
             'name' => 'required|min:2|max:48',
-            'description' => 'nullable|max:20000'
+            'description' => 'nullable|max:20000',
+            'youtube_video' => [ 'nullable', new YoutubeVideo ]
         ]);
 
         // Create buoy
         $buoy = Buoy::create([
             'name' => $fields['name'],
-            'description' => $fields['description']
+            'description' => $fields['description'],
+            'youtube_video' => $fields['youtube_video']
         ]);
 
         // Go to the new admin buoy page
@@ -90,13 +93,15 @@ class AdminBuoysController extends Controller
         // Validate input
         $fields = $request->validate([
             'name' => 'required|min:2|max:48',
-            'description' => 'nullable|max:20000'
+            'description' => 'nullable|max:20000',
+            'youtube_video' => [ 'nullable', new YoutubeVideo ]
         ]);
 
         // Update buoy
         $buoy->update([
             'name' => $fields['name'],
-            'description' => $fields['description']
+            'description' => $fields['description'],
+            'youtube_video' => $fields['youtube_video']
         ]);
 
         // Go to the admin buoy page

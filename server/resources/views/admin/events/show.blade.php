@@ -55,7 +55,7 @@
         <h1 class="title is-spaced is-4">@lang('admin/events.show.map')</h1>
 
         <div class="box" style="position: relative; padding-top: 50%; background-color: #191a1a; overflow: hidden;">
-            <div id="map-container" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+            <div id="map-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
         </div>
 
         <script>

@@ -281,7 +281,11 @@ function updateMapItems() {
 
                 selectedBuoyPopup = new mapboxgl.Popup()
                     .setLngLat([selectedBuoy.positions[0].longitude, selectedBuoy.positions[0].latitude])
-                    .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + selectedBuoy.name + '</h3>' +
+                    .setHTML((selectedBuoy.youtube_video != null ?
+                            '<div class="box" style="position: relative; padding-top: 45%; background-color: #191a1a; overflow: hidden; margin-bottom: 16px;">' +
+                                '<iframe src="https://www.youtube.com/embed/' + selectedBuoy.youtube_video + '?autoplay=1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen></iframe>' +
+                            '</div>' : '') +
+                        '<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + selectedBuoy.name + '</h3>' +
                         '<div>' + strings.latitude + ': ' + selectedBuoy.positions[0].latitude + '</div>' +
                         '<div>' + strings.longitude + ': ' + selectedBuoy.positions[0].longitude + '</div>' +
                         '<div>' + strings.time + ': ' + new Date(selectedBuoy.positions[0].created_at).toLocaleString('en-US') + '</div>'
@@ -291,6 +295,7 @@ function updateMapItems() {
                         selectedBuoyPopup = undefined;
                     })
                     .addTo(map);
+                selectedBuoyPopup.getElement().style.width = '320px';
             });
 
             map.on('mouseenter', 'buoy_points', mapMouseEnter);
