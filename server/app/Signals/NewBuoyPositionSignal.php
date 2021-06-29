@@ -4,7 +4,7 @@ namespace App\Signals;
 
 use App\Models\BuoyPosition;
 
-class NewbuoyPositionSignal extends Signal
+class NewBuoyPositionSignal extends Signal
 {
     public function __construct(BuoyPosition $buoyPosition)
     {
