@@ -30,7 +30,7 @@
             window.data = {
                 debug: @json(config('app.debug')),
                 websocketsReconnectTimeout: @json(config('websockets.reconnect_timeout')),
-                websocketsUrl: 'ws://' + @json(config('websockets.host')) + ':' + @json(config('websockets.port')) + '/',
+                websocketsUrl: @json(config('websockets.url')),
                 mapboxAccessToken: @json(config('mapbox.access_token')),
                 openweatherApiKey: @json(config('openweather.api_key')),
                 boats: @json($boats),

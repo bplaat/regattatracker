@@ -67,10 +67,10 @@ class WebSocketsServer extends Command
         });
 
         // Start websockets server
-        echo '[INFO] Starting websockets server at: ws://127.0.0.1:' . config('websockets.port') . '/' . PHP_EOL;
+        echo '[INFO] Starting websockets server at: ws://' . config('websockets.host') . ':' . config('websockets.port') . '/' . PHP_EOL;
         $websocketServer = new IoServer(
             new HttpServer(new WsServer($websocketsController)),
-            new Server('127.0.0.1:' . config('websockets.port'), $loop),
+            new Server(config('websockets.host') . ':' . config('websockets.port'), $loop),
             $loop
         );
 
