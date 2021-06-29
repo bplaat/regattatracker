@@ -25,7 +25,9 @@
         @endif
 
         @if ($boat->image != null)
-            <img src="/storage/boats/{{ $boat->image }}" alt="@lang('boats.show.image_alt', [ 'boat.name' => $boat->name ])">
+            <div class="box" style="display: inline-block; padding: 0; background-color: #191a1a; overflow: hidden; margin-bottom: 16px;">
+                <img style="display: block;" src="/storage/boats/{{ $boat->image }}" alt="@lang('boats.show.image_alt', [ 'boat.name' => $boat->name ])">
+            </div>
         @endif
 
         <h2 class="subtitle is-5">@lang('boats.show.boat_info')</h2>

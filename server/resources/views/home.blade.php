@@ -43,6 +43,7 @@
                     legend_buoy: @json(__('home.map_legend_buoy')),
                     wind_message: @json(__('home.map_wind_message')),
                     wind_loading: @json(__('home.map_wind_loading')),
+                    boat_image_alt: @json(__('home.map_boat_image_alt')),
                     latitude: @json(__('home.map_latitude')),
                     longitude: @json(__('home.map_longitude')),
                     time: @json(__('home.map_time'))

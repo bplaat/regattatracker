@@ -206,7 +206,11 @@ function updateMapItems() {
 
                 selectedBoatPopup = new mapboxgl.Popup()
                     .setLngLat([selectedBoat.positions[0].longitude, selectedBoat.positions[0].latitude])
-                    .setHTML('<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + selectedBoat.name + '</h3>' +
+                    .setHTML((selectedBoat.image != null ?
+                            '<div class="box" style="padding: 0; background-color: #191a1a; overflow: hidden; margin-bottom: 12px;">' +
+                                '<img style="display: block;" src="/storage/boats/' + selectedBoat.image + '" alt="' + strings.boat_image_alt.replace(':boat.name', selectedBoat.name) + '">' +
+                            '</div>' : '') +
+                        '<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + selectedBoat.name + '</h3>' +
                         '<div>' + strings.latitude + ': ' + selectedBoat.positions[0].latitude + '</div>' +
                         '<div>' + strings.longitude + ': ' + selectedBoat.positions[0].longitude + '</div>' +
                         '<div>' + strings.time + ': ' + new Date(selectedBoat.positions[0].created_at).toLocaleString('en-US') + '</div>'
@@ -282,7 +286,7 @@ function updateMapItems() {
                 selectedBuoyPopup = new mapboxgl.Popup()
                     .setLngLat([selectedBuoy.positions[0].longitude, selectedBuoy.positions[0].latitude])
                     .setHTML((selectedBuoy.youtube_video != null ?
-                            '<div class="box" style="position: relative; padding-top: 45%; background-color: #191a1a; overflow: hidden; margin-bottom: 16px;">' +
+                            '<div class="box" style="position: relative; padding-top: 45%; background-color: #191a1a; overflow: hidden; margin-bottom: 12px;">' +
                                 '<iframe src="https://www.youtube.com/embed/' + selectedBuoy.youtube_video + '?autoplay=1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen></iframe>' +
                             '</div>' : '') +
                         '<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + selectedBuoy.name + '</h3>' +
