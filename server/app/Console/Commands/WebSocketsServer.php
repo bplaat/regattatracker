@@ -50,8 +50,8 @@ class WebSocketsServer extends Command
         $websocketsController = new WebSocketsController();
 
         // Start signals server
-        echo '[INFO] Starting signals server at: 127.0.0.1:' . config('signals.port') . PHP_EOL;
-        $socketServer = new Server('127.0.0.1:' . config('signals.port'), $loop);
+        echo '[INFO] Starting signals server at: ' . config('signals.host') . ':' . config('signals.port') . PHP_EOL;
+        $socketServer = new Server(config('signals.host') . ':' . config('signals.port'), $loop);
         $socketServer->on('connection', function (ConnectionInterface $connection) use ($websocketsController) {
             $connection->on('data', function ($data) use ($websocketsController) {
                 $data = json_decode($data);
