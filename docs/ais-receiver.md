@@ -4,8 +4,8 @@
 Om de boten te kunnen tracken op de website heb je een raspberry pi met een AIS receiver nodig. Op deze pagina zullen we uitleggen hoe dat in zijn werking gaat.
 
 ## Python client code
-[Link naar de client code](../../ais-receiver/ais-receiver.py)  
-In de client code hebben we gebruik gemaakt van een library waarin we een NMEA message om zetten naar een leesbare python dictionary.  
+[Link naar de client code](../ais-receiver/ais-receiver.py)
+In de client code hebben we gebruik gemaakt van een library waarin we een NMEA message om zetten naar een leesbare python dictionary.
 Om de message om te zetten moet hij eerst gedecode worden waarna hij geformat word in een dictionary.
 ```python
 def decode_ais(message):
@@ -17,8 +17,8 @@ def decode_ais(message):
         pass
     return None
 ```
-Om een message te kunnen ontvangen op de raspberry pi gebruiken we een head (hierover meer in het kopje hardware).  
-Deze head maakt gebruik van de GPIO serial port (/dev/ttyAMA0).  
+Om een message te kunnen ontvangen op de raspberry pi gebruiken we een head (hierover meer in het kopje hardware).
+Deze head maakt gebruik van de GPIO serial port (/dev/ttyAMA0).
 Deze message lezen we aller eerst uit.
 ```python
 	# Read one message from the serial port and give back the nmea message.

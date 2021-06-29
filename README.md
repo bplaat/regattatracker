@@ -1,6 +1,11 @@
 # RegattaTracker
 The brand new RegattaTracker deluxe tracking system
 
+## Project Flyer
+Hier is een flyer die we hebben gemaakt die het project een beetje uitlegd:
+
+![Project Flyer](docs/images/flyer.png)
+
 ## Documentation
 Choose the topic where you want to learn more about:
 - [Getting Started](docs/getting-started.md)
