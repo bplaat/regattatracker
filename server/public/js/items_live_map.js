@@ -220,6 +220,9 @@ function updateMapItems() {
                         selectedBoatPopup = undefined;
                     })
                     .addTo(map);
+                if (selectedBoat.image != null) {
+                    selectedBoatPopup.getElement().style.width = '320px';
+                }
             });
 
             map.on('mouseenter', 'boat_points', mapMouseEnter);
@@ -299,7 +302,9 @@ function updateMapItems() {
                         selectedBuoyPopup = undefined;
                     })
                     .addTo(map);
-                selectedBuoyPopup.getElement().style.width = '320px';
+                if (selectedBuoy.youtube_video != null) {
+                    selectedBuoyPopup.getElement().style.width = '320px';
+                }
             });
 
             map.on('mouseenter', 'buoy_points', mapMouseEnter);
