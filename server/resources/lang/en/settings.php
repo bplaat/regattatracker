@@ -30,7 +30,7 @@ return [
     'no_avatar' => 'You have not uploaded an avatar',
     'avatar_alt' => ':user.name\'s avatar',
     'avatar' => 'Avatar image',
-    'avatar_message' => 'You can upload an squared jpeg or png image',
+    'avatar_message' => 'You can upload an squared .jpg or .png image',
     'change_avatar_button' => 'Change avatar',
     'delete_avatar_button' => 'Delete avatar',
     'change_avatar_message' => 'Your avatar has changed',

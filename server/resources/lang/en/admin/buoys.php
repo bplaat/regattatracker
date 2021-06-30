@@ -7,7 +7,7 @@ return [
     'index.header' => 'All the buoys',
     'index.query_placeholder' => 'Search for buoys...',
     'index.search_button' => 'Search',
-    'index.empty' => 'There are no buoys found',
+    'index.empty' => 'There were no buoys found',
     'index.create_button' => 'Create new buoy',
 
     // Admin buoys create page
