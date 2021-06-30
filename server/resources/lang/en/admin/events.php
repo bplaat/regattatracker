@@ -82,13 +82,13 @@ return [
     'timer.title' => 'Timer - :event.name - Events - Admin',
     'timer.breadcrumb' => 'Timer',
     'timer.header' => 'Time boats',
-    'timer.info_message' => 'Select which time you want to enter then enter boat id, MMSI or sail number and time then press enter and continue:',
+    'timer.info_message' => 'Select what time you want to enter. Enter boat id, MMSI or sail number, and time. Press enter to continue.',
     'timer.time_type' => 'Time type',
     'timer.boat_thing' => 'Boat id, MMSI or sail number',
-    'timer.boat_thing_message' => 'Check below for a list with all enrolled boats',
+    'timer.boat_thing_message' => 'Check below for a list of all enrolled boats',
     'timer.started_at' => 'Start time',
     'timer.finished_at' => 'Finish time',
-    'timer.time_message' => 'Enter the time in the format of HHMMSS',
+    'timer.time_message' => 'Enter the time in the format HHMMSS',
     'timer.save_button' => 'Save time',
     'timer.times_header' => 'Boat times',
     'timer.name' => 'Name',
@@ -194,7 +194,7 @@ return [
     'classes.fleets.boats.index.boat_finished_at_empty' => 'No finish time',
     'classes.fleets.boats.index.boat_users_button' => 'Temporary users',
     'classes.fleets.boats.index.boat_edit_button' => 'Edit details',
-    'classes.fleets.boats.index.boat_delete_button' => 'Remove boot',
+    'classes.fleets.boats.index.boat_delete_button' => 'Remove boat',
     'classes.fleets.boats.index.boat_placeholder' => 'Select a boat...',
     'classes.fleets.boats.index.boat_add_button' => 'Add boat',
 
@@ -213,7 +213,7 @@ return [
     // Event class fleet boat user index page
     'classes.fleets.boats.users.index.title' => 'Users - :boat.name - Boats - :event_class_fleet.name - Fleets - :event_class.name - Classes - :event.name - Events - Admin',
     'classes.fleets.boats.users.index.breadcrumb' => 'Users',
-    'classes.fleets.boats.users.index.header' => 'All temporary users of this boat',
+    'classes.fleets.boats.users.index.header' => 'All temporary users for this boat',
     'classes.fleets.boats.users.index.query_placeholder' => 'Search for users...',
     'classes.fleets.boats.users.index.search_button' => 'Search',
 
@@ -222,14 +222,14 @@ return [
     'classes.fleets.boats.users.index.user_delete_button' => 'Remove user',
     'classes.fleets.boats.users.index.user_placeholder' => 'Select a user...',
     'classes.fleets.boats.users.index.user_add_button' => 'Add user',
-    'classes.fleets.boats.users.index.user_empty' => 'No temporary users found of this boat',
+    'classes.fleets.boats.users.index.user_empty' => 'No temporary users found for this boat',
 
     'classes.fleets.boats.users.index.guest_header' => 'Temporary guests',
     'classes.fleets.boats.users.index.guest_role_crew' => 'CREW',
     'classes.fleets.boats.users.index.guest_edit_button' => 'Edit guest',
     'classes.fleets.boats.users.index.guest_delete_button' => 'Delete guest',
     'classes.fleets.boats.users.index.guest_create_button' => 'Create guest',
-    'classes.fleets.boats.users.index.guest_empty' => 'No temporary guests found of this boat',
+    'classes.fleets.boats.users.index.guest_empty' => 'No temporary guests found for this boat',
 
     // ### Event class fleet boat guests pages ###
 
