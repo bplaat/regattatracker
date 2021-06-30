@@ -356,11 +356,8 @@
             <p><i>@lang('boats.show.guests_empty')</i></p>
         @endif
 
-        @can('create_boat_user', $boat)
-
-            <div class="buttons">
-                <a class="button is-link" href="{{ route('admin.boats.guests.create', [$boat]) }}">@lang('boats.show.guests_create_button')</a>
-            </div>
-        @endcan
+        <div class="buttons">
+            <a class="button is-link" href="{{ route('admin.boats.guests.create', [$boat]) }}">@lang('boats.show.guests_create_button')</a>
+        </div>
     </div>
 @endsection
