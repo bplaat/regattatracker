@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\boat;
+use App\Models\Boat;
 use App\Models\Event;
 use App\Models\EventClass;
 use App\Models\EventClassFleet;
