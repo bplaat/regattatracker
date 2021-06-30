@@ -121,11 +121,23 @@ class PathLengthControl {
     onAdd(map) {
         this._map = map;
 
+        this.unit = localStorage.distance_unit || 'm';
+
         this._container = document.createElement('div');
         this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
-        this._container.style = 'padding: 4px 8px;';
+        this._container.style = 'padding: 4px 8px; cursor: pointer; user-select: none;';
         this._container.innerHTML = `<p></p>`;
         this.onUpdate();
+
+        this._container.addEventListener('click', () => {
+            if (this.unit == 'm') {
+                this.unit = 'nm';
+            } else {
+                this.unit = 'm';
+            }
+            localStorage.distance_unit = this.unit;
+            this.onUpdate();
+        });
 
         return this._container;
     }
@@ -133,8 +145,14 @@ class PathLengthControl {
     onUpdate() {
         if (path.length >= 2) {
             const line = turf.lineString((event.connected == 1 ? path.concat([path[0]]) : path).map(point => [ point.lng, point.lat ]));
-            const length = turf.length(line, { units: 'kilometers' });
-            this._container.children[0].textContent = strings.path_length + ' ' + (length >= 1 ? length.toFixed(2) + ' km' : (length * 1000).toFixed(0) + ' m');
+            let length = turf.length(line, { units: 'kilometers' });
+            if (this.unit == 'm') {
+                this._container.children[0].textContent = strings.path_length + ' ' + (length >= 1 ? length.toFixed(2) + ' km' : (length * 1000).toFixed(0) + ' m');
+            }
+            if (this.unit == 'nm') {
+                length *= 0.53995680;
+                this._container.children[0].textContent = strings.path_length + ' ' + length.toFixed(length >= 1 ? 2 : 3) + ' nm';
+            }
         } else {
             this._container.children[0].textContent = strings.path_length_message;
         }
