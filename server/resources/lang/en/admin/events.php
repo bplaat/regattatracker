@@ -85,7 +85,7 @@ return [
     'timer.info_message' => 'Select what time you want to enter. Enter boat id, MMSI or sail number, and time. Press enter to continue.',
     'timer.time_type' => 'Time type',
     'timer.boat_thing' => 'Boat id, MMSI or sail number',
-    'timer.boat_thing_message' => 'Check below for a list of all enrolled boats',
+    'timer.boat_thing_message' => 'Check below for a list of all enrolled boats, enter \'*\' to change all boats',
     'timer.started_at' => 'Start time',
     'timer.finished_at' => 'Finish time',
     'timer.time_message' => 'Enter the time in the format HHMMSS',
