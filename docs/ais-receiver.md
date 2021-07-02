@@ -5,9 +5,9 @@ Om de boten te kunnen tracken op de website heb je een raspberry pi met een AIS 
 
 ## Python client code
 
-[Link naar de client code](../ais-receiver/ais-receiver.py)  
+[Link naar de client code](../ais-receiver/ais-receiver.py)
 ---
-In de client code hebben we gebruik gemaakt van een library waarin we een NMEA message om zetten naar een leesbare python dictionary.  
+In de client code hebben we gebruik gemaakt van een library waarin we een NMEA message om zetten naar een leesbare python dictionary.
 Om de message om te zetten moet hij eerst gedecode worden waarna hij geformat word in een dictionary.
 ```python
 def decode_ais(message):
@@ -48,7 +48,7 @@ Ook is het mogelijk om alle mmsi nummers van boten in de buurt uit te printen. O
 python <dir>/AIS_Receiver.py --mmsi <bool>
 ```
 
-Hiervoor hebben we ook nog een functie geschreven.  
+Hiervoor hebben we ook nog een functie geschreven.
 De functie maakt een list aan waar alle mmsi nummers in worden opgeslagen. Aangezien een list niet ordered is slaan we het aller eerste mmsi nummer ook nog op in een losse variable.
 ```python
 def getAllMMSI(ser):
@@ -74,7 +74,7 @@ Tot slot returned de functie de complete list.
     return mmsiList
 ```
 
-Deze functie word aangereoepen voordat de code data wil ontvangen en versturen naar de REST API. Het aanroepen van de functie word zo gedaan dat het er mooi uit ziet op de commandline. 
+Deze functie word aangereoepen voordat de code data wil ontvangen en versturen naar de REST API. Het aanroepen van de functie word zo gedaan dat het er mooi uit ziet op de commandline.
 ```python
 if giveMMSI:
     print("Getting mmsi numbers... Please wait.")
@@ -85,21 +85,16 @@ if giveMMSI:
 ```
 
 ## Hardware
-[Link naar de documentatie over de hat](https://wegmatt.com/files/dAISy%20HAT%20AIS%20Receiver%20Quickstart.pdf)  
----
-Voor de hardware van de AIS Receiver hebben we een raspberry pi 4 gebruikt.  
-In theorie kun je alles vanaf een raspberry pi 2 gebruiken. (Zie de documentatie van de hat)  
-Voor de raspberry pi heb je een powerbrick nodig die 5V/2.5A levert. De standaard raspberry pi charger is precies goed.  
-Op de raspberry pi zit de bovenstaande hat gemonteerd. Aan deze hat zit weer een antenne vast.  
-Al deze hardware hebben wij in een custom laser cut doosje gestopt.  
-[Link naar de .ai file](../ais-receiver/custom_box.ai)  
----
-Onderdelenlijst:
+[Link naar de documentatie over de hat](https://wegmatt.com/files/dAISy%20HAT%20AIS%20Receiver%20Quickstart.pdf)
+
+Voor de hardware van de AIS Receiver hebben we een raspberry pi 4 gebruikt.
+In theorie kun je alles vanaf een raspberry pi 2 gebruiken. (Zie de documentatie van de hat)
+Voor de raspberry pi heb je een powerbrick nodig die 5V/2.5A levert. De standaard raspberry pi charger is precies goed.
+Op de raspberry pi zit de bovenstaande hat gemonteerd. Aan deze hat zit weer een antenne vast.
+Al deze hardware hebben wij in een custom laser cut doosje gestopt. [Link naar de .ai file](../ais-receiver/custom_box.ai)
+
+### Onderdelenlijst:
 - Raspberry Pi (2/3/4) | <https://www.raspberrypi.org/products/raspberry-pi-4-model-b/>
 - Wegmatt hat | <https://shop.wegmatt.com/products/daisy-hat-ais-receiver>
 - Banten antenne | <https://www.nauticgear.nl/banten/banten-rvs-vhf-marifoon-antenne-1-meter.html>
 - Raspberry Pi charger | <https://www.raspberrypi.org/products/type-c-power-supply/>
----
-[&laquo; Back to the README.md](../README.md)
-
-
