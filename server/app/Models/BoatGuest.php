@@ -21,6 +21,10 @@ class BoatGuest extends Model
         'country'
     ];
 
+    protected $casts = [
+        'birthday' => 'datetime'
+    ];
+
     // Get user full name (firstname insertion lastname)
     public function getNameAttribute()
     {
