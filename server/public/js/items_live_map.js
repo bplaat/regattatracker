@@ -75,7 +75,7 @@ class WindInfoControl {
     onAdd(map) {
         this._map = map;
 
-        this.unit = localStorage.wind_unit || 'm/s';
+        this.unit = localStorage.wind_unit || 'nm/h';
 
         this._container = document.createElement('div');
         this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
@@ -85,7 +85,7 @@ class WindInfoControl {
             <svg viewBox="0 0 24 24" style="display: block; margin: 0 auto 4px; width: 48px; height: 48px; transition: transform 0.2s ease-in-out">
                 <path fill="currentColor" d="M13,18H11V10L7.5,13.5L6.08,12.08L12,6.16L17.92,12.08L16.5,13.5L13,10V18M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4Z" />
             </svg>
-            <p style="font-weight: bold;"></p>
+            <p style="font-weight: bold; text-align: center;"></p>
         `;
         this.onUpdate();
 
@@ -117,7 +117,7 @@ class WindInfoControl {
                 this._container.children[1].textContent = (this.windSpeed * 3.6).toFixed(2) + ' km/h';
             }
             if (this.unit == 'nm/h') {
-                this._container.children[1].textContent = (this.windSpeed * 1.9438444924406).toFixed(2) + ' nm/h';
+                this._container.children[1].textContent = (this.windSpeed * 1.9438444924406).toFixed(2) + ' kn';
             }
         } else {
             this._container.children[1].textContent = strings.wind_loading;
