@@ -9,7 +9,7 @@
 
     ```
     cd C:/xampp/htdocs
-    git clone https://github.com/IpsumCapra/regattatracker.git
+    git clone https://github.com/bplaat/regattatracker.git
     cd regattatracker
     ```
 - Install deps via Composer
@@ -109,7 +109,7 @@ TODO
 
     ```
     cd /var/www/html
-    git clone https://github.com/IpsumCapra/regattatracker.git
+    git clone https://github.com/bplaat/regattatracker.git
     cd regattatracker
     ```
 - Install deps via Composer
@@ -217,7 +217,7 @@ TODO
 - Create a vhost document root, rename it to a domain name (e.g. regattadev.com)
 
     ```
-    # git clone https://github.com/IpsumCapra/regattatracker.git
+    # git clone https://github.com/bplaat/regattatracker.git
     # mv regattatracker your_domain
     # chown -R http http
     # chmod -R g+rwx http

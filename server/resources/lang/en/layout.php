@@ -24,5 +24,5 @@ return [
 
     // Layout footer
     'footer.authors' => 'Made by <a href="https://bastiaan.ml/" target="_blank" rel="noreferrer">Bastiaan van der Plaat</a>, Charlie de Raaf, Sam Cornelisse, Stan Boer en Rowdey Goos',
-    'footer.source' => 'Download our <a href="/regattatracker.apk">Android app</a> and for the source code go to <a href="https://github.com/IpsumCapra/regattatracker" target="_blank" rel="noreferrer">GitHub</a>',
+    'footer.source' => 'Download our <a href="/regattatracker.apk">Android app</a> and for the source code go to <a href="https://github.com/bplaat/regattatracker" target="_blank" rel="noreferrer">GitHub</a>',
 ];
