@@ -242,7 +242,7 @@
                                     @endif
 
                                     @if ($user->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
-                                        <span class="tag is-pulled-right is-info">@lang('boats.show.users_role_captain')</span>
+                                        <span class="tag is-pulled-right is-link">@lang('boats.show.users_role_captain')</span>
                                     @endif
 
                                     @if ($user->pivot->role == App\Models\BoatUser::ROLE_OWNER)
@@ -257,7 +257,7 @@
                                                 @if ($user->pivot->role == App\Models\BoatUser::ROLE_OWNER)
                                                     @can('update_owner_boat_user', $boat)
                                                         @if ($boatOwners->count() > 1)
-                                                            <a class="button is-info is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">
+                                                            <a class="button is-link is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">
                                                                 @lang('boats.show.users_make_captain_button')
                                                             </a>
 
@@ -295,7 +295,7 @@
                                                         </a>
                                                     @endcan
 
-                                                    <a class="button is-info is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">
+                                                    <a class="button is-link is-light is-small" href="{{ route('boats.users.update', [$boat, $user]) }}?role={{ App\Models\BoatUser::ROLE_CAPTAIN }}">
                                                         @lang('boats.show.users_make_captain_button')
                                                     </a>
 
@@ -395,7 +395,7 @@
                                 @canany(['update_boat_user', 'delete_boat_user'], $boat)
                                         <div class="buttons">
                                             @can('update_boat_user', $boat)
-                                                <a class="button is-info is-light is-small" href="{{ route('boats.guests.edit', [$boat, $guest]) }}">
+                                                <a class="button is-link is-light is-small" href="{{ route('boats.guests.edit', [$boat, $guest]) }}">
                                                     @lang('boats.show.guest_edit_button')
                                                 </a>
                                             @endcan

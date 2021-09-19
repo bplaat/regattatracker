@@ -84,7 +84,7 @@
                                 @endif
 
                                 @if ($boat->pivot->role == App\Models\BoatUser::ROLE_CAPTAIN)
-                                    <span class="tag is-pulled-right is-info">@lang('admin/users.show.boats_role_captain')</span>
+                                    <span class="tag is-pulled-right is-link">@lang('admin/users.show.boats_role_captain')</span>
                                 @endif
 
                                 @if ($boat->pivot->role == App\Models\BoatUser::ROLE_OWNER)

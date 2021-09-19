@@ -114,7 +114,7 @@
                                 </h3>
 
                                 <div class="buttons">
-                                    <a class="button is-info is-light is-small" href="{{ route('admin.events.classes.fleets.boats.guests.edit', [$event, $eventClass, $eventClassFleet, $boat, $guest]) }}">
+                                    <a class="button is-link is-light is-small" href="{{ route('admin.events.classes.fleets.boats.guests.edit', [$event, $eventClass, $eventClassFleet, $boat, $guest]) }}">
                                         @lang('admin/events.classes.fleets.boats.users.index.guest_edit_button')
                                     </a>
                                     <a class="button is-danger is-light is-small" href="{{ route('admin.events.classes.fleets.boats.guests.delete', [$event, $eventClass, $eventClassFleet, $boat, $guest]) }}">
