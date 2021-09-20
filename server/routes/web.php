@@ -119,7 +119,9 @@ Route::middleware('admin')->group(function () {
     // Admin user routes
     Route::get('/admin/users', [AdminUsersController::class, 'index'])->name('admin.users.index');
     Route::view('/admin/users/create', 'admin.users.create')->name('admin.users.create');
+    Route::view('/admin/users/create_complete', 'admin.users.create_complete')->name('admin.users.create_complete');
     Route::post('/admin/users', [AdminUsersController::class, 'store'])->name('admin.users.store');
+    Route::post('/admin/users/store_complete', [AdminUsersController::class, 'storeComplete'])->name('admin.users.store_complete');
     Route::get('/admin/users/{user}', [AdminUsersController::class, 'show'])->name('admin.users.show');
     Route::get('/admin/users/{user}/hijack', [AdminUsersController::class, 'hijack'])->name('admin.users.hijack');
     Route::get('/admin/users/{user}/edit', [AdminUsersController::class, 'edit'])->name('admin.users.edit');

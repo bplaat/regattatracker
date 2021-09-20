@@ -11,6 +11,7 @@ return [
     'index.role_admin' => 'ADMIN',
     'index.empty' => 'There are no users found',
     'index.create_button' => 'Create new user',
+    'index.create_complete_button' => 'Create new user and boat',
 
     // Admin users create page
     'create.title' => 'Create - Users - Admin',
@@ -38,6 +39,17 @@ return [
     'create.role_normal' => 'Normal',
     'create.role_admin' => 'Admin',
     'create.create_button' => 'Create new user',
+
+    // Admin users create complete page
+    'create_complete.title' => 'Create Complete - Users - Admin',
+    'create_complete.breadcrumb' => 'Create Complete',
+    'create_complete.header' => 'Create new user and boat',
+    'create_complete.user_info' => 'User information',
+    'create_complete.boat_info' => 'Boat information',
+    'create_complete.website' => 'Website (not required)',
+    'create_complete.boat_type' => 'Boat Type (attach on existing or create)',
+    'create_complete.weight' => 'Weight (ton)',
+    'create_complete.create_button' => 'Create new user and boat',
 
     // Admin users show page
     'show.title' => ':user.name - Users - Admin',

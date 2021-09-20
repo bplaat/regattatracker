@@ -18,6 +18,7 @@
             <div class="column">
                 <div class="buttons">
                     <a class="button is-link" href="{{ route('admin.users.create') }}">@lang('admin/users.index.create_button')</a>
+                    <a class="button is-link" href="{{ route('admin.users.create_complete') }}">@lang('admin/users.index.create_complete_button')</a>
                 </div>
             </div>
 

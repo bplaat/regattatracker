@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Boat;
+use App\Models\BoatType;
+use App\Models\BoatUser;
 use App\Models\User;
+use App\Rules\SailNumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -84,6 +88,84 @@ class AdminUsersController extends Controller
             // Update user that he has an avatar
             $user->update([ 'avatar' => $avatar ]);
         }
+
+        // Go to the new admin user page
+        return redirect()->route('admin.users.show', $user);
+    }
+
+
+    // Admin users store complete route
+    public function storeComplete(Request $request)
+    {
+        // Validate input
+        $fields = $request->validate([
+            // User info
+            'firstname' => 'required|min:2|max:48',
+            'insertion' => 'nullable|max:16',
+            'lastname' => 'required|min:2|max:48',
+            'gender' => 'required|integer|digits_between:' . User::GENDER_MALE . ',' . User::GENDER_OTHER,
+            'birthday' => 'required|date',
+            'email' => 'required|email|max:255|unique:users',
+            'phone' => 'nullable|max:255',
+            'address' => 'required|min:2|max:255',
+            'postcode' => 'required|min:2|max:255',
+            'city' => 'required|min:2|max:255',
+            'country' => 'required|min:2|max:255',
+
+            // Boat info
+            'name' => 'required|min:2|max:48',
+            'website' => 'nullable|url',
+            'boat_type' => 'required|min:2|max:48',
+            'mmsi' => 'required|digits:9|unique:boats',
+            'length' => 'required|numeric|min:1|max:1000',
+            'breadth' => 'required|numeric|min:1|max:1000',
+            'weight' => 'required|numeric|min:1|max:100000000',
+            'sail_number' => ['required', new SailNumber],
+            'sail_area' => 'required|numeric|min:1|max:10000'
+        ]);
+
+        // Create user
+        $user = User::create([
+            'firstname' => $fields['firstname'],
+            'insertion' => $fields['insertion'],
+            'lastname' => $fields['lastname'],
+            'gender' => $fields['gender'],
+            'birthday' => $fields['birthday'],
+            'email' => $fields['email'],
+            'phone' => $fields['phone'],
+            'address' => $fields['address'],
+            'postcode' => $fields['postcode'],
+            'city' => $fields['city'],
+            'country' => $fields['country'],
+            'password' => Hash::make('regattatracker'),
+            'role' => User::ROLE_NORMAL
+        ]);
+
+        // Create boat
+        $boat = Boat::create([
+            'name' => $fields['name'],
+            'description' => $fields['website'] != '' ? 'Website: ' . $fields['website'] : null,
+            'mmsi' => $fields['mmsi'],
+            'length' => $fields['length'],
+            'breadth' => $fields['breadth'],
+            'weight' => $fields['weight'] * 1000,
+            'sail_number' => $fields['sail_number'],
+            'sail_area' => $fields['sail_area']
+        ]);
+
+        // Attach user to boat as owner
+        $boat->users()->attach($user, [
+            'role' => BoatUser::ROLE_OWNER
+        ]);
+
+        // Attach boat type (create if not existing) to new boat
+        $boatType = BoatType::where('name', $fields['boat_type'])->first();
+        if ($boatType == null) {
+            $boatType = BoatType::create([
+                'name' => $fields['boat_type']
+            ]);
+        }
+        $boat->boatTypes()->attach($boatType);
 
         // Go to the new admin user page
         return redirect()->route('admin.users.show', $user);
