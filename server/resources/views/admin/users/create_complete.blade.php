@@ -316,7 +316,7 @@
                         <label class="label" for="sail_number">@lang('admin/boats.create.sail_number')</label>
 
                         <div class="control">
-                            <input class="input @error('sail_number') is-danger @enderror" type="text" id="sail_number" name="sail_number" value="{{ old('sail_number') }}" required>
+                            <input class="input @error('sail_number') is-danger @enderror" type="text" id="sail_number" name="sail_number" value="{{ old('sail_number') }}">
                         </div>
 
                         @error('sail_number')

@@ -119,8 +119,8 @@ class AdminUsersController extends Controller
             'mmsi' => 'required|digits:9|unique:boats',
             'length' => 'required|numeric|min:1|max:1000',
             'breadth' => 'required|numeric|min:1|max:1000',
-            'weight' => 'required|numeric|min:1|max:100000000',
-            'sail_number' => ['required', new SailNumber],
+            'weight' => 'required|numeric|min:1|max:100000',
+            'sail_number' => ['nullable', new SailNumber],
             'sail_area' => 'required|numeric|min:1|max:10000'
         ]);
 

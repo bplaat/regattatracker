@@ -22,7 +22,7 @@ class CreateBoatsTable extends Migration
             $table->unsignedDecimal('length', 8, 2);
             $table->unsignedDecimal('breadth', 8, 2);
             $table->unsignedDecimal('weight', 12, 3);
-            $table->string('sail_number');
+            $table->string('sail_number')->nullable();
             $table->unsignedDecimal('sail_area', 8, 2);
             $table->timestamps();
         });

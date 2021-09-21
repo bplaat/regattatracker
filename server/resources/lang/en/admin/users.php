@@ -48,7 +48,7 @@ return [
     'create_complete.boat_info' => 'Boat information',
     'create_complete.website' => 'Website (not required)',
     'create_complete.boat_type' => 'Boat Type (attach on existing or create)',
-    'create_complete.weight' => 'Weight (ton)',
+    'create_complete.weight' => 'Weight (tons)',
     'create_complete.create_button' => 'Create new user and boat',
 
     // Admin users show page

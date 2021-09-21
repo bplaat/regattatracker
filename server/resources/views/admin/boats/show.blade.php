@@ -36,10 +36,10 @@
         <p>@lang('boats.show.mmsi') {{ $boat->mmsi }}</p>
         <p>@lang('boats.show.length') {{ round($boat->length, 2) }} m</p>
         <p>@lang('boats.show.breadth') {{ round($boat->breadth, 2) }} m</p>
-        <p>@lang('boats.show.weight') {{ round($boat->weight, 2) }} kg</p>
+        <p>@lang('boats.show.weight') {{ round($boat->weight / 1000, 2) }} tons</p>
 
         <h2 class="subtitle is-5">@lang('boats.show.sail_info')</h2>
-        <p>@lang('boats.show.sail_number') {{ $boat->sail_number }}</p>
+        <p>@lang('boats.show.sail_number') {{ $boat->sail_number != null ? $boat->sail_number : '?' }}</p>
         <p>@lang('boats.show.sail_area') {{ round($boat->sail_area, 2) }} m<sup>2</sup></p>
 
         <h2 class="subtitle is-5">@lang('boats.show.handicap_info')</h2>

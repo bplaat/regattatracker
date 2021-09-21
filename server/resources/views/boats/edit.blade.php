@@ -111,7 +111,7 @@
                     <label class="label" for="weight">@lang('boats.create.weight')</label>
 
                     <div class="control">
-                        <input class="input @error('weight') is-danger @enderror" type="number" step="0.01" id="weight" name="weight" value="{{ old('weight', $boat->weight) }}" required>
+                        <input class="input @error('weight') is-danger @enderror" type="number" step="0.01" id="weight" name="weight" value="{{ old('weight', round($boat->weight / 1000, 2)) }}" required>
                     </div>
 
                     @error('weight')
@@ -127,7 +127,7 @@
                     <label class="label" for="sail_number">@lang('boats.create.sail_number')</label>
 
                     <div class="control">
-                        <input class="input @error('sail_number') is-danger @enderror" type="text" id="sail_number" name="sail_number" value="{{ old('sail_number', $boat->sail_number) }}" required>
+                        <input class="input @error('sail_number') is-danger @enderror" type="text" id="sail_number" name="sail_number" value="{{ old('sail_number', $boat->sail_number) }}">
                     </div>
 
                     @error('sail_number')

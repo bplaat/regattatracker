@@ -40,7 +40,7 @@ public function store(Request $request)
         'name' => 'required|min:2|max:48',
         'description' => 'nullable|max:20000',
         // ...
-        'sail_number' => ['required', new SailNumber],
+        'sail_number' => ['nullable', new SailNumber],
         'sail_area' => 'required|numeric|min:1|max:10000'
     ]);
 ```

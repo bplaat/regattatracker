@@ -86,7 +86,7 @@
                         <td>{{ $boat->id }}</td>
                         <td>{{ $boat->name }}</td>
                         <td>{{ $boat->mmsi }}</td>
-                        <td>{{ $boat->sail_number }}</td>
+                        <td>{{ $boat->sail_number != null ? $boat->sail_number : '?' }}</td>
                         <td>{{ $boat->pivot->started_at != null ? $boat->pivot->started_at->format('Y-m-d H:i:s') : '-' }}</td>
                         <td>{{ $boat->pivot->finished_at != null ? $boat->pivot->finished_at->format('Y-m-d H:i:s') : '-' }}</td>
                         <td><a href="{{ route('admin.events.classes.fleets.boats.edit', [$event, $boat->pivot->event_class_id, $boat->pivot->event_class_fleet_id, $boat]) }}">@lang('admin/events.timer.edit_button')</a>

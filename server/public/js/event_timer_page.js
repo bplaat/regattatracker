@@ -27,7 +27,7 @@ timeForm.addEventListener('submit', event => {
     const timeValue = timeInput.value.slice(0, 2) + ':' + timeInput.value.slice(2, 4) + ':' + timeInput.value.slice(4, 6);
 
     for (const boat of eventClassFleetBoats) {
-        if (boatThingInput.value == '*' || boat.id == boatThingInput.value || boat.mmsi == boatThingInput.value || boat.sail_number == boatThingInput.value) {
+        if (boatThingInput.value == '*' || boat.id == boatThingInput.value || boat.mmsi == boatThingInput.value || (boat.sail_number != null && boat.sail_number == boatThingInput.value)) {
             fetch(links.apiEventClassFleetBoatsUpdate.replace('{event}', eventData.id).replace('{eventClass}', boat.pivot.event_class_id)
                 .replace('{eventClassFleet}', boat.pivot.event_class_fleet_id).replace('{boat}', boat.id), {
                 method: 'post',

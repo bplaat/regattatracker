@@ -42,8 +42,8 @@ class BoatsController extends Controller
             'mmsi' => 'required|digits:9|unique:boats',
             'length' => 'required|numeric|min:1|max:1000',
             'breadth' => 'required|numeric|min:1|max:1000',
-            'weight' => 'required|numeric|min:1|max:100000000',
-            'sail_number' => ['required', new SailNumber],
+            'weight' => 'required|numeric|min:1|max:100000',
+            'sail_number' => ['nullable', new SailNumber],
             'sail_area' => 'required|numeric|min:1|max:10000'
         ]);
 
@@ -54,7 +54,7 @@ class BoatsController extends Controller
             'mmsi' => $fields['mmsi'],
             'length' => $fields['length'],
             'breadth' => $fields['breadth'],
-            'weight' => $fields['weight'],
+            'weight' => $fields['weight'] * 1000,
             'sail_number' => $fields['sail_number'],
             'sail_area' => $fields['sail_area']
         ]);
@@ -168,8 +168,8 @@ class BoatsController extends Controller
             ],
             'length' => 'required|numeric|min:1|max:1000',
             'breadth' => 'required|numeric|min:1|max:1000',
-            'weight' => 'required|numeric|min:1|max:100000000',
-            'sail_number' => ['required', new SailNumber],
+            'weight' => 'required|numeric|min:1|max:100000',
+            'sail_number' => ['nullable', new SailNumber],
             'sail_area' => 'required|numeric|min:1|max:10000'
         ]);
 
@@ -180,7 +180,7 @@ class BoatsController extends Controller
             'mmsi' => $fields['mmsi'],
             'length' => $fields['length'],
             'breadth' => $fields['breadth'],
-            'weight' => $fields['weight'],
+            'weight' => $fields['weight'] * 1000,
             'sail_number' => $fields['sail_number'],
             'sail_area' => $fields['sail_area']
         ]);

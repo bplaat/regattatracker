@@ -30,7 +30,7 @@ class Boat extends Model
     // Get the Klipperrace rating of the boat
     public function getKlipperraceRatingAttribute()
     {
-        return $this->length * $this->sail_area / sqrt($this->breadth * $this->weight);
+        return ($this->length * $this->sail_area) / sqrt($this->breadth * ($this->weight / 1000));
     }
 
     // A boat has many positions
