@@ -228,7 +228,7 @@
                         <label class="label" for="website">@lang('admin/users.create_complete.website')</label>
 
                         <div class="control">
-                            <input class="input @error('website') is-danger @enderror" type="text" id="website" name="website" value="{{ old('website') }}" required>
+                            <input class="input @error('website') is-danger @enderror" type="text" id="website" name="website" value="{{ old('website') }}">
                         </div>
 
                         @error('website')
