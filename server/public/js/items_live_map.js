@@ -158,6 +158,101 @@ function mapMouseLeave() {
 }
 
 function updateMapItems() {
+    // Selected boat items
+    if (selectedBoat != undefined && selectedBuoy == undefined) {
+        // Selected boat position line
+        const selectedBoatPointsLine = {
+            type: 'Feature',
+            geometry: {
+                type: 'LineString',
+                coordinates: selectedBoat.positions.map(position =>
+                    [position.longitude, position.latitude]
+                )
+            }
+        };
+
+        if (map.getSource('selected_boat_positions_line') != undefined) {
+            map.getSource('selected_boat_positions_line').setData(selectedBoatPointsLine);
+        } else {
+            map.addSource('selected_boat_positions_line', { type: 'geojson', data: selectedBoatPointsLine });
+
+            map.addLayer({
+                id: 'selected_boat_positions_line',
+                source: 'selected_boat_positions_line',
+                type: 'line',
+                layout: {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                paint: {
+                    'line-color': '#a2a2a2',
+                    'line-width': 4
+                }
+            }, 'boat_points');
+        }
+
+        // Selected boat position points
+        const selectedBoatPositionPoints = {
+            type: 'FeatureCollection',
+            features: selectedBoat.positions.slice(1).map(position => ({
+                type: 'Feature',
+                properties: {
+                    position: position
+                },
+                geometry: {
+                    type: 'Point',
+                    coordinates: [position.longitude, position.latitude]
+                }
+            }))
+        };
+
+        if (map.getSource('selected_boat_positions_points') != undefined) {
+            map.getSource('selected_boat_positions_points').setData(selectedBoatPositionPoints);
+        } else {
+            map.addSource('selected_boat_positions_points', { type: 'geojson', data: selectedBoatPositionPoints });
+
+            map.addLayer({
+                id: 'selected_boat_positions_points',
+                source: 'selected_boat_positions_points',
+                type: 'circle',
+                paint: {
+                    'circle-color': '#a2a2a2',
+                    'circle-radius': 6
+                }
+            }, 'selected_boat_positions_line');
+
+            map.on('click', 'selected_boat_positions_points', event => {
+                const position = JSON.parse(event.features[0].properties.position);
+                const boat = boats.find(boat => boat.id == position.boat_id);
+
+                new mapboxgl.Popup()
+                    .setLngLat([position.longitude, position.latitude])
+                    .setHTML((boat.image != null ?
+                            '<div class="box" style="padding: 0; background-color: #191a1a; overflow: hidden; margin-bottom: 12px;">' +
+                                '<img style="display: block;" src="/storage/boats/' + boat.image + '" alt="' + strings.boat_image_alt.replace(':boat.name', boat.name) + '">' +
+                            '</div>' : '') +
+                        '<h3 style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">' + boat.name + '</h3>' +
+                        '<div>' + strings.latitude + ': ' + position.latitude + '</div>' +
+                        '<div>' + strings.longitude + ': ' + position.longitude + '</div>' +
+                        '<div>' + strings.time + ': ' + new Date(position.created_at).toLocaleString('en-US') + '</div>'
+                    )
+                    .addTo(map);
+            });
+
+            map.on('mouseenter', 'selected_boat_positions_points', mapMouseEnter);
+            map.on('mouseleave', 'selected_boat_positions_points', mapMouseLeave);
+        }
+    } else {
+        if (map.getSource('selected_boat_positions_line') != undefined) {
+            map.removeLayer('selected_boat_positions_line');
+            map.removeSource('selected_boat_positions_line');
+        }
+        if (map.getSource('selected_boat_positions_points') != undefined) {
+            map.removeLayer('selected_boat_positions_points');
+            map.removeSource('selected_boat_positions_points');
+        }
+    }
+
     // Boat points
     if (boatsChanged) {
         boatsChanged = false;
@@ -223,6 +318,8 @@ function updateMapItems() {
                 if (selectedBoat.image != null) {
                     selectedBoatPopup.getElement().style.width = '320px';
                 }
+
+                updateMapItems();
             });
 
             map.on('mouseenter', 'boat_points', mapMouseEnter);
@@ -306,6 +403,8 @@ function updateMapItems() {
                 if (selectedBuoy.youtube_video != null) {
                     selectedBuoyPopup.getElement().style.width = '320px';
                 }
+
+                updateMapItems();
             });
 
             map.on('mouseenter', 'buoy_points', mapMouseEnter);
