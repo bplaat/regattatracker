@@ -20,12 +20,13 @@ class ApiAISController extends Controller
         $data = json_decode(request('data'), true);
 
         // Check if a boat exsists with the given mmsi
-        try{
-            $boat = Boat::where('mmsi', $data['mmsi'])->first();
-        }catch(\Exception $e){
-            return NULL;
+        $boat = Boat::where('mmsi', $data['mmsi'])->first();
+        if ($boat == null) {
+            return [
+                'error' => 'MMSI not found!'
+            ];
         }
-        
+
         // Create boat position
         $boatPosition = $boat->positions()->create([
             'latitude' => $data['lat'],
