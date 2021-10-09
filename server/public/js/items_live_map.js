@@ -109,7 +109,7 @@ class WindInfoControl {
 
     onUpdate() {
         if (this.windDeg != undefined && this.windSpeed != undefined) {
-            this._container.children[0].style.transform = 'rotate(' + this.windDeg + 'deg)';
+            this._container.children[0].style.transform = 'rotate(' + (this.windDeg + 180) + 'deg)';
             if (this.unit == 'm/s') {
                 this._container.children[1].textContent = this.windSpeed.toFixed(2) + ' m/s';
             }
